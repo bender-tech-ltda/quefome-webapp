@@ -1,9 +1,8 @@
-var debug = require('debug')('quefome-webapp');
 var app = require('./app');
 
 app.bootstrap();
 app.start(function() {
-	debug('Express server listening ');
+	console.log('Servidor iniciado na porta ' + app.config.webapp.port);
 });
 
 //app.set('port', process.env.PORT || 3000);

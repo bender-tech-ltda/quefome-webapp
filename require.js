@@ -1,6 +1,9 @@
 var namespaces = require("./namespaces.js");
+var path = require("path");
 
-var $require = function(module) {
+var DIR = __dirname;
+
+var $require = function(namespace) {
 	var result = null;
 
 	if (namespaces[namespace]) {
@@ -19,7 +22,7 @@ var $require = function(module) {
 			result = result(namespace);
 		}
 
-		return require(path.join(root, result));
+		return require(path.join(DIR, result));
 	} else {
 		return require(namespace);
 	}

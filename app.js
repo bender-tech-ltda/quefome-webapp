@@ -10,7 +10,8 @@ var MODELS_DIR = path.join(DIR, "models");
 var VIEWS_DIR = path.join(DIR, "views");
 var PUBLIC_DIR = path.join(DIR, "public");
 
-var ControllerCollection = function(express) {
+var ControllerCollection = function(app) {
+	var express = require("express");
 	var router = express.Router();
 
 	var loadedControllers = [];
@@ -31,13 +32,15 @@ var ControllerCollection = function(express) {
 			}
 		});
 
+		var self = this;
 		readableFiles.forEach(function(file) {
-			if (fs.lstatSync(file).isDirectory()) {
-				loadRecursive(path.join(dir, file), namespace + file + ".");
+			var absoluteFile = path.join(dir, file);
+
+			if (fs.lstatSync(absoluteFile).isDirectory()) {
+				loadRecursive.call(self, absoluteFile, namespace + file + ".");
 			} else {
-				var controller = require(path.join(dir, file));
-				this.loadController(namespace + file, controller);
-				
+				var controller = require(absoluteFile);
+				self.loadController(namespace + file, controller);	
 			}
 		});
 	}
@@ -47,13 +50,14 @@ var ControllerCollection = function(express) {
 			return;
 		}
 
-		loadRecursive();
+		loadRecursive.call(this);
+		app.use(router);
 	};
 
 	this.loadController = function(namespace, controller) {
 		if (typeof(controller) === "function") {
 			controller(router);
-			loadedControllers.push(namespace + file);
+			loadedControllers.push(namespace);
 		}
 	};
 
@@ -64,13 +68,34 @@ var ControllerCollection = function(express) {
 
 var ModelCollection = function()  {
 
+	this.load = function() {
+		var self = this;
+
+		fs.readdirSync(MODELS_DIR).forEach(function(file) {
+			var modelName = file.replace(/\.js$/);
+			var model = require(MODELS_DIR, file);
+
+			if (typeof(model) === "function") {
+				model = new model();
+			}
+
+			self[modelName] = model;
+		});
+	};
+
+	this.isLoaded = function(modelName) {
+		return this[modelName];
+	};
+
 };
 
 var App = function() {
 	var express = require("express");
 	var app = express();
+	var server = null;
 
-	this.controllers = new ControllerCollection(express);
+	this.config = config;
+	this.controllers = new ControllerCollection(app);
 	this.models = new ModelCollection();
 
 	var loadMiddlewareParsers = function() {
@@ -79,7 +104,7 @@ var App = function() {
 		var methodOverride = require("method-override");
 		var cookieParser = require('cookie-parser');
 		var session = require('express-session');
-		var multipart = require("connect-multiparty");
+		//var multipart = require("connect-multiparty");
 		var errorhandler = require("errorhandler");
 
 		app.use(logger('dev'));
@@ -88,10 +113,8 @@ var App = function() {
 		app.use(methodOverride());
 		app.use(cookieParser());
 		app.use(session({secret: config.webapp.session.secret, resave: false, saveUninitialized: false}));
-		app.use(multipart({uploadDir: config.webapp.upload.dir}));
+		//app.use(multipart({uploadDir: config.webapp.upload.dir}));
 		app.use(express.static(PUBLIC_DIR));
-
-		configureErrorHandlers();
 	};
 
 	var configureErrorHandlers = function() {
@@ -140,9 +163,21 @@ var App = function() {
 		this.controllers.load();
 		this.models.load();
 
+		configureErrorHandlers();
+
 		if (typeof(callback) === "function") {
-			callback();
+			callback.call(this);
 		}
+	};
+
+	this.start = function(callback) {
+		var self = this;
+
+		server = app.listen(app.get("port"), function() {
+			if (typeof(callback) === "function") {
+				callback.call(self);
+			}
+		});
 	};
 
 };
