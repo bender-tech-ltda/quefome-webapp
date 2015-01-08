@@ -1,5 +1,8 @@
 $require = require("../require.js");
 
+$require("app");
+app.bootstrap();
+
 jasmine.Matchers.prototype.toBeEmpty = function() {
 	if (typeof(this.actual) === "undefined") {
 		return true;

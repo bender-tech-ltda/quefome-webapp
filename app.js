@@ -1,4 +1,7 @@
 $require = require("./require");
+$require("expand-js-api");
+$require("model");
+
 var config = $require("config");
 
 var path = require("path");
@@ -72,10 +75,11 @@ var ModelCollection = function()  {
 		var self = this;
 
 		fs.readdirSync(MODELS_DIR).forEach(function(file) {
-			var modelName = file.replace(/\.js$/);
-			var model = require(MODELS_DIR, file);
+			var modelName = file.replace(/\.js$/, "");
+			var model = require(path.join(MODELS_DIR, file));
 
 			if (typeof(model) === "function") {
+				model.extends(Model);
 				model = new model();
 			}
 
