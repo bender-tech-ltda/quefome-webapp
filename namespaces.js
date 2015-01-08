@@ -1,4 +1,4 @@
 module.exports = {
 	"config": "./config.js",
-	"webservice": "./models/datasource/webservice.js"
+	"webservice": "./util/datasource/webservice.js"
 };
