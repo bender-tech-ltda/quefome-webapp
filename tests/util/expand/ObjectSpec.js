@@ -35,3 +35,21 @@ describe("the Dog prototype", function() {
 	});
 
 });
+
+var object = {
+	name: "Supercow",
+	age: "42"
+};
+
+var copiedObject = object.copy();
+
+describe("copying objects", function() {
+	it("should copy only the content of objects", function() {
+		expect(JSON.stringify(copiedObject)).toEqual(JSON.stringify(object));
+	});
+
+	it("and not it instance", function() {
+		expect(copiedObject == object).toBe(false);
+	});
+
+});

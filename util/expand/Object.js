@@ -32,7 +32,7 @@ Object.prototype.copy = function(destObject, deep) {
 
 	for (var property in this) {
 		if (this.hasOwnProperty(property)) {
-			destObject = this[property];
+			destObject[property] = this[property];
 		}
 	}
 
