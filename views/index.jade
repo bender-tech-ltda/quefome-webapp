@@ -1,10 +1,10 @@
 doctype html
-html
+html(ng-app="")
 	head
 		title Teste
 		link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
 
-	body(ng-app="quefome")
-		h1 Teste
+	body
+		h1 {{teste}}
 
 		script(src="/components/requirejs/require.js", data-main="/assets/js/main.js")
