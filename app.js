@@ -153,6 +153,7 @@ var App = function() {
 	};
 
 	var configureApp = function() {
+		console.log(VIEWS_DIR);
 		app.set('port', config.webapp.port);
 		app.set('views', VIEWS_DIR);
 		app.set('view engine', 'jade');
