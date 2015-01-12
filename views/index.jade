@@ -3,8 +3,17 @@ html(ng-app="")
 	head
 		title Teste
 		link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
+		link(rel='stylesheet', href='/assets/css/quefome.css')
 
 	body
+		nav.navbar.navbar-inverse.navbar-fixed-top
+			div.container
+				div.navbar-header
+					a.navbar-brand(href="#/") Quefo.me
+				
+				div.navbar-collapse.collapse
+					a.navbar-right.navbar-brand(href="javascript:void(0);") Login
+
 		div.content(ng-view)
 
 		script(src="/components/requirejs/require.js", data-main="/assets/js/main.js")
