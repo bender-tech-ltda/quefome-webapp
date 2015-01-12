@@ -3,17 +3,19 @@
 require.config({
 	baseUrl: "/assets/js/",
 	paths: {
-		jquery: "/components/jquery/dist/jquery",
-		bootstrap: "/components/bootstrap/dist/js/bootstrap",
-		angular: "/components/angular/angular"
+		"jquery": "/components/jquery/dist/jquery",
+		"bootstrap": "/components/bootstrap/dist/js/bootstrap",
+		"angular": "/components/angular/angular",
+		"angular/route": "/components/angular-route/angular-route"
 	},
 	shim: {
 		"jquery": {"exports" : "jquery"},
 		"bootstrap": ["jquery"],
 		"angular" : {
-			deps: ['jquery'],
+			deps: ["jquery"],
 			exports : "angular"
-		}
+		},
+		"angular/route": ["angular"]
 	}
 });
 

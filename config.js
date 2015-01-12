@@ -1,4 +1,6 @@
 module.exports = {
+	debug: true,
+
 	webapp: {
 		port: (process.env.PORT || 3000),
 

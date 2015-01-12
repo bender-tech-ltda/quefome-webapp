@@ -5,6 +5,6 @@ html(ng-app="")
 		link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
 
 	body
-		h1 {{teste}}
+		div.content(ng-view)
 
 		script(src="/components/requirejs/require.js", data-main="/assets/js/main.js")

@@ -25,6 +25,8 @@ var ControllerCollection = function(app) {
 			namespace = "";
 		}
 
+		console.log("Carregando controllers...");
+
 		var readableFiles = [];
 
 		fs.readdirSync(dir).forEach(function(file) {
@@ -43,9 +45,13 @@ var ControllerCollection = function(app) {
 				loadRecursive.call(self, absoluteFile, namespace + file + ".");
 			} else {
 				var controller = require(absoluteFile);
-				self.loadController(namespace + file, controller);	
+				self.loadController(namespace + file, controller);
+
+				console.log(namespace + file);
 			}
 		});
+
+		console.log("");
 	}
 
 	this.load = function() {
@@ -153,7 +159,6 @@ var App = function() {
 	};
 
 	var configureApp = function() {
-		console.log(VIEWS_DIR);
 		app.set('port', config.webapp.port);
 		app.set('views', VIEWS_DIR);
 		app.set('view engine', 'jade');
