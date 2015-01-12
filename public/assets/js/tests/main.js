@@ -9,15 +9,14 @@ for (var file in window.__karma__.files) {
 	}
 }
 
-console.log(tests);
-
 require.config({
 	baseUrl: "/base/assets/js/",
 	paths: {
 		"jquery": "../../components/jquery/dist/jquery",
 		"bootstrap": "../../components/bootstrap/dist/js/bootstrap",
 		"angular": "../../components/angular/angular",
-		"angular/route": "../../components/angular-route/angular-route"
+		"angular/route": "../../components/angular-route/angular-route",
+		"angular/mock": "../../components/angular-mocks/angular-mocks"
 	},
 	shim: {
 		"jquery": {"exports" : "jquery"},
@@ -26,7 +25,8 @@ require.config({
 			deps: ["jquery"],
 			exports : "angular"
 		},
-		"angular/route": ["angular"]
+		"angular/route": ["angular"],
+		"angular/mock": ["angular"]
 	},
 	deps: tests,
 	callback: window.__karma__.start,
