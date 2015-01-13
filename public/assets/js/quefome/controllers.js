@@ -1,8 +1,12 @@
 "use strict";
 
-define(["angular"], function(angular) {
-	var quefome = angular.module("qfControllers", []);
+define(["angular", "quefome/directives"], function(angular) {
+	var quefome = angular.module("qfControllers", ["qfDirectives"]);
 	
+	quefome.controller("LoginController", ["$scope", function($scope) {
+		$scope.teste = "Blablabla";
+	}]);
+
 	quefome.controller("HomeController", ["$scope", function($scope) {
 		$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
 

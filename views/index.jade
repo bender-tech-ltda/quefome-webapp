@@ -12,7 +12,7 @@ html(ng-app="")
 					a.navbar-brand(href="#/") Quefo.me
 				
 				div.navbar-collapse.collapse
-					a.navbar-right.navbar-brand(href="javascript:void(0);") Login
+					a.navbar-right.navbar-brand(href="javascript:void(0);", qf-popover, qf-popover-trigger="focus" qf-popover-url="/partials/login/login") Login
 
 		div.content(ng-view)
 
