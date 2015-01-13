@@ -3,7 +3,16 @@
 define(["angular", "bootstrap"], function(angular) {
 	var module = angular.module("qfDirectives", []);
 
-	module.directive("qfPopover", ["$compile", "$http", "$templateCache", function($compile, $http, $templateCache) {
+	module.service("TemplateResolver", ["$compile", "$http", "$templateCache", function($compile, $http, $templateCache) {
+		this.resolve = function(url, compileScope) {
+			return $http.get(url, {cache: $templateCache}).then(function(response) {
+				var content = response.data;
+				return compileScope ? $compile(content)(compileScope) : content;
+			});
+		};
+	}])
+
+	module.directive("qfPopover", ["TemplateResolver", function(TemplateResolver) {
 		return {
 			restrict: "A",
 			scope: {
@@ -23,14 +32,14 @@ define(["angular", "bootstrap"], function(angular) {
 				}
 
 				if (scope.contentUrl) {
-					$http.get(scope.contentUrl, {cache: $templateCache}).success(function(html) {
-          				element.popover({
-          					content: $compile(html)(scope),
-          					placement: scope.placement,
-          					trigger: scope.trigger,
-          					html: true
+					TemplateResolver.resolve(scope.contentUrl, scope).then(function(html) {
+						element.popover({
+							content: html,
+							placement: scope.placement,
+							trigger: scope.trigger,
+							html: true
           				});
-        			});
+					});
 				} else {
 					element.popover({
 						title: scope.title,
