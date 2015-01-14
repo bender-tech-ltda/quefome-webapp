@@ -1,16 +1,16 @@
 "use strict";
 
-var tests = [];
+var testFiles = [];
 for (var file in window.__karma__.files) {
-	if ( window.__karma__.files.hasOwnProperty(file) ) {
+	if (window.__karma__.files.hasOwnProperty(file)) {
 		if (file.toLowerCase().indexOf("spec.js") >= 0) {
-			tests.push(file);
+			testFiles.push(file);
 		}
 	}
 }
 
 require.config({
-	baseUrl: "/base/assets/js/",
+	baseUrl: "/base/public/assets/js/",
 	paths: {
 		"jquery": "../../components/jquery/dist/jquery",
 		"bootstrap": "../../components/bootstrap/dist/js/bootstrap",
@@ -28,10 +28,11 @@ require.config({
 		"angular/route": ["angular"],
 		"angular/mock": ["angular"]
 	},
-	deps: tests,
+	deps: testFiles,
 	callback: window.__karma__.start,
 });
 
+/**
 //Isso faz com que o angular pause sua inicializacao ate que o metodo resumeBootstrap seja chamado
 //https://docs.angularjs.org/guide/bootstrap
 window.name = "NG_DEFER_BOOTSTRAP!";
@@ -41,3 +42,4 @@ require(["angular", "quefome"], function(angular, quefomeApp) {
 		angular.bootstrap(document, [quefomeApp.name]);	
 	});
 });
+**/
