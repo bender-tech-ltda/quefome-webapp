@@ -12,29 +12,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			controller = $controller("HomeController", {"$scope": scope});
 		}));
 
-		it("should not have a user logged in", function() {
-			expect(scope.isLoggedIn()).toBe(false);
-		});
-
-		it("should have a user property", function() {
-			expect(scope.user).not.toBeUndefined();
-			expect(scope.user).not.toBeNull();
-		});
-			
-		it("should log in the user", function() {
-			scope.user = {
-				username: "teste",
-				password: "teste"
-			};
-
-			scope.login();
-
-			expect(scope.isLoggedIn()).toBe(true);
-
-			var loggedUser = scope.getLoggedUser();
-
-			expect(loggedUser).not.toBeUndefined();
-			expect(loggedUser).not.toBeNull();
+		it("should have a welcomeMessage property", function() {
+			expect(scope.welcomeMessage).toBeDefined();
 		});
 	});
 });
