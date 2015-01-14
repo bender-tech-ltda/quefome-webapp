@@ -1,47 +1,40 @@
 "use strict";
 
-define(["angular", "angular/mock"], function(angular) {
+define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
-	describe("quefome", function() {
-		var $controller = null;
+	describe("HomeController", function() {
+		var scope, controller;
 
-		beforeEach(module("quefome"));
-		beforeEach(inject(function(_$controller_) {
-			$controller = _$controller_;
+		beforeEach(module("qfControllers"));
+
+		beforeEach(inject(function($controller) {
+			scope = {};
+			controller = $controller("HomeController", {"$scope": scope});
 		}));
 
-		describe("HomeController", function() {
-			var $scope = null, controller = null;
+		it("should not have a user logged in", function() {
+			expect(scope.isLoggedIn()).toBe(false);
+		});
 
-			beforeEach(function() {
-				$scope = {};
-				controller = $controller("HomeController", {"$scope": $scope});
-			});
-
-			it("should not have a user logged in", function() {
-				expect($scope.isLoggedIn()).toBe(false);
-			});
-
-			it("should have a user property", function() {
-				expect($scope.user).not.toBeUndefined();
-				expect($scope.user).not.toBeNull();
-			});
+		it("should have a user property", function() {
+			expect(scope.user).not.toBeUndefined();
+			expect(scope.user).not.toBeNull();
+		});
 			
-			it("should log in the user", function() {
-				$scope.user = {
-					username: "teste",
-					password: "teste"
-				};
+		it("should log in the user", function() {
+			scope.user = {
+				username: "teste",
+				password: "teste"
+			};
 
-				$scope.login();
+			scope.login();
 
-				expect($scope.isLoggedIn()).toBe(true);
+			expect(scope.isLoggedIn()).toBe(true);
 
-				var loggedUser = $scope.getLoggedUser();
+			var loggedUser = scope.getLoggedUser();
 
-				expect(loggedUser).not.toBeUndefined();
-				expect(loggedUser).not.toBeNull();
-			});
+			expect(loggedUser).not.toBeUndefined();
+			expect(loggedUser).not.toBeNull();
 		});
 	});
 });
