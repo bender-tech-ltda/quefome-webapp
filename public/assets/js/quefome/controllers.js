@@ -26,6 +26,10 @@ define(["angular", "quefome/directives"], function(angular) {
 		$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
 	}]);
 
+	quefome.controller("TesteController", ["$scope", function($scope) {
+		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
+	}]);
+
 	quefome.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
