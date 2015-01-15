@@ -9,10 +9,10 @@ html(ng-app="")
 		nav.navbar.navbar-inverse.navbar-fixed-top
 			div.container
 				div.navbar-header
-					a.navbar-brand(href="#/") Quefo.me
+					a.navbar-brand(qf-href="/") Quefo.me
 				
 				div.navbar-collapse.collapse
-					a.navbar-right.navbar-brand(href="javascript:void(0);", qf-popover, qf-popover-trigger="focus" qf-popover-url="/partials/login/login") Login
+					a.navbar-right.navbar-brand(href="javascript:void(0);", qf-popover, qf-popover-trigger="focus" qf-popover-url="/partials/login/access-popover") Login
 
 		div.content(ng-view)
 

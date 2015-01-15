@@ -12,6 +12,25 @@ define(["angular", "bootstrap"], function(angular) {
 		};
 	}])
 
+	module.directive("qfHref", ["$location", function($location) {
+		return {
+			restrict: "A",
+			scope: {
+				href: "@qfHref"
+			},
+			link: function(scope, element, attrs) {
+				if (element.is("a")) {
+					element.attr("href", "#" + scope.href);
+				} else {
+					element.click(function() {
+						$location.path(scope.href);
+						return false;
+					});
+				}
+			}
+		};
+	}]);
+
 	module.directive("qfPopover", ["TemplateResolver", function(TemplateResolver) {
 		return {
 			restrict: "A",
