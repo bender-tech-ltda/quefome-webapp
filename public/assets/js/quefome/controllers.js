@@ -1,37 +1,45 @@
 "use strict";
 
-define(["angular", "quefome/directives"], function(angular) {
-	var quefome = angular.module("qfControllers", ["qfDirectives"]);
+define(["angular", "quefome/services", "quefome/directives"], function(angular) {
+	var module = angular.module("qfControllers", ["qfServices", "qfDirectives"]);
 	
-	quefome.controller("LoginController", ["$scope", function($scope) {
+	module.controller("AuthController", ["$scope", "Auth", function($scope, Auth) {
 		$scope.teste = "Blablabla";
 
-		$scope.user = {};
-		$scope.loggedUser = null;
+		$scope.username = "";
+		$scope.password = "";
 
-		$scope.isLoggedIn = function() {
-			return !!$scope.loggedUser;
+		$scope.isLogged = function() {
+			return Auth.isLogged();
 		};
 
-		$scope.getLoggedUser = function() {
-			return $scope.loggedUser;
+		$scope.getUser = function() {
+			return Auth.getUser();
 		};
 
 		$scope.login = function() {
-			$scope.loggedUser = angular.copy($scope.user);
+			return Auth.login($scope.username, $scope.password).then(function(user) {
+				$scope.password = "";
+
+				return user;
+			});
+		};
+
+		$scope.logout = function() {
+			return Auth.logout();
 		};
 	}]);
 
-	quefome.controller("HomeController", ["$scope", function($scope) {
+	module.controller("HomeController", ["$scope", function($scope) {
 		$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
 	}]);
 
-	quefome.controller("TesteController", ["$scope", function($scope) {
+	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);
 
-	quefome.controller("NotFoundController", ["$scope", function($scope) {
+	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	return quefome;
+	return module;
 });
