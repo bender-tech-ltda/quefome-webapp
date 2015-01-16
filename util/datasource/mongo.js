@@ -145,11 +145,14 @@ var Mongo = function(config) {
 
 	this._connect = connect;
 
-	this.request = function(method, options) {
+	this.request = function(options) {
+		var self = this;
+
 		return Q.fcall(function() {
-			method = method.trim().toLowerCase();
-			if (this[method]) {
-				return this[method](options.url, options.body || options.qs, options);
+			method = options.method ? options.method.trim().toLowerCase() : "get";
+
+			if (self[method]) {
+				return self[method](options.url, options.body || options.qs, options);
 			}
 
 			throw {

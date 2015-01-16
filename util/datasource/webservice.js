@@ -71,8 +71,8 @@ var WebService = function(config) {
 		return deferred.promise;
 	};
 
-	this.request = function(method, options) {
-		return doRequest(method, null, null, options);
+	this.request = function(options) {
+		return doRequest(null, null, null, options);
 	};
 
 	this.get = function(url, query, options) {
