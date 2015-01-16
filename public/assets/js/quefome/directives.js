@@ -5,7 +5,14 @@ define(["angular", "bootstrap"], function(angular) {
 
 	module.service("TemplateResolver", ["$compile", "$http", "$templateCache", function($compile, $http, $templateCache) {
 		this.resolve = function(url, compileScope) {
-			return $http.get(url, {cache: $templateCache}).then(function(response) {
+			var requestConfig = {
+				cache: $templateCache,
+				headers: {
+					"Accept": "text/html,application/xhtml+xml,application/xml"
+				}
+			};
+
+			return $http.get(url, requestConfig).then(function(response) {
 				var content = response.data;
 				return compileScope ? $compile(content)(compileScope) : content;
 			});
@@ -60,18 +67,26 @@ define(["angular", "bootstrap"], function(angular) {
 						modal.remove();
 					});
 
-					TemplateResolver.resolve(scope.url, scope).then(function(html) {
+					var newScope = scope.$root.$new();
+
+					TemplateResolver.resolve(scope.url, newScope).then(function(html) {
 						var htmlEl = angular.element(html);
 
 						if (htmlEl.hasClass("modal")) {
 							modal = htmlEl;
 						} else {
-							content.append(html);
+							content.html(html);
 						}
 
 						angular.element("body").append(modal);
 						modal.modal("show");
 					});
+
+					newScope.$dialog = {
+						close: function() {
+							modal.modal("hide");
+						}
+					};
 
 					return false;
 				});
@@ -100,7 +115,7 @@ define(["angular", "bootstrap"], function(angular) {
 				}
 
 				if (scope.contentUrl) {
-					TemplateResolver.resolve(scope.contentUrl, scope).then(function(html) {
+					TemplateResolver.resolve(scope.contentUrl, scope.$root).then(function(html) {
 						element.popover({
 							content: html,
 							placement: scope.placement,

@@ -1,3 +1,4 @@
 div.jumbotron
 	div.container
-		h2.text-center {{welcomeMessage}}
+		h2.text-center(ng-show="isUserLogged()") Olá {{getLoggedUser().name}}, seja bem-vindo ao Quefo.me!
+		h2.text-center(ng-hide="isUserLogged()") Olá, seja bem-vindo ao Quefo.me!

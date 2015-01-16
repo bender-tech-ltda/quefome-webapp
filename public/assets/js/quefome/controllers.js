@@ -2,10 +2,18 @@
 
 define(["angular", "quefome/services", "quefome/directives"], function(angular) {
 	var module = angular.module("qfControllers", ["qfServices", "qfDirectives"]);
+
+	module.controller("UserMenuController", ["$scope", "Auth", function($scope, Auth) {
+		$scope.loginView = "/partials/login/login";
+
+		$scope.logout = function() {
+			Auth.logout().then(function() {
+				$scope.$safeApply();
+			});
+		};
+	}]);
 	
 	module.controller("LoginController", ["$scope", "Auth", function($scope, Auth) {
-		$scope.teste = "Blablabla";
-
 		$scope.username = "";
 		$scope.password = "";
 
@@ -47,6 +55,9 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 					$scope.password = "";
 					$scope.processing = false;
 
+					$scope.$safeApply();
+					$scope.$parent.$dialog.close();
+
 					return user;
 				}, function() {
 					$scope.processing = false;
@@ -59,8 +70,12 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("HomeController", ["$scope", function($scope) {
-		$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
+	module.controller("HomeController", ["$scope", "Auth", function($scope, Auth) {
+		if (Auth.isLogged()) {
+			$scope.welcomeMessage = "Olá " + Auth.getUser().name + ", seja bem vindo ao Quefo.me!";
+		} else {
+			$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
+		}
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {
