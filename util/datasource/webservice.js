@@ -60,15 +60,19 @@ var WebService = function(config) {
 					console.error(error);
 				}
 
-				deferred.reject(response);
+				deferred.reject(response, httpRequest);
 				return;
 			}
 
-			deferred.resolve(response);
+			deferred.resolve(response, httpRequest);
 		});
 
 		deferred.promise.request = httpRequest;
 		return deferred.promise;
+	};
+
+	this.request = function(method, options) {
+		return doRequest(method, null, null, options);
 	};
 
 	this.get = function(url, query, options) {

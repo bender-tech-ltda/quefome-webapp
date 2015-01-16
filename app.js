@@ -28,10 +28,16 @@ var ControllerCollection = function(app) {
 		console.log("Carregando controllers...");
 
 		var readableFiles = [];
-
+		var routeConfig = false;
 		fs.readdirSync(dir).forEach(function(file) {
 			if (file.indexOf("_config.js") >= 0) {
-				//TODO ler arquivo de configuração dos controllers
+				routeConfig = require(path.join(dir, file));
+
+				if (typeof(routeConfig) === "function") {
+					routeConfig(router);
+				} else if (typeof(routeConfig) === "object" && typeof(routeConfig.beforeLoad) === "function") {
+					routeConfig.beforeLoad(router);
+				}
 			} else {
 				readableFiles.push(file);
 			}
@@ -50,6 +56,10 @@ var ControllerCollection = function(app) {
 				console.log(namespace + file);
 			}
 		});
+
+		if (typeof(routeConfig) === "object" && typeof(routeConfig.afterLoad) === "function") {
+			routeConfig.afterLoad(router);
+		}
 
 		console.log("");
 	}

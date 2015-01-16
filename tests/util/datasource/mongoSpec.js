@@ -7,48 +7,64 @@ if (config.webapp.datasource == "mongo") {
 	describe("the mongo client", function() {
 
 		afterEach(function() {
-			mongo.do(function(err, db) {
-				db.collection("testes").remove();
+			mongo._connect().then(function(db) {
+				db.collection("testes").drop();
 			});
 		});
 
-		it("must have a 'do' function", function() {
-			expect(mongo).toBeFunction();
-		});
-
 		it("must connect to mongo service", function(done) {
-			mongo.do(function(err) {
-				expect(err).toBeNull();
+			mongo._connect().then(function(db) {
+				expect(db).toBeDefined();
+				done();
+			}, function() {
+				expect(false).toBe(true); //nao sei o melhor jeito de falhar o teste
 				done();
 			});
 		});
 		
 		it("must insert a register", function(done) {
-			mongo.do(function(err, db) {
-				db.collection("testes").insert({
-					name: "teste"
+			mongo.post("/testes/insert", {name: "teste"}).then(function(data) {
+				expect(data).toBeDefined();
+				expect(data.status).toEqual(200);
+				expect(data.body).toBeDefined();
+				expect(data.body.name).toEqual("teste");
+
+				done();
+			}, function(err) {
+				expect(false).toBe(true);
+				done();
+			});
+		});
+
+		it("must update a register", function(done) {
+			mongo.post("/testes/insert", {_id: -1, name: "teste"}).then(function(data) {
+				mongo.put("/testes/update", {_id: -1, name: "teste2"}).then(function(data) {
+					expect(data).toBeDefined();
+					expect(data.status).toEqual(200);
+
+					done();
 				}, function(err) {
-					expect(err).toBeNull();
+					expect(false).toBe(true);
 					done();
 				});
 			});
 		});
 
-		it("must update a register", function(done) {
-			var register = {_id: -1, name: "teste"};
+		it("must save a register", function(done) {
+			var register = {_id: -6, name: "teste"};
 
-			mongo.do(function(err, db) {
-				var collection = db.collection("testes");
+			mongo.post("/testes/save", register).then(function(data) {
+				expect(data).toBeDefined();
+				expect(data.status).toEqual(200);
 
-				collection.insert(register, function(err) {
-					expect(err).toBeNull();
-					
-					register.name = "teste-update";
+				mongo.put("/testes/save/", register).then(function(data) {
+					expect(data).toBeDefined();
+					expect(data.status).toEqual(200);
 
-					collection.update({_id: register._id}, register, function(err) {
-						expect(err).toBeNull();
-						done();
-					});
+					done();
+				}, function(err) {
+					expect(false).toBe(true);
+					done();
 				});
 			});
 		});
@@ -56,16 +72,15 @@ if (config.webapp.datasource == "mongo") {
 		it("must delete a register", function(done) {
 			var register = {_id: -2, name: "outro teste"};
 
-			mongo.do(function(err, db) {
-				var collection = db.collection("testes");
+			mongo.post("/testes/insert", register).then(function(data) {
+				mongo.delete("/testes/delete/" + register._id).then(function(data) {
+					expect(data).toBeDefined();
+					expect(data.status).toEqual(200);
 
-				collection.insert(register, function(err) {
-					expect(err).toBeNull();
-
-					collection.remove({_id: register._id}, function(err) {
-						expect(err).toBeNull();
-						done();
-					});
+					done();
+				}, function(err) {
+					expect(false).toBe(true);
+					done();
 				});
 			});
 		});
