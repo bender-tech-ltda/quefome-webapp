@@ -85,5 +85,23 @@ if (config.webapp.datasource == "mongo") {
 			});
 		});
 
+		it("must find a register", function(done) {
+			var register = {_id: -7, name: "pudim", lastName: "da silva"};
+
+			mongo.post("/testes/insert", register).then(function(data) {
+				mongo.get("/testes/list/", {name: "pudim", lastName: "da silva"}).then(function(list) {
+					expect(list).toBeDefined();
+					expect(list.body).toBeDefined();
+					expect(list.body[0]).toBeDefined();
+					expect(list.body[0]._id).toEqual(register._id);
+
+					done();
+				}, function(err) {
+					expect(false).toBe(true);
+					done();
+				});
+			});
+		});
+
 	});
 }

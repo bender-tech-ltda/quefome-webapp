@@ -1,3 +1,4 @@
+
 module.exports = function(router) {
 	router.post("/api/auth/login/", function(req, res) {
 		res.status(200).send({name: "teste", username: "teste2"});
