@@ -1,0 +1,26 @@
+form(ng-controller="LoginController", ng-submit="login()", name="form", novalidate)
+	div.modal-header
+		button.close(type="button", data-dismiss="modal")
+			span &times;
+
+		h4.modal-title Você já possui uma conta?
+
+	div.modal-body
+		div.alert.alert-danger(ng-show="errorMessage")
+			b {{errorMessage}}
+
+		div.form-group
+			label(for="username") Seu email
+			input.form-control(type="email", name="username", placeholder="email@dominio.com", ng-disabled="processing", ng-model="username", required)
+
+		div.form-group
+			label(for="password") Sua senha
+			input.form-control(type="password", name="password", placeholder="senha", ng-disabled="processing", ng-model="password", required)
+
+		div.checkbox
+			label
+				input(type="checkbox")
+				span manter-me conectado
+
+	div.modal-footer
+		button.btn.btn-lg.btn-block.btn-success(type="submit", ng-disabled="processing") Login

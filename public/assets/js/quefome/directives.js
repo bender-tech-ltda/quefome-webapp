@@ -31,6 +31,55 @@ define(["angular", "bootstrap"], function(angular) {
 		};
 	}]);
 
+	module.directive("qfClickDialogUrl", ["TemplateResolver", function(TemplateResolver) {
+		return {
+			restrict: "A",
+			scope: {
+				url: "@qfClickDialogUrl",
+				size: "@qfDialogSize"
+			},
+			link: function(scope, element, attrs) {
+				element.click(function() {
+					var content = angular.element('<div class="modal-content">');
+
+					var dialog = angular.element('<div class="modal-dialog">');
+					dialog.append(content);
+					
+					var modal = angular.element('<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
+					modal.append(dialog);
+
+					if (scope.size) {
+						if (scope.size.trim().toLowerCase() == "large") {
+							dialog.addClass("modal-lg");
+						} else if (scope.size.trim().toLowerCase() == "small") {
+							dialog.addClass("modal-sm");
+						}
+					}
+
+					modal.on("hidden.bs.modal", function() {
+						modal.remove();
+					});
+
+					TemplateResolver.resolve(scope.url, scope).then(function(html) {
+						var htmlEl = angular.element(html);
+
+						if (htmlEl.hasClass("modal")) {
+							modal = htmlEl;
+						} else {
+							content.append(html);
+						}
+
+						angular.element("body").append(modal);
+						modal.modal("show");
+					});
+
+					return false;
+				});
+			}
+		};
+
+	}]);
+
 	module.directive("qfPopover", ["TemplateResolver", function(TemplateResolver) {
 		return {
 			restrict: "A",
