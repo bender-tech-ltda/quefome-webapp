@@ -8,13 +8,17 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.logout = function() {
 			Auth.logout().then(function() {
-				$scope.$safeApply();
+				$scope.$apply();
 			});
+		};
+
+		$scope.isUserLogged = function() {
+			return Auth.isLogged();
 		};
 	}]);
 	
 	module.controller("LoginController", ["$scope", "Auth", function($scope, Auth) {
-		$scope.username = "";
+		$scope.email = "";
 		$scope.password = "";
 
 		$scope.processing = false;
@@ -31,11 +35,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.isLoginFormValid = function() {
 			if ($scope.form && $scope.form.$invalid) {
-				if ($scope.form.username.$error.required) {
+				if ($scope.form.email.$error.required) {
 					$scope.errorMessage = "Por favor, informe seu email";
 				} else if ($scope.form.password.$error.required) {
 					$scope.errorMessage = "Por favor, informe sua senha";
-				} else if ($scope.form.username.$error.email) {
+				} else if ($scope.form.email.$error.email) {
 					$scope.errorMessage = "Por favor, informe um email válido";
 				}
 
@@ -51,22 +55,20 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			if ($scope.isLoginFormValid()) {
 				$scope.processing = true;
 
-				return Auth.login($scope.username, $scope.password).then(function(user) {
+				return Auth.login($scope.email, $scope.password).then(function(user) {
 					$scope.password = "";
 					$scope.processing = false;
 
-					$scope.$safeApply();
-					$scope.$parent.$dialog.close();
+					$scope.$apply();
 
-					return user;
-				}, function() {
+					if ($scope.$parent.$dialog) {
+						$scope.$parent.$dialog.close();
+					}
+				}, function(error) {
+					$scope.errorMessage = error;
 					$scope.processing = false;
 				});
 			}
-		};
-
-		$scope.logout = function() {
-			return Auth.logout();
 		};
 	}]);
 

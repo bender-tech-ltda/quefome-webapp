@@ -3,7 +3,7 @@
 define(["angular"], function(angular) {
 	var module = angular.module("qfServices", []);
 
-	module.service("Auth", ["$http", function($http) {
+	module.service("Auth", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 
 		this.isLogged = function() {
@@ -14,11 +14,17 @@ define(["angular"], function(angular) {
 			return loggedUser;
 		};
 
-		this.login = function(username, password) {
-			return $http.post("/api/auth/login/", {username: username, password: password}).then(function(response) {
+		this.login = function(email, password) {
+			return $http.post("/api/auth/login/", {email: email, password: password}).then(function(response) {
 				loggedUser = response.data;
 
 				return response.data
+			}, function(response) {
+				if (response.status == 404 && typeof(response.data) === "string") {
+					$q.reject(response.data);
+				} else {
+					$q.reject("");
+				}
 			});
 		};
 

@@ -7,8 +7,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		beforeEach(module("qfControllers"));
 
-		beforeEach(inject(function($controller) {
-			scope = {};
+		beforeEach(inject(function($rootScope, $controller) {
+			scope = $rootScope.$new();
 			controller = $controller("HomeController", {"$scope": scope});
 		}));
 

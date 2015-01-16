@@ -15,17 +15,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return !!this._user;
 				},
 
-				login: function(username, password) {
-					if (username == "teste" && password == "teste") {
+				login: function(email, password) {
+					if (email == "teste@teste.com" && password == "teste") {
 						this._user = {
-							username: username,
+							email: email,
 							password: password
 						};
 					}
 
+					var user = this._user;
+
 					return {
-						then: function(callback) {
-							callback(this._user);
+						then: function(success, fail) {
+							if (user) {
+								success(user);
+							} else {
+								fail();
+							}
 						}
 					};
 				},
@@ -46,7 +52,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		}));
 
 		var login = function() {
-			scope.username = "teste";
+			scope.email = "teste@teste.com";
 			scope.password = "teste";
 
 			return scope.login();
@@ -56,8 +62,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.isLogged()).toBe(false);
 		});
 		
-		it("should have a username property", function() {
-			expect(scope.username).toBeDefined();
+		it("should have a email property", function() {
+			expect(scope.email).toBeDefined();
 		});
 
 		it("should have a passowrd property", function() {
@@ -75,14 +81,6 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			login();
 
 			expect(scope.password.trim()).toBe("");
-		});
-
-		it("should logout the user", function() {
-			login();
-			expect(scope.isLogged()).toBe(true);
-
-			scope.logout();
-			expect(scope.isLogged()).toBe(false);
 		});
 	});
 });

@@ -12,7 +12,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			Auth = _Auth_;
 
 			var validUser = {
-				username: "teste",
+				email: "teste@teste.com",
 				password: "teste"
 			};
 
@@ -25,7 +25,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		it("should login a user with correct username and password", function() {
-			Auth.login("teste", "teste").then(function(user) {
+			Auth.login("teste@teste.com", "teste").then(function(user) {
 				expect(Auth.isLogged()).toBe(true);
 				expect(Auth.getUser()).toEqual(user);
 			});
@@ -34,10 +34,10 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		it("should not login a user with invalid username and password", function() {
-			var invalidUser = {username: "thor", password: "ironmansucks"};
+			var invalidUser = {email: "thor@gmail.com", password: "ironmansucks"};
 
 			$httpBackend.expectPOST("/api/auth/login/", invalidUser).respond(404);
-			Auth.login(invalidUser.username, invalidUser.password).then(null, function() {
+			Auth.login(invalidUser.email, invalidUser.password).then(null, function() {
 				expect(Auth.isLogged()).toBe(false);
 				expect(Auth.getUser()).toBeNull();
 			});
@@ -46,7 +46,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		it("should logout the user", function() {
-			Auth.login("teste", "teste").then(function(user) {
+			Auth.login("teste@teste.com", "teste").then(function(user) {
 				expect(Auth.isLogged()).toBe(true);
 			});
 
