@@ -2,8 +2,16 @@ var Auth = app.models.Auth;
 
 module.exports = function(router) {
 	router.post("/api/auth/login/", function(req, res) {
+		var keepLoggedIn = req.body && req.body.keepLoggedIn ? req.body.keepLoggedIn : false;
+
 		Auth.login(req.body.email, req.body.password).then(function(user) {
 			delete(user.password);
+
+			if (!keepLoggedIn) {
+				req.session.cookie.expires = false;
+				req.session.cookie.maxAge = false;
+			}
+
 			req.session.user = user;
 
 			res.json(user);

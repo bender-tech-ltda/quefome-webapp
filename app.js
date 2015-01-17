@@ -132,7 +132,7 @@ var App = function() {
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(methodOverride());
 		app.use(cookieParser());
-		app.use(session({secret: config.webapp.session.secret, resave: false, saveUninitialized: false}));
+		app.use(session({secret: config.webapp.session.secret, resave: false, saveUninitialized: false, cookie: {maxAge: 60000}}));
 		//app.use(multipart({uploadDir: config.webapp.upload.dir}));
 		app.use(express.static(PUBLIC_DIR));
 	};

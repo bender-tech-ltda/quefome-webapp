@@ -19,7 +19,7 @@ form(ng-controller="LoginController", ng-submit="login()", name="form", novalida
 
 		div.checkbox
 			label
-				input(type="checkbox")
+				input(type="checkbox", ng-model="keepLoggedIn")
 				span manter-me conectado
 
 	div.modal-footer
