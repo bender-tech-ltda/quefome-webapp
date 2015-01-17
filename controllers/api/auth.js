@@ -1,18 +1,12 @@
-var datasource = $require("datasource");
+var Auth = app.models.Auth;
 
 module.exports = function(router) {
 	router.post("/api/auth/login/", function(req, res) {
-		datasource.get("/users/list/", {email: req.body.email, password: req.body.password}).then(function(response) {
-			var user = response.body && response.body[0] ? response.body[0] : false;
+		Auth.login(req.body.email, req.body.password).then(function(user) {
+			delete(user.password);
+			req.session.user = user;
 
-			if (user) {
-				delete(user.password);
-				req.session.user = user;
-
-				res.json(user);
-			} else {
-				res.status(404).send("Usuário e senha inválidos.");
-			}
+			res.json(user);
 		}, function() {
 			res.status(404).send("Usuário e senha inválidos.");
 		});

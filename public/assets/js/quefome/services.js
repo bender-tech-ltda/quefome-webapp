@@ -21,9 +21,9 @@ define(["angular"], function(angular) {
 				return response.data
 			}, function(response) {
 				if (response.status == 404 && typeof(response.data) === "string") {
-					$q.reject(response.data);
+					return $q.reject(response.data);
 				} else {
-					$q.reject("");
+					return $q.reject(false);
 				}
 			});
 		};

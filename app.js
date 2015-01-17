@@ -115,8 +115,8 @@ var App = function() {
 	var server = null;
 
 	this.config = config;
-	this.controllers = new ControllerCollection(app);
 	this.models = new ModelCollection();
+	this.controllers = new ControllerCollection(app);
 
 	var loadMiddlewareParsers = function() {
 		var logger = require('morgan');
@@ -180,8 +180,8 @@ var App = function() {
 		configureApp();
 		loadMiddlewareParsers();
 
-		this.controllers.load();
 		this.models.load();
+		this.controllers.load();
 
 		configureErrorHandlers();
 
