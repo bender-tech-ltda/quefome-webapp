@@ -13,19 +13,26 @@ define(["angular"], function(angular) {
 				callback = function() {};
 			}
 
-			if (this.$$phase || scope.$root.$$phase) {
+			if (this.$$phase || this.$root.$$phase) {
 				callback.call(this);
+				return function() {};
 			} else {
-				this[what](callback);
+				return this[what](callback);
 			}
 		}
 
-		$rootScope.$safeDigest = function(callback) {
-			doItSafe.call(this, "$digest", callback);
+		$rootScope.__$digest = $rootScope.$digest;
+		$rootScope.$digest = function(callback) {
+			return doItSafe.call(this, "__$digest", callback);
 		};
 
-		$rootScope.$safeApply = function(callback) {
-			doItSafe.call(this, "$apply", callback);
+		$rootScope.__$apply = $rootScope.$apply;
+		$rootScope.$apply = function(callback) {
+			doItSafe.call(this, "__$apply", callback);
 		};
+
+		Auth.checkForLoggedUser().then(function() {
+			$rootScope.$apply();
+		});
 	}];
 });

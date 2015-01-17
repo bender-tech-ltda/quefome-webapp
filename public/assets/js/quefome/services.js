@@ -33,6 +33,16 @@ define(["angular"], function(angular) {
 				loggedUser = null
 			});
 		};
+
+		this.checkForLoggedUser = function() {
+			return $http.get("/api/auth/retrieve").then(function(response) {
+				if (response.data) {
+					loggedUser = response.data;
+				}
+
+				return response.data;
+			});
+		};
 	}]);
 	
 	return module;

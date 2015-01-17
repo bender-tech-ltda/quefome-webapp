@@ -59,5 +59,14 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			$httpBackend.flush();
 		});
+
+		it("should check if a user is logged", function() {
+			$httpBackend.expectGET("/api/auth/retrieve").respond(200, {name: "Teste", email: "teste@teste.com"});
+			Auth.checkForLoggedUser().then(function() {
+				expect(Auth.isLogged()).toBe(true);
+			});
+
+			$httpBackend.flush();
+		});
 	});
 });
