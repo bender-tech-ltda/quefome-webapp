@@ -14,8 +14,14 @@ define(["angular"], function(angular) {
 			return loggedUser;
 		};
 
-		this.login = function(email, password) {
-			return $http.post("/api/auth/login/", {email: email, password: password}).then(function(response) {
+		this.login = function(email, password, keepLoggedIn) {
+			var userData = {
+				email: email,
+				password: password,
+				keepLoggedIn: keepLoggedIn ? keepLoggedIn : false
+			};
+
+			return $http.post("/api/auth/login/", userData).then(function(response) {
 				loggedUser = response.data;
 
 				return response.data

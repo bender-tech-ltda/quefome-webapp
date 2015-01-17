@@ -15,11 +15,12 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return !!this._user;
 				},
 
-				login: function(email, password) {
+				login: function(email, password, keepLoggedIn) {
 					if (email == "teste@teste.com" && password == "teste") {
 						this._user = {
 							email: email,
-							password: password
+							password: password,
+							keepLoggedIn: keepLoggedIn
 						};
 					}
 
@@ -66,8 +67,12 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.email).toBeDefined();
 		});
 
-		it("should have a passowrd property", function() {
+		it("should have a password property", function() {
 			expect(scope.password).toBeDefined();
+		});
+
+		it("should have a keepLoggedIn property", function() {
+			expect(scope.keepLoggedIn).toBeDefined();
 		});
 
 		it("should login the user", function() {
@@ -81,6 +86,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			login();
 
 			expect(scope.password.trim()).toBe("");
+		});
+
+		it("should keep the user logged in", function() {
+			scope.keepLoggedIn = true;
+			login();
+
+			expect(scope.isLogged()).toBe(true);
+			expect(scope.getUser().keepLoggedIn).toBe(true);
 		});
 	});
 });

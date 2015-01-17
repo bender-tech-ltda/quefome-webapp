@@ -13,7 +13,8 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			var validUser = {
 				email: "teste@teste.com",
-				password: "teste"
+				password: "teste",
+				keepLoggedIn: false
 			};
 
 			$httpBackend.whenPOST("/api/auth/login/", validUser).respond(200, validUser);
@@ -24,7 +25,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.verifyNoOutstandingRequest();
 		});
 
-		it("should login a user with correct username and password", function() {
+		it("should login a user with correct email and password", function() {
 			Auth.login("teste@teste.com", "teste").then(function(user) {
 				expect(Auth.isLogged()).toBe(true);
 				expect(Auth.getUser()).toEqual(user);
@@ -33,8 +34,20 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.flush();
 		});
 
-		it("should not login a user with invalid username and password", function() {
-			var invalidUser = {email: "thor@gmail.com", password: "ironmansucks"};
+		it("should keep the user logged in", function() {
+			var user = {email: "teste@teste.com", password:"teste" ,keepLoggedIn: true}
+
+			$httpBackend.expectPOST("/api/auth/login/", user).respond(200, user);
+			Auth.login(user.email, user.password, true).then(function(user) {
+				expect(Auth.isLogged()).toBe(true);
+				expect(Auth.getUser()).toEqual(user);
+			});
+
+			$httpBackend.flush();
+		});
+
+		it("should not login a user with invalid email and password", function() {
+			var invalidUser = {email: "thor@gmail.com", password: "ironmansucks", keepLoggedIn: false};
 
 			$httpBackend.expectPOST("/api/auth/login/", invalidUser).respond(404);
 			Auth.login(invalidUser.email, invalidUser.password).then(null, function() {

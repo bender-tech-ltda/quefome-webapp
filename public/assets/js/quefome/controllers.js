@@ -20,9 +20,9 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	module.controller("LoginController", ["$scope", "Auth", function($scope, Auth) {
 		$scope.email = "";
 		$scope.password = "";
+		$scope.keepLoggedIn = false;
 
 		$scope.processing = false;
-
 		$scope.errorMessage = false;
 
 		$scope.isLogged = function() {
@@ -55,7 +55,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			if ($scope.isLoginFormValid()) {
 				$scope.processing = true;
 
-				return Auth.login($scope.email, $scope.password).then(function(user) {
+				return Auth.login($scope.email, $scope.password, $scope.keepLoggedIn).then(function(user) {
 					$scope.password = "";
 					$scope.processing = false;
 
