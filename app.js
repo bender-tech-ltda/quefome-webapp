@@ -1,4 +1,4 @@
-$require = require("./require");
+$require = require("./util/require/require.js");
 $require("expand-js-api");
 $require("model");
 

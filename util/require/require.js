@@ -1,7 +1,7 @@
 var namespaces = require("./namespaces.js");
 var path = require("path");
 
-var DIR = __dirname;
+var DIR = path.join(__dirname, "../..");
 
 var $require = function(namespace) {
 	var result = null;

@@ -1,4 +1,4 @@
-$require = require("../require.js");
+$require = require("../util/require/require.js");
 
 $require("app");
 app.bootstrap();
