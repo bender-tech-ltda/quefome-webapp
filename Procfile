@@ -1,1 +1,1 @@
-web: npm run-script forever-start
+web: npm start
