@@ -61,7 +61,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 		}));
 **/
 		beforeEach(function() {
-			return injectController("LoginController", "/base/views/partials/users/login-form.html", {Auth: MockedAuthService}, function($scope) {
+			return injectController("LoginController", "views/partials/users/login-form.html", {Auth: MockedAuthService}, function($scope) {
 				scope = $scope;
 			})
 		});
