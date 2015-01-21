@@ -16,7 +16,8 @@ require.config({
 		"bootstrap": "../../components/bootstrap/dist/js/bootstrap",
 		"angular": "../../components/angular/angular",
 		"angular/route": "../../components/angular-route/angular-route",
-		"angular/mock": "../../components/angular-mocks/angular-mocks"
+		"angular/mock": "../../components/angular-mocks/angular-mocks",
+		"quefome/mock": "tests/mock"
 	},
 	shim: {
 		"jquery": {"exports" : "jquery"},

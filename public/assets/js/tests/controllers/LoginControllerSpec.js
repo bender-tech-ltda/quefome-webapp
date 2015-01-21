@@ -1,6 +1,6 @@
 "use strict";
 
-define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
+define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("LoginController", function() {
 		var scope, controller, MockedAuthService;
@@ -47,16 +47,32 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			};
 		});
 
-		beforeEach(inject(function($rootScope, $controller) {
+		/**
+		beforeEach(inject(function($templateCache, $rootScope, $compile, $controller) {
 			scope = $rootScope.$new();
 			controller = $controller("LoginController", {"$scope": scope, Auth: MockedAuthService});
+
+			var view = angular.element($templateCache.get("/partials/users/login-form.html"));
+			console.log(view);
+			view.find("[ng-controller='LoginController']").removeAttrs("ng-controller");
+
+			$compile(view)(scope);
+			scope.$digest();
 		}));
+**/
+		beforeEach(function() {
+			return injectController("LoginController", "/base/views/partials/users/login-form.html", {Auth: MockedAuthService}, function($scope) {
+				scope = $scope;
+			})
+		});
 
 		var login = function() {
 			scope.email = "teste@teste.com";
 			scope.password = "teste";
 
-			return scope.login();
+			scope.$digest();
+
+			scope.login();
 		};
 
 		it("should not have a user logged in", function() {
