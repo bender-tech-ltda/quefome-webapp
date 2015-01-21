@@ -1,7 +1,0 @@
-div(ng-controller="UserMenuController")
-	div(ng-hide="isUserLogged()")
-		button.btn.btn-success.btn-block(type="button", qf-click-dialog-url="{{loginView}}", qf-dialog-size="small") Já tenho login
-		button.btn.btn-primary.btn-block.disabled(type="button") Cadastrar
-
-	div(ng-show="isUserLogged()")
-		button.btn.btn-danger.btn-block(type="button", ng-click="logout()") Sair	

@@ -1,6 +1,8 @@
 doctype html
 html(ng-app="")
 	head
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+
 		title Quefo.me
 		link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
 		link(rel='stylesheet', href='/assets/css/quefome.css')
@@ -11,8 +13,13 @@ html(ng-app="")
 				div.navbar-header
 					a.navbar-brand(qf-href="/") Quefo.me
 				
-				div.navbar-collapse.collapse
-					a.navbar-right.navbar-brand(href="javascript:void(0);", qf-popover, qf-popover-trigger="focus" qf-popover-url="/partials/login/access-popover") Minha Conta
+				div(ng-controller="UserMenuController")
+					div(ng-hide="isUserLogged()")
+						a.navbar-right.navbar-brand(href="javascript:void(0);", qf-click-dialog-url="{{loginView}}", qf-dialog-size="large") Entrar
+
+					div(ng-show="isUserLogged()")
+						a.navbar-right.navbar-brand(href="javascript:void(0);", ng-click="logout()") Sair
+
 
 		div.content(ng-view)
 

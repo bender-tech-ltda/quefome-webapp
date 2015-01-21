@@ -30,7 +30,7 @@ var Mongo = function(config) {
 	var defaultReject = function(deferred, error) {
 		deferred.reject({
 			status: 500,
-			body: err
+			body: error
 		});
 	};
 
