@@ -1,3 +1,4 @@
+/**
 "use strict";
 
 define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
@@ -17,3 +18,4 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 	});
 });
+**/

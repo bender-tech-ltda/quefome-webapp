@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>Quefo.me</title>
+		<link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css"></link>
+		<link rel="stylesheet" href="/assets/css/quefome.css"></link>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" qf-href="/">Quefo.me</a>
+				</div>
+				
+				<div ng-controller="UserMenuController">
+					<div ng-hide="isUserLogged()">
+						<a class="navbar-right navbar-brand" href="javascript:void(0);" qf-click-dialog-url="{{loginView}}" qf-dialog-size="large">Entrar</a>
+
+					<div ng-show="isUserLogged()">
+						<a class="navbar-right navbar-brand" href="javascript:void(0);" ng-click="logout()">Sair</a>
+			</div>
+		</nav>
+
+
+		<div class="content" ng-view></div>
+
+		<script src="/components/requirejs/require.js" data-main="/assets/js/main.js"></script>
+	</body>
+</html>

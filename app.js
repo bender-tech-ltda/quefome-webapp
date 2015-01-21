@@ -169,9 +169,12 @@ var App = function() {
 	};
 
 	var configureApp = function() {
+		var ejs = require("ejs");
+
 		app.set('port', config.webapp.port);
 		app.set('views', VIEWS_DIR);
-		app.set('view engine', 'jade');
+		app.set('view engine', 'html');
+		app.engine('html', ejs.renderFile);
 	};
 
 	this.bootstrap = function() {
