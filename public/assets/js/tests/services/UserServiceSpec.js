@@ -25,7 +25,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				password: "42istheanswer"
 			};
 
-			$httpBackend.whenPUT("/api/user/saveAndLogin", user).respond(200, user);
+			$httpBackend.whenPOST("/api/user/saveAndLogin", user).respond(200, user);
 			UserService.saveAndLogin(user).then(function(savedUser) {
 				expect(savedUser).toEqual(user);
 				expect(AuthService.isLogged()).toBe(true);
@@ -41,7 +41,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				password: "imreallycrazy"
 			};
 
-			$httpBackend.expectPUT("/api/user/saveAndLogin", user).respond(900, "O email " + user.email + " já estando sendo utilizado");
+			$httpBackend.whenPOST("/api/user/saveAndLogin", user).respond(900, "O email " + user.email + " já estando sendo utilizado");
 			UserService.saveAndLogin(user).then(null, function(response) {
 				expect(typeof(response)).toEqual("string");
 				expect(AuthService.isLogged()).toBe(false);

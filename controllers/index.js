@@ -1,5 +1,5 @@
 module.exports = function Index(router) {
 	router.get("/", function(req, res) {
-		res.render("index", {title: "Fuck"});
+		res.render("index", {title: "Quefo.me"});
 	});
 };

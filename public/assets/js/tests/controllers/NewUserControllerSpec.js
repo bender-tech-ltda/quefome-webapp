@@ -60,6 +60,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			scope.$digest();
 
 			scope.saveAndLogin();
+			
+			return false;
 		};
 
 		it("should have a user property", function() {

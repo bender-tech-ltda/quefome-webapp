@@ -16,7 +16,11 @@ module.exports = function(router) {
 
 			res.json(user);
 		}, function() {
-			res.status(900).send("Usuário e senha inválidos.");
+			if (typeof(response) === "object") {
+				res.status(response.status).send(response.body);
+			} else {
+				res.status(900).send("Usuário e senha inválidos.");
+			}
 		});
 	});
 

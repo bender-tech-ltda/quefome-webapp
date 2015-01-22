@@ -57,7 +57,7 @@ define(["angular"], function(angular) {
 	
 	module.service("UserService", ["$http", "$q", "AuthService", function($http, $q, AuthService) {
 		this.saveAndLogin = function(user) {
-			return $http.put("/api/user/saveAndLogin", user).then(function(response) {
+			return $http.post("/api/user/saveAndLogin", user).then(function(response) {
 				var user = response.data;
 
 				AuthService.__setLoggedUser(user);

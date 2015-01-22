@@ -1,4 +1,4 @@
-<form class="register-form" name="form" novalidate>
+<form ng-controller="NewUserController" ng-submit="saveAndLogin()" class="register-form" name="form" novalidate>
 	<fieldset>
 		<legend>Quero me cadastrar</legend>
 
@@ -18,7 +18,7 @@
 
 		<div class="form-group">
 			<label for="password">Senha</label>
-			<input class="form-control" type="password" name="password" placeholder="Senha" ng-disabled="processing" ng-model="user.password" required ng-minlength="6" ng-maxlength="20" />
+			<input class="form-control" type="password" name="password" placeholder="Senha" autocomplete="off" ng-disabled="processing" ng-model="user.password" required ng-minlength="6" ng-maxlength="20" />
 		</div>
 
 		<button class="btn btn-block btn-success" type="submit" ng-disabled="processing">Cadastrar</button>

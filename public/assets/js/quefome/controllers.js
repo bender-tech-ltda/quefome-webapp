@@ -83,6 +83,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
 		$scope.user = {};
 
+		$scope.processing = false;
 		$scope.errorMessage = "";
 
 		$scope.isUserLoggedIn = function() {
@@ -113,12 +114,15 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.saveAndLogin = function() {
 			if ($scope.isUserFormValid()) {
+				$scope.processing = true;
 				UserService.saveAndLogin($scope.user).then(function() {
 					$scope.$apply();
 
 					if ($scope.$parent.$dialog) {
 						$scope.$parent.$dialog.close();
 					}
+
+					$scope.processing = false;
 				}, function(error) {
 					$scope.errorMessage = error;
 					$scope.processing = false;

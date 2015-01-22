@@ -18,9 +18,11 @@
 				<div ng-controller="UserMenuController">
 					<div ng-hide="isUserLogged()">
 						<a class="navbar-right navbar-brand" href="javascript:void(0);" qf-click-dialog-url="{{loginView}}" qf-dialog-size="large">Entrar</a>
+					</div>
 
 					<div ng-show="isUserLogged()">
 						<a class="navbar-right navbar-brand" href="javascript:void(0);" ng-click="logout()">Sair</a>
+					</div>
 			</div>
 		</nav>
 

@@ -185,7 +185,7 @@ var Mongo = function(config) {
 
 			if (params.action == "save") {
 				return save(params.collection, data);
-			} else if (params.action == "insert") {
+			} else if (params.action == "insert" || params.action == "create") {
 				return insert(params.collection, data);
 			}
 

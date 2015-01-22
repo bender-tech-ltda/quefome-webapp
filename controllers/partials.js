@@ -2,8 +2,6 @@ var path = require("path");
 
 module.exports = function Index(router) {
 	router.get("/partials/*", function(req, res) {
-		console.log("Pudim");
-
 		if (!app.config.debug && !req.xhr) {
 			res.send(404);
 			return;
