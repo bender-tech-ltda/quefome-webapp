@@ -66,13 +66,17 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			})
 		});
 
-		var login = function() {
-			scope.email = "teste@teste.com";
-			scope.password = "teste";
+		var login = function(email, password) {
+			scope.email = email;
+			scope.password = password;
 
 			scope.$digest();
 
 			scope.login();
+		};
+
+		var defaultLogin = function() {
+			login("teste@teste.com", "teste");
 		};
 
 		it("should not have a user logged in", function() {
@@ -91,22 +95,53 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			expect(scope.keepLoggedIn).toBeDefined();
 		});
 
+		it("should have a errorMessage property", function() {
+			expect(scope.errorMessage).toBeDefined();
+		});
+
+		it("should show a error message when the email is not filled", function() {
+			login("", "teste");
+
+			expect(scope.isLogged()).toBe(false);
+
+			expect(typeof(scope.errorMessage)).toEqual("string");
+			expect(scope.errorMessage.length).toBeGreaterThan(0);
+		});
+
+		it("should show a error message when the password is not filled", function() {
+			login("teste@teste.com");
+
+			expect(scope.isLogged()).toBe(false);
+
+			expect(typeof(scope.errorMessage)).toEqual("string");
+			expect(scope.errorMessage.length).toBeGreaterThan(0);
+		});
+
+		it("should show a error message when the email is invalid", function() {
+			login("teste", "teste");
+
+			expect(scope.isLogged()).toBe(false);
+
+			expect(typeof(scope.errorMessage)).toEqual("string");
+			expect(scope.errorMessage.length).toBeGreaterThan(0);
+		});
+
 		it("should login the user", function() {
-			login();
+			defaultLogin();
 
 			expect(scope.isLogged()).toBe(true);
 			expect(scope.getUser()).toBeDefined();
 		});
 
 		it("should clear the password property after login for security", function() {
-			login();
+			defaultLogin();
 
 			expect(scope.password.trim()).toBe("");
 		});
 
 		it("should keep the user logged in", function() {
 			scope.keepLoggedIn = true;
-			login();
+			defaultLogin();
 
 			expect(scope.isLogged()).toBe(true);
 			expect(scope.getUser().keepLoggedIn).toBe(true);
