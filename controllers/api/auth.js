@@ -16,7 +16,7 @@ module.exports = function(router) {
 
 			res.json(user);
 		}, function() {
-			res.status(404).send("Usuário e senha inválidos.");
+			res.status(900).send("Usuário e senha inválidos.");
 		});
 	});
 

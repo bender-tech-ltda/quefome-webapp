@@ -1,11 +1,11 @@
 define(["angular"], function(angular) {
-	return ["$rootScope", "Auth", function($rootScope, Auth) {
+	return ["$rootScope", "AuthService", function($rootScope, AuthService) {
 		$rootScope.isUserLogged = function() {
-			return Auth.isLogged();
+			return AuthService.isLogged();
 		};
 
 		$rootScope.getLoggedUser = function() {
-			return Auth.getUser();
+			return AuthService.getUser();
 		};
 
 		var doItSafe = function(what, callback) {
@@ -31,7 +31,7 @@ define(["angular"], function(angular) {
 			doItSafe.call(this, "__$apply", callback);
 		};
 
-		Auth.checkForLoggedUser().then(function() {
+		AuthService.checkForLoggedUser().then(function() {
 			$rootScope.$apply();
 		});
 	}];

@@ -3,21 +3,21 @@
 define(["angular", "quefome/services", "quefome/directives"], function(angular) {
 	var module = angular.module("qfControllers", ["qfServices", "qfDirectives"]);
 
-	module.controller("UserMenuController", ["$scope", "Auth", function($scope, Auth) {
+	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.loginView = "/partials/login/login";
 
 		$scope.logout = function() {
-			Auth.logout().then(function() {
+			AuthService.logout().then(function() {
 				$scope.$apply();
 			});
 		};
 
 		$scope.isUserLogged = function() {
-			return Auth.isLogged();
+			return AuthService.isLogged();
 		};
 	}]);
 	
-	module.controller("LoginController", ["$scope", "Auth", function($scope, Auth) {
+	module.controller("LoginController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.email = "";
 		$scope.password = "";
 		$scope.keepLoggedIn = false;
@@ -26,11 +26,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.errorMessage = false;
 
 		$scope.isLogged = function() {
-			return Auth.isLogged();
+			return AuthService.isLogged();
 		};
 
 		$scope.getUser = function() {
-			return Auth.getUser();
+			return AuthService.getUser();
 		};
 
 		$scope.isLoginFormValid = function() {
@@ -55,7 +55,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			if ($scope.isLoginFormValid()) {
 				$scope.processing = true;
 
-				return Auth.login($scope.email, $scope.password, $scope.keepLoggedIn).then(function(user) {
+				return AuthService.login($scope.email, $scope.password, $scope.keepLoggedIn).then(function(user) {
 					$scope.password = "";
 					$scope.processing = false;
 
@@ -72,18 +72,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("HomeController", ["$scope", "Auth", function($scope, Auth) {
-		if (Auth.isLogged()) {
-			$scope.welcomeMessage = "Olá " + Auth.getUser().name + ", seja bem vindo ao Quefo.me!";
+	module.controller("HomeController", ["$scope", "AuthService", function($scope, AuthService) {
+		if (AuthService.isLogged()) {
+			$scope.welcomeMessage = "Olá " + AuthService.getUser().name + ", seja bem vindo ao Quefo.me!";
 		} else {
 			$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
 		}
 	}]);
 
-	module.controller("NewUserController", ["$scope", function($scope) {
+	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
 		$scope.user = {};
 
 		$scope.errorMessage = "";
+
+		$scope.isUserLoggedIn = function() {
+			return AuthService.isLogged();
+		};
 
 		$scope.isUserFormValid = function() {
 			if ($scope.form && $scope.form.$invalid) {
@@ -107,9 +111,18 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			return true;
 		};
 
-		$scope.register = function() {
+		$scope.saveAndLogin = function() {
 			if ($scope.isUserFormValid()) {
+				UserService.saveAndLogin($scope.user).then(function() {
+					$scope.$apply();
 
+					if ($scope.$parent.$dialog) {
+						$scope.$parent.$dialog.close();
+					}
+				}, function(error) {
+					$scope.errorMessage = error;
+					$scope.processing = false;
+				});
 			}
 		};
 	}]);

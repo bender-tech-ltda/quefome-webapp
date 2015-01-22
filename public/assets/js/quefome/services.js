@@ -3,7 +3,7 @@
 define(["angular"], function(angular) {
 	var module = angular.module("qfServices", []);
 
-	module.service("Auth", ["$http", "$q", function($http, $q) {
+	module.service("AuthService", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 
 		this.isLogged = function() {
@@ -12,6 +12,10 @@ define(["angular"], function(angular) {
 
 		this.getUser = function() {
 			return loggedUser;
+		};
+
+		this.__setLoggedUser = function(user) {
+			loggedUser = user;
 		};
 
 		this.login = function(email, password, keepLoggedIn) {
@@ -26,7 +30,7 @@ define(["angular"], function(angular) {
 
 				return response.data
 			}, function(response) {
-				if (response.status == 404 && typeof(response.data) === "string") {
+				if (response.status == 900 && typeof(response.data) === "string") {
 					return $q.reject(response.data);
 				} else {
 					return $q.reject(false);
@@ -51,5 +55,22 @@ define(["angular"], function(angular) {
 		};
 	}]);
 	
+	module.service("UserService", ["$http", "$q", "AuthService", function($http, $q, AuthService) {
+		this.saveAndLogin = function(user) {
+			return $http.put("/api/user/saveAndLogin", user).then(function(response) {
+				var user = response.data;
+
+				AuthService.__setLoggedUser(user);
+				return user;
+			}, function(response) {
+				if (response.status == 900 && typeof(response.data) === "string") {
+					return $q.reject(response.data);
+				} else {
+					return $q.reject(false);
+				}
+			});
+		};
+	}]);
+
 	return module;
 });

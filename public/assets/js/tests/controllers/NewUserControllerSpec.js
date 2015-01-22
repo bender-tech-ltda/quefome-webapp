@@ -3,22 +3,63 @@
 define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("NewUserController", function() {
-		var scope;
+		var scope, MockedUserService, MockedAuthService, savedUsers;
 
 		beforeEach(module("qfControllers"));
 
-		beforeEach(injectController("NewUserController", "views/partials/users/register-form.html", {}, function($scope) {
-			scope = $scope;
-		}));
+		beforeEach(function() {
+			var savedUsers = {
+				"beeblebrox@gmail.com": {
+					name: "Zaphod Beeblebrox",
+					email: "beeblebrox@gmail.com",
+					password: "imreallycrazy"
+				}
+			};
 
-		var register = function(name, email, password) {
+			MockedAuthService = {
+				user: false,
+
+				isLogged: function() {
+					return !!this.user;
+				}
+			};
+
+			MockedUserService = {
+				saveAndLogin: function(user) {
+					if (savedUsers[user.email]) {
+						return {then: function(successCallback, failCallback) {
+							if (failCallback) {
+								failCallback("O email " + user.email + " já esta sendo utilizado!");
+							}
+						}};
+					} else {
+						return {then: function(successCallback, failCallback) {
+							MockedAuthService.user = user;
+
+							if (successCallback) {
+								successCallback(user);
+							}
+						}};
+					}
+				}
+			};
+
+		});
+
+		beforeEach(function () {
+			return injectController("NewUserController", "views/partials/users/register-form.html", {UserService: MockedUserService, AuthService: MockedAuthService}, function($scope) {
+				scope = $scope;
+			});
+		});
+
+		var saveAndLogin = function(name, email, password) {
 			scope.user.name = name;
 			scope.user.email = email;
 			scope.user.password = password;
 
 			scope.$digest();
 
-			scope.register();
+			scope.saveAndLogin();
 		};
 
 		it("should have a user property", function() {
@@ -32,46 +73,73 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		describe("should show a error message", function() {
 			//Arthur Dent
 			it("when the name is not filled", function() {
-				register("", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("", "arthurdent@gmail.com", "42istheanswer");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 
 			it("when the email is not filled", function() {
-				register("Arthur Dent", "", "42istheanswer");
+				saveAndLogin("Arthur Dent", "", "42istheanswer");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 
 			it("when the password is not filled", function() {
-				register("Arthur Dent", "arthurdent@gmail.com", "");
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 
 			it("when the email is invalid", function() {
-				register("Arthur Dent", "arthurdent", "42istheanswer");
+				saveAndLogin("Arthur Dent", "arthurdent", "42istheanswer");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 
 			it("when the password has less than 6 characters", function() {
-				register("Arthur Dent", "arthurdent@gmail.com", "42");
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 
 			it("when the password has more than 20 characters", function() {
-				register("Arthur Dent", "arthurdent@gmail.com", "42istheanswerforlifeuniverseandeverythingelse");
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswerforlifeuniverseandeverythingelse");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
+
+			it("when the email is already beeing used", function() {
+				saveAndLogin("Arthur Dent", "beeblebrox@gmail.com", "42istheanswer");
+
+				expect(scope.isUserLoggedIn()).toBe(false);
+
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
+		});
+
+		it("should save and login the user", function() {
+			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+
+			expect(scope.isUserLoggedIn()).toBe(true);
 		});
 	});
 });

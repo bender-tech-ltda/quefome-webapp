@@ -7,9 +7,9 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 		beforeEach(module("qfServices"));
 
-		beforeEach(inject(function(_Auth_, _$httpBackend_) {
+		beforeEach(inject(function(_AuthService_, _$httpBackend_) {
 			$httpBackend = _$httpBackend_;
-			Auth = _Auth_;
+			Auth = _AuthService_;
 
 			var validUser = {
 				email: "teste@teste.com",
@@ -35,7 +35,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		it("should keep the user logged in", function() {
-			var user = {email: "teste@teste.com", password:"teste" ,keepLoggedIn: true}
+			var user = {email: "teste@teste.com", password:"teste", keepLoggedIn: true}
 
 			$httpBackend.expectPOST("/api/auth/login/", user).respond(200, user);
 			Auth.login(user.email, user.password, true).then(function(user) {
@@ -49,7 +49,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		it("should not login a user with invalid email and password", function() {
 			var invalidUser = {email: "thor@gmail.com", password: "ironmansucks", keepLoggedIn: false};
 
-			$httpBackend.expectPOST("/api/auth/login/", invalidUser).respond(404);
+			$httpBackend.expectPOST("/api/auth/login/", invalidUser).respond(900);
 			Auth.login(invalidUser.email, invalidUser.password).then(null, function() {
 				expect(Auth.isLogged()).toBe(false);
 				expect(Auth.getUser()).toBeNull();
