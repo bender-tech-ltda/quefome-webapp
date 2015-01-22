@@ -3,7 +3,7 @@
 define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("LoginController", function() {
-		var scope, controller, MockedAuthService;
+		var scope, MockedAuthService;
 
 		beforeEach(module("qfControllers"));
 

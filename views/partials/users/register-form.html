@@ -8,17 +8,17 @@
 
 		<div class="form-group">
 			<label for="name">Nome</label>
-			<input class="form-control" type="text" name="name" placeholder="Nome" ng-disabled="processing" ng-model="name" required />
+			<input class="form-control" type="text" name="name" placeholder="Nome" ng-disabled="processing" ng-model="user.name" required />
 		</div>
 
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input class="form-control" type="email" name="email" placeholder="email@dominio.com" ng-disabled="processing" ng-model="email" required />
+			<input class="form-control" type="email" name="email" placeholder="email@dominio.com" ng-disabled="processing" ng-model="user.email" required />
 		</div>
 
 		<div class="form-group">
 			<label for="password">Senha</label>
-			<input class="form-control" type="password" name="password" placeholder="Senha" ng-disabled="processing" ng-model="password" required />
+			<input class="form-control" type="password" name="password" placeholder="Senha" ng-disabled="processing" ng-model="user.password" required ng-minlength="6" ng-maxlength="20" />
 		</div>
 
 		<button class="btn btn-block btn-success" type="submit" ng-disabled="processing">Cadastrar</button>

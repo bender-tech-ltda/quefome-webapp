@@ -80,6 +80,40 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		}
 	}]);
 
+	module.controller("NewUserController", ["$scope", function($scope) {
+		$scope.user = {};
+
+		$scope.errorMessage = "";
+
+		$scope.isUserFormValid = function() {
+			if ($scope.form && $scope.form.$invalid) {
+				if ($scope.form.name.$error.required) {
+					$scope.errorMessage = "Por favor, informe seu nome";
+				} else if ($scope.form.email.$error.required) {
+					$scope.errorMessage = "Por favor, informe seu email";
+				} else if ($scope.form.password.$error.required) {
+					$scope.errorMessage = "Por favor, informe sua senha";
+				} else if ($scope.form.email.$error.email) {
+					$scope.errorMessage = "Por favor, informe um email válido";
+				} else if ($scope.form.password.$error.minlength || $scope.form.password.$error.maxlength) {
+					$scope.errorMessage = "A senha deve possuir de 6 à 20 caracteres";
+				}
+
+				return false;
+			}
+
+			$scope.errorMessage = false;
+
+			return true;
+		};
+
+		$scope.register = function() {
+			if ($scope.isUserFormValid()) {
+
+			}
+		};
+	}]);
+
 	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);
