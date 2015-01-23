@@ -1,40 +1,44 @@
-Object.prototype.extends = function(prototype) {
-	if (this.inherits(prototype)) {
-		return;
-	}
-
-	var constructor = this.prototype ? this.prototype.constructor : this.constructor;
-
-	constructor.prototype = new prototype;
-	constructor.prototype.constructor = constructor;
-	constructor.prototype.super = prototype.prototype;
-};
-
-Object.prototype.inherits = function(prototype) {
-	var constructor = this.prototype ? this.prototype.constructor : this.constructor;
-	return constructor.prototype.super && constructor.prototype.super.constructor == prototype.prototype.constructor;
-};
-
-Object.prototype.copy = function(destObject, deep) {
-	deep = 100, destObject = {};
-
-	if (typeof(arguments[0]) === "number") {
-		deep = arguments[0];
-	} else if (typeof(arguments[1]) === "number") {
-		deep = arguments[1];
-	}
-
-	if (typeof(arguments[0]) === "object") {
-		destObject = arguments[0];
-	} else if (typeof(arguments[1]) === "object") {
-		destObject = arguments[1];
-	}
-
-	for (var property in this) {
-		if (this.hasOwnProperty(property)) {
-			destObject[property] = this[property];
+util.Object = {
+	extends: function(parentPrototype, childPrototype) {
+		if (util.Object.inherits(parentPrototype, childPrototype)) {
+			return;
 		}
-	}
 
-	return destObject;
+		var constructor = childPrototype.prototype ? childPrototype.prototype.constructor : childPrototype.constructor;
+
+		constructor.prototype = new parentPrototype;
+		constructor.prototype.constructor = constructor;
+		constructor.prototype.super = parentPrototype.prototype;
+	},
+
+	inherits: function(parentPrototype, childPrototype) {
+		var constructor = childPrototype.prototype ? childPrototype.prototype.constructor : childPrototype.constructor;
+		return constructor.prototype.super && constructor.prototype.super.constructor == parentPrototype.prototype.constructor;
+	},
+
+	copy: function(sourceObject, destObject, deep) {
+		if (!deep) {
+			deep = 100;
+		}
+
+		if (!destObject) {
+			destObject = {};
+		}
+
+		for (var property in sourceObject) {
+			if (sourceObject.hasOwnProperty(property)) {
+				var value = sourceObject[property];
+
+				if (typeof(value) === "object" && deep > 0) {
+					destObject[property] = util.Object.copy(value, {}, deep-1);
+				} else {
+					destObject[property] = value;
+				}
+			}
+		}
+
+		return destObject;
+	}
 };
+
+module.exports = util;

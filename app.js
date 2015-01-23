@@ -95,7 +95,7 @@ var ModelCollection = function()  {
 			var model = require(path.join(MODELS_DIR, file));
 
 			if (typeof(model) === "function") {
-				model.extends(Model);
+				util.Object.extends(Model, model);
 				model = new model();
 			}
 

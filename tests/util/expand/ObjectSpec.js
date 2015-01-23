@@ -17,13 +17,13 @@ var Dog = function() {
 	};
 };
 
-Dog.extends(Animal);
+util.Object.extends(Animal, Dog);
 dog = new Dog();
 
 describe("the Dog prototype", function() {
 
 	it("should inherits Animal", function() {
-		expect(Dog.inherits(Animal)).toBe(true);
+		expect(util.Object.inherits(Animal, Dog)).toBe(true);
 	});
 
 	it("should behaves like an Animal", function() {
@@ -36,20 +36,23 @@ describe("the Dog prototype", function() {
 
 });
 
-var object = {
-	name: "Supercow",
-	age: "42"
-};
-
-var copiedObject = object.copy();
-
 describe("copying objects", function() {
+	var object = {
+		name: "Supercow",
+		age: "42"
+	};
+
+	var copiedObject = util.Object.copy(object);
+
 	it("should copy only the content of objects", function() {
 		expect(JSON.stringify(copiedObject)).toEqual(JSON.stringify(object));
 	});
 
-	it("and not it instance", function() {
-		expect(copiedObject == object).toBe(false);
+	it("and not its instance", function() {
+		copiedObject.newProperty = "teste";
+
+		expect(copiedObject.newProperty).toBeDefined();
+		expect(object.newProperty).toBeUndefined();
 	});
 
 });
