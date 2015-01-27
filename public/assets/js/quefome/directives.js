@@ -78,12 +78,27 @@ define(["angular", "bootstrap"], function(angular) {
 							content.html(html);
 						}
 
-						angular.element("body").append(modal);
-						modal.modal("show");
+						var show = function() {
+							angular.element("body").append(modal);
+							modal.modal("show");
+						};
+
+						if (scope.$parent.$dialog) {
+							scope.$parent.$dialog.close(show);
+						} else {
+							show();
+						}
 					});
 
 					newScope.$dialog = {
-						close: function() {
+						close: function(callback) {
+							if (typeof(callback) === "function") {
+								modal.on("hidden.bs.modal.afterCloseCallback", function() {
+									modal.off("hidden.bs.modal.afterCloseCallback");
+									callback.call(modal, modal);
+								});
+							}
+
 							modal.modal("hide");
 						}
 					};

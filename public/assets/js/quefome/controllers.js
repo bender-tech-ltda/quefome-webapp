@@ -25,6 +25,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.processing = false;
 		$scope.errorMessage = false;
 
+		$scope.registerView = "/partials/users/register";
+
 		$scope.isLogged = function() {
 			return AuthService.isLogged();
 		};
@@ -85,6 +87,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.processing = false;
 		$scope.errorMessage = "";
+
+		$scope.loginView = "/partials/login/login";
 
 		$scope.isUserLoggedIn = function() {
 			return AuthService.isLogged();

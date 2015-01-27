@@ -47,21 +47,8 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			};
 		});
 
-		/**
-		beforeEach(inject(function($templateCache, $rootScope, $compile, $controller) {
-			scope = $rootScope.$new();
-			controller = $controller("LoginController", {"$scope": scope, Auth: MockedAuthService});
-
-			var view = angular.element($templateCache.get("/partials/users/login-form.html"));
-			console.log(view);
-			view.find("[ng-controller='LoginController']").removeAttrs("ng-controller");
-
-			$compile(view)(scope);
-			scope.$digest();
-		}));
-**/
 		beforeEach(function() {
-			return injectController("LoginController", "views/partials/users/login-form.html", {AuthService: MockedAuthService}, function($scope) {
+			return injectController("LoginController", "views/partials/login/login.html", {AuthService: MockedAuthService}, function($scope) {
 				scope = $scope;
 			})
 		});
@@ -97,6 +84,10 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 
 		it("should have a errorMessage property", function() {
 			expect(scope.errorMessage).toBeDefined();
+		});
+
+		it("should have a registerView property", function() {
+			expect(scope.registerView).toBeDefined();
 		});
 
 		it("should show a error message when the email is not filled", function() {

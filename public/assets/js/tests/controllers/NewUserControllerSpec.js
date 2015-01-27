@@ -47,7 +47,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		});
 
 		beforeEach(function () {
-			return injectController("NewUserController", "views/partials/users/register-form.html", {UserService: MockedUserService, AuthService: MockedAuthService}, function($scope) {
+			return injectController("NewUserController", "views/partials/users/register.html", {UserService: MockedUserService, AuthService: MockedAuthService}, function($scope) {
 				scope = $scope;
 			});
 		});
@@ -70,6 +70,10 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 		it("should have a errorMessage property", function() {
 			expect(scope.errorMessage).toBeDefined();
+		});
+
+		it("should have a loginView property", function() {
+			expect(scope.loginView).toBeDefined();
 		});
 
 		describe("should show a error message", function() {

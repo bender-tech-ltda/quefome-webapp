@@ -1,0 +1,42 @@
+<div class="login-dialog" ng-controller="NewUserController">
+	<div class="modal-header">
+		<h4 class="modal-title">Cadastre-se</h4>
+	</div>
+	<div class="modal-body clearfix">
+		<form ng-submit="saveAndLogin()" class="register-form" name="form" novalidate>
+			<fieldset>
+				<div class="alert alert-danger" ng-show="errorMessage">
+					<b>{{errorMessage}}</b>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Nome</label>
+					<input class="form-control" type="text" name="name" placeholder="Nome" ng-disabled="processing" ng-model="user.name" required />
+					<span class="help-block">Você pode informar apenas seu nome e seu sobrenome.</span>
+				</div>
+
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input class="form-control" type="email" name="email" placeholder="Email" ng-disabled="processing" ng-model="user.email" required />
+				</div>
+
+				<div class="form-group">
+					<label for="password">Senha</label>
+					<input class="form-control" type="password" name="password" placeholder="Senha" autocomplete="off" ng-disabled="processing" ng-model="user.password" required ng-minlength="6" ng-maxlength="20" />
+					<span class="help-block">A senha deve possuir entre 6 e 20 caracteres.</span>
+				</div>
+
+				<button class="btn btn-block btn-success" type="submit" ng-disabled="processing">Cadastrar</button>
+			</fieldset>
+		</form>
+
+		<div class="visible-xs text-center">
+			<hr/>
+
+			<h3>
+				<span>Já possuí cadastro?</span>
+				<a href="javascript:void(0)" qf-click-dialog-url="{{loginView}}">Faça o login</a>
+			</h3>
+		</div>
+	</div>
+</div>

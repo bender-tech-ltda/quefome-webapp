@@ -1,6 +1,40 @@
-<div class="login-register-dialog">
+<div class="login-dialog" ng-controller="LoginController">
+	<div class="modal-header">
+		<h4 class="modal-title">Login</h4>
+	</div>
 	<div class="modal-body clearfix">
-		<div ng-include src="'/partials/users/login-form'"></div>
-		<div ng-include src="'/partials/users/register-form'"></div>
+		<form ng-submit="login()" class="login-form" name="form" novalidate>
+			<fieldset>
+				<div class="alert alert-danger" ng-show="errorMessage">
+					<b>{{errorMessage}}</b>
+				</div>
+
+				<div class="form-group">
+					<input class="form-control" type="email" name="email" placeholder="Email" ng-disabled="processing" ng-model="email" required />
+				</div>
+
+				<div class="form-group">
+					<input class="form-control" type="password" name="password" placeholder="Senha" ng-disabled="processing" ng-model="password" required />
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="keepLoggedIn" />
+						<span>mantenha-me conectado</span>
+					</label>
+				</div>
+
+				<button class="btn btn-block btn-primary" type="submit" ng-disabled="processing">Entrar</button>
+			</fieldset>
+		</form>
+
+		<div class="visible-xs text-center">
+			<hr/>
+
+			<h3>
+				<span>Não possuí cadastro?</span>
+				<a href="javascript:void(0)" qf-click-dialog-url="{{registerView}}">Cadastre-se</a>
+			</h3>
+		</div>
 	</div>
 </div>
