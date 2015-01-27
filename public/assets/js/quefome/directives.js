@@ -1,6 +1,6 @@
-"use strict";
-
 define(["angular", "bootstrap"], function(angular) {
+	"use strict";
+	
 	var module = angular.module("qfDirectives", []);
 
 	module.service("TemplateResolver", ["$compile", "$http", "$templateCache", function($compile, $http, $templateCache) {

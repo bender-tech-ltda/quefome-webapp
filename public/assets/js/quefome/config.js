@@ -1,6 +1,6 @@
-"use strict";
-
 define(["angular", "quefome/routes"], function(angular, routes) {
+	"use strict";
+	
 	return ["$routeProvider", function($routeProvider) {
 		var configureRoutes = function() {
 			for (var i in routes) {

@@ -1,6 +1,6 @@
-"use strict";
-
 define(["angular"], function(angular) {
+	"use strict";
+	
 	var module = angular.module("qfServices", []);
 
 	module.service("AuthService", ["$http", "$q", function($http, $q) {

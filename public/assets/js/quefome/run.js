@@ -1,4 +1,6 @@
 define(["angular"], function(angular) {
+	"use strict";
+	
 	return ["$rootScope", "AuthService", function($rootScope, AuthService) {
 		$rootScope.isUserLogged = function() {
 			return AuthService.isLogged();

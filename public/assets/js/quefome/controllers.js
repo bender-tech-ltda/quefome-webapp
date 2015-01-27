@@ -1,6 +1,6 @@
-"use strict";
-
 define(["angular", "quefome/services", "quefome/directives"], function(angular) {
+	"use strict";
+	
 	var module = angular.module("qfControllers", ["qfServices", "qfDirectives"]);
 
 	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
