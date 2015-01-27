@@ -1,5 +1,6 @@
 <div class="login-dialog" ng-controller="LoginController">
 	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
 		<h4 class="modal-title">Login</h4>
 	</div>
 	<div class="modal-body clearfix">
@@ -24,17 +25,25 @@
 					</label>
 				</div>
 
+				<br/>
+
 				<button class="btn btn-block btn-primary" type="submit" ng-disabled="processing">Entrar</button>
 			</fieldset>
 		</form>
 
-		<div class="visible-xs text-center">
+		<div class="register-panel-xs visible-xs text-center">
 			<hr/>
 
 			<h3>
 				<span>Não possuí cadastro?</span>
 				<a href="javascript:void(0)" qf-click-dialog-url="{{registerView}}">Cadastre-se</a>
 			</h3>
+		</div>
+
+		<div class="register-panel hidden-xs">
+			<h4>Não possuí cadastro?</h4>
+
+			<button type="button" class="btn btn-success btn-lg" qf-click-dialog-url="{{registerView}}">Cadastre-se</a>
 		</div>
 	</div>
 </div>

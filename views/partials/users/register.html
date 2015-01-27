@@ -1,5 +1,6 @@
-<div class="login-dialog" ng-controller="NewUserController">
+<div class="register-dialog" ng-controller="NewUserController">
 	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
 		<h4 class="modal-title">Cadastre-se</h4>
 	</div>
 	<div class="modal-body clearfix">
@@ -26,17 +27,25 @@
 					<span class="help-block">A senha deve possuir entre 6 e 20 caracteres.</span>
 				</div>
 
+				<br/>
+
 				<button class="btn btn-block btn-success" type="submit" ng-disabled="processing">Cadastrar</button>
 			</fieldset>
 		</form>
 
-		<div class="visible-xs text-center">
+		<div class="login-panel-xs visible-xs text-center">
 			<hr/>
 
-			<h3>
+			<h4>
 				<span>Já possuí cadastro?</span>
 				<a href="javascript:void(0)" qf-click-dialog-url="{{loginView}}">Faça o login</a>
-			</h3>
+			</h4>
+		</div>
+
+		<div class="login-panel hidden-xs">
+			<h4>Já possuí cadastro?</h4>
+
+			<button type="button" class="btn btn-primary" qf-click-dialog-url="{{loginView}}">Faça o login</button>
 		</div>
 	</div>
 </div>

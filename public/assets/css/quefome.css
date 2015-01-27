@@ -2,35 +2,48 @@
 	padding-top: 3%;
 }
 
-.form-control, .checkbox {
-	border-radius: 6px;
-	font-size: 18px;
-	height: 46px;
-	line-height: 1.33;
-	padding: 10px 16px;
-}
-
-.btn {
-	border-radius: 6px;
-	font-size: 18px;
-	line-height: 1.33;
-	padding: 10px 16px;
-}
-
-@media (min-width: 768px) {
+@media (max-width: 767px) {
 	.form-control, .checkbox {
-		border-radius: 4px;
-		font-size: 14px;
-		height: 34px;
-		line-height: 1.42857;
-		padding: 6px 12px;
+		border-radius: 6px;
+		font-size: 18px;
+		height: 46px;
+		line-height: 1.33;
+		padding: 10px 16px;
 	}
 
 	.btn {
-		border-radius: 4px;
-		font-size: 14px;
-		line-height: 1.42857;
-		padding: 6px 12px;
+		border-radius: 6px;
+		font-size: 18px;
+		line-height: 1.33;
+		padding: 10px 16px;
+	}
+}
+
+@media (min-width: 768px) {
+	.login-dialog .login-form, .register-dialog .register-form {
+		width: 65%;
+
+		float: left;
+
+		border-right: 1px solid #ccc;
+		padding-right: 5%;
+	}
+
+	.login-dialog .register-panel, .register-dialog .login-panel {
+		width: 32%;
+		padding-top: 6%;
+
+		text-align: center;
+		float: right;
+	}
+
+	.register-dialog .register-form {
+		width: 69%;
+	}
+
+	.register-dialog .login-panel {
+		width: 29%;
+		padding-top: 17%;
 	}
 }
 
