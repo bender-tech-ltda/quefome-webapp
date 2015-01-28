@@ -10,6 +10,45 @@ a:hover, a:focus {
 	color: #EE6016;
 }
 
+.navbar-quefome {
+	background-color: #FDE09C;
+	border-color: #FDE09C;
+}
+
+.navbar-quefome .navbar-quefome-brand {
+	margin-top: 7px;
+	margin-bottom: 7px;
+	margin-left: 5%;
+	background: url("/assets/img/quefome_logo_120x45.png") no-repeat;
+	width: 120px;
+	height: 45px;
+}
+
+.navbar-quefome .navbar-toggle {
+	background-color: #EE6016;
+	border-color: #EE6016;
+	margin-top: 12px;
+}
+
+.navbar-quefome .navbar-toggle:hover, .navbar-quefome .navbar-toggle:focus {
+	background-color: #EE6016;
+	border-color: #EE6016;
+}
+
+.navbar-quefome .navbar-toggle .icon-bar {
+	background-color: white;
+}
+
+.navbar-default .navbar-collapse {
+	border-color: #EE6016;
+	background-color: #FDE09C;
+}
+
+.navbar-quefome .navbar-nav > li > a, .navbar-quefome .navbar-nav > li > a:hover,
+.navbar-quefome .navbar-nav > li > a:focus {
+	color: #EE6016;
+}
+
 @media (max-width: 767px) {
 	.form-control, .checkbox {
 		border-radius: 6px;

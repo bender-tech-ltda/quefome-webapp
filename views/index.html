@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-quefome navbar-static-top">
+		<nav class="navbar navbar-default navbar-quefome navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
 					<button class="navbar-toggle collapsed" data-target="#user-menu" data-toggle="collapse" type="button">
@@ -20,13 +20,15 @@
 					<a class="navbar-brand navbar-quefome-brand" qf-href="/"></a>
 				</div>
 
-				<div id="user-menu" class="nav navbar-nav navbar-right" ng-controller="UserMenuController">
-					<h4 ng-hide="isUserLogged()" class="login-quefome-icon">
-						<a href="javascript:void(0);" qf-click-dialog-url="{{loginView}}">Login | Cadastre-se</a>
-					</h4>
-					<h4 ng-show="isUserLogged()" class="login-quefome-icon">
-						Olá, {{getLoggedUser().name}}! - <a href="javascript:void(0);" ng-click="logout()">Sair</a>
-					</h4>
+				<div id="user-menu" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right" ng-controller="UserMenuController">
+						<li ng-hide="isUserLogged()" class="login-quefome-icon">
+							<a href="javascript:void(0);" qf-click-dialog-url="{{loginView}}">Login | Cadastre-se</a>
+						</li>
+						<li ng-show="isUserLogged()" class="login-quefome-icon">
+							Olá, {{getLoggedUser().name}}! - <a href="javascript:void(0);" ng-click="logout()">Sair</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</nav>
