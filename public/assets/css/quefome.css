@@ -39,7 +39,7 @@ a:hover, a:focus {
 	background-color: white;
 }
 
-.navbar-default .navbar-collapse {
+.navbar-quefome .navbar-collapse {
 	border-color: #EE6016;
 	background-color: #FDE09C;
 }
@@ -68,24 +68,40 @@ a:hover, a:focus {
 
 @media (min-width: 768px) {
 	.navbar-quefome {
-		background-color: #FDE09C;
-		border-color: #FDE09C;
-		height: 133px;
+		height: 122px;
 	}
 
 	.navbar-quefome .navbar-quefome-brand {
 		margin-top: 15px;
+		margin-bottom: 0px;
+		margin-left: 0px;
+
 		background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
 		width: 250px;
 		height: 93px;
 	}
 
+	.navbar-quefome .navbar-collapse {
+		background-color: transparent;
+	}
+
 	.navbar-quefome .login-quefome-icon {
-		margin-top: 30px;
+		margin-top: 25px;
 		padding-left: 80px;
-		padding-top: 25px;
+		padding-top: 12px;
 		background: url("/assets/img/quefome_icon_70x75.png") no-repeat;
 		height: 97px;
+	}
+
+	.navbar-quefome .navbar-nav > li > a {
+		font-size: 20px;
+		color: #4e200f;
+	}
+
+	.navbar-quefome .navbar-nav > li > a:hover,
+	.navbar-quefome .navbar-nav > li > a:focus {
+		color: #EE6016;
+		text-decoration: underline;
 	}
 
 	.login-dialog .login-form, .register-dialog .register-form {
