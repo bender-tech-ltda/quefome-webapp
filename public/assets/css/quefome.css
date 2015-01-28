@@ -2,6 +2,14 @@
 	padding-top: 3%;
 }
 
+a {
+	color: #4e200f;
+}
+
+a:hover, a:focus {
+	color: #EE6016;
+}
+
 @media (max-width: 767px) {
 	.form-control, .checkbox {
 		border-radius: 6px;
@@ -20,6 +28,27 @@
 }
 
 @media (min-width: 768px) {
+	.navbar-quefome {
+		background-color: #FDE09C;
+		border-color: #FDE09C;
+		height: 133px;
+	}
+
+	.navbar-quefome .navbar-quefome-brand {
+		margin-top: 15px;
+		background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
+		width: 250px;
+		height: 93px;
+	}
+
+	.navbar-quefome .login-quefome-icon {
+		margin-top: 30px;
+		padding-left: 80px;
+		padding-top: 25px;
+		background: url("/assets/img/quefome_icon_70x75.png") no-repeat;
+		height: 97px;
+	}
+
 	.login-dialog .login-form, .register-dialog .register-form {
 		width: 65%;
 
