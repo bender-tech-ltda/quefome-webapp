@@ -52,16 +52,18 @@ a:hover, a:focus {
 	color: #ed3825;
 }
 
-.modal .modal-dialog .modal-content {
-	border-radius: 0px;
-}
-
-.modal .modal-dialog .modal-content .modal-header {
-	background-color: #eaeaea;
+.modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
+	border-radius: 6px;
 }
 
 .form-control, .checkbox, .btn {
-	border-radius: 0px;
+	border-radius: 6px;
+}
+
+.btn.btn-default {
+	border-color: #cf4d0d;
+	background-color: #f15e18;
+	color: white;
 }
 
 .btn.btn-primary {
