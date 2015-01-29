@@ -1,3 +1,4 @@
+/**
 require("../../setup.js");
 
 var config = $require("config");
@@ -105,3 +106,4 @@ if (config.webapp.datasource == "mongo") {
 
 	});
 }
+**/
