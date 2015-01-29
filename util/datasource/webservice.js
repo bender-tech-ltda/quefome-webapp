@@ -1,9 +1,11 @@
 var Q = require("q");
 var request = require("request");
 
+var defaultConfig = $require("config").webservice;
+
 var WebService = function(config) {
 	if (!config) {
-		config = {};
+		config = defaultConfig;
 	}
 
 	this.setConfig = function(c) {
@@ -49,12 +51,16 @@ var WebService = function(config) {
 
 		var httpRequest = request(options, function(error, response, body) {
 			if (error || !response || response.statusCode != 200) {
-				console.error({
-					url: options.url,
-					method: options.method,
-					status: (response && response.statusCode),
-					body: body
-				});
+				if (!response) {
+					response = {
+						url: options.url,
+						method: options.method,
+						status: 404,
+						body: body || ""
+					};
+				}
+
+				console.error(response);
 
 				if (error) {
 					console.error(error);

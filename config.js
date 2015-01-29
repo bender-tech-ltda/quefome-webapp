@@ -11,6 +11,10 @@ module.exports = {
 		datasource: "mongo"
 	},
 
+	webservice: {
+		baseUrl: "http://localhost:8080/QueFomeCoreMVP/"
+	},
+
 	mongo: {
 		url: process.env.MONGO_URL || "mongodb://localhost:27017/quefome"
 	},

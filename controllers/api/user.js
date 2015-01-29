@@ -10,11 +10,7 @@ module.exports = function(router) {
 			req.session.user = user;
 			res.json(user);
 		}, function(response) {
-			if (typeof(response) === "object") {
-				res.status(response.status).send(response.body);
-			} else {
-				res.status(900).send("O email " + user.email + " já esta sendo utilizado");
-			}
+			res.status(response.status).send(response.body);
 		});
 	});
 };
