@@ -19,19 +19,15 @@ define(["angular"], function(angular) {
 		};
 
 		this.login = function(email, password, keepLoggedIn) {
-			var userData = {
-				email: email,
-				password: password,
-				keepLoggedIn: keepLoggedIn ? keepLoggedIn : false
-			};
+			var params = email + "/" + encodeURIComponent(password);
+			var keepLoggedIn = keepLoggedIn ? keepLoggedIn : false;
 
-			return $http.post("/api/auth/login/", userData).then(function(response) {
+			return $http.get("/api/users/auth/login/" + params, {keepLoggedIn: keepLoggedIn}).then(function(response) {
 				loggedUser = response.data;
-
 				return response.data
 			}, function(response) {
-				if (response.status == 900 && typeof(response.data) === "string") {
-					return $q.reject(response.data);
+				if (response.status == 900 && typeof(response.data) === "object") {
+					return $q.reject(response.data.message);
 				} else {
 					return $q.reject(false);
 				}
@@ -39,13 +35,13 @@ define(["angular"], function(angular) {
 		};
 
 		this.logout = function() {
-			return $http.post("/api/auth/logout/").then(function() {
+			return $http.delete("/api/users/auth/logout/").then(function() {
 				loggedUser = null
 			});
 		};
 
 		this.checkForLoggedUser = function() {
-			return $http.get("/api/auth/retrieve").then(function(response) {
+			return $http.get("/api/users/auth/retrieve/").then(function(response) {
 				if (response.data) {
 					loggedUser = response.data;
 				}

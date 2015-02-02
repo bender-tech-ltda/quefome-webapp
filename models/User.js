@@ -8,6 +8,21 @@ var User = function() {
 			return response.body;
 		});
 	};
+
+	this.login = function(email, password) {
+		console.log("Senha: " + password);
+
+		var params = email + "/" + password;
+		return webservice.get("/users/auth/login/" + params).then(function(response) {
+			var user = response.body;
+
+			if (!user) {
+				return Q.reject(response);
+			} else {
+				return user;
+			}
+		});
+	};
 };
 
 module.exports = User;

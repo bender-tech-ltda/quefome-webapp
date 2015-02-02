@@ -17,7 +17,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				keepLoggedIn: false
 			};
 
-			$httpBackend.whenPOST("/api/auth/login/", validUser).respond(200, validUser);
+			$httpBackend.whenGET("/api/users/auth/login/" + validUser.email + "/" + validUser.password).respond(200, validUser);
 		}));
 
 		afterEach(function() {
@@ -37,7 +37,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		it("should keep the user logged in", function() {
 			var user = {email: "teste@teste.com", password:"teste", keepLoggedIn: true}
 
-			$httpBackend.expectPOST("/api/auth/login/", user).respond(200, user);
+			$httpBackend.expectGET("/api/users/auth/login/" + user.email + "/" + user.password).respond(200, user);
 			Auth.login(user.email, user.password, true).then(function(user) {
 				expect(Auth.isLogged()).toBe(true);
 				expect(Auth.getUser()).toEqual(user);
@@ -49,7 +49,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		it("should not login a user with invalid email and password", function() {
 			var invalidUser = {email: "thor@gmail.com", password: "ironmansucks", keepLoggedIn: false};
 
-			$httpBackend.expectPOST("/api/auth/login/", invalidUser).respond(900);
+			$httpBackend.expectGET("/api/users/auth/login/" + invalidUser.email + "/" + invalidUser.password).respond(900);
 			Auth.login(invalidUser.email, invalidUser.password).then(null, function() {
 				expect(Auth.isLogged()).toBe(false);
 				expect(Auth.getUser()).toBeNull();
@@ -65,7 +65,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			$httpBackend.flush();
 
-			$httpBackend.expectPOST("/api/auth/logout/").respond(200);
+			$httpBackend.expectDELETE("/api/users/auth/logout/").respond(200);
 			Auth.logout().then(function() {
 				expect(Auth.isLogged()).toBe(false);
 			});
@@ -74,7 +74,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		it("should check if a user is logged", function() {
-			$httpBackend.expectGET("/api/auth/retrieve").respond(200, {name: "Teste", email: "teste@teste.com"});
+			$httpBackend.expectGET("/api/users/auth/retrieve/").respond(200, {name: "Teste", email: "teste@teste.com"});
 			Auth.checkForLoggedUser().then(function() {
 				expect(Auth.isLogged()).toBe(true);
 			});

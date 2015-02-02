@@ -60,6 +60,10 @@ var WebService = function(config) {
 					};
 				}
 
+				if (!response.status && response.statusCode) {
+					response.status = response.statusCode;
+				}
+
 				console.error(response);
 
 				if (error) {
@@ -69,6 +73,15 @@ var WebService = function(config) {
 				deferred.reject(response, httpRequest);
 				return;
 			}
+
+			//contorno para caso o JSON venha como uma string
+			if (response.body && typeof(response.body) === "string") {
+				try {
+					response.body = JSON.parse(response.body);
+				} catch(ex) {}
+			}
+
+			console.log(response);
 
 			deferred.resolve(response, httpRequest);
 		});
