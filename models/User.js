@@ -10,10 +10,7 @@ var User = function() {
 	};
 
 	this.login = function(email, password) {
-		console.log("Senha: " + password);
-
-		var params = email + "/" + password;
-		return webservice.get("/users/auth/login/" + params).then(function(response) {
+		return webservice.get("/users/auth/login/" + email + "/", {password: password}).then(function(response) {
 			var user = response.body;
 
 			if (!user) {

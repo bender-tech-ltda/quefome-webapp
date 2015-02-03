@@ -19,10 +19,12 @@ define(["angular"], function(angular) {
 		};
 
 		this.login = function(email, password, keepLoggedIn) {
-			var params = email + "/" + encodeURIComponent(password);
-			var keepLoggedIn = keepLoggedIn ? keepLoggedIn : false;
+			var params = {
+				password: password,
+				keepLoggedIn: keepLoggedIn ? keepLoggedIn : false
+			};
 
-			return $http.get("/api/users/auth/login/" + params, {keepLoggedIn: keepLoggedIn}).then(function(response) {
+			return $http.get("/api/users/auth/login/" + email + "/", {params: params}).then(function(response) {
 				loggedUser = response.data;
 				return response.data
 			}, function(response) {
@@ -52,15 +54,19 @@ define(["angular"], function(angular) {
 	}]);
 	
 	module.service("UserService", ["$http", "$q", "AuthService", function($http, $q, AuthService) {
-		this.saveAndLogin = function(user) {
-			return $http.post("/api/user/saveAndLogin", user).then(function(response) {
+		this.save = function(user, login) {
+			var params = {
+				login: login
+			};
+
+			return $http.post("/api/users/", user, {params: params}).then(function(response) {
 				var user = response.data;
 
 				AuthService.__setLoggedUser(user);
 				return user;
 			}, function(response) {
-				if (response.status == 900 && typeof(response.data) === "string") {
-					return $q.reject(response.data);
+				if (response.status == 900 && typeof(response.data) === "object") {
+					return $q.reject(response.data.message);
 				} else {
 					return $q.reject(false);
 				}

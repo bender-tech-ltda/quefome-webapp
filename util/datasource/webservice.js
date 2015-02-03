@@ -81,8 +81,6 @@ var WebService = function(config) {
 				} catch(ex) {}
 			}
 
-			console.log(response);
-
 			deferred.resolve(response, httpRequest);
 		});
 

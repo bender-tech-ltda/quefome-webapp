@@ -1,23 +1,26 @@
 var User = app.models.User;
 
 module.exports = function(router) {
-	router.post("/api/users/saveAndLogin/", function(req, res) {
+	router.post("/api/users/", function(req, res) {
 		var user = req.body;
 
 		User.save(user).then(function(user) {
 			delete(user.password);
 
-			req.session.user = user;
+			if (req.query && req.query.login) {
+				req.session.user = user;	
+			}
+			
 			res.json(user);
 		}, function(response) {
 			res.status(response.status).send(response.body);
 		});
 	});
 
-	router.get("/api/users/auth/login/:email/:password", function(req, res) {
+	router.get("/api/users/auth/login/:email", function(req, res) {
 		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.body.keepLoggedIn : false;
 
-		User.login(req.params.email, req.params.password).then(function(user) {
+		User.login(req.params.email, req.query ? req.query.password : "").then(function(user) {
 			delete(user.password);
 
 			if (!keepLoggedIn) {

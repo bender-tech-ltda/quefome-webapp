@@ -119,7 +119,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.saveAndLogin = function() {
 			if ($scope.isUserFormValid()) {
 				$scope.processing = true;
-				UserService.saveAndLogin($scope.user).then(function() {
+				UserService.save($scope.user, true).then(function() {
 					$scope.$apply();
 
 					if ($scope.$parent.$dialog) {

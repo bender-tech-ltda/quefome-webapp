@@ -25,7 +25,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			};
 
 			MockedUserService = {
-				saveAndLogin: function(user) {
+				save: function(user) {
 					if (savedUsers[user.email]) {
 						return {then: function(successCallback, failCallback) {
 							if (failCallback) {
