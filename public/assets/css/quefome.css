@@ -1,22 +1,11 @@
-.ng-cloak {
-	display: none;
-}
-
-.content {
-	padding-top: 3%;
-}
-
-a {
-	color: #ed3825;
-}
-
-a:hover, a:focus {
-	color: #a01608;
+html, body {
+	height: 100%;
 }
 
 .navbar-quefome {
 	background-color: #FDE09C;
 	border-color: #FDE09C;
+	margin-bottom: 0px;
 }
 
 .navbar-quefome .navbar-quefome-brand {
@@ -52,6 +41,16 @@ a:hover, a:focus {
 	color: #ed3825;
 }
 
+.delivery-search {
+	height: 200px;
+}
+
+.delivery-search.banner-sushi {
+	background: url("/assets/img/banner_pizza_301x200.jpg") no-repeat;
+	background-size: cover;
+	width: 100%;
+}
+
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
 	border-radius: 6px;
 }
@@ -71,9 +70,17 @@ a:hover, a:focus {
 	background-color: #ed3825;
 }
 
+a {
+	color: #ed3825;
+}
+
+a:hover, a:focus {
+	color: #a01608;
+}
+
 @media (max-width: 767px) {
 	.form-control, .checkbox {
-		border-radius: 0px;
+		border-radius: 6px;
 		font-size: 18px;
 		height: 46px;
 		line-height: 1.33;
@@ -81,7 +88,7 @@ a:hover, a:focus {
 	}
 
 	.btn {
-		border-radius: 0px;
+		border-radius: 6px;
 		font-size: 18px;
 		line-height: 1.33;
 		padding: 10px 16px;
@@ -150,6 +157,26 @@ a:hover, a:focus {
 	.register-dialog .login-panel {
 		width: 29%;
 		padding-top: 17%;
+	}
+
+	.delivery-search {
+		height: 300px;
+		display: inline-block;
+	}
+
+	.delivery-search.banner-sushi {
+		background: url("/assets/img/banner_pizza_1370x300.jpg") no-repeat;
+		background-size: cover;
+		width: 100%;
+	}
+
+	.delivery-search .jumbotron {
+		border-radius: 30px;
+
+		margin-top: 30px;
+		margin-left: 15%;
+		margin-right: 15%;
+		padding: 2%;
 	}
 }
 
