@@ -1,5 +1,10 @@
-html, body {
+html, body{
 	height: 100%;
+}
+
+body {
+	display: table;
+	width: 100%;
 }
 
 .navbar-quefome {
@@ -41,13 +46,15 @@ html, body {
 	color: #ed3825;
 }
 
-.delivery-search {
-	display: none;
+.content {
+	display: table-row;
+	height: 100%;
 }
 
-.delivery-search .food-type-list {
+.delivery-search .food-type-list, .delivery-search * {
 	list-style: outside none none;
-	display: inline-block;
+	display: none;
+	/*display: inline-block;*/
 	padding-left: 0px;
 }
 
@@ -80,18 +87,17 @@ html, body {
 }
 
 .footer {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 	height: 70px;
-	background-color: #ef6815;;
+	background-color: #ef6815;
+	display: table-row;
 }
 
 .footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
 	color: black;
 	background-color: #fac090;
 	border-top: 5px solid #944200;
-	height: 70%;
+	height: 51px;
 	margin-top: 10px;
 }
 
@@ -197,6 +203,15 @@ a:hover, a:focus {
 		padding-top: 17%;
 	}
 
+	.delivery-search {
+		height: 300px;
+		background-color: black;
+	}
+
+	.delivery-search .banner-burguer {
+
+	}
+
 	.delivery-search .food-type-list li {
 		width: 15%;
 		font-size: 12px;
@@ -210,7 +225,7 @@ a:hover, a:focus {
 		float: left;
 		display: inline-block;
 		width: 20%;
-		height: 83%;
+		height: 114px;
 	}
 
 	.footer .new-delivery {
