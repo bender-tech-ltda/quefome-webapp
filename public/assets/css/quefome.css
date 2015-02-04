@@ -51,6 +51,17 @@ body {
 	height: 100%;
 }
 
+.delivery-search {
+	height: 300px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+
+.delivery-search.banner-burguer {
+	background-image: url("/assets/img/banner_burguer_767x300.jpg");
+}
+
 .delivery-search .food-type-list, .delivery-search * {
 	list-style: outside none none;
 	display: none;
@@ -203,13 +214,8 @@ a:hover, a:focus {
 		padding-top: 17%;
 	}
 
-	.delivery-search {
-		height: 300px;
-		background-color: black;
-	}
-
-	.delivery-search .banner-burguer {
-
+	.delivery-search.banner-burguer {
+		background-image: url("/assets/img/banner_burguer_991x300.jpg");
 	}
 
 	.delivery-search .food-type-list li {
@@ -245,11 +251,15 @@ a:hover, a:focus {
 }
 
 @media (min-width: 992px) {
-
+	.delivery-search.banner-burguer {
+		background-image: url("/assets/img/banner_burguer_1199x300.jpg");
+	}
 }
 
 @media (min-width: 1200px) {
-
+	.delivery-search.banner-burguer {
+		background-image: url("/assets/img/banner_burguer_1920x300.jpg");
+	}
 }
 
 @media (max-width: 767px) {
