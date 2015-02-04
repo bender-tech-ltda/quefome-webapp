@@ -42,17 +42,64 @@ html, body {
 }
 
 .delivery-search {
-	height: 200px;
+	display: none;
 }
 
-.delivery-search.banner-sushi {
-	background: url("/assets/img/banner_pizza_301x200.jpg") no-repeat;
-	background-size: cover;
-	width: 100%;
+.delivery-search .food-type-list {
+	list-style: outside none none;
+	display: inline-block;
+	padding-left: 0px;
+}
+
+.delivery-search .food-type-list li {
+	float: left;
+	width: 25%;
+	height: 95px;
+	padding: 10px;
+	font-size: 10px;
+	line-height: 1.4;
+	text-align: center;
+	background-color: #f9f9f9;
+	border: 1px solid #fff;
+}
+
+.delivery-search .food-type-list li:hover {
+	cursor: pointer;
+	color: #fff;
+	background-color: #563d7c;
+}
+
+.delivery-search .glyphicon {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 24px;
 }
 
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
 	border-radius: 6px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 70px;
+	background-color: #ef6815;;
+}
+
+.footer .social-networks {
+	color: black;
+	background-color: #fac090;
+	border-top: 5px solid #944200;
+	height: 70%;
+	margin-top: 10px;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.footer .social-networks .title {
+	text-align: center;
+	margin-top: 3px;
 }
 
 .form-control, .checkbox, .btn {
@@ -76,23 +123,6 @@ a {
 
 a:hover, a:focus {
 	color: #a01608;
-}
-
-@media (max-width: 767px) {
-	.form-control, .checkbox {
-		border-radius: 6px;
-		font-size: 18px;
-		height: 46px;
-		line-height: 1.33;
-		padding: 10px 16px;
-	}
-
-	.btn {
-		border-radius: 6px;
-		font-size: 18px;
-		line-height: 1.33;
-		padding: 10px 16px;
-	}
 }
 
 @media (min-width: 768px) {
@@ -159,24 +189,9 @@ a:hover, a:focus {
 		padding-top: 17%;
 	}
 
-	.delivery-search {
-		height: 300px;
-		display: inline-block;
-	}
-
-	.delivery-search.banner-sushi {
-		background: url("/assets/img/banner_pizza_1370x300.jpg") no-repeat;
-		background-size: cover;
-		width: 100%;
-	}
-
-	.delivery-search .jumbotron {
-		border-radius: 30px;
-
-		margin-top: 30px;
-		margin-left: 15%;
-		margin-right: 15%;
-		padding: 2%;
+	.delivery-search .food-type-list li {
+		width: 15%;
+		font-size: 12px;
 	}
 }
 
@@ -186,4 +201,21 @@ a:hover, a:focus {
 
 @media (min-width: 1200px) {
 
+}
+
+@media (max-width: 767px) {
+	.form-control, .checkbox {
+		border-radius: 6px;
+		font-size: 18px;
+		height: 46px;
+		line-height: 1.33;
+		padding: 10px 16px;
+	}
+
+	.btn {
+		border-radius: 6px;
+		font-size: 18px;
+		line-height: 1.33;
+		padding: 10px 16px;
+	}
 }
