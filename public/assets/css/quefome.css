@@ -87,19 +87,27 @@ html, body {
 	background-color: #ef6815;;
 }
 
-.footer .social-networks {
+.footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
 	color: black;
 	background-color: #fac090;
 	border-top: 5px solid #944200;
 	height: 70%;
 	margin-top: 10px;
+}
+
+.footer .new-delivery, .footer .indicate-delivery {
+	display: none;
+}
+
+.footer .social-networks {
 	margin-left: 10%;
 	margin-right: 10%;
 }
 
-.footer .social-networks .title {
+.footer .new-delivery .title, .footer .indicate-delivery .title, .footer .social-networks .title {
+	font-size: 13px;
 	text-align: center;
-	margin-top: 3px;
+	margin: 5px;
 }
 
 .form-control, .checkbox, .btn {
@@ -192,6 +200,32 @@ a:hover, a:focus {
 	.delivery-search .food-type-list li {
 		width: 15%;
 		font-size: 12px;
+	}
+
+	.footer {
+		height: 140px;
+	}
+
+	.footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
+		float: left;
+		display: inline-block;
+		width: 20%;
+		height: 83%;
+	}
+
+	.footer .new-delivery {
+		margin-left: 10%;
+		margin-right: 1%;
+	}
+
+	.footer .indicate-delivery {
+		margin-left: 1%;
+		margin-right: 17%;
+	}
+
+	.footer .social-networks {
+		margin-left: 1%;
+		margin-right: 10%;
 	}
 }
 
