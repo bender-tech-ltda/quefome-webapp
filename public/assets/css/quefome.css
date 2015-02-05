@@ -126,7 +126,7 @@ body {
 	height: 59px;
 	padding-top: 8px;
 	padding-left: 4%;
-	margin-bottom: -5px;
+	margin-bottom: 0px;
 }
 
 .delivery-search-page .order-steps li {
@@ -197,6 +197,10 @@ body {
 
 .delivery-search-page .search-result {
 	margin: 10px 5px;
+}
+
+.delivery-search-page .search-result .panel-body {
+	min-height: 100px;
 }
 
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
@@ -359,6 +363,16 @@ a:hover, a:focus {
 
 	.delivery-search-panel .food-type-list li {
 		font-size: 12px;
+	}
+
+	.delivery-search-page .search-form .food-type-choice {
+		width: 31%;
+		margin: auto;
+	}
+
+	.delivery-search-page .search-result {
+		margin: 10px auto;
+		width: 75%;
 	}
 
 	.footer {
