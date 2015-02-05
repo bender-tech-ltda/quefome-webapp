@@ -70,14 +70,13 @@ body {
 	display: inline-block;
 	background-color: #f5f5f5;
 	padding: 0px 10px 10px 10px;
-	margin: 15px;
+	margin: 20px 15px;
 	height: 260px;
 	width: 90%;
 	width: -webkit-calc(100% - 30px);
 	width: -moz-calc(100% - 30px);
 	width: calc(100% - 30px);
 	text-align: center;
-	opacity: 0.98;
 	box-shadow: 0px 12px 8px -12px #000;
 }
 
@@ -97,6 +96,7 @@ body {
 	text-align: center;
 	background-color: #fff;
 	border: 2px solid #f5f5f5;
+	border-radius: 12px;
 
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -108,8 +108,8 @@ body {
 
 .delivery-search .food-type-list li:hover {
 	cursor: pointer;
-	color: #fff;
-	background-color: #FAC090;
+	color: #f5f5f5;
+	background-color: #f46c21;
 }
 
 .delivery-search .glyphicon {
@@ -243,8 +243,12 @@ a:hover, a:focus {
 		background-image: url("/assets/img/banner_burguer_991x300.jpg");
 	}
 
+	.delivery-search .food-type-search {
+		width: 30%;
+		margin-left: 10%;
+	}
+
 	.delivery-search .food-type-list li {
-		width: 15%;
 		font-size: 12px;
 	}
 
