@@ -75,11 +75,17 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	}]);
 
 	module.controller("HomeController", ["$scope", "AuthService", function($scope, AuthService) {
-		if (AuthService.isLogged()) {
-			$scope.welcomeMessage = "Olá " + AuthService.getUser().name + ", seja bem vindo ao Quefo.me!";
-		} else {
-			$scope.welcomeMessage = "Olá, seja bem vindo ao Quefo.me!";
-		}
+		$scope.productTypes = [
+			{name: "Pizza"},
+			{name: "Comida Japonesa"},
+			{name: "Pastel"},
+			{name: "Xis"},
+			{name: "Comida Chinesa"},
+			{name: "Comida Vegana"},
+			{name: "Comida espacial"},
+			{name: "Frutos do mar"}
+		];
+
 	}]);
 
 	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {

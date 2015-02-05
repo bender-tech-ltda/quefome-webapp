@@ -12,8 +12,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			controller = $controller("HomeController", {"$scope": scope});
 		}));
 
-		it("should have a welcomeMessage property", function() {
-			expect(scope.welcomeMessage).toBeDefined();
+		it("should have a productTypes property", function() {
+			expect(scope.productTypes).toBeDefined();
 		});
 	});
 });
