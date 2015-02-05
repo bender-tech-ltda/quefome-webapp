@@ -51,7 +51,7 @@ body {
 	height: 100%;
 }
 
-.delivery-search {
+.delivery-search-panel {
 	width: 100%;
 	height: 300px;
 	background-repeat: no-repeat;
@@ -61,11 +61,11 @@ body {
 	box-shadow: inset 0px 11px 8px -13px black, inset 0px -11px 8px -13px black;
 }
 
-.delivery-search.banner-burguer {
+.delivery-search-panel.banner-burguer {
 	background-image: url("/assets/img/banner_burguer_767x300.jpg");
 }
 
-.delivery-search .food-type-search {
+.delivery-search-panel .food-type-search {
 	border-radius: 20px;
 	display: inline-block;
 	background-color: #f5f5f5;
@@ -80,13 +80,13 @@ body {
 	box-shadow: 0px 12px 8px -12px #000;
 }
 
-.delivery-search .food-type-list {
+.delivery-search-panel .food-type-search .food-type-list {
 	list-style: outside none none;
 	display: inline-block;
 	padding-left: 0px;
 }
 
-.delivery-search .food-type-list li {
+.delivery-search-panel .food-type-search .food-type-list li {
 	float: left;
 	width: 25%;
 	height: 95px;
@@ -106,16 +106,64 @@ body {
 	user-select: none;
 }
 
-.delivery-search .food-type-list li:hover {
+.delivery-search-panel .food-type-search .food-type-list li:hover {
 	cursor: pointer;
-	color: #f5f5f5;
+	color: #fff;
 	background-color: #f46c21;
 }
 
-.delivery-search .glyphicon {
+.delivery-search-panel .glyphicon {
 	margin-top: 5px;
 	margin-bottom: 10px;
 	font-size: 24px;
+}
+
+.delivery-search-page .order-delivery-step {
+	background: #f1c60d;
+	height: 75px;
+}
+
+.delivery-search-page .search-form {
+	background: #ffe171;
+	padding: 5px;
+	height: 130px;
+	width: 100%;
+}
+
+.delivery-search-page .search-form .title {
+	color: #f0751f;
+	text-align: center;
+	font-size: 15px;
+}
+
+.delivery-search-page .search-form .food-type-list {
+	list-style: outside none none;
+	display: inline-block;
+	width: 100%;
+	padding-left: 8%;
+}
+
+.delivery-search-page .search-form .food-type-list li {
+	float: left;
+	width: 18%;
+	height: 38px;
+	padding: 10px 1px;
+	font-size: 12px;
+	line-height: 1.4;
+	text-align: center;
+	background-color: #fff;
+	border: 2px solid #ffe171;
+	border-radius: 0px;
+}
+
+.delivery-search-page .search-form .food-type-list li:hover, .delivery-search-page .search-form .food-type-list li.active {
+	cursor: pointer;
+	color: #fff;
+	background-color: #f46c21;
+}
+
+.delivery-search-page .search-result {
+	margin: 10px 5px;
 }
 
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
@@ -152,6 +200,16 @@ body {
 	margin: 5px;
 }
 
+.helper-no-select {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
 .form-control, .checkbox, .btn {
 	border-radius: 6px;
 }
@@ -165,6 +223,24 @@ body {
 .btn.btn-primary {
 	border-color: #e73422;
 	background-color: #ed3825;
+}
+
+.panel {
+	border-radius: 0px;
+}
+
+.panel .panel-heading {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.panel.panel-default {
+	border-color: #d0d0d0;
+}
+
+.panel.panel-default .panel-heading {
+	background-color: #a6a6a6;
+	color: #fff;
 }
 
 a {
@@ -239,16 +315,16 @@ a:hover, a:focus {
 		padding-top: 17%;
 	}
 
-	.delivery-search.banner-burguer {
+	.delivery-search-panel.banner-burguer {
 		background-image: url("/assets/img/banner_burguer_991x300.jpg");
 	}
 
-	.delivery-search .food-type-search {
+	.delivery-search-panel .food-type-search {
 		width: 30%;
 		margin-left: 10%;
 	}
 
-	.delivery-search .food-type-list li {
+	.delivery-search-panel .food-type-list li {
 		font-size: 12px;
 	}
 
@@ -280,13 +356,13 @@ a:hover, a:focus {
 }
 
 @media (min-width: 992px) {
-	.delivery-search.banner-burguer {
+	.delivery-search-panel.banner-burguer {
 		background-image: url("/assets/img/banner_burguer_1199x300.jpg");
 	}
 }
 
 @media (min-width: 1200px) {
-	.delivery-search.banner-burguer {
+	.delivery-search-panel.banner-burguer {
 		background-image: url("/assets/img/banner_burguer_1920x300.jpg");
 	}
 }
