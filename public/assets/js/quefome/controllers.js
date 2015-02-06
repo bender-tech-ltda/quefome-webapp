@@ -74,7 +74,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("HomeController", ["$scope", "AuthService", function($scope, AuthService) {
+	module.controller("HomeController", ["$scope", "ProductTypeService", function($scope, ProductTypeService) {
 		$scope.productTypes = [
 			{name: "Pizza"},
 			{name: "Comida Japonesa"},
@@ -86,6 +86,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			{name: "Frutos do mar"}
 		];
 
+		ProductTypeService.list().then(function(productTypes) {
+			$scope.productTypes = productTypes;
+		});
+
+		$scope.$digest();
 	}]);
 
 	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
@@ -147,6 +152,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;
 		});
+
+		$scope.$digest();
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {

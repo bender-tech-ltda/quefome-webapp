@@ -36,7 +36,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function() {
 			return injectController("SearchDeliveryController", "views/partials/deliveries/search.html", {ProductTypeService: MockedProductTypeService}, function($scope) {
 				scope = $scope;
-			})
+			});
 		});
 
 		it("should have a productTypes property", function() {
