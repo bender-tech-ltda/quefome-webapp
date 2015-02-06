@@ -76,8 +76,10 @@ define(["angular"], function(angular) {
 
 	module.service("ProductTypeService", ["$http", "$q", function($http, $q) {
 		this.list = function() {
-			return $q(function() {
-				return [
+			var deferred = $q.defer();
+
+			setTimeout(function() {
+				deferred.resolve([
 					{name: "Pizza"},
 					{name: "Comida Japonesa"},
 					{name: "Pastel"},
@@ -86,8 +88,10 @@ define(["angular"], function(angular) {
 					{name: "Comida Vegana"},
 					{name: "Comida espacial"},
 					{name: "Frutos do mar"}
-				];
-			});
+				]);
+			}, 1);
+
+			return deferred.promise;
 		};
 	}]);
 

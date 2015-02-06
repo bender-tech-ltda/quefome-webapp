@@ -10,7 +10,8 @@ define([], function() {
 		{
 			path: "/deliveries/search/",
 			controller: "SearchDeliveryController",
-			templateUrl: "/partials/deliveries/search.html"
+			templateUrl: "/partials/deliveries/search.html",
+			reloadOnSearch: false
 		}
 	];
 });

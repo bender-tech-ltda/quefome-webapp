@@ -75,22 +75,12 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	}]);
 
 	module.controller("HomeController", ["$scope", "ProductTypeService", function($scope, ProductTypeService) {
-		$scope.productTypes = [
-			{name: "Pizza"},
-			{name: "Comida Japonesa"},
-			{name: "Pastel"},
-			{name: "Xis"},
-			{name: "Comida Chinesa"},
-			{name: "Comida Vegana"},
-			{name: "Comida espacial"},
-			{name: "Frutos do mar"}
-		];
+		$scope.productTypes = [];
 
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;
+			$scope.$digest();
 		});
-
-		$scope.$digest();
 	}]);
 
 	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
@@ -146,14 +136,19 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("SearchDeliveryController", ["$scope", "ProductTypeService", function($scope, ProductTypeService) {
+	module.controller("SearchDeliveryController", ["$scope", "$location", "ProductTypeService", function($scope, $location, ProductTypeService) {
 		$scope.productTypes = [];
+		$scope.selectedProductType = false;
+
+		$scope.selectProductType = function(productType) {
+			$scope.selectedProductType = productType ? productType : false;
+			$location.search("productType", productType ? productType.name : null);
+		};
 
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;
+			$scope.$digest();
 		});
-
-		$scope.$digest();
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {
