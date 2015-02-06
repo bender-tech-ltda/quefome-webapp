@@ -74,5 +74,22 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.service("ProductTypeService", ["$http", "$q", function($http, $q) {
+		this.list = function() {
+			return $q(function() {
+				return [
+					{name: "Pizza"},
+					{name: "Comida Japonesa"},
+					{name: "Pastel"},
+					{name: "Xis"},
+					{name: "Comida Chinesa"},
+					{name: "Comida Vegana"},
+					{name: "Comida espacial"},
+					{name: "Frutos do mar"}
+				];
+			});
+		};
+	}]);
+
 	return module;
 });
