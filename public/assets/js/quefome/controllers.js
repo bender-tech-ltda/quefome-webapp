@@ -141,6 +141,14 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
+	module.controller("SearchDeliveryController", ["$scope", "ProductTypeService", function($scope, ProductTypeService) {
+		$scope.productTypes = [];
+
+		ProductTypeService.list().then(function(productTypes) {
+			$scope.productTypes = productTypes;
+		});
+	}]);
+
 	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);
