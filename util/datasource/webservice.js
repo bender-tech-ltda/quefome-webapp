@@ -41,50 +41,70 @@ var WebService = function(config) {
 		if (data) {
 			if (methodHasBody(options.method)) {
 				options.body = data;
-				options.json = typeof(data) === "object";
 			} else {
 				options.qs = data;
 			}
 		}
 
+		if (typeof(options.body) === "object") {
+			options.json = options.body;
+			delete(options.body)
+		} else {
+			options.body = data;
+		}
+
 		var deferred = Q.defer();
 
-		var httpRequest = request(options, function(error, response, body) {
-			if (error || !response || response.statusCode != 200) {
-				if (!response) {
-					response = {
-						url: options.url,
-						method: options.method,
-						status: 404,
-						body: body || ""
-					};
+		try {
+			var httpRequest = request(options, function(error, response, body) {
+				if (error || !response || response.statusCode != 200) {
+					if (!response) {
+						response = {
+							url: options.url,
+							method: options.method,
+							status: 404,
+							body: body || ""
+						};
+					}
+
+					if (!response.status && response.statusCode) {
+						response.status = response.statusCode;
+					}
+
+					console.error(response);
+
+					if (error) {
+						console.error(error);
+					}
+
+					deferred.reject(response, httpRequest);
+					return;
 				}
 
-				if (!response.status && response.statusCode) {
-					response.status = response.statusCode;
+				//contorno para caso o JSON venha como uma string
+				if (response.body && typeof(response.body) === "string") {
+					try {
+						response.body = JSON.parse(response.body);
+					} catch(ex) {}
 				}
 
-				console.error(response);
+				deferred.resolve(response, httpRequest);
+			});
 
-				if (error) {
-					console.error(error);
-				}
+			deferred.promise.request = httpRequest;
+		} catch (error) {
+			console.log(error);
 
-				deferred.reject(response, httpRequest);
-				return;
-			}
-
-			//contorno para caso o JSON venha como uma string
-			if (response.body && typeof(response.body) === "string") {
-				try {
-					response.body = JSON.parse(response.body);
-				} catch(ex) {}
-			}
-
-			deferred.resolve(response, httpRequest);
-		});
-
-		deferred.promise.request = httpRequest;
+			setTimeout(function() {
+				deferred.reject({
+					url: options.url,
+					method: options.method,
+					status: 500,
+					body: error
+				});
+			}, 1);
+		}
+		
 		return deferred.promise;
 	};
 

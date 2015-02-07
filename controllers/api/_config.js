@@ -1,5 +1,5 @@
 var config = $require("config");
-var datasource = $require("datasource");
+var webservice = $require("webservice");
 
 module.exports = {
 	beforeLoad: function(router) {
@@ -34,12 +34,12 @@ module.exports = {
 				console.log(req.body);
 			}
 
-			datasource.request(options).then(function(response) {
+			webservice.request(options).then(function(response) {
 				if (response.headers && response.headers["content-type"]) {
 					res.type(response.headers["content-type"]);
 				}
 
-				res.status(response.status).send(response.body);
+				res.status(response.statusCode).send(response.body);
 			}, function(response) {
 				response = response ? response : {};
 				res.status(response.status ? response.status : 500).send(response.body ? response.body : "");

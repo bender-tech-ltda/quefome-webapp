@@ -76,6 +76,16 @@ define(["angular"], function(angular) {
 
 	module.service("ProductTypeService", ["$http", "$q", function($http, $q) {
 		this.list = function() {
+			return $http.get("/api/product-types/").then(function(response) {
+				return response.data;
+			}, function(response) {
+				if (response.status == 900 && typeof(response.data) === "object") {
+					return $q.reject(response.data.message);
+				} else {
+					return $q.reject(false);
+				}
+			});
+			/*
 			var deferred = $q.defer();
 
 			setTimeout(function() {
@@ -92,6 +102,7 @@ define(["angular"], function(angular) {
 			}, 1);
 
 			return deferred.promise;
+			*/
 		};
 	}]);
 
