@@ -30,8 +30,6 @@ define(["angular", "bootstrap"], function(angular) {
 				if (element.is("a")) {
 					element.attr("href", "#" + scope.href);
 				} else {
-					
-
 					element.click(function() {
 						scope.$apply(function() {
 							var location = $location.path(scope.href);

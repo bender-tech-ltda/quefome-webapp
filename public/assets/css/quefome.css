@@ -87,27 +87,22 @@ body {
 	width: 100%;
 }
 
-.delivery-search-panel .food-type-search .food-type-list li {
+.delivery-search-panel .food-type-search .food-type-list li a {
 	float: left;
 	width: 25%;
 	height: 95px;
 	padding: 10px 1px;
 	font-size: 12px;
 	line-height: 1.4;
+	text-decoration: none;
 	text-align: center;
+	color: #333;
 	background-color: #fff;
 	border: 2px solid #f5f5f5;
 	border-radius: 12px;
-
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
-.delivery-search-panel .food-type-search .food-type-list li:hover {
+.delivery-search-panel .food-type-search .food-type-list li a:hover {
 	cursor: pointer;
 	color: #fff;
 	background-color: #f46c21;
