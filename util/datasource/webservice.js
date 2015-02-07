@@ -49,8 +49,6 @@ var WebService = function(config) {
 		if (typeof(options.body) === "object") {
 			options.json = options.body;
 			delete(options.body)
-		} else {
-			options.body = data;
 		}
 
 		var deferred = Q.defer();
@@ -65,10 +63,6 @@ var WebService = function(config) {
 							status: 404,
 							body: body || ""
 						};
-					}
-
-					if (!response.status && response.statusCode) {
-						response.status = response.statusCode;
 					}
 
 					console.error(response);
@@ -94,15 +88,7 @@ var WebService = function(config) {
 			deferred.promise.request = httpRequest;
 		} catch (error) {
 			console.log(error);
-
-			setTimeout(function() {
-				deferred.reject({
-					url: options.url,
-					method: options.method,
-					status: 500,
-					body: error
-				});
-			}, 1);
+			throw error;
 		}
 		
 		return deferred.promise;

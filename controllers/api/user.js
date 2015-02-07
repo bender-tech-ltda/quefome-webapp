@@ -13,7 +13,7 @@ module.exports = function(router) {
 			
 			res.json(user);
 		}, function(response) {
-			res.status(response.status).send(response.body);
+			res.status(response.statusCode).send(response.body);
 		});
 	});
 
@@ -33,7 +33,7 @@ module.exports = function(router) {
 			res.json(user);
 		}, function(response) {
 			console.log(response);
-			res.status(response.status).send(response.body);
+			res.status(response.statusCode).send(response.body);
 		});
 	});
 
