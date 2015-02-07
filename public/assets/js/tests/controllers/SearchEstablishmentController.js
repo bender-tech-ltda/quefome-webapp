@@ -2,7 +2,7 @@
 
 define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
-	describe("SearchDeliveryController", function() {
+	describe("SearchEstablishmentController", function() {
 		var scope, controller, MockedProductTypeService, Mocked$location;
 
 		beforeEach(module("qfControllers"));
@@ -54,7 +54,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		});
 
 		beforeEach(function() {
-			return injectController("SearchDeliveryController", "views/partials/deliveries/search.html", {ProductTypeService: MockedProductTypeService, $location: Mocked$location}, function($scope) {
+			return injectController("SearchDeliveryController", "views/partials/establishments/search.html", {ProductTypeService: MockedProductTypeService, $location: Mocked$location}, function($scope) {
 				scope = $scope;
 			});
 		});

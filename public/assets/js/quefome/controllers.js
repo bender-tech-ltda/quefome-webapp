@@ -136,7 +136,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("SearchDeliveryController", ["$scope", "$location", "ProductTypeService", function($scope, $location, ProductTypeService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$location", "ProductTypeService", function($scope, $location, ProductTypeService) {
 		$scope.productTypes = [];
 		$scope.selectedProductType = false;
 

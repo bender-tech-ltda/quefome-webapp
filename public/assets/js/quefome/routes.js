@@ -8,9 +8,9 @@ define([], function() {
 			templateUrl: "/partials/home/index.html"
 		},
 		{
-			path: "/deliveries/search/",
-			controller: "SearchDeliveryController",
-			templateUrl: "/partials/deliveries/search.html",
+			path: "/establishments/search/",
+			controller: "SearchEstablishmentController",
+			templateUrl: "/partials/establishments/search.html",
 			reloadOnSearch: false
 		}
 	];
