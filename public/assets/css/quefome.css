@@ -248,6 +248,12 @@ body {
 	color: #4C4E4E;
 }
 
+.delivery-search-page .search-result .no-establishment-found {
+	width: 100%;
+	margin-top: 40px;
+	text-align: center;
+}
+
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
 	border-radius: 6px;
 }
