@@ -10,7 +10,7 @@
 			<h5 class="title">Escolha o tipo de comida</h5>
 
 			<ul class="food-type-list">
-				<li class="helper-no-select" ng-repeat="productType in productTypes" ng-class="{active: productType == selectedProductType}" ng-click="selectProductType(productType)">
+				<li class="helper-no-select" ng-repeat="productType in productTypes" ng-class="{active: isProductTypeSelected(productType)}" ng-click="selectProductType(productType)">
 					<span class="glyphicon glyphicon-asterisk"></span>
 				</li>
 			</ul>
