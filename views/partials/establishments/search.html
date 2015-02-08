@@ -23,6 +23,11 @@
 				8 estabelecimentos encontrados em <b>Porto Alegre</b>
 			</div>
 			<div class="panel-body">
+				<ul class="establishment-list">
+					<li class="establishment" ng-repeat="establishment in establishments">
+						<span>{{establishment.name}}</span>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

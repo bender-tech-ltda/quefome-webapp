@@ -157,7 +157,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				scope.searchEstablishments();
 			}).not.toThrow();
 
-			expect(MockedEstablishmentService.query).toEqual(productType);
+			expect(MockedEstablishmentService.query.productType).toEqual(productType.name);
 		});
 	});
 });

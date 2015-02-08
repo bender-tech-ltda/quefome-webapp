@@ -140,22 +140,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.productTypes = [];
 		$scope.establishments = [];
 
-		var searchFilter = $location.search();
+		var searchFilter = $location.search() ? $location.search() : {};
 		var selectedProductType = searchFilter.productType ? {name: searchFilter.productType} : false;
 
 		$scope.selectProductType = function(productType) {
-			selectedProductType = productType ? productType : false;
-			$location.search("productType", productType ? productType.name : null);
+			searchFilter.productType = productType ? productType.name : false;
+			$location.search(searchFilter);
 
 			$scope.searchEstablishments();
 		};
 
 		$scope.isProductTypeSelected = function(productType) {
-			return selectedProductType && selectedProductType.name == productType.name;
+			return searchFilter.productType && searchFilter.productType == productType.name;
 		};
 
 		$scope.searchEstablishments = function() {
-			EstablishmentService.list(selectedProductType).then(function(establishments) {
+			EstablishmentService.list(searchFilter).then(function(establishments) {
 				$scope.establishments = establishments;
 				$scope.$digest();
 			});
