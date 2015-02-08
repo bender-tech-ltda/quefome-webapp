@@ -136,19 +136,32 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("SearchEstablishmentController", ["$scope", "$location", "ProductTypeService", function($scope, $location, ProductTypeService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$location", "ProductTypeService", "EstablishmentService", function($scope, $location, ProductTypeService, EstablishmentService) {
 		$scope.productTypes = [];
-		$scope.selectedProductType = false;
+		$scope.establishments = [];
+
+		$scope.selectedProductType = $location.search("productType") ? $location.search("productType") : false;
 
 		$scope.selectProductType = function(productType) {
 			$scope.selectedProductType = productType ? productType : false;
 			$location.search("productType", productType ? productType.name : null);
+
+			$scope.searchEstablishments();
+		};
+
+		$scope.searchEstablishments = function() {
+			EstablishmentService.list($scope.selectedProductType).then(function(establishments) {
+				$scope.establishments = establishments;
+				$scope.$digest();
+			});
 		};
 
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;
 			$scope.$digest();
 		});
+
+		$scope.searchEstablishments();
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {

@@ -3,6 +3,16 @@ define(["angular"], function(angular) {
 	
 	var module = angular.module("qfServices", []);
 
+	var treatPromiseErrors = function($q) {
+		return function(response) {
+			if (response.status == 900 && typeof(response.data) === "object") {
+				return $q.reject(response.data.message);
+			} else {
+				return $q.reject(false);
+			}
+		};
+	};
+
 	module.service("AuthService", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 
@@ -27,13 +37,7 @@ define(["angular"], function(angular) {
 			return $http.get("/api/users/auth/login/" + email + "/", {params: params}).then(function(response) {
 				loggedUser = response.data;
 				return response.data
-			}, function(response) {
-				if (response.status == 900 && typeof(response.data) === "object") {
-					return $q.reject(response.data.message);
-				} else {
-					return $q.reject(false);
-				}
-			});
+			}, treatPromiseErrors($q));
 		};
 
 		this.logout = function() {
@@ -64,13 +68,7 @@ define(["angular"], function(angular) {
 
 				AuthService.__setLoggedUser(user);
 				return user;
-			}, function(response) {
-				if (response.status == 900 && typeof(response.data) === "object") {
-					return $q.reject(response.data.message);
-				} else {
-					return $q.reject(false);
-				}
-			});
+			}, treatPromiseErrors($q));
 		};
 	}]);
 
@@ -78,31 +76,15 @@ define(["angular"], function(angular) {
 		this.list = function() {
 			return $http.get("/api/product-types/").then(function(response) {
 				return response.data;
-			}, function(response) {
-				if (response.status == 900 && typeof(response.data) === "object") {
-					return $q.reject(response.data.message);
-				} else {
-					return $q.reject(false);
-				}
-			});
-			/*
-			var deferred = $q.defer();
+			}, treatPromiseErrors($q));
+		};
+	}]);
 
-			setTimeout(function() {
-				deferred.resolve([
-					{name: "Pizza"},
-					{name: "Comida Japonesa"},
-					{name: "Pastel"},
-					{name: "Xis"},
-					{name: "Comida Chinesa"},
-					{name: "Comida Vegana"},
-					{name: "Comida espacial"},
-					{name: "Frutos do mar"}
-				]);
-			}, 1);
-
-			return deferred.promise;
-			*/
+	module.service("EstablishmentService", ["$http", "$q", function($http, $q) {
+		this.list = function(query) {
+			return $http.get("/api/establishments/", {params: query}).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
 		};
 	}]);
 
