@@ -20,7 +20,9 @@
 	<div class="search-result">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				{{establishments.length}} estabelecimentos encontrados
+				<span ng-show="establishments.length == 0">Nenhum estabelecimento encontrado</span>
+				<span ng-show="establishments.length == 1">1 estabelecimento encontrado</span>
+				<span ng-show="establishments.length > 1">{{establishments.length}} estabelecimento encontrado</span>
 			</div>
 			<div class="panel-body">
 				<ul class="establishment-list" ng-show="establishments && establishments.length > 0">
