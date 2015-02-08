@@ -195,6 +195,10 @@ body {
 	margin: 10px 5px;
 }
 
+.delivery-search-page .search-result .panel {
+	margin-bottom: 10px;
+}
+
 .delivery-search-page .search-result .panel-body {
 	min-height: 100px;
 	padding: 0px;
