@@ -12,7 +12,7 @@ module.exports = {
 	},
 
 	webservice: {
-		baseUrl: "http://localhost:8080/QueFomeCoreMVP/"
+		baseUrl: (process.env.WS_URL || "http://localhost:8080/QueFomeCoreMVP/")
 	},
 
 	mongo: {
