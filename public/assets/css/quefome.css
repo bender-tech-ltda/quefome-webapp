@@ -260,17 +260,9 @@ body {
 
 .footer {
 	width: 100%;
-	height: 70px;
+	height: 204px;
 	background-color: #ef6815;
 	display: table-row;
-}
-
-.footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
-	color: black;
-	background-color: #fac090;
-	border-top: 5px solid #944200;
-	height: 51px;
-	margin-top: 10px;
 }
 
 .footer .new-delivery, .footer .indicate-delivery {
@@ -278,14 +270,11 @@ body {
 }
 
 .footer .social-networks {
-	margin-left: 10%;
-	margin-right: 10%;
-}
-
-.footer .new-delivery .title, .footer .indicate-delivery .title, .footer .social-networks .title {
-	font-size: 13px;
-	text-align: center;
-	margin: 5px;
+	background: url("/assets/img/footer_sigam_me_os_bons_217x212.png") no-repeat;
+	background-position: top center;
+	background-size: 188px;
+	height: 188px;
+	margin-top: 10px;
 }
 
 .helper-no-select {
@@ -427,35 +416,52 @@ a:hover, a:focus {
 	}
 
 	.footer {
-		height: 140px;
+		height: 229px;
 	}
 
 	.footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
+		background: url("/assets/img/footer_651x212.png") no-repeat;
 		float: left;
 		display: inline-block;
-		width: 20%;
-		height: 114px;
+		margin-top: 10px;
 	}
 
 	.footer .new-delivery {
-		margin-left: 10%;
+		width: 217px;
+		height: 212px;
+		margin-left: 5%;
 		margin-right: 1%;
 	}
 
 	.footer .indicate-delivery {
+		width: 217px;
+		height: 212px;
 		margin-left: 1%;
-		margin-right: 17%;
+		background-position: -217px;
 	}
 
 	.footer .social-networks {
+		float: right;
+		width: 217px;
+		height: 212px;
+		margin-top: 10px;
 		margin-left: 1%;
-		margin-right: 10%;
+		margin-right: 5%;
+		background-position: -434px;
 	}
 }
 
 @media (min-width: 992px) {
 	.delivery-search-panel.banner-burguer {
 		background-image: url("/assets/img/banner_burguer_1199x300.jpg");
+	}
+
+	.footer .new-delivery {
+		margin-left: 10%;
+	}
+
+	.footer .social-networks {
+		margin-right: 10%;
 	}
 }
 
