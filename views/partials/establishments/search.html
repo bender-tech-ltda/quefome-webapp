@@ -11,7 +11,7 @@
 
 			<ul class="food-type-list">
 				<li class="helper-no-select" ng-repeat="productType in productTypes" ng-class="{active: isProductTypeSelected(productType)}" ng-click="selectProductType(productType)">
-					<span class="glyphicon glyphicon-asterisk"></span>
+					<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 				</li>
 			</ul>
 		</div>
