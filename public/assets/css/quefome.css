@@ -61,8 +61,8 @@ body {
 	box-shadow: inset 0px 11px 8px -13px black, inset 0px -11px 8px -13px black;
 }
 
-.delivery-search-panel.banner-burguer {
-	background-image: url("/assets/img/banner_burguer_767x300.jpg");
+.delivery-search-panel.banner-burger {
+	background-image: url("/assets/img/banner_burger_767x300.jpg");
 }
 
 .delivery-search-panel .food-type-search {
@@ -260,7 +260,7 @@ body {
 
 .footer {
 	width: 100%;
-	height: 204px;
+	height: 164px;
 	background-color: #ef6815;
 	display: table-row;
 }
@@ -272,8 +272,8 @@ body {
 .footer .social-networks {
 	background: url("/assets/img/footer_sigam_me_os_bons_217x212.png") no-repeat;
 	background-position: top center;
-	background-size: 188px;
-	height: 188px;
+	background-size: 150px;
+	height: 147px;
 	margin-top: 10px;
 }
 
@@ -392,8 +392,8 @@ a:hover, a:focus {
 		padding-top: 17%;
 	}
 
-	.delivery-search-panel.banner-burguer {
-		background-image: url("/assets/img/banner_burguer_991x300.jpg");
+	.delivery-search-panel.banner-burger {
+		background-image: url("/assets/img/banner_burger_991x300.jpg");
 	}
 
 	.delivery-search-panel .food-type-search {
@@ -416,44 +416,45 @@ a:hover, a:focus {
 	}
 
 	.footer {
-		height: 229px;
+		height: 164px;
 	}
 
-	.footer .new-delivery, .footer .indicate-delivery, .footer .social-networks {
-		background: url("/assets/img/footer_651x212.png") no-repeat;
+	.footer .new-delivery, .footer .indicate-delivery {
+		background: url("/assets/img/footer_436x212.png") no-repeat;
+		background-size: 300px;
 		float: left;
 		display: inline-block;
 		margin-top: 10px;
 	}
 
 	.footer .new-delivery {
-		width: 217px;
-		height: 212px;
+		width: 150px;
+		height: 146px;
 		margin-left: 5%;
 		margin-right: 1%;
 	}
 
 	.footer .indicate-delivery {
-		width: 217px;
-		height: 212px;
+		width: 150px;
+		height: 146px;
 		margin-left: 1%;
-		background-position: -217px;
+		background-position: -149px;
 	}
 
 	.footer .social-networks {
 		float: right;
-		width: 217px;
-		height: 212px;
-		margin-top: 10px;
+		width: 150px;
+		height: 147px;
+		margin-top: 8px;
 		margin-left: 1%;
 		margin-right: 5%;
-		background-position: -434px;
+		background-size: 150px;
 	}
 }
 
 @media (min-width: 992px) {
-	.delivery-search-panel.banner-burguer {
-		background-image: url("/assets/img/banner_burguer_1199x300.jpg");
+	.delivery-search-panel.banner-burger {
+		background-image: url("/assets/img/banner_burger_1199x300.jpg");
 	}
 
 	.footer .new-delivery {
@@ -466,8 +467,8 @@ a:hover, a:focus {
 }
 
 @media (min-width: 1200px) {
-	.delivery-search-panel.banner-burguer {
-		background-image: url("/assets/img/banner_burguer_1920x300.jpg");
+	.delivery-search-panel.banner-burger {
+		background-image: url("/assets/img/banner_burger_1920x300.jpg");
 	}
 }
 
