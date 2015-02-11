@@ -174,7 +174,7 @@ body {
 
 .delivery-search-page .search-form .food-type-list li {
 	float: left;
-	width: 18%;
+	width: 30%;
 	height: 38px;
 	padding: 2px 1px;
 	font-size: 12px;
@@ -471,7 +471,7 @@ a:hover, a:focus {
 	}
 
 	.delivery-search-page .search-form .food-type-choice {
-		width: 31%;
+		width: 20%;
 		margin: auto;
 	}
 
