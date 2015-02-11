@@ -108,10 +108,10 @@ body {
 	background-color: #f46c21;
 }
 
-.delivery-search-panel .glyphicon {
+.delivery-search-panel .qf-icon {
 	margin-top: 5px;
 	margin-bottom: 10px;
-	font-size: 24px;
+	font-size: 42px;
 }
 
 .delivery-search-page .order-steps {
@@ -326,6 +326,67 @@ a {
 
 a:hover, a:focus {
 	color: #a01608;
+}
+
+@font-face {
+	font-family: 'quefome';
+	src:url('/assets/fonts/quefome.eot?-q38e6l');
+	src:url('/assets/fonts/quefome.eot?#iefix-q38e6l') format('embedded-opentype'),
+		url('/assets/fonts/quefome.woff?-q38e6l') format('woff'),
+		url('/assets/fonts/quefome.ttf?-q38e6l') format('truetype'),
+		url('/assets/fonts/quefome.svg?-q38e6l#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.qf-icon {
+	font-family: "quefome";
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.qf-icon.icon-meat:before {
+	content: "\e600";
+}
+
+.qf-icon.icon-skewer:before {
+	content: "\e601";
+}
+
+.qf-icon.icon-burger:before {
+	content: "\e602";
+}
+
+.qf-icon.icon-yakisoba:before {
+	content: "\e603";
+}
+
+.qf-icon.icon-vegetarian:before {
+	content: "\e604";
+}
+
+.qf-icon.icon-fish:before {
+	content: "\e605";
+}
+
+.qf-icon.icon-pizza:before {
+	content: "\e606";
+}
+
+.qf-icon.icon-question:before {
+	content: "\e607";
+}
+
+.qf-icon.icon-sushi:before {
+	content: "\e608";
 }
 
 @media (min-width: 768px) {
