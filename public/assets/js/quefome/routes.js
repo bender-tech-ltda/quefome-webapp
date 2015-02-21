@@ -12,6 +12,11 @@ define([], function() {
 			controller: "SearchEstablishmentController",
 			templateUrl: "/partials/establishments/search.html",
 			reloadOnSearch: false
+		},
+		{
+			path: "/order/finish/",
+			controller: "SelectPaymentMethodController",
+			templateUrl: "/partials/establishments/select-payment-method.html"
 		}
 	];
 });

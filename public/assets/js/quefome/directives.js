@@ -116,6 +116,35 @@ define(["angular", "bootstrap"], function(angular) {
 
 	}]);
 
+	module.directive("qfModal", [function() {
+		return {
+			restrict: "E",
+			template: "<div class='modal fade' ng-transclude></div>",
+			replace: true,
+			transclude: true,
+			scope: {
+				openOnLoad: "=qfModalOpenOnLoad"
+			},
+			link: function(scope, element, attrs) {
+				if (scope.openOnLoad) {
+					element.ready(function() {
+						element.modal("show");
+					});
+				}
+
+				scope.$parent.$dialog = {
+					open: function(callback) {
+						return element.modal("show");
+					},
+					close: function(callback) {
+						return element.modal("hide");
+					}
+				};
+			}
+
+		};
+	}]);
+
 	module.directive("qfPopover", ["TemplateResolver", function(TemplateResolver) {
 		return {
 			restrict: "A",

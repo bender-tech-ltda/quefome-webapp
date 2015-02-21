@@ -538,7 +538,7 @@ a:hover, a:focus {
 }
 
 @media (max-width: 767px) {
-	.form-control, .checkbox {
+	.form-control, .checkbox, .radio {
 		border-radius: 6px;
 		font-size: 18px;
 		height: 46px;

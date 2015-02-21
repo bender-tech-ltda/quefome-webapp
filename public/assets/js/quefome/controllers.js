@@ -169,6 +169,52 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.searchEstablishments();
 	}]);
 
+	module.controller("SelectPaymentMethodController", ["$scope", function($scope) {
+		$scope.paymentMethods = [
+			{
+				name: "Dinheiro",
+				category: {
+					name: "Dinheiro"
+				}
+			},
+			{
+				name: "Mastercard",
+				category: {
+					name: "Cartão"
+				}
+			},
+			{
+				name: "Visa",
+				category: {
+					name: "Cartão"
+				}
+			}
+		];
+
+		$scope.paymentCategoriesGroupper = {};
+		$scope.paymentCategories = [];
+
+		for (var i in $scope.paymentMethods) {
+			var method = $scope.paymentMethods[i];
+
+			if (!$scope.paymentCategoriesGroupper[method.category.name]) {
+				$scope.paymentCategoriesGroupper[method.category.name] = angular.copy(method.category);
+				$scope.paymentCategoriesGroupper[method.category.name].paymentMethods = [];
+
+				$scope.paymentCategories.push($scope.paymentCategoriesGroupper[method.category.name]);
+			}
+
+			$scope.paymentCategoriesGroupper[method.category.name].paymentMethods.push(method);
+		}
+
+		$scope.$digest();
+
+		$scope.order = {
+			paymentMethod: null
+		};
+
+	}]);
+
 	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);

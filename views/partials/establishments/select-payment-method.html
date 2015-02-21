@@ -1,0 +1,29 @@
+<qf-modal qf-modal-open-on-load="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Selecione a forma de pagamento</h4>
+			</div>
+			<div class="modal-body">
+				<form name="form">
+					<div class="row">
+						<fieldset class="col-sm-12 col-md-6" ng-repeat="category in paymentCategories">
+							<legend style="margin-bottom: 0px;">{{category.name}}</legend>
+
+							<div class="col-xs-6" ng-repeat="method in category.paymentMethods">
+								<div class="radio">
+									<label>
+										<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
+									</label>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default disabled" data-dismiss="modal">Finalizar pedido!</button>
+			</div>
+		</div>
+	</div>
+</qf-modal>
