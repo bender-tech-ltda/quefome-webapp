@@ -8,11 +8,11 @@
 				<form name="form">
 					<div class="row">
 						<fieldset class="col-sm-12 col-md-6" ng-repeat="category in paymentCategories">
-							<legend style="margin-bottom: 0px;">{{category.name}}</legend>
+							<legend style="margin-bottom: 0px;">{{category.name}} <span class="pull-right qf-icon icon-{{category.key}}"></span></legend>
 
-							<div class="col-xs-6" ng-repeat="method in category.paymentMethods">
+							<div class="col-xs-12" ng-repeat="method in category.paymentMethods">
 								<div class="radio">
-									<label>
+									<label title="{{method.name}} - {{category.name}}">
 										<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
 									</label>
 								</div>

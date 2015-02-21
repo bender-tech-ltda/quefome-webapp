@@ -91,7 +91,7 @@ body {
 	float: left;
 	width: 33%;
 	height: 95px;
-	padding: 10px 1px;
+	padding: 12px 1px;
 	font-size: 12px;
 	line-height: 1.4;
 	text-decoration: none;
@@ -111,7 +111,7 @@ body {
 .delivery-search-panel .qf-icon {
 	margin-top: 5px;
 	margin-bottom: 10px;
-	font-size: 42px;
+	font-size: 36px;
 }
 
 .delivery-search-page .order-steps {
@@ -176,7 +176,7 @@ body {
 	float: left;
 	width: 30%;
 	height: 38px;
-	padding: 2px 1px;
+	padding: 4px 1px;
 	font-size: 12px;
 	line-height: 1.4;
 	text-align: center;
@@ -192,7 +192,7 @@ body {
 }
 
 .delivery-search-page .search-form .food-type-list .qf-icon {
-	font-size: 31px;
+	font-size: 27px;
 }
 
 .delivery-search-page .search-result {
@@ -391,6 +391,22 @@ a:hover, a:focus {
 
 .qf-icon.icon-sushi:before {
 	content: "\e608";
+}
+
+.qf-icon.icon-money:before {
+	content: "\e609";
+}
+
+.qf-icon.icon-card:before {
+	content: "\e93f";
+}
+
+.qf-icon.icon-card-ticket:before {
+	content: "\e93f";
+}
+
+.qf-icon.icon-paper-ticket:before {
+	content: "\e904";
 }
 
 @media (min-width: 768px) {
