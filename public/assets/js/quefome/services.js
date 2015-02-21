@@ -88,5 +88,13 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.service("PaymentMethodService", ["$http", "$q", function($http, $q) {
+		this.list = function() {
+			return $http.get("/api/payment-methods/").then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
+	}]);
+
 	return module;
 });
