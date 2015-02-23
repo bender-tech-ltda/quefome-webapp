@@ -78,5 +78,22 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				expect(scope.paymentCategories.length).toEqual(MockedPaymentMethodService.categoriesSize);
 			});
 		});
+
+		describe("should check if a payment method is selected", function() {
+			it("returning false when the selected is null", function() {
+				scope.order.paymentMethod = null;
+				expect(scope.isPaymentMethodSelected({id: 1, name: "Visa"})).toBe(false);
+			});
+
+			it("returning false when the selected is not equal to the informed method", function() {
+				scope.order.paymentMethod = {id: 1, name: "Visa"};
+				expect(scope.isPaymentMethodSelected({id: 2, name: "Mastercard"})).toBe(false);
+			});
+
+			it("returning true when the selected is equal to the informed method", function() {
+				scope.order.paymentMethod = {id: 1, name: "Visa"};
+				expect(scope.isPaymentMethodSelected({id: 1, name: "Visa"})).toBe(true);
+			});
+		});
 	});
 });

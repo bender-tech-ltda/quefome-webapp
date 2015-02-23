@@ -175,6 +175,14 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			paymentMethod: null
 		};
 
+		$scope.isPaymentMethodSelected = function(paymentMethod) {
+			if (!$scope.order.paymentMethod || !paymentMethod) {
+				return false;
+			}
+
+			return $scope.order.paymentMethod.id == paymentMethod.id;
+		};
+
 		PaymentMethodService.list().then(function(paymentMethods) {
 			var paymentCategoriesGroupper = {};
 

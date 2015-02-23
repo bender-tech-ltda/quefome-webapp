@@ -10,11 +10,26 @@
 						<fieldset class="col-sm-12 col-md-6" ng-repeat="category in paymentCategories">
 							<legend style="margin-bottom: 0px;">{{category.name}} <span class="pull-right qf-icon icon-{{category.key}}"></span></legend>
 
-							<div class="col-xs-12" ng-repeat="method in category.paymentMethods">
-								<div class="radio">
-									<label title="{{method.name}} - {{category.name}}">
-										<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
-									</label>
+							<div ng-repeat="method in category.paymentMethods">
+								<div class="col-xs-12">
+									<div class="radio">
+										<label title="{{method.name}} - {{category.name}}">
+											<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
+										</label>
+									</div>
+								</div>
+
+								<div ng-show="category.hasChange && isPaymentMethodSelected(method)">
+									<div class="col-xs-12">
+										<label>Troco para?</label>
+
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1">R$</span>
+											<input type="number" class="form-control" name="change" placeholder="0.00" ng-model="order.change" min="0.00" step="10" pattern=""/>
+										</div>
+
+										<span class="help-block">Deixe em branco caso não precise de troco</span>
+									</div>
 								</div>
 							</div>
 						</fieldset>
