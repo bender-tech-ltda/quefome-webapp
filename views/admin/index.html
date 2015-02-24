@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>Quefo.me - Acesso Delivery</title>
+
+		<link rel="shortcut icon" href="/assets/img/quefome_icon_70x75.png">
+
+		<style type="text/css">
+			.ng-cloak {
+				display: none
+			}
+		</style>
+
+		<link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css"></link>
+		<link rel="stylesheet" href="/assets/css/quefome-admin.css"></link>
+	</head>
+
+	<body class="ng-cloak">
+		<nav class="navbar navbar-default navbar-quefome navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" data-target="#user-menu" data-toggle="collapse" type="button">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand navbar-quefome-brand" qf-href="/"></a>
+				</div>
+
+				<div id="user-menu" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right" ng-controller="UserMenuController">
+						<li ng-hide="isUserLogged()" class="login-quefome-icon">
+							<a href="javascript:void(0);" qf-click-dialog-url="{{loginView}}">Login | Cadastre-se</a>
+						</li>
+						<li ng-show="isUserLogged()" class="login-quefome-icon">
+							<a href="javascript:void(0);" ng-click="logout()">Sair</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="content" ng-view></div>
+
+		<footer class="footer">
+			<div class="new-delivery">
+			</div>
+			<div class="indicate-delivery">
+			</div>
+			<div class="social-networks">
+			</div>
+		</footer>
+
+		<script src="/components/requirejs/require.js" data-main="/assets/js/quefome/admin/main.js"></script>
+	</body>
+</html>
