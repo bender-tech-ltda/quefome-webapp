@@ -1,6 +1,6 @@
 var path = require("path");
 
-module.exports = function Index(router) {
+module.exports = function Partials(router) {
 	router.get("/partials/*", function(req, res) {
 		if (!app.config.debug && !req.xhr) {
 			res.send(404);

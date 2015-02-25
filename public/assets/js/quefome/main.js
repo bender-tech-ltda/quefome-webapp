@@ -23,7 +23,7 @@ require.config({
 //https://docs.angularjs.org/guide/bootstrap
 window.name = "NG_DEFER_BOOTSTRAP!";
 
-require(["angular", "quefome"], function(angular, quefomeApp) {
+require(["angular", "quefome/quefome"], function(angular, quefomeApp) {
 	angular.element().ready(function() {
 		angular.resumeBootstrap([quefomeApp.name]);	
 	});
