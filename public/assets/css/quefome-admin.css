@@ -31,7 +31,7 @@ body {
 	margin: 35px auto;
 	width: 80%;
 	min-height: 200px;
-	border-radius: 6px;
+	border-radius: 2px;
 	box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -39,6 +39,8 @@ body {
 	background-color: #f26c23;
 	color: #fff; 
 	border: 1px solid #f26c23;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
 }
 
 .login-page .login-panel input {
@@ -47,6 +49,7 @@ body {
 
 .form-control {
 	box-shadow: none;
+	border-radius: 2px;
 }
 
 .form-control:focus {
@@ -54,9 +57,13 @@ body {
 	box-shadow: 0px 0px 8px rgba(242, 108, 35, 0.6);
 }
 
+.btn {
+	border-radius: 2px;
+}
+
 .btn.btn-primary {
 	background-color: #eb3825;
-	border-color: #a93825;
+	border-color: #eb3825;
 }
 
 @media (min-width: 768px) {

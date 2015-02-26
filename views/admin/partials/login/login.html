@@ -1,0 +1,39 @@
+<div class="login-page" ng-controller="LoginController">
+	<div class="quefome-brand"></div>
+
+	<div class="login-panel">
+		<form name="loginForm" ng-submit="login()" novalidate>
+			<fieldset>
+				<legend>Acesso restrito</legend>
+
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-envelope"></span>
+						</span>
+						<input type="email" class="form-control" name="email" placeholder="Email" ng-model="email" required />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-lock"></span>
+						</span>
+						<input type="password" class="form-control" name="password" placeholder="Senha" ng-model="password" required />
+					</div>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="keepLoggedIn" ng-model="keepLoggedIn" /> Mantenha-me conectado
+					</label>
+				</div>
+
+				<hr/>
+
+				<button type="submit" class="btn btn-primary btn-block">Login</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
