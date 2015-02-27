@@ -5,7 +5,9 @@ module.exports = function(router) {
 		var user = req.body;
 
 		User.save(user).then(function(user) {
-			delete(user.password);
+			if (typeof(user.password) != "undefined") {
+				delete(user.password);
+			}
 
 			if (req.query && req.query.login) {
 				req.session.user = user;	
@@ -21,7 +23,9 @@ module.exports = function(router) {
 		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.body.keepLoggedIn : false;
 
 		User.login(req.params.email, req.query ? req.query.password : "").then(function(user) {
-			delete(user.password);
+			if (typeof(user.password) != "undefined") {
+				delete(user.password);
+			}
 
 			if (!keepLoggedIn) {
 				req.session.cookie.expires = false;
@@ -29,7 +33,6 @@ module.exports = function(router) {
 			}
 
 			req.session.user = user;
-
 			res.json(user);
 		}, function(response) {
 			console.log(response);

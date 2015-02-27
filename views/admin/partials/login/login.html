@@ -1,10 +1,14 @@
-<div class="login-page" ng-controller="LoginController">
+<div class="login-page" ng-controller="LoginController" ng-hide="isLogged()">
 	<div class="quefome-brand"></div>
 
 	<div class="login-panel">
 		<form name="loginForm" ng-submit="login()" novalidate>
 			<fieldset>
 				<legend>Acesso restrito</legend>
+
+				<div class="alert alert-danger" ng-show="errorMessage">
+					{{errorMessage}}
+				</div>
 
 				<div class="form-group">
 					<div class="input-group">

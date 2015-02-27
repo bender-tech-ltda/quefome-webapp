@@ -65,5 +65,9 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
+	module.run([function() {
+		
+	}]);
+
 	return module;
 });
