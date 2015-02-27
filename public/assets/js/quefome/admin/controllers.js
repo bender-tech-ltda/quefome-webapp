@@ -89,6 +89,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			doItSafe.call(this, "__$apply", callback);
 		};
 
+		$rootScope.logout = function() {
+			return AuthService.logout().then(function() {
+				$rootScope.$apply();
+			});
+		};
+
 		$rootScope.isUserLogged = function() {
 			return AuthService.isLogged();
 		};
