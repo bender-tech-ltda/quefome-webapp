@@ -50,9 +50,13 @@ define(["angular"], function(angular) {
 			return $http.get("/api/establishment-users/auth/retrieve/").then(function(response) {
 				if (response.data) {
 					loggedUser = response.data;
+				} else {
+					loggedUser = null;
 				}
 
 				return response.data;
+			}, function(response) {
+				loggedUser = null;
 			});
 		};
 	}]);

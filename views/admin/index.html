@@ -21,7 +21,10 @@
 	<body class="ng-cloak">
 		<% include partials/login/login.html %>
 
-		<!--div class="content" ng-view></div-->
+		<div class="ng-cloak" ng-show="!isCheckingLoggedUser() && isUserLogged()">
+			<div class="content" ng-view></div>
+		</div>
+		
 
 		<script src="/components/requirejs/require.js" data-main="/assets/js/quefome/admin/main.js"></script>
 	</body>
