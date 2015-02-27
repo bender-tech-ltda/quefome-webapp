@@ -22,7 +22,35 @@
 		<% include partials/login/login.html %>
 
 		<div class="ng-cloak" ng-show="hasCheckedForLoggedUser() && isUserLogged()">
-			<div class="content" ng-view></div>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navbar-brand" href="#/">Quefo.me</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#/">Dashboard</a></li>
+							<li><a href="#/">Configurações</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<div class="row">
+				<div class="col-sm-3 col-md-2 sidebar">
+					<ul class="nav nav-sidebar">
+						<li class="active"><a href="#/">Pedidos</a></li>
+					</ul>
+				</div>
+
+				<div class="content col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" ng-view></div>
+			</div>
 		</div>
 		
 
