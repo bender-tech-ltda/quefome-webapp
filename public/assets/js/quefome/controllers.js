@@ -215,5 +215,54 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
+	module.run(["$rootScope", "AuthService", function($rootScope, AuthService) {
+		var doItSafe = function(what, callback) {
+			if (typeof(callback) !== "function") {
+				callback = function() {};
+			}
+
+			if (this.$$phase || this.$root.$$phase) {
+				callback.call(this);
+				return function() {};
+			} else {
+				return this[what](callback);
+			}
+		}
+
+		$rootScope.__$digest = $rootScope.$digest;
+		$rootScope.$digest = function(callback) {
+			return doItSafe.call(this, "__$digest", callback);
+		};
+
+		$rootScope.__$apply = $rootScope.$apply;
+		$rootScope.$apply = function(callback) {
+			doItSafe.call(this, "__$apply", callback);
+		};
+		
+		$rootScope.isUserLogged = function() {
+			return AuthService.isLogged();
+		};
+
+		$rootScope.getLoggedUser = function() {
+			return AuthService.getUser();
+		};
+
+		$rootScope.hasCheckedForLoggedUser = function() {
+			return AuthService.hasCheckedForLoggedUser();
+		};
+
+		$rootScope.isCheckingForLoggedUser = function() {
+			return AuthService.isCheckingForLoggedUser();
+		};
+
+		//a verificacao pelo usuario precisa ser chamada no modulo principal
+		//se nao, os testes comecam a falhar por causa da requisicao HTTP inesperada
+		$rootScope.checkForLoggedUser = function() {
+			return AuthService.checkForLoggedUser().then(function() {
+				$rootScope.$apply();
+			});
+		};
+	}]);
+
 	return module;
 });

@@ -46,7 +46,19 @@ define(["angular"], function(angular) {
 			});
 		};
 
+		var hasCheckedForLoggedUser = false;
+		this.hasCheckedForLoggedUser = function() {
+			return hasCheckedForLoggedUser;
+		};
+
+		var isCheckingForLoggedUser = false;
+		this.isCheckingForLoggedUser = function() {
+			return isCheckingForLoggedUser;
+		};
+
 		this.checkForLoggedUser = function() {
+			isCheckingForLoggedUser = true;
+
 			return $http.get("/api/establishment-users/auth/retrieve/").then(function(response) {
 				if (response.data) {
 					loggedUser = response.data;
@@ -54,9 +66,15 @@ define(["angular"], function(angular) {
 					loggedUser = null;
 				}
 
+				isCheckingForLoggedUser = false;
+				hasCheckedForLoggedUser = true;
+
 				return response.data;
 			}, function(response) {
 				loggedUser = null;
+
+				isCheckingForLoggedUser = false;
+				hasCheckedForLoggedUser = true;
 			});
 		};
 	}]);

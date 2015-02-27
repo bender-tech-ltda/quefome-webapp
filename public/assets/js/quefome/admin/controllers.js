@@ -97,15 +97,21 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			return AuthService.getUser();
 		};
 
-		var isCheckingLoggedUser = true;
-		$rootScope.isCheckingLoggedUser = function() {
-			return isCheckingLoggedUser;
+		$rootScope.hasCheckedForLoggedUser = function() {
+			return AuthService.hasCheckedForLoggedUser();
 		};
 
-		AuthService.checkForLoggedUser().then(function() {
-			isCheckingLoggedUser = false;
-			$rootScope.$apply();
-		});
+		$rootScope.isCheckingForLoggedUser = function() {
+			return AuthService.isCheckingForLoggedUser();
+		};
+
+		//a verificacao pelo usuario precisa ser chamada no modulo principal
+		//se nao, os testes comecam a falhar por causa da requisicao HTTP inesperada
+		$rootScope.checkForLoggedUser = function() {
+			return AuthService.checkForLoggedUser().then(function() {
+				$rootScope.$apply();
+			});
+		};
 	}]);
 
 	return module;

@@ -1,4 +1,4 @@
-<div class="ng-cloak login-page" ng-controller="LoginController" ng-hide="isCheckingLoggedUser() || isLogged()">
+<div class="ng-cloak login-page" ng-controller="LoginController" ng-hide="!hasCheckedForLoggedUser() || isLogged()">
 	<div class="quefome-brand"></div>
 
 	<div class="login-panel">

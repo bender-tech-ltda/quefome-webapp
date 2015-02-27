@@ -46,13 +46,35 @@ define(["angular"], function(angular) {
 			});
 		};
 
+		var hasCheckedForLoggedUser = false;
+		this.hasCheckedForLoggedUser = function() {
+			return hasCheckedForLoggedUser;
+		};
+
+		var isCheckingForLoggedUser = false;
+		this.isCheckingForLoggedUser = function() {
+			return isCheckingForLoggedUser;
+		};
+
 		this.checkForLoggedUser = function() {
+			isCheckingForLoggedUser = true;
+
 			return $http.get("/api/users/auth/retrieve/").then(function(response) {
 				if (response.data) {
 					loggedUser = response.data;
+				} else {
+					loggedUser = null;
 				}
 
+				isCheckingForLoggedUser = false;
+				hasCheckedForLoggedUser = true;
+
 				return response.data;
+			}, function() {
+				loggedUser = null;
+
+				isCheckingForLoggedUser = false;
+				hasCheckedForLoggedUser = true;
 			});
 		};
 	}]);

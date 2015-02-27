@@ -21,7 +21,7 @@
 	<body class="ng-cloak">
 		<% include partials/login/login.html %>
 
-		<div class="ng-cloak" ng-show="!isCheckingLoggedUser() && isUserLogged()">
+		<div class="ng-cloak" ng-show="hasCheckedForLoggedUser() && isUserLogged()">
 			<div class="content" ng-view></div>
 		</div>
 		

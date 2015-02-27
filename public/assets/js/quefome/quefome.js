@@ -1,9 +1,33 @@
-define(["angular", "quefome/config", "quefome/run", "quefome/services" ,"quefome/controllers", "angular/route"], function(angular, config, run) {
+define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route"], function(angular, routes) {
 	"use strict";
 	
 	var quefome = angular.module("quefome", ["ngRoute", "qfServices", "qfControllers"]);
-	quefome.config(config);
-	quefome.run(run);
+
+	quefome.config(["$routeProvider", function($routeProvider) {
+		var configureRoutes = function() {
+			for (var i in routes) {
+				var route = routes[i];
+
+				if (route.path) {
+					$routeProvider.when(route.path, route);
+				}
+			}
+
+			$routeProvider.otherwise({
+				controller: "NotFoundController",
+				templateUrl: "/partials/errors/404.html"
+			});
+		};
+
+		configureRoutes();
+
+	}]);
+
+	quefome.run(["$rootScope", function($rootScope) {
+		if ($rootScope.checkForLoggedUser) {
+			$rootScope.checkForLoggedUser();
+		}
+	}]);
 
 	return quefome;
 });

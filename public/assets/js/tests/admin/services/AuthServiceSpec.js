@@ -81,5 +81,35 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			$httpBackend.flush();
 		});
+
+				//I heard you like checks, so I put a check into your check...
+		describe("should check if was checked for logged user", function() {
+			it("and return false if it wasn't", function() {
+				expect(Auth.hasCheckedForLoggedUser()).toBe(false);	
+			});
+
+			it("and return true if it was", function() {
+				$httpBackend.expectGET("/api/establishment-users/auth/retrieve/").respond(200, {name: "Teste", email: "teste@teste.com"});
+				Auth.checkForLoggedUser().then(function() {
+					expect(Auth.hasCheckedForLoggedUser()).toBe(true);
+				});
+
+				$httpBackend.flush();
+			});
+		});
+
+		describe("should check if it is checking for logged user", function() {
+			it("and return false if it wasn't", function() {
+				expect(Auth.isCheckingForLoggedUser()).toBe(false);	
+			});
+
+			it("and return true if it was", function() {
+				$httpBackend.expectGET("/api/establishment-users/auth/retrieve/").respond(200, {name: "Teste", email: "teste@teste.com"});
+				Auth.checkForLoggedUser();
+				expect(Auth.isCheckingForLoggedUser()).toBe(true);
+
+				$httpBackend.flush();
+			});
+		});
 	});
 });

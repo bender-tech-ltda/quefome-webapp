@@ -1,9 +1,9 @@
 define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/admin/controllers","angular/route"], function(angular, routes) {
 	"use strict";
 	
-	var quefome = angular.module("quefomeAdmin", ["ngRoute", "qfAdminServices", "qfAdminControllers"]);
+	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "qfAdminServices", "qfAdminControllers"]);
 
-	quefome.config(["$routeProvider", function($routeProvider) {
+	quefomeAdmin.config(["$routeProvider", function($routeProvider) {
 		var configureRoutes = function() {
 			for (var i in routes) {
 				var route = routes[i];
@@ -23,5 +23,11 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 
 	}]);
 
-	return quefome;
+	quefomeAdmin.run(["$rootScope", function($rootScope) {
+		if ($rootScope.checkForLoggedUser) {
+			$rootScope.checkForLoggedUser();
+		}
+	}]);
+
+	return quefomeAdmin;
 });
