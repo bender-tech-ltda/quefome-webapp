@@ -46,6 +46,21 @@ body {
 	color: #ed3825;
 }
 
+.login-dialog .login-form .form-control, .register-dialog .register-form .form-control,
+.login-dialog .login-form .checkbox, .register-dialog .register-form .checkbox,
+.login-dialog .login-form .radio, .register-dialog .register-form .radio {
+	font-size: 16px;
+	height: 40px;
+	line-height: 1.33;
+	padding: 10px 16px;
+}
+
+.login-dialog .login-form .btn, .register-dialog .register-form .btn {
+	font-size: 16px;
+	line-height: 1.33;
+	padding: 10px 16px;
+}
+
 .content {
 	display: table-row;
 	height: 100%;
@@ -291,20 +306,29 @@ body {
 	user-select: none;
 }
 
+.form-control {
+	box-shadow: none;
+	border-radius: 2px;
+}
 
-.form-control, .checkbox, .btn {
-	border-radius: 6px;
+.form-control:focus {
+	border-color: #f26c23;
+	box-shadow: 0px 0px 8px rgba(242, 108, 35, 0.6);
+}
+
+.btn {
+	border-radius: 2px;
+}
+
+.btn.btn-primary {
+	background-color: #eb3825;
+	border-color: #eb3825;
 }
 
 .btn.btn-default {
 	border-color: #cf4d0d;
 	background-color: #f15e18;
 	color: white;
-}
-
-.btn.btn-primary {
-	border-color: #e73422;
-	background-color: #ed3825;
 }
 
 .panel {
@@ -465,6 +489,21 @@ a:hover, a:focus {
 		float: right;
 	}
 
+	.login-dialog .login-form .form-control, .register-dialog .register-form .form-control,
+	.login-dialog .login-form .checkbox, .register-dialog .register-form .checkbox,
+	.login-dialog .login-form .radio, .register-dialog .register-form .radio {
+		font-size: 14px;
+		height: 34px;
+		line-height: 1.42857;
+		padding: 6px 12px;
+	}
+
+	.login-dialog .login-form .btn, .register-dialog .register-form .btn {
+		font-size: 14px;
+		line-height: 1.42857;
+		padding: 6px 12px;
+	}
+
 	.register-dialog .register-form {
 		width: 69%;
 	}
@@ -555,22 +594,5 @@ a:hover, a:focus {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
-	}
-}
-
-@media (max-width: 767px) {
-	.form-control, .checkbox, .radio {
-		border-radius: 6px;
-		font-size: 18px;
-		height: 46px;
-		line-height: 1.33;
-		padding: 10px 16px;
-	}
-
-	.btn {
-		border-radius: 6px;
-		font-size: 18px;
-		line-height: 1.33;
-		padding: 10px 16px;
 	}
 }

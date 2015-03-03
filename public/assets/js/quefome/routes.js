@@ -17,6 +17,11 @@ define([], function() {
 			path: "/order/finish/",
 			controller: "SelectPaymentMethodController",
 			templateUrl: "/partials/establishments/select-payment-method.html"
+		},
+		{
+			path: "/order/address/",
+			//controller: "InformDeliveryAddressController",
+			templateUrl: "/partials/establishments/inform-delivery-address.html"
 		}
 	];
 });

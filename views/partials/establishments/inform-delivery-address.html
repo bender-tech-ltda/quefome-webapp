@@ -1,0 +1,71 @@
+<qf-modal qf-modal-open-on-load="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Informe o endereço de entrega</h4>
+			</div>
+			<div class="modal-body">
+				<form name="form">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<label for="zipCode">CEP</label>
+							<input type="number" class="form-control" name="zipCode" placeholder="CEP" pattern="[0-9]{5}-{0,1}[0-9]{3}" required/>
+						</div>
+					</div>
+
+					<hr />
+
+					<div class="row">
+						<div class="col-xs-6">
+							<label>Estado</label>
+							<p class="form-control-static">Rio Grande do Sul</p>
+						</div>
+
+						<div class="col-xs-6">
+							<label>Cidade</label>
+							<p class="form-control-static">Porto Alegre</p>
+						</div>
+					</div>
+
+					<br/>
+
+					<div class="row">
+						<div class="col-xs-12">
+							<label>Bairro</label>
+							<select class="form-control" required>
+								<option value="">Selecione um bairro</option>
+								<option value="asdads">Teste</option>
+							</select>
+						</div>
+					</div>
+
+					<br/>
+
+					<div class="row">
+						<div class="col-xs-12">
+							<label>Endereço</label>
+							<input type="text" class="form-control" name="address" placeholder="Rua, Avenida, etc." required/>
+						</div>
+					</div>
+
+					<br/>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<label>Número</label>
+							<input type="number" class="form-control" name="number" placeholder="Número" required/>
+						</div>
+
+						<div class="col-xs-12 col-sm-6">
+							<label>Complemento</label>
+							<input type="text" class="form-control" name="number" placeholder="Complemento" required/>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default disabled" data-dismiss="modal">Finalizar pedido!</button>
+			</div>
+		</div>
+	</div>
+</qf-modal>
