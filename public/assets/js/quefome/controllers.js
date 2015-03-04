@@ -208,12 +208,13 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 	}]);
 
-	module.controller("InformDeliveryAddressController", ["$scope", function($scope) {
+	module.controller("InformDeliveryAddressController", ["$scope", "NeighborhoodService", function($scope, NeighborhoodService) {
 		$scope.order = {};
+		$scope.neighborhoods = [];
 
-		$scope.teste = function() {
-			console.log($scope.order);
-		};
+		NeighborhoodService.list().then(function(neighborhoods) {
+			$scope.neighborhoods = neighborhoods;
+		});
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {

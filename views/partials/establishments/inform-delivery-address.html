@@ -32,10 +32,8 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<label class="control-label" for="neighborhood">Bairro</label>
-							<select name="neighborhood" class="form-control" ng-model="order.address.neighborhood" qf-show-validation-state>
+							<select name="neighborhood" class="form-control" ng-model="order.address.neighborhood" ng-options="neighborhood.name for neighborhood in neighborhoods track by neighborhood.id" qf-show-validation-state>
 								<option value="">Selecione um bairro...</option>
-								<option value="1">Ideal</option>
-								<option value="2">Centro</option>
 							</select>
 						</div>
 					</div>

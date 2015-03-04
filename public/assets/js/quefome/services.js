@@ -118,5 +118,13 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.service("NeighborhoodService", ["$http", "$q", function($http, $q) {
+		this.list = function() {
+			return $http.get("/api/neighborhoods/").then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
+	}]);
+
 	return module;
 });
