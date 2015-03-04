@@ -208,6 +208,10 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 	}]);
 
+	module.controller("InformDeliveryAddressController", ["$scope", function($scope) {
+		$scope.pudim = "adsasdasd";
+	}]);
+
 	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);

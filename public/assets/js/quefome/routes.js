@@ -20,7 +20,6 @@ define([], function() {
 		},
 		{
 			path: "/order/address/",
-			//controller: "InformDeliveryAddressController",
 			templateUrl: "/partials/establishments/inform-delivery-address.html"
 		}
 	];

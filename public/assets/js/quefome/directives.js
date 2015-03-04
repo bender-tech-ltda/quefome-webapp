@@ -184,4 +184,73 @@ define(["angular", "bootstrap"], function(angular) {
 			}
 		};
 	}]);
+
+	module.directive("qfValidateState", function() {
+		return {
+			restrict: "A",
+			require: '^form',
+			scope: {
+				showValid: "=qfValidState",
+				showInvalid: "=qfInvalidState"
+
+			},
+			link: function(scope, element, attrs, formController) {
+				if (!attrs.name || !formController[attrs.name]) {
+					return;
+				}
+
+				var checkAndApplyState = function() {
+					var property = formController[attrs.name];
+					var invalid = property.$dirty && property.$invalid;
+
+					var elementsToApplyState = findElementsToApplyState();
+
+					if (invalid) {
+						elementsToApplyState.removeClass("valid");
+
+						if (typeof(scope.showInvalid) === "undefined" || scope.showInvalid) {
+							elementsToApplyState.addClass("invalid");
+						}
+					} else {
+						elementsToApplyState.removeClass("invalid");
+
+						if (scope.showValid) {
+							elementsToApplyState.addClass("valid");
+						}
+					}
+				};
+
+				var findElementsToApplyState = function() {
+					var elementsToApplyState = null;
+
+					var elementTag = element.prop("tagName");
+					var parent = element.parent();
+
+					if (parent.find(elementTag).length > 1) {
+						elementsToApplyState = element;
+
+						var elementLabel = parent.find("[for='" + attrs.name + "']");
+						if (elementLabel && elementLabel.length > 0) {
+							elementsToApplyState = elementsToApplyState.add(elementLabel);
+						}
+					} else {
+						elementsToApplyState = parent;
+						parent.removeClass
+					}
+
+					return elementsToApplyState;
+				};
+
+				scope.$watch(function() {
+					return formController[attrs.name].$valid;
+				}, checkAndApplyState);
+
+				/*
+				scope.$parent.$watch("form.zipCode.$valid", function() {
+					alert("creu")
+				}, true);
+				*/
+			}
+		};
+	});
 });
