@@ -209,7 +209,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	}]);
 
 	module.controller("InformDeliveryAddressController", ["$scope", function($scope) {
-		$scope.pudim = "adsasdasd";
+		$scope.order = {};
+
+		$scope.teste = function() {
+			console.log($scope.order);
+		};
 	}]);
 
 	module.controller("TesteController", ["$scope", function($scope) {

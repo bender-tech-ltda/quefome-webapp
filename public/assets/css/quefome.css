@@ -1,3 +1,4 @@
+/** --- Override general element style --- **/
 html, body {
 	height: 100%;
 }
@@ -7,6 +8,15 @@ body {
 	width: 100%;
 }
 
+a {
+	color: #ed3825;
+}
+
+a:hover, a:focus {
+	color: #a01608;
+}
+
+/** --- Application specific style --- **/
 .navbar-quefome {
 	background-color: #FDE09C;
 	border-color: #FDE09C;
@@ -297,6 +307,20 @@ body {
 	margin-top: 10px;
 }
 
+label.invalid {
+	color: #A94442;
+}
+
+input.invalid, select.invalid {
+	border-color: #A94442;
+}
+
+input.invalid:focus, select.invalid:focus {
+	border-color: #843534;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px #CE8483;
+}
+
+/** --- Helper classes --- **/
 .helper-no-select {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -306,6 +330,8 @@ body {
 	user-select: none;
 }
 
+
+/** --- Override bootstrap style --- **/
 .form-control {
 	box-shadow: none;
 	border-radius: 2px;
@@ -347,14 +373,6 @@ body {
 .panel.panel-default .panel-heading {
 	background-color: #a6a6a6;
 	color: #fff;
-}
-
-a {
-	color: #ed3825;
-}
-
-a:hover, a:focus {
-	color: #a01608;
 }
 
 @font-face {
