@@ -1,10 +1,63 @@
+/** --- Override general element style --- **/
 html, body {
 	height: 100%;
 }
 
 body {
+	width: 100%;
+}
+
+
+/** --- Application specific style --- **/
+.page-body {
 	display: table;
 	width: 100%;
+	height: 100%;
+}
+
+.navbar-toggle-sidebar {
+	height: 50px;
+	background: #272727;
+}
+
+.navbar-toggle-sidebar .toggle-sidebar-button {
+	height: 100%;
+	width: 62px;
+	background: transparent;
+	display: block;
+	font-size: 34px;
+	padding: 4px 14px;
+	color: #fff;
+}
+
+.navbar-quefome-admin {
+	background-color: #EB3825;
+	border-color: #EB3825;
+	border-radius: 0px;
+	color: #fff;
+	height: 90px;
+	width: 100%;
+	padding-bottom: 90px;
+}
+
+.navbar-quefome-admin .navbar-quefome-brand {
+	background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
+	background-size: 170px;
+	width: 170px;
+	height: 93px;
+	float: left;
+	margin: 15px 10px 0px;
+}
+
+.navbar-quefome-admin .navbar-establishment-brand {
+	float: right;
+	padding: 11px;
+}
+
+.navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 3px;
+	width: 70px;
 }
 
 .login-page {
@@ -48,13 +101,38 @@ body {
 }
 
 .content {
-	padding: 40px;
+	display: table-row;
+	height: 100%;
 }
 
 .sidebar {
 	display: none;
 }
 
+.footer {
+	width: 100%;
+	display: table-row;
+}
+
+.footer .footer-content {
+	border-top: 1px solid #CCC;
+	margin: 10px;
+	min-height: 50px;
+	text-align: center;
+}
+
+/** --- Helper classes --- **/
+.helper-no-select {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+/** --- Override bootstrap style --- **/
 .form-control {
 	box-shadow: none;
 	border-radius: 2px;
@@ -74,7 +152,31 @@ body {
 	border-color: #eb3825;
 }
 
+
+
 @media (min-width: 768px) {
+	.navbar-toggle-sidebar {
+		display: none;
+	}
+
+	.navbar-quefome-admin {
+		height: 110px;
+	}
+
+	.navbar-quefome-admin .navbar-quefome-brand {
+		background-size: 200px;
+		width: 200px;
+		margin-left: 20px;
+	}
+
+	.navbar-quefome-admin .navbar-establishment-brand {
+		padding-right: 30px;
+	}
+
+	.navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
+		width: 90px;
+	}
+
 	.login-page .login-panel {
 		width: 400px;
 	}
