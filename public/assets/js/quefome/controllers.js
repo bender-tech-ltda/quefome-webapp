@@ -208,9 +208,50 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 	}]);
 
-	module.controller("InformDeliveryAddressController", ["$scope", "NeighborhoodService", function($scope, NeighborhoodService) {
-		$scope.order = {};
+	module.controller("InformDeliveryAddressController", ["$scope", "NeighborhoodService", "AddressService", function($scope, NeighborhoodService, AddressService) {
+		$scope.errorMessage = false;
+
+		$scope.order = {
+			address: {}
+		};
 		$scope.neighborhoods = [];
+
+		$scope.searchingZipCode = false;
+		$scope.completeAddressUsingZipCode = function() {
+			$scope.errorMessage = false;
+
+			if (!$scope.order.address.zipCode) {
+				return;
+			}
+
+			$scope.searchingZipCode = true;
+
+			AddressService.searchZipCode($scope.order.address.zipCode).then(function(address) {
+				$scope.order.address.neighborhood = null;
+				$scope.order.address.address = null;
+
+				for (var i in $scope.neighborhoods) {
+					var neighborhood = $scope.neighborhoods[i];
+
+					if (neighborhood.name.toLowerCase().trim() == address.neighborhood.toLowerCase().trim()) {
+						$scope.order.address.neighborhood = neighborhood;
+						break;
+					}
+				}
+
+				if (!$scope.order.address.neighborhood) {
+					return;
+				}
+
+				$scope.order.address.address = address.address;
+				$scope.searchingZipCode = false;
+				$scope.$digest();
+			}, function(message) {
+				$scope.errorMessage = message;
+				$scope.searchingZipCode = false;
+				$scope.$digest();
+			});
+		};
 
 		NeighborhoodService.list().then(function(neighborhoods) {
 			$scope.neighborhoods = neighborhoods;

@@ -237,6 +237,10 @@ define(["angular", "bootstrap"], function(angular) {
 					checkAndApplyState(true);
 				});
 
+				element.on("change.qfValidateState", function() {
+					checkAndApplyState(true);
+				});
+
 				element.on("keyup.qfValidateState", function() {
 					checkAndApplyState(false);
 				});

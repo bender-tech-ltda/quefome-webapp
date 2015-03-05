@@ -6,10 +6,15 @@
 			</div>
 			<div class="modal-body">
 				<form name="form" ng-controller="InformDeliveryAddressController" novalidate>
+					<div class="alert alert-danger" ng-show="errorMessage">
+						<p>{{errorMessage}}</p>
+					</div>
+
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
 							<label for="zipCode">CEP</label>
-							<input type="tel" class="form-control" name="zipCode" placeholder="CEP" pattern="[0-9]{5}(-){0,1}[0-9]{3}" required ng-model="order.address.zipCode" qf-show-validation-state/>
+							<input type="tel" class="form-control" name="zipCode" placeholder="CEP" pattern="[0-9]{5}(-){0,1}[0-9]{3}" required ng-model="order.address.zipCode" qf-show-validation-state ng-change="completeAddressUsingZipCode()" ng-disabled="searchingZipCode"/>
+							<span class="help-block" ng-show="searchingZipCode">Procurando CEP...</span>
 						</div>
 					</div>
 
@@ -32,7 +37,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<label for="neighborhood">Bairro</label>
-							<select name="neighborhood" class="form-control" ng-model="order.address.neighborhood" ng-options="neighborhood.name for neighborhood in neighborhoods track by neighborhood.id" required qf-show-validation-state>
+							<select name="neighborhood" class="form-control" ng-model="order.address.neighborhood" ng-options="neighborhood.name for neighborhood in neighborhoods track by neighborhood.id" required qf-show-validation-state ng-disabled="searchingZipCode">
 								<option value="">Selecione um bairro...</option>
 							</select>
 						</div>
@@ -43,7 +48,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<label for="address">Endereço</label>
-							<input type="text" class="form-control" name="address" placeholder="Rua, Avenida, etc." required ng-model="order.address.address" qf-show-validation-state/>
+							<input type="text" class="form-control" name="address" placeholder="Rua, Avenida, etc." required ng-model="order.address.address" qf-show-validation-state ng-disabled="searchingZipCode"/>
 						</div>
 					</div>
 
@@ -52,12 +57,12 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
 							<label for="number">Número</label>
-							<input type="number" class="form-control" name="number" placeholder="Número" ng-model="order.address.number" required qf-show-validation-state/>
+							<input type="number" class="form-control" name="number" placeholder="Número" ng-model="order.address.number" required qf-show-validation-state ng-disabled="searchingZipCode"/>
 						</div>
 
 						<div class="col-xs-12 col-sm-6">
 							<label for="complement">Complemento</label>
-							<input type="text" class="form-control" name="complement" placeholder="Complemento" ng-model="order.address.complement" qf-show-validation-state/>
+							<input type="text" class="form-control" name="complement" placeholder="Complemento" ng-model="order.address.complement" qf-show-validation-state ng-disabled="searchingZipCode"/>
 						</div>
 					</div>
 				</form>

@@ -38,6 +38,8 @@ var WebService = function(config) {
 			}	
 		}
 
+		console.log(options.url);
+
 		if (data) {
 			if (methodHasBody(options.method)) {
 				options.body = data;
