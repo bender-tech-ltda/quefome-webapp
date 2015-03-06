@@ -23,10 +23,11 @@
 
 		<div class="ng-cloak page-body" ng-show="hasCheckedForLoggedUser() && isUserLogged()">
 			<nav class="navbar-toggle-sidebar">
-				<a href="javascript:void(0);" class="toggle-sidebar-button">
+				<a href="javascript:void(0);" class="toggle-sidebar-button" qf-toggle-class="open" qf-toggle-target=".nav-sidebar">
 					<span class="glyphicon glyphicon-align-justify"></span>
 				</a>
 			</nav>
+
 			<nav class="navbar navbar-quefome-admin">
 				<a class="navbar-quefome-brand" href="/"></a>
 
@@ -35,10 +36,24 @@
 				</a>
 			</nav>
 
-			<div class="content" ng-view></div>
+			<nav class="nav-sidebar">
+				<ul class="nav nav-stacked">
+					<li class="nav-header">menu</li>
+					<li>
+						<a href="#/" qf-toggle-class="open" qf-toggle-target=".nav-sidebar">
+							<span class="glyphicon glyphicon-th-list"></span> Pedidos
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="content">
+				<div class="content-body" ng-view></div>
+			</div>
 
 			<footer class="footer">
 				<div class="footer-content">
+
 				</div>
 			</footer>
 		</div>
