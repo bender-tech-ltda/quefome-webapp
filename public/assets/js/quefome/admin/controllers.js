@@ -62,6 +62,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 		
 	}]);
 
+	module.controller("RealTimeOrdersController", ["$scope", function($scope) {
+
+	}]);
+
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
