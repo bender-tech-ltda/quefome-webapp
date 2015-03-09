@@ -9,12 +9,12 @@ define([], function() {
 		// }
 		{
 			path: "/",
-			redirectTo: "/orders/real-time/"
+			redirectTo: "/orders/fulfillment/"
 		},
 		{
-			path: "/orders/real-time/",
-			controller: "RealTimeOrdersController",
-			templateUrl: "/admin/partials/orders/real-time.html"
+			path: "/orders/fulfillment/",
+			controller: "OrdersFullfillmentController",
+			templateUrl: "/admin/partials/orders/fullfillment.html"
 		}
 	];
 });
