@@ -49,10 +49,13 @@ define(["angular", "bootstrap"], function(angular) {
 			restrict: "A",
 			scope: {
 				url: "@qfClickDialogUrl",
-				size: "@qfDialogSize"
+				size: "@qfDialogSize",
+				event: "@qfShowOn"
 			},
 			link: function(scope, element, attrs) {
-				element.click(function() {
+				var event = scope.event ? scope.event : "click";
+
+				element.on(event + ".qfClickDialogUrl", function() {
 					var content = angular.element('<div class="modal-content">');
 
 					var dialog = angular.element('<div class="modal-dialog">');

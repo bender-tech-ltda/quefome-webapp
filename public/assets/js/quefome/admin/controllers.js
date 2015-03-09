@@ -63,7 +63,42 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	}]);
 
 	module.controller("OrdersFullfillmentController", ["$scope", function($scope) {
+		$scope.orderOptionsViewUrl = "/admin/partials/orders/options-dialog.html";
 
+		$scope.orderStatuses = [
+			{key: "OPEN", name: "Pedidos Abertos", list: []},
+			{key: "PRODUCTION", name: "Pedidos em Produção", list: []}
+		];
+
+		$scope.orders = [
+			{
+				date: new Date(),
+				status: "OPEN",
+
+				user: {
+					name: "Gabriel",
+					email: "gabrielhof@gmail.com"
+				},
+
+				address: {
+					address: "Rua Marechal Câmara",
+					number: "22"
+				},
+
+				items: [
+					{
+						product: {
+							name: "Xis Salada"
+						}
+					},
+					{
+						product: {
+							name: "Xis Frango"
+						}
+					}
+				]
+			}
+		];
 	}]);
 
 	module.controller("NotFoundController", ["$scope", function($scope) {

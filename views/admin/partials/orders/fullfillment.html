@@ -9,35 +9,37 @@
 	</div>
 </div>
 
-<table class="table">
+<table class="table" ng-repeat="status in orderStatuses">
 	<thead>
+		<tr>
+			<td colspan="4">
+				<h3>{{status.name}} <span class="badge">{{status.list && status.list.length ? status.list.length : '0'}}</span></h3>
+			</td>
+		</tr>
 		<tr>
 			<th>Cliente</th>
 			<th>Produtos</th>
 			<th>Data e Hora</th>
-			<th>a</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<tr ng-repeat="order in status.list = (orders | filter:{status: status.key})">
 			<td>
-				<b>Nome:</b> Gabriel Hoff<br/>
-				<b>Fone:</b> (51) 9886-8901<br/>
-				<b>Endereço:</b> Rua Marechal Câmara, Nº 22<br/>
+				<b>Nome:</b> {{order.user.name}}<br/>
+				<b>Email:</b> {{order.user.email}}<br/>
+				<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
 			</td>
-			<td>Xis Salada, Xis Bacon, Xis tudo, Xis pernada</td>
-			<td>09/03/2015 16:30</td>
-			<td>a</td>
-		</tr>
-		<tr>
 			<td>
-				<b>Nome:</b> Gabriel Hoff<br/>
-				<b>Fone:</b> (51) 9886-8901<br/>
-				<b>Endereço:</b> Rua Marechal Câmara, Nº 22<br/>
+				<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
 			</td>
-			<td>Xis Salada, Xis Bacon, Xis tudo, Xis pernada</td>
-			<td>09/03/2015 16:30</td>
-			<td>a</td>
+			<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+			<td>
+				<button class="btn btn-success" title="Mandar para produção" ng-click="sendOrderToProduction(order)">
+					<span class="hidden-xs">Mandar para produção</span>
+					<span class="glyphicon glyphicon-share-alt"></span>
+				</button>
+			</td>
 		</tr>
 	</tbody>
 </table>
