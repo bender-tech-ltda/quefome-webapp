@@ -149,15 +149,16 @@ body {
 
 .content .partial-header {
 	min-height: 68px;
-	padding: 20px;
+	padding: 15px;
+	margin: 0px -10px 0px -10px;
 	border-bottom: 1px solid #DDD;
 }
 
 .content .partial-header .partial-icon {
 	float: left;
 	display: inline-block;
-	width: 66px;
-	font-size: 42px;
+	width: 53px;
+	font-size: 32px;
 	text-align: center;
 	color: #EB3825;
 	border: 3px solid #EB3825;
@@ -169,7 +170,7 @@ body {
 }
 
 .content .partial-header .partial-icon + .partial-title {
-	margin-left: 85px;
+	margin-left: 65px;
 }
 
 .content .partial-header .partial-title .short-description {
@@ -182,7 +183,7 @@ body {
 .content .partial-header .partial-title .title {
 	margin-top: 0px;
 	margin-left: -2px;
-	font-size: 32px;
+	font-size: 24px;
 	color: #EB3825;
 }
 
@@ -271,6 +272,23 @@ body {
 
 	.content .content-body {
 		margin-left: 270px;
+	}
+
+	.content .partial-header {
+		padding: 20px;
+	}
+
+	.content .partial-header .partial-icon {
+		font-size: 42px;
+		width: 70px;
+	}
+
+	.content .partial-header .partial-icon + .partial-title {
+		margin-left: 85px;
+	}
+
+	.content .partial-header .partial-title .title {
+		font-size: 32px;
 	}
 
 	.footer .footer-content {
