@@ -3,7 +3,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	
 	var module = angular.module("qfAdminControllers", ["qfAdminServices", "qfAdminDirectives"]);
 
-	module.controller("LoginController", ["$scope", "AuthService", function($scope, AuthService) {
+	module.controller("LoginController", ["$scope", "$location", "AuthService", function($scope, $location, AuthService) {
 		$scope.email = "";
 		$scope.password = "";
 		$scope.keepLoggedIn = true;
@@ -45,6 +45,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 					$scope.password = "";
 					$scope.processing = false;
 
+					$location.path("/");
 					$scope.$apply();
 				}, function(error) {
 					$scope.processing = false;
@@ -59,93 +60,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	}]);
 
 	module.controller("HomeController", ["$scope", function($scope) {
-		
 	}]);
 
 	module.controller("OrdersFullfillmentController", ["$scope", "OrderService", function($scope, OrderService) {
-		$scope.orders = [
-			{
-				date: new Date(),
-				status: "OPEN",
-
-				user: {
-					name: "Gabriel",
-					email: "gabrielhof@gmail.com"
-				},
-
-				address: {
-					address: "Rua Marechal Câmara",
-					number: "22"
-				},
-
-				items: [
-					{
-						product: {
-							name: "Xis Salada"
-						}
-					},
-					{
-						product: {
-							name: "Xis Frango"
-						}
-					}
-				]
-			},
-			{
-				date: new Date(),
-				status: "OPEN",
-
-				user: {
-					name: "Gabriel",
-					email: "gabrielhof@gmail.com"
-				},
-
-				address: {
-					address: "Rua Marechal Câmara",
-					number: "22"
-				},
-
-				items: [
-					{
-						product: {
-							name: "Xis Salada"
-						}
-					},
-					{
-						product: {
-							name: "Xis Frango"
-						}
-					}
-				]
-			},
-			{
-				date: new Date(),
-				status: "PRODUCTION",
-
-				user: {
-					name: "Gabriel",
-					email: "gabrielhof@gmail.com"
-				},
-
-				address: {
-					address: "Rua Marechal Câmara",
-					number: "22"
-				},
-
-				items: [
-					{
-						product: {
-							name: "Xis Salada"
-						}
-					},
-					{
-						product: {
-							name: "Xis Frango"
-						}
-					}
-				]
-			}
-		];
+		$scope.orders = [];
 
 		OrderService.list().then(function(orders) {
 			$scope.orders = orders;

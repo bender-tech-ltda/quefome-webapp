@@ -8,13 +8,17 @@ define([], function() {
 		// 	templateUrl: "/admin/partials/home/index.html"
 		// }
 		{
+			path: "/login"
+		},
+		{
 			path: "/",
 			redirectTo: "/orders/fulfillment/"
 		},
 		{
 			path: "/orders/fulfillment/",
 			controller: "OrdersFullfillmentController",
-			templateUrl: "/admin/partials/orders/fullfillment.html"
+			templateUrl: "/admin/partials/orders/fullfillment.html",
+			login: true
 		}
 	];
 });

@@ -3,7 +3,7 @@
 define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"], function(angular) {
 
 	describe("LoginController", function() {
-		var scope, MockedAuthService;
+		var scope, MockedAuthService, Mocked$location;
 
 		beforeEach(module("qfAdminControllers"));
 
@@ -45,10 +45,23 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 					return this._user;
 				}
 			};
+
+			Mocked$location = {
+				_calledPath: false,
+
+				path: function(path) {
+					this._calledPath = path;
+				}
+			};
 		});
 
 		beforeEach(function() {
-			return injectController("LoginController", "views/admin/partials/login/login.html", {AuthService: MockedAuthService}, function($scope) {
+			var params = {
+				AuthService: MockedAuthService,
+				$location: Mocked$location
+			};
+
+			return injectController("LoginController", "views/admin/partials/login/login.html", params, function($scope) {
 				scope = $scope;
 			})
 		});
@@ -124,6 +137,11 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			defaultLogin();
 
 			expect(scope.password.trim()).toBe("");
+		});
+
+		it("should redirect the user to / after login", function() {
+			defaultLogin();
+			expect(Mocked$location._calledPath).toEqual("/");
 		});
 
 		it("should keep the user logged in", function() {

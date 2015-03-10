@@ -23,9 +23,35 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 
 	}]);
 
-	quefomeAdmin.run(["$rootScope", function($rootScope) {
+	quefomeAdmin.run(["$rootScope", "$route", "$location", "AuthService", function($rootScope, $route, $location, AuthService) {
+		var checkForLocationAccess = function(event) {
+			var nextRoute = $route.routes[$location.path()];
+
+			if (nextRoute) {
+				if (nextRoute.login && !AuthService.isLogged()) {
+					if (event && event.preventDefault) {
+						event.preventDefault();
+					}
+
+					$location.path("/login");
+				} else if (nextRoute.path == "/login" && AuthService.isLogged()) {
+					$location.path("/");
+				}
+			}
+		};
+
+		$rootScope.$on("$locationChangeStart", function(event) {
+			if (!AuthService.hasCheckedForLoggedUser()) {
+				return;
+			}
+
+			checkForLocationAccess(event);
+		});
+
 		if ($rootScope.checkForLoggedUser) {
-			$rootScope.checkForLoggedUser();
+			$rootScope.checkForLoggedUser().then(function() {
+				checkForLocationAccess();
+			});
 		}
 	}]);
 
