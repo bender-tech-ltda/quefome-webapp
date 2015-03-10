@@ -62,14 +62,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 		
 	}]);
 
-	module.controller("OrdersFullfillmentController", ["$scope", function($scope) {
-		$scope.orderOptionsViewUrl = "/admin/partials/orders/options-dialog.html";
-
-		$scope.orderStatuses = [
-			{key: "OPEN", name: "Pedidos Abertos", list: []},
-			{key: "PRODUCTION", name: "Pedidos em Produção", list: []}
-		];
-
+	module.controller("OrdersFullfillmentController", ["$scope", "OrderService", function($scope, OrderService) {
 		$scope.orders = [
 			{
 				date: new Date(),
@@ -97,8 +90,67 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 						}
 					}
 				]
+			},
+			{
+				date: new Date(),
+				status: "OPEN",
+
+				user: {
+					name: "Gabriel",
+					email: "gabrielhof@gmail.com"
+				},
+
+				address: {
+					address: "Rua Marechal Câmara",
+					number: "22"
+				},
+
+				items: [
+					{
+						product: {
+							name: "Xis Salada"
+						}
+					},
+					{
+						product: {
+							name: "Xis Frango"
+						}
+					}
+				]
+			},
+			{
+				date: new Date(),
+				status: "PRODUCTION",
+
+				user: {
+					name: "Gabriel",
+					email: "gabrielhof@gmail.com"
+				},
+
+				address: {
+					address: "Rua Marechal Câmara",
+					number: "22"
+				},
+
+				items: [
+					{
+						product: {
+							name: "Xis Salada"
+						}
+					},
+					{
+						product: {
+							name: "Xis Frango"
+						}
+					}
+				]
 			}
 		];
+
+		OrderService.list().then(function(orders) {
+			$scope.orders = orders;
+			$scope.$digest();
+		});
 	}]);
 
 	module.controller("NotFoundController", ["$scope", function($scope) {

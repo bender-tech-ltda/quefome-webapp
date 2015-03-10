@@ -9,22 +9,22 @@
 	</div>
 </div>
 
-<table class="table" ng-repeat="status in orderStatuses">
+<table class="table">
 	<thead>
 		<tr>
 			<td colspan="4">
-				<h3>{{status.name}} <span class="badge">{{status.list && status.list.length ? status.list.length : '0'}}</span></h3>
+				<h3>Pedidos Abertos <span class="badge">{{openOrders && openOrders.length ? openOrders.length : '0'}}</span></h3>
 			</td>
 		</tr>
 		<tr>
-			<th>Cliente</th>
-			<th>Produtos</th>
-			<th>Data e Hora</th>
-			<th></th>
+			<th class="col-md-4">Cliente</th>
+			<th class="col-md-4">Produtos</th>
+			<th class="col-md-2">Data e Hora</th>
+			<th class="col-md-2"></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="order in status.list = (orders | filter:{status: status.key})">
+		<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'})">
 			<td>
 				<b>Nome:</b> {{order.user.name}}<br/>
 				<b>Email:</b> {{order.user.email}}<br/>
@@ -35,8 +35,43 @@
 			</td>
 			<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
 			<td>
-				<button class="btn btn-success" title="Mandar para produção" ng-click="sendOrderToProduction(order)">
+				<button class="btn btn-success btn-block" title="Mandar para produção" ng-click="sendOrderToProduction(order)">
 					<span class="hidden-xs">Mandar para produção</span>
+					<span class="glyphicon glyphicon-share-alt"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table">
+	<thead>
+		<tr>
+			<td colspan="4">
+				<h3>Pedidos em Produção <span class="badge">{{productionOrders && productionOrders.length ? productionOrders.length : '0'}}</span></h3>
+			</td>
+		</tr>
+		<tr>
+			<th class="col-md-4">Cliente</th>
+			<th class="col-md-4">Produtos</th>
+			<th class="col-md-2">Data e Hora</th>
+			<th class="col-md-2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'})">
+			<td>
+				<b>Nome:</b> {{order.user.name}}<br/>
+				<b>Email:</b> {{order.user.email}}<br/>
+				<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
+			</td>
+			<td>
+				<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
+			</td>
+			<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+			<td>
+				<button class="btn btn-warning btn-block" title="Marcar como Entregue" ng-click="markAsDelivered(order)">
+					<span class="hidden-xs">Marcar como Entregue</span>
 					<span class="glyphicon glyphicon-share-alt"></span>
 				</button>
 			</td>
