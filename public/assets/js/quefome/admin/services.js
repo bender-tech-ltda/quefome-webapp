@@ -79,5 +79,13 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.service("OrderService", ["$http", "$q", function($http, $q) {
+		this.list = function() {
+			return $http.get("/api/establishment/orders/").then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
+	}]);
+
 	return module;
 });
