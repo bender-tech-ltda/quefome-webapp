@@ -65,6 +65,35 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	module.controller("OrdersFullfillmentController", ["$scope", "OrderService", function($scope, OrderService) {
 		$scope.orders = [];
 
+		var OrderStatus = {
+			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
+		};
+
+		var changeOrderStatus = function(order, newStatus) {
+			order.changingStatus = true;
+			$scope.$digest();
+
+			var copiedOrder = angular.copy(order);
+			copiedOrder.status = newStatus;
+
+			OrderService.update(copiedOrder).then(function() {
+				order.status = order.status;
+				order.changingStatus = false;
+				$scope.$digest();
+			}, function(errorMessage) {
+				order.changingStatus = false;
+				scope.$digest();
+			});
+		}
+
+		$scope.sendOrderToProduction = function(order) {
+			changeOrderStatus(order, OrderStatus.PRODUCTION);
+		};
+
+		$scope.markAsDelivered = function(order) {
+			changeOrderStatus(order, OrderStatus.DELIVERED);
+		};
+
 		OrderService.list().then(function(orders) {
 			$scope.orders = orders;
 			$scope.$digest();

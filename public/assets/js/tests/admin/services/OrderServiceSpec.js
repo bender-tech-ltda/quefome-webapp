@@ -27,5 +27,16 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			$httpBackend.flush();
 		});
+
+		it("should update an order", function() {
+			var updatedOrder = {id: -42, status: 'PRODUCTION', date: new Date()};
+			$httpBackend.whenPUT("/api/orders/" + updatedOrder.id, updatedOrder).respond(200, updatedOrder);
+
+			OrderService.update(updatedOrder).then(function(order) {
+				expect(order).toEqual(updatedOrder);
+			});
+
+			$httpBackend.flush();
+		});
 	});
 });

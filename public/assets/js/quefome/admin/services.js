@@ -85,6 +85,12 @@ define(["angular"], function(angular) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
+
+		this.update = function(order) {
+			return $http.put("/api/orders/" + order.id, order).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
 	}]);
 
 	return module;

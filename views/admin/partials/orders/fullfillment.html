@@ -27,7 +27,7 @@
 		<tr class="no-hover" ng-hide="openOrders && openOrders.length > 0">
 			<td class="text-center" colspan="4">Não existem pedidos abertos</td>
 		</tr>
-		<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'})">
+		<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: 'date')">
 			<td>
 				<b>Nome:</b> {{order.user.name}}<br/>
 				<b>Email:</b> {{order.user.email}}<br/>
@@ -65,7 +65,7 @@
 		<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
 			<td class="text-center" colspan="4">Não existem pedidos em produção</td>
 		</tr>
-		<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'})">
+		<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: 'date')">
 			<td>
 				<b>Nome:</b> {{order.user.name}}<br/>
 				<b>Email:</b> {{order.user.email}}<br/>
