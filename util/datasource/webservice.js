@@ -62,7 +62,7 @@ var WebService = function(config) {
 						response = {
 							url: options.url,
 							method: options.method,
-							status: 404,
+							statusCode: 404,
 							body: body || ""
 						};
 					}

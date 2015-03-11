@@ -17,7 +17,6 @@ module.exports = function(router) {
 			req.session.establishmentUser = establishmentUser;
 			res.json(establishmentUser);
 		}, function(response) {
-			console.log(response);
 			res.status(response.statusCode).send(response.body);
 		});
 	});
