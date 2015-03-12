@@ -76,13 +76,16 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			var copiedOrder = angular.copy(order);
 			copiedOrder.status = newStatus;
 
-			OrderService.update(copiedOrder).then(function() {
-				order.status = order.status;
+			OrderService.update(copiedOrder).then(function(updatedOrder) {
+				order.status = updatedOrder.status;
+				order.version = updatedOrder.version;
+
 				order.changingStatus = false;
 				$scope.$digest();
 			}, function(errorMessage) {
+				alert(errorMessage);
 				order.changingStatus = false;
-				scope.$digest();
+				$scope.$digest();
 			});
 		}
 
