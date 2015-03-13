@@ -144,6 +144,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			};
 		};
 
+		var timeoutPromise = false;
 		$scope.checkIncomingOrders = function() {
 			OrderService.list().then(function(orders) {
 				$scope.cachedOrders = orders;
@@ -153,7 +154,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 				$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
 
 				$scope.$digest(function() {
-					$timeout(function() {
+					timeoutPromise = $timeout(function() {
 						$scope.checkIncomingOrders();
 					}, (1000 * $scope.secondsToCheckForIncomingOrders));
 				});
@@ -173,6 +174,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			$scope.$digest(function() {
 				$scope.checkIncomingOrders();
 			});
+		});
+
+		$scope.$on("$destroy", function() {
+			if (timeoutPromise) {
+				$timeout.cancel(timeoutPromise);
+			}
 		});
 	}]);
 
