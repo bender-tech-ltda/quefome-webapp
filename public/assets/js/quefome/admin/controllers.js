@@ -83,7 +83,6 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 				order.changingStatus = false;
 				$scope.$digest();
 			}, function(errorMessage) {
-				alert(errorMessage);
 				order.changingStatus = false;
 				$scope.$digest();
 			});

@@ -1,6 +1,6 @@
 <div class="partial-header">
 	<div class="partial-icon">
-		<span class="glyphicon glyphicon-inbox"></span>
+		<span class="qf-icon icon-order"></span>
 	</div>
 
 	<div class="partial-title">
@@ -18,9 +18,9 @@
 		</tr>
 		<tr>
 			<th class="col-md-4">Cliente</th>
-			<th class="col-md-4">Produtos</th>
+			<th class="col-md-3">Produtos</th>
 			<th class="col-md-2">Data e Hora</th>
-			<th class="col-md-2"></th>
+			<th class="col-md-3"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -44,7 +44,7 @@
 				</button>
 
 				<button class="btn btn-success btn-block disabled" title="Enviando para produção..." ng-show="order.changingStatus">
-					<span class="hidden-xs">Enviando para produção...</span>
+					<span class="qf-icon icon-loading spin"></span>
 				</button>
 			</td>
 		</tr>
@@ -60,9 +60,9 @@
 		</tr>
 		<tr>
 			<th class="col-md-4">Cliente</th>
-			<th class="col-md-4">Produtos</th>
+			<th class="col-md-3">Produtos</th>
 			<th class="col-md-2">Data e Hora</th>
-			<th class="col-md-2"></th>
+			<th class="col-md-3"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -86,7 +86,7 @@
 				</button>
 
 				<button class="btn btn-warning btn-block disabled" title="Marcando como entregue..." ng-show="order.changingStatus">
-					<span class="hidden-xs">Marcando como entregue...</span>
+					<span class="qf-icon icon-loading spin"></span>
 				</button>
 			</td>
 		</tr>

@@ -43,6 +43,7 @@ body {
 	border: 1px solid #f26c23;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
+	font-size: 18px;
 }
 
 .login-page .login-panel input {
@@ -257,6 +258,9 @@ body {
 	border-color: #eb3825;
 }
 
+.badge {
+	vertical-align: middle;
+}
 
 
 @media (min-width: 768px) {
