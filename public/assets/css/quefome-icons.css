@@ -104,6 +104,10 @@
 	content: "\e608";
 }
 
+.qf-icon.icon-forward:before {
+	content: "\e968";
+}
+
 .qf-icon.icon-loading:before {
 	content: "\e97a";
 }
