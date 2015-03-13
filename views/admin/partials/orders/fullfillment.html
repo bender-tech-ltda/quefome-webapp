@@ -9,6 +9,24 @@
 	</div>
 </div>
 
+<div class="alert alert-success growl text-center" ng-show="numberOfIncomingOrders > 0">
+	<span ng-show="numberOfIncomingOrders == 1">Existe um novo pedido que ainda não entrou na lista de pedidos.</span>
+	<span ng-show="numberOfIncomingOrders > 1">Existem {{numberOfIncomingOrders}} novos pedidos que ainda não entraram na lista de pedidos.</span>
+
+	<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
+		<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
+	</button>
+</div>
+
+<div class="alert alert-warning growl text-center" ng-show="numberOfModifiedOrders > 0">
+	<span ng-show="numberOfModifiedOrders == 1">Existe um pedido que foi modificado e se encontra desatualizado na lista de pedidos.</span>
+	<span ng-show="numberOfModifiedOrders > 1">Existem {{numberOfModifiedOrders}} que foram modificados e se encontram desatualizados na lista de pedidos.</span>
+
+	<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
+		<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
+	</button>
+</div>
+
 <table class="table">
 	<thead>
 		<tr>

@@ -62,8 +62,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 	module.controller("HomeController", ["$scope", function($scope) {
 	}]);
 
-	module.controller("OrdersFullfillmentController", ["$scope", "OrderService", function($scope, OrderService) {
+	module.controller("OrdersFullfillmentController", ["$scope", "$timeout", "OrderService", function($scope, $timeout, OrderService) {
 		$scope.orders = [];
+		$scope.secondsToCheckForIncomingOrders = 30;
+		$scope.cachedOrders = []
+		$scope.numberOfIncomingOrders = 0;
+		$scope.numberOfModifiedOrders = 0;
 
 		var OrderStatus = {
 			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
@@ -96,9 +100,79 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			changeOrderStatus(order, OrderStatus.DELIVERED);
 		};
 
+		var countIncomingAndModifiedOrders = function(orders) {
+			var totalIncomingOrders = 0, totalModifiedOrders = 0;
+
+			var ordersIds = [];
+
+			for (var orderIndex in orders) {
+				var order = orders[orderIndex];
+				var existentOrder = false;
+
+				ordersIds.push(order.id);
+
+				for (var scopeOrderIndex in $scope.orders) {
+					var scopeOrder = $scope.orders[scopeOrderIndex];
+
+					if (order.id == scopeOrder.id) {
+						existentOrder = true;
+
+						if (order.status != scopeOrder.status) {
+							totalModifiedOrders++;
+						}
+
+						break;
+					}
+				}
+
+				if (order.status == OrderStatus.OPEN && !existentOrder) {
+					totalIncomingOrders++;
+				}
+			}
+
+			for (var scopeOrderIndex in $scope.orders) {
+				var scopeOrder = $scope.orders[scopeOrderIndex];
+
+				if (ordersIds.indexOf(scopeOrder.id) < 0) {
+					totalModifiedOrders++;
+				}
+			}
+
+			return {
+				numberOfIncomingOrders: totalIncomingOrders,
+				numberOfModifiedOrders: totalModifiedOrders
+			};
+		};
+
+		$scope.checkIncomingOrders = function() {
+			OrderService.list().then(function(orders) {
+				$scope.cachedOrders = orders;
+
+				var totalOrders = countIncomingAndModifiedOrders(orders);
+				$scope.numberOfIncomingOrders = totalOrders.numberOfIncomingOrders;
+				$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
+
+				$scope.$digest(function() {
+					$timeout(function() {
+						$scope.checkIncomingOrders();
+					}, (1000 * $scope.secondsToCheckForIncomingOrders));
+				});
+			});
+		};
+
+		$scope.updateOrdersWithCachedOrders = function() {
+			$scope.orders = $scope.cachedOrders;
+			$scope.numberOfIncomingOrders = 0;
+			$scope.numberOfModifiedOrders = 0;
+
+			$scope.$digest();
+		};
+
 		OrderService.list().then(function(orders) {
 			$scope.orders = orders;
-			$scope.$digest();
+			$scope.$digest(function() {
+				$scope.checkIncomingOrders();
+			});
 		});
 	}]);
 

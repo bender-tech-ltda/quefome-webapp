@@ -259,6 +259,16 @@ body {
 	border-color: #eb3825;
 }
 
+.alert {
+	border-radius: 2px;
+}
+
+.alert.growl {
+	position: fixed;
+	bottom: 10px;
+	box-shadow: 0 0 80px rgba(0,0,0,.5);
+}
+
 .badge {
 	vertical-align: middle;
 }
