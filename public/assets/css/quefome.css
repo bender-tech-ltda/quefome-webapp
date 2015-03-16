@@ -141,9 +141,9 @@ a:hover, a:focus {
 }
 
 .delivery-search-page .order-steps {
+	display: none;
 	background: #f1c60d;
 	list-style: outside none none;
-	display: table;
 	width: 100%;
 	height: 59px;
 	padding-top: 8px;
@@ -181,7 +181,7 @@ a:hover, a:focus {
 .delivery-search-page .search-form {
 	background: #ffe171;
 	padding: 5px;
-	height: 130px;
+	min-height: 130px;
 	width: 100%;
 }
 
@@ -219,6 +219,43 @@ a:hover, a:focus {
 
 .delivery-search-page .search-form .food-type-list .qf-icon {
 	font-size: 27px;
+}
+
+.delivery-search-page .search-form .search-form-divisor {
+	width: 100%;
+	height: 1px;
+	background-color: #eee;
+	text-align: center;
+	margin: 15px 0px;
+}
+
+.delivery-search-page .search-form .search-form-divisor .divisor-text {
+	background-color: #ffe171;
+	color: white;
+	padding: 0px 10px;
+	font-weight: bold;
+	font-size: 18px;
+	text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+	text-transform: uppercase;
+	position: relative;
+	top: -0.7em;
+}
+
+.delivery-search-page .search-form .query-search {
+	margin: 20px 0px 12px;
+}
+
+.delivery-search-page .search-form .query-search .query-field {
+	width: 90%;
+	margin-left: 5%;
+	padding: 10px;
+	border: 1px solid #fff;
+	border-radius: 2px;
+}
+
+.delivery-search-page .search-form .query-search .query-field:focus {
+	border-color: #F46C21;
+	box-shadow: 0px 0px 8px rgba(244, 108, 33, 0.6);
 }
 
 .delivery-search-page .search-result {
@@ -535,5 +572,12 @@ input.invalid:focus, select.invalid:focus {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
+	}
+}
+
+/*Workaround para impedir que o browser mobile dê um zoom desnecessário na página*/
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+	select:focus, textarea:focus, input:focus {
+		font-size: 16px;
 	}
 }
