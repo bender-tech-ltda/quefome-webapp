@@ -92,6 +92,10 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			expect(scope.establishments).toBeDefined();
 		});
 
+		it("should have a searchFilter property", function() {
+			expect(scope.searchFilter).toBeDefined();
+		});
+
 		it("should get the list of productTypes from service on startup", function() {
 			expect(MockedProductTypeService.called).toBe(true);
 			expect(scope.productTypes).toEqual(MockedProductTypeService._list);
@@ -103,8 +107,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("selecting a product type", function() {
-
-			it("should set the selectedProductType", function() {
+			it("should set the selected product type", function() {
 				var productType = {
 					name: "Teste"
 				};
@@ -114,6 +117,16 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				}).not.toThrow();
 
 				expect(scope.isProductTypeSelected(productType)).toBe(true);
+			});
+
+			it("should clear the query search", function() {
+				scope.searchFilter.query = "teste";
+
+				expect(function() {
+					scope.selectProductType({name: "Pudim"});
+				}).not.toThrow();
+
+				expect(scope.searchFilter.query).toEqual("");
 			});
 
 			it("should change the current query search in the URL", function() {
