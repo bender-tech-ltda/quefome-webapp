@@ -138,7 +138,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					scope.selectProductType(productType);
 				}).not.toThrow();
 
-				expect(Mocked$location.search("productType")).toEqual(productType.name);
+				expect(Mocked$location.search("product-type")).toEqual(productType.name);
+				expect(Mocked$location.search("q")).toBeUndefined();
 			});
 
 			it("should search for establishments", function() {
@@ -154,23 +155,44 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
-		it("should search for a list of establishments", function() {
-			expect(function() {
+		describe("when searching for stablishments", function() {
+			it("should get list of establishments", function() {
+				expect(function() {
+					scope.searchEstablishments();
+				}).not.toThrow();
+
+				expect(scope.establishments).toEqual(MockedEstablishmentService._list);
+			});
+
+			it("should clear the selected product type if it has a query to search", function() {
+				scope.searchFilter.productType = "Xis";
+				scope.searchFilter.query = "Pizzaria";
+
 				scope.searchEstablishments();
-			}).not.toThrow();
+				expect(scope.searchFilter.productType).toEqual("");
+			});
 
-			expect(scope.establishments).toEqual(MockedEstablishmentService._list);
-		});
+			it("and set change the current query search", function() {
+				scope.searchFilter.query = "Pizzaria";
 
-		it("should search for a list of establishments using a query object", function() {
-			var productType = {name: "Teste"};
-			scope.selectProductType(productType);
-
-			expect(function() {
 				scope.searchEstablishments();
-			}).not.toThrow();
+				expect(Mocked$location.search("q")).toEqual(scope.searchFilter.query);
+				expect(Mocked$location.search("productType")).toBeUndefined();
+			});
 
-			expect(MockedEstablishmentService.query.productType).toEqual(productType.name);
+			it("should search for a list of establishments using a query object", function() {
+				var productType = {name: "Teste"};
+				scope.selectProductType(productType);
+
+				scope.searchEstablishments();
+				expect(MockedEstablishmentService.query.productType).toEqual(productType.name);
+
+				var query = "Pizzaria";
+				scope.searchFilter.query = query;
+				scope.searchEstablishments();
+
+				expect(MockedEstablishmentService.query.query).toEqual(query);
+			});
 		});
 	});
 });

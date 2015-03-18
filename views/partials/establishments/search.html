@@ -5,7 +5,7 @@
 		<li class="order-destination"><p>Onde entregar?</p></li>
 	</ul>
 
-	<form class="search-form">
+	<form class="search-form" ng-submit="searchEstablishments()">
 		<div class="food-type-choice">
 			<h5 class="title">Escolha o tipo de comida</h5>
 
@@ -22,7 +22,7 @@
 
 		<div class="query-search">
 			<h5 class="title">Procure pelo nome do estabelecimento</h5>
-			<input type="text" class="query-field" name="query" placeholder="Qual o nome do estabelecimento?" />
+			<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" />
 		</div>
 	</form>
 

@@ -141,13 +141,16 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.establishments = [];
 
-		$scope.searchFilter = $location.search() ? $location.search() : {};
+		var searchObject = $location.search();
+		$scope.searchFilter = {
+			query: searchObject.q || searchObject.query || "",
+			productType: searchObject["product-type"] || searchObject.productType || ""
+		};
 
 		$scope.selectProductType = function(productType) {
 			$scope.searchFilter.productType = productType ? productType.name : false;
 			$scope.searchFilter.query = "";
 
-			$location.search($scope.searchFilter);
 			$scope.$digest();
 
 			$scope.searchEstablishments();
@@ -158,6 +161,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 
 		$scope.searchEstablishments = function() {
+			if ($scope.searchFilter.query && $scope.searchFilter.productType) {
+				$scope.searchFilter.productType = "";
+				$scope.$digest();
+			}
+
+			var searchObject = {};
+			if ($scope.searchFilter.query) {
+				searchObject.q = $scope.searchFilter.query;
+			}
+
+			if ($scope.searchFilter.productType) {
+				searchObject["product-type"] = $scope.searchFilter.productType;
+			}
+
+			$location.search(searchObject);
+
 			EstablishmentService.list($scope.searchFilter).then(function(establishments) {
 				$scope.establishments = establishments;
 				$scope.$digest();
