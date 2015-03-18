@@ -29,10 +29,19 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				$httpBackend.flush();
 			});
 
-			it("should accept a query object", function() {
+			it("should accept a query object with a productType property", function() {
 				var query = {productType: "Teste"};
 
 				$httpBackend.expectGET("/api/establishments/?productType=Teste").respond(200, []);
+
+				EstablishmentService.list(query);
+				$httpBackend.flush();
+			});
+
+			it("should accept a query object with a q property", function() {
+				var query = {query: "Teste"};
+
+				$httpBackend.expectGET("/api/establishments/?q=Teste").respond(200, []);
 
 				EstablishmentService.list(query);
 				$httpBackend.flush();

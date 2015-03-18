@@ -104,6 +104,15 @@ define(["angular"], function(angular) {
 
 	module.service("EstablishmentService", ["$http", "$q", function($http, $q) {
 		this.list = function(query) {
+			if (query) {
+				query = angular.copy(query);
+
+				if (query.query) {
+					query.q = query.query;
+					delete(query.query);
+				}
+			}
+
 			return $http.get("/api/establishments/", {params: query}).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
