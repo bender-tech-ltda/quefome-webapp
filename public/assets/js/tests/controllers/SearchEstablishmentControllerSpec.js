@@ -48,6 +48,19 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 							callback(list);
 						}
 					};
+				},
+
+				_names: ["Xis do Tonhão", "Pizzaria do Mal", "Panqueca do Alemão"],
+				names: function(query) {
+					this.query = query;
+
+					var names = this._names;
+
+					return {
+						then: function(callback) {
+							callback(names);
+						}
+					};
 				}
 			};
 
@@ -152,6 +165,23 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				}).not.toThrow();
 
 				expect(scope.establishments).toEqual(MockedEstablishmentService._list);
+			});
+		});
+
+		describe("when getting establishments names", function() {
+			it("should search for a string", function() {
+				scope.searchEstablishmentsNames("pudim", function() {});
+				expect(MockedEstablishmentService.query).toEqual("pudim");
+			});
+
+			it("should call a callback function", function() {
+				var called = false;
+
+				scope.searchEstablishmentsNames("", function() {
+					called = true;
+				});
+
+				expect(called).toBe(true);
 			});
 		});
 

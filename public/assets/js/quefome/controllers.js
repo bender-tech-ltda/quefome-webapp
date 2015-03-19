@@ -164,6 +164,14 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			return $scope.searchFilter.productType && $scope.searchFilter.productType == productType.name;
 		};
 
+		$scope.searchEstablishmentsNames = function(query, callback) {
+			EstablishmentService.names(query).then(function(names) {
+				callback(names);
+			}, function() {
+				callback([]);
+			});
+		};
+
 		$scope.searchEstablishments = function() {
 			if ($scope.searchFilter.query && $scope.searchFilter.productType) {
 				$scope.searchFilter.productType = "";
