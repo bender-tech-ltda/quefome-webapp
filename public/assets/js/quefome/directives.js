@@ -199,7 +199,9 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				onSelect: "&qfOnSelectItem"
 			},
 			link: function(scope, element, attrs) {
+				var templates = scope.templates || {};
 				var fetchFunction = null;
+
 				if (scope.data) {
 					fetchFunction = function(query, callback) {
 						var regex = new RegExp(query, "g");
@@ -229,10 +231,15 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					};
 				}
 
-				var templates = scope.templates || {};
+				element.on("keydown.qfAutocomplete", function(event) {
+					if (event.which == 13 && autocomplete && autocomplete.resultIndex < 0) {
+						autocomplete.hideResults();
+					}
+				});
 
 				var autocomplete = new AutoComplete({
 					el: element,
+					//debounceTime: 1000,
 					threshold: 1,
 					limit: 0,
 					templates: {
