@@ -252,12 +252,11 @@ a:hover, a:focus {
 }
 
 .delivery-search-page .search-form .query-search {
-	margin: 20px 0px 12px;
+	margin: 20px 12px 12px;
 }
 
 .delivery-search-page .search-form .query-search .query-field {
-	width: 90%;
-	margin-left: 5%;
+	width: 100%;
 	padding: 7px 10px;
 	border: 1px solid #fff;
 	border-radius: 2px;
@@ -608,11 +607,6 @@ input.invalid:focus, select.invalid:focus {
 		float: left;
 		width: 45%;
 		margin: 0px;
-	}
-
-	.delivery-search-page .search-form .query-search .query-field {
-		width: 100%;
-		margin-left: 0px;
 	}
 
 	.delivery-search-page .search-form .search-form-divisor .divisor-text {

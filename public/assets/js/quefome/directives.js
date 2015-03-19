@@ -198,17 +198,6 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				fetch: "&qfFetchFunction"
 			},
 			link: function(scope, element, attrs) {
-				var list = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-					'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-					'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-					'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-					'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-					'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-					'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-					'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-					'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-				];
-
 				var fetchFunction = null;
 				if (scope.data) {
 					fetchFunction = function(query, callback) {
@@ -226,7 +215,18 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					};
 				} else {
 					fetchFunction = function(query, callback) {
-						scope.fetch({$query: query, $callback: callback});
+						scope.fetch({$query: query, $callback: function(data) {
+							var result = [];
+
+							for (var i in data) {
+								var item = data[i];
+								result.push(typeof(item) === "string" ? {value: item} : item);
+							}
+
+							$timeout(function() {
+								callback(result);
+							}, 5000);
+						}});
 					};
 				}
 
