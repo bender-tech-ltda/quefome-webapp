@@ -446,7 +446,7 @@ input.invalid:focus, select.invalid:focus {
 }
 
 .autocomplete .result .list .item.highlighted {
-	background-color: #5897fb;
+	background-color: #FF964D;
 	color: white;
 }
 

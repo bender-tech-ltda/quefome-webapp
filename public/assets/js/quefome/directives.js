@@ -195,7 +195,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				templates: "=qfResultTemplate",
 				template: "@qfResultTemplate",
 				data: "=qfData",
-				fetch: "&qfFetchFunction"
+				fetch: "&qfFetchFunction",
+				onSelect: "&qfOnSelectItem"
 			},
 			link: function(scope, element, attrs) {
 				var fetchFunction = null;
@@ -207,7 +208,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 						for (var i in scope.data) {
 							var item = scope.data[i];
 							if (item.match(regex)) {
-								matches.push({value: item});
+								matches.push({item: item});
 							}
 						}
 
@@ -220,12 +221,10 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 							for (var i in data) {
 								var item = data[i];
-								result.push(typeof(item) === "string" ? {value: item} : item);
+								result.push({item: item});
 							}
 
-							$timeout(function() {
-								callback(result);
-							}, 5000);
+							callback(result);
 						}});
 					};
 				}
@@ -237,8 +236,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					threshold: 1,
 					limit: 0,
 					templates: {
-						item: templates.item || scope.template || "{{value}}",
-						value: templates.value || scope.template || "{{value}}",
+						item: templates.item || scope.template || "{{item}}",
+						value: templates.value || scope.template || "{{item}}",
 						empty: templates.empty || "Nenhum resultado encontrado"
 					},
 					extraClasses: {
@@ -252,7 +251,13 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 						searchTerm:  "search-term",
 						loading:     "loading"
 					},
-					fetch: fetchFunction
+					fetch: fetchFunction,
+					onItem: function(itemElement) {
+						var selectedItem = angular.element(itemElement).data("value");
+						element.val(selectedItem).change();
+
+						scope.onSelect({$item: selectedItem});
+					}
 				});
 
 				element.on("focusin.qfAutocomplete", function() {
