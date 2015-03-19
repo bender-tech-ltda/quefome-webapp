@@ -22,7 +22,7 @@
 
 		<div class="query-search">
 			<h5 class="title">Procure pelo nome do estabelecimento</h5>
-			<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" />
+			<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" qf-autocomplete qf-fetch-function="teste($query, $callback)"/>
 		</div>
 	</form>
 

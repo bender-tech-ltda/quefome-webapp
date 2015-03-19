@@ -422,6 +422,41 @@ input.invalid:focus, select.invalid:focus {
 	color: #fff;
 }
 
+.autocomplete .result {
+	position: relative;
+}
+
+.autocomplete .result .list {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	max-height: 165px;
+	overflow-y: auto;
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 2px;
+	border-top: none;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.autocomplete .result .list .item {
+	padding: 10px;
+	cursor: default;
+}
+
+.autocomplete .result .list .item.highlighted {
+	background-color: #5897fb;
+	color: white;
+}
+
+.autocomplete .result .list .item.empty {
+	background-color: #fff;
+	color: #888;
+	text-align: center;
+}
+
 @media (min-width: 768px) {
 	.navbar-quefome {
 		height: 122px;
@@ -655,7 +690,7 @@ input.invalid:focus, select.invalid:focus {
 }
 
 /*Workaround para impedir que o browser mobile dê um zoom desnecessário na página*/
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+@media (max-width: 768px) { 
 	select:focus, textarea:focus, input:focus {
 		font-size: 16px;
 	}

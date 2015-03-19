@@ -1,4 +1,4 @@
-define(["angular", "bootstrap"], function(angular) {
+define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootstrap, AutoComplete) {
 	"use strict";
 	
 	var module = angular.module("qfDirectives", []);
@@ -184,6 +184,87 @@ define(["angular", "bootstrap"], function(angular) {
 						trigger: scope.trigger
 					});
 				}
+			}
+		};
+	}]);
+
+	module.directive("qfAutocomplete", ["$timeout", function($timeout) {
+		return {
+			restrict: "A",
+			scope: {
+				templates: "=qfResultTemplate",
+				template: "@qfResultTemplate",
+				data: "=qfData",
+				fetch: "&qfFetchFunction"
+			},
+			link: function(scope, element, attrs) {
+				var list = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+					'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+					'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+					'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+					'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+					'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+					'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+					'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+					'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+				];
+
+				var fetchFunction = null;
+				if (scope.data) {
+					fetchFunction = function(query, callback) {
+						var regex = new RegExp(query, "g");
+						var matches = [];
+
+						for (var i in scope.data) {
+							var item = scope.data[i];
+							if (item.match(regex)) {
+								matches.push({value: item});
+							}
+						}
+
+						callback(matches);
+					};
+				} else {
+					fetchFunction = function(query, callback) {
+						scope.fetch({$query: query, $callback: callback});
+					};
+				}
+
+				var templates = scope.templates || {};
+
+				var autocomplete = new AutoComplete({
+					el: element,
+					threshold: 1,
+					limit: 0,
+					templates: {
+						item: templates.item || scope.template || "{{value}}",
+						value: templates.value || scope.template || "{{value}}",
+						empty: templates.empty || "Nenhum resultado encontrado"
+					},
+					extraClasses: {
+						wrapper:     "autocomplete",
+						results:     "result",
+						list:        "list",
+						item:        "item",
+						highlighted: "highlighted",
+						disabled:    "disabled",
+						empty:       "empty",
+						searchTerm:  "search-term",
+						loading:     "loading"
+					},
+					fetch: fetchFunction
+				});
+
+				element.on("focusin.qfAutocomplete", function() {
+					var value = element.val();
+					if (value && value.trim().length > 0) {
+						autocomplete.searchTerm = value;
+
+						$timeout(function() {
+							autocomplete.processSearch();
+						}, 1);
+					}
+				});
 			}
 		};
 	}]);
