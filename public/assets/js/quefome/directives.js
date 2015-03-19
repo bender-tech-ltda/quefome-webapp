@@ -363,11 +363,15 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			restrict: "E",
 			require: "form",
 			link: function(scope, element, attrs, formController) {
-				var fakeButton = angular.element("<button type='submit' style='display: none;'></button>");
-				element.append(fakeButton);
+				var submitButton = element.find("button[type='submit']");
+
+				if (!submitButton || !submitButton[0]) {
+					var submitButton = angular.element("<button type='submit' style='display: none;'></button>");
+					element.append(submitButton);
+				}
 
 				formController.$submit = function() {
-					fakeButton.click();
+					submitButton.click();
 				};
 			}
 		};

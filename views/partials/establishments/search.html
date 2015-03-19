@@ -10,7 +10,7 @@
 			<h5 class="title">Escolha o tipo de comida</h5>
 
 			<ul class="food-type-list">
-				<li class="helper-no-select" ng-repeat="productType in productTypes" ng-class="{active: isProductTypeSelected(productType)}" ng-click="selectProductType(productType)">
+				<li class="helper-no-select" ng-repeat="productType in productTypes" ng-class="{active: isProductTypeSelected(productType)}" ng-click="selectProductType(productType)" title="{{productType.name}}">
 					<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 				</li>
 			</ul>
@@ -22,7 +22,16 @@
 
 		<div class="query-search">
 			<h5 class="title">Procure pelo nome do estabelecimento</h5>
-			<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="searchForm.$submit()"/>
+
+			<div class="query-group">
+				<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="searchForm.$submit()"/>
+
+				<span class="query-button-wrapper">
+					<button type="submit" class="query-button">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
 		</div>
 	</form>
 
