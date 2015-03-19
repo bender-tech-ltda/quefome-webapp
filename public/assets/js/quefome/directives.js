@@ -281,6 +281,20 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
+	module.directive("qfLoseFocusOnSubmit", [function() {
+		return {
+			restrict: "A",
+			link: function(scope, element, attrs) {
+				element.on("submit.qfLoseFocusOnSubmit", function() {
+					var focusedElement = element.find(":focus");
+					if (focusedElement && focusedElement[0]) {
+						focusedElement.blur();
+					}
+				});
+			}
+		};
+	}]);
+
 	module.directive("qfShowValidationState", [function() {
 		return {
 			restrict: "A",
@@ -340,6 +354,21 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				element.on("keyup.qfValidateState", function() {
 					checkAndApplyState(false);
 				});
+			}
+		};
+	}]);
+
+	module.directive("form", [function() {
+		return {
+			restrict: "E",
+			require: "form",
+			link: function(scope, element, attrs, formController) {
+				var fakeButton = angular.element("<button type='submit' style='display: none;'></button>");
+				element.append(fakeButton);
+
+				formController.$submit = function() {
+					fakeButton.click();
+				};
 			}
 		};
 	}]);
