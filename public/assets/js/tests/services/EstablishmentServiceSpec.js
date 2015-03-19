@@ -47,5 +47,28 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				$httpBackend.flush();
 			});
 		});
+
+		describe("the names function", function() {
+			it("should search for a list of names", function() {
+				var response = ["Xis", "Pizzaria", "Blablabla"];
+				$httpBackend.expectGET("/api/establishments/names/").respond(200, response);
+
+				EstablishmentService.names().then(function(names) {
+					expect(names).toEqual(response);
+				});
+
+				$httpBackend.flush();
+			});
+
+			it("should search using a query", function() {
+				var query = "xis";
+
+				var response = ["Xis"];
+				$httpBackend.expectGET("/api/establishments/names/?q=" + query).respond(200, response);
+
+				EstablishmentService.names(query);
+				$httpBackend.flush();
+			});
+		});
 	});
 });

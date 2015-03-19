@@ -117,6 +117,22 @@ define(["angular"], function(angular) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
+
+		this.names = function(query, limit) {
+			var params = {};
+
+			if (query) {
+				params.q = query;
+			}
+
+			if (limit) {
+				params.limit = limit;
+			}
+
+			return $http.get("/api/establishments/names/", {params: params}).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
 	}]);
 
 	module.service("PaymentMethodService", ["$http", "$q", function($http, $q) {
