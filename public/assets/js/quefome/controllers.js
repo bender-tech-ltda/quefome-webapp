@@ -141,10 +141,6 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.establishments = [];
 
-		$scope.teste = function(query, callback) {
-			callback(["pudim", "tapioca", "chocolate", "leite"]);
-		};
-
 		var searchObject = $location.search();
 		$scope.searchFilter = {
 			query: searchObject.q || searchObject.query || "",

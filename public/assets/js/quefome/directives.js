@@ -239,7 +239,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 				var autocomplete = new AutoComplete({
 					el: element,
-					//debounceTime: 1000,
+					debounceTime: 500,
 					threshold: 1,
 					limit: 0,
 					templates: {
