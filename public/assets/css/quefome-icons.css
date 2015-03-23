@@ -12,6 +12,7 @@
 .qf-icon {
 	font-family: "quefome";
 	speak: none;
+	font-size: 20px;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
@@ -32,83 +33,99 @@
 	animation: 1.3s linear 0s normal none infinite spin;
 }
 
-.qf-icon.icon-order:before {
+.icon-order:before {
 	content: "\e609";
 }
 
-.qf-icon.icon-lock:before {
+.icon-lock:before {
 	content: "\e60a";
 }
 
-.qf-icon.icon-card:before {
+.icon-card:before {
 	content: "\e60b";
 }
 
-.qf-icon.icon-menu:before {
+.icon-search:before {
+	content: "\e614";
+}
+
+.icon-menu:before {
 	content: "\e60c";
 }
 
-.qf-icon.icon-email:before {
+.icon-email:before {
 	content: "\e610";
 }
 
-.qf-icon.icon-money:before {
+.icon-bike:before {
+	content: "\e611";
+}
+
+.icon-money:before {
 	content: "\e60d";
 }
 
-.qf-icon.icon-card-ticket:before {
+.icon-paper-ticket:before {
 	content: "\e60b";
 }
 
-.qf-icon.icon-paper-ticket:before {
+.icon-paper-ticket:before {
 	content: "\e60e";
 }
 
-.qf-icon.icon-user:before {
+.icon-event-open:before {
+	content: "\e612";
+}
+
+.icon-event-closed:before {
+	content: "\e613";
+}
+
+.icon-user:before {
 	content: "\e60f";
 }
 
-.qf-icon.icon-meat:before {
+.icon-meat:before {
 	content: "\e600";
 }
 
-.qf-icon.icon-yakisoba:before {
+.icon-yakisoba:before {
 	content: "\e603";
 }
 
-.qf-icon.icon-skewer:before {
+.icon-skewer:before {
 	content: "\e601";
 }
 
-.qf-icon.icon-burger:before {
+.icon-burger:before {
 	content: "\e602";
 }
 
-.qf-icon.icon-vegetarian:before {
+.icon-vegetarian:before {
 	content: "\e604";
 }
 
-.qf-icon.icon-question:before {
+.icon-question:before {
 	content: "\e607";
 }
 
-.qf-icon.icon-fish:before {
+.icon-fish:before {
 	content: "\e605";
 }
 
-.qf-icon.icon-pizza:before {
+.icon-pizza:before {
 	content: "\e606";
 }
 
-.qf-icon.icon-sushi:before {
+.icon-sushi:before {
 	content: "\e608";
 }
 
-.qf-icon.icon-forward:before {
+.icon-forward:before {
 	content: "\e968";
 }
 
-.qf-icon.icon-loading:before {
+.icon-loading:before {
 	content: "\e97a";
 }
 

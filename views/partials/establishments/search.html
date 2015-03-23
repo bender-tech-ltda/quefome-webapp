@@ -28,7 +28,7 @@
 
 				<span class="query-button-wrapper">
 					<button type="submit" class="query-button">
-						<span class="glyphicon glyphicon-search"></span>
+						<span class="qf-icon icon-search"></span>
 					</button>
 				</span>
 			</div>
@@ -45,11 +45,29 @@
 			<div class="panel-body">
 				<ul class="establishment-list" ng-show="establishments && establishments.length > 0">
 					<li class="establishment" ng-repeat="establishment in establishments">
-						<img class="logo img-thumbnail" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" class="img-rounded" />
+						<img class="logo img-thumbnail" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" />
 
 						<div class="information">
-							<h3 class="name">{{establishment.name}}</h3>
-							<p class="description">{{establishment.description}}</p>
+							<div class="title">
+								<h3 class="name">{{establishment.name}}</h3>
+								<p class="description">{{establishment.description}}</p>
+							</div>
+							<div class="additional-info">
+								<div class="status" ng-class="{open: establishment.parameters.status == 'OPEN', closed: establishment.parameters.status != 'OPEN'}" title="Horário de Funcionamento">
+									<span class="qf-icon" ng-class="{'icon-event-open': establishment.parameters.status == 'OPEN', 'icon-event-closed': establishment.parameters.status != 'OPEN'}"></span>
+									<span class="text">{{establishment.parameters.status == 'OPEN' ? 'Aberto' : 'Fechado'}} </span>
+									<span class="schedule" ng-show="establishment.parameters.currentSchedule"> ({{formatCurrentSchedule(establishment)}})</span>
+								</div>
+								<div class="delivery-time" title="Tempo de entrega">
+									<span class="qf-icon icon-bike"></span>
+									<span>{{formatDeliveryTime(establishment)}}</span>
+								</div>
+								<div class="minimum-order-value" title="Pedido mínimo">
+									<span class="qf-icon icon-money"></span>
+									<span>R$ {{formatMoney(establishment.parameters.minimumOrderValue)}}</span>
+								</div>
+							</div>
+							<br/>
 						</div>
 					</li>
 				</ul>

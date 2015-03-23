@@ -136,7 +136,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("SearchEstablishmentController", ["$scope", "$location", "ProductTypeService", "EstablishmentService", function($scope, $location, ProductTypeService, EstablishmentService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, ProductTypeService, EstablishmentService) {
 		$scope.productTypes = [];
 
 		$scope.establishments = [];
@@ -145,6 +145,50 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.searchFilter = {
 			query: searchObject.q || searchObject.query || "",
 			productType: searchObject["product-type"] || searchObject.productType || ""
+		};
+
+		$scope.formatCurrentSchedule = function(establishment) {
+			if (!establishment || !establishment.parameters || !establishment.parameters.currentSchedule) {
+				return;
+			}
+
+			var status = establishment.parameters.status;
+			var schedule = establishment.parameters.currentSchedule;
+
+			if (status == 'OPEN') {
+				return $filter("date")(schedule.openingTime, "HH:mm") + " até " + $filter("date")(schedule.closingTime, "HH:mm");
+			}
+
+			var weekDayName = schedule.weekDay.name;
+			if (schedule.weekDay.number == (new Date()).getDay()) {
+				weekDayName = "hoje";
+			}
+
+			return "Abrirá " + weekDayName + ", às " + $filter("date")(schedule.openingTime, "HH:mm");
+
+		};
+
+		$scope.formatDeliveryTime = function(establishment) {
+			if (!establishment || !establishment.parameters || !establishment.parameters.currentSchedule) {
+				return;
+			}
+
+			var parameters = establishment.parameters;
+			if (parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
+				return parameters.minimumDeliveryTime + " min."
+			} else if (!parameters.minimumDeliveryTime && parameters.maximumDeliveryTime) {
+				return parameters.maximumDeliveryTime + " min.";
+			} else if (!parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
+				return "0 min."
+			} else if (parameters.minimumDeliveryTime == parameters.maximumDeliveryTime) {
+				return parameters.minimumDeliveryTime + " min."
+			} else {
+				return parameters.minimumDeliveryTime + " à " + parameters.maximumDeliveryTime + "min.";
+			}
+		};
+
+		$scope.formatMoney = function(money) {
+			return $filter('number')(money, 2).replace(",", "").replace(".", ",");
 		};
 
 		$scope.selectProductType = function(productType) {

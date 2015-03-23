@@ -282,7 +282,7 @@ a:hover, a:focus {
 
 .delivery-search-page .search-form .query-search .query-button-wrapper .query-button {
 	width: 100%;
-	padding: 7px 18px;
+	padding: 3px 18px 7px;
 	border: 1px solid #f46c21;
 	border-radius: 2px;
 	border-top-left-radius: 0px;
@@ -295,6 +295,10 @@ a:hover, a:focus {
 	color: #fff;
 	border: 1px solid #FBCA0E;
 	background-color: #FBCA0E;
+}
+
+.delivery-search-page .search-form .query-search .query-button-wrapper .query-button > * {
+	top: 5px;
 }
 
 .delivery-search-page .search-result {
@@ -319,8 +323,10 @@ a:hover, a:focus {
 
 .delivery-search-page .search-result .establishment-list .establishment {
 	background-color: #f5f5f5;
-	height: 120px;
+	min-height: 120px;
 	width: 100%;
+	display: inline-block;
+	margin-bottom: -6px
 }
 
 .delivery-search-page .search-result .establishment-list .establishment + .establishment {
@@ -341,17 +347,58 @@ a:hover, a:focus {
 
 .delivery-search-page .search-result .establishment-list .establishment .information {
 	float: left;
-	width: 61%;
+	width: 57%;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .name {
+.delivery-search-page .search-result .establishment-list .establishment .information .title {
+	border-bottom: 1px solid #DCDCDC;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment:hover .information .title {
+	border-color: #F5F5F5
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .title .name {
 	margin-top: 15px;
 	margin-bottom: 5px;
-	font-size: 22px;
+	font-size: 20px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .description {
+.delivery-search-page .search-result .establishment-list .establishment .information .title .description {
+	display: none;
 	color: #4C4E4E;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info {
+	margin-top: 9px;
+	font-size: 12px;
+	color: #4C4E4E;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .qf-icon {
+	top: 3px;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status {
+	margin-bottom: 6px;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status.open {
+	color: #008000;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .delivery-time {
+	float: left;
+	width: 55%;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value {
+	float: left;
+	width: 45%;
+}
+
+.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value .qf-icon {
+	top: 4px;
 }
 
 .delivery-search-page .search-result .no-establishment-found {
@@ -656,6 +703,48 @@ input.invalid:focus, select.invalid:focus {
 		width: 75%;
 	}
 
+	.delivery-search-page .search-result .establishment-list .establishment .information {
+		width: 79%;
+		margin-top: 15px;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .title {
+		float: left;
+		width: 69%;
+		min-height: 90px;
+		border-bottom: none;
+		border-right: 1px solid #DCDCDC;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .title .name {
+		margin-top: 0px;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info {
+		float: left;
+		width: 28%;
+		margin-top: 0px;
+		margin-left: 10px;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status {
+		margin-bottom: 0px;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .delivery-time {
+		float: none;
+		width: 100%;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value {
+		float: none;
+		width: 100%;	
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .title .description {
+		display: block;
+	}
+
 	.footer {
 		height: 164px;
 	}
@@ -698,6 +787,14 @@ input.invalid:focus, select.invalid:focus {
 		background-image: url("/assets/img/banner_burger_1199x300.jpg");
 	}
 
+	.delivery-search-page .search-result .establishment-list .establishment .information {
+		width: 83%;
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information .title {
+		width: 70%;
+	}
+
 	.footer .new-delivery {
 		margin-left: 10%;
 	}
@@ -710,6 +807,10 @@ input.invalid:focus, select.invalid:focus {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
+	}
+
+	.delivery-search-page .search-result .establishment-list .establishment .information {
+		width: 86%;
 	}
 }
 
