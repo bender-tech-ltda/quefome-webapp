@@ -160,8 +160,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			}
 
 			var weekDayName = schedule.weekDay.name;
-			if (schedule.weekDay.number == (new Date()).getDay()) {
+			var today = new Date();
+			if (schedule.weekDay.number == today.getDay()) {
 				weekDayName = "hoje";
+			} else if ((schedule.weekDay.number - today.getDay()) == 1) {
+				weekDayName = "amanhã";
 			}
 
 			return "Abrirá " + weekDayName + ", às " + $filter("date")(schedule.openingTime, "HH:mm");
@@ -175,13 +178,13 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 			var parameters = establishment.parameters;
 			if (parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
-				return parameters.minimumDeliveryTime + " min."
+				return parameters.minimumDeliveryTime + "min."
 			} else if (!parameters.minimumDeliveryTime && parameters.maximumDeliveryTime) {
-				return parameters.maximumDeliveryTime + " min.";
+				return parameters.maximumDeliveryTime + "min.";
 			} else if (!parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
-				return "0 min."
+				return "0min."
 			} else if (parameters.minimumDeliveryTime == parameters.maximumDeliveryTime) {
-				return parameters.minimumDeliveryTime + " min."
+				return parameters.minimumDeliveryTime + "min."
 			} else {
 				return parameters.minimumDeliveryTime + " à " + parameters.maximumDeliveryTime + "min.";
 			}

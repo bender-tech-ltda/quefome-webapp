@@ -326,7 +326,7 @@ a:hover, a:focus {
 	min-height: 120px;
 	width: 100%;
 	display: inline-block;
-	margin-bottom: -6px
+	margin-bottom: -5px
 }
 
 .delivery-search-page .search-result .establishment-list .establishment + .establishment {
@@ -371,7 +371,7 @@ a:hover, a:focus {
 
 .delivery-search-page .search-result .establishment-list .establishment .information .additional-info {
 	margin-top: 9px;
-	font-size: 12px;
+	font-size: 11px;
 	color: #4C4E4E;
 }
 
@@ -725,6 +725,7 @@ input.invalid:focus, select.invalid:focus {
 		width: 28%;
 		margin-top: 0px;
 		margin-left: 10px;
+		font-size: 12px;
 	}
 
 	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status {
