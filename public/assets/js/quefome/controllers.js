@@ -172,8 +172,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 
 		$scope.formatDeliveryTime = function(establishment) {
-			if (!establishment || !establishment.parameters || !establishment.parameters.currentSchedule) {
-				return;
+			if (!establishment || !establishment.parameters) {
+				return "";
 			}
 
 			var parameters = establishment.parameters;
