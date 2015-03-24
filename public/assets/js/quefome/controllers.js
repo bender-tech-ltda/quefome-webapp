@@ -162,7 +162,12 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			var weekDayName = schedule.weekDay.name;
 			var today = new Date();
 			if (schedule.weekDay.number == today.getDay()) {
-				weekDayName = "hoje";
+				var openingTime = new Date(schedule.openingTime);
+
+				if (today.getHours() < openingTime.getHours() ||
+					(today.getHours() == openingTime.getHours() && today.getMinutes() < openingTime.getMinutes())) {
+					weekDayName = "hoje";
+				}
 			} else if ((schedule.weekDay.number - today.getDay()) == 1) {
 				weekDayName = "amanhã";
 			}

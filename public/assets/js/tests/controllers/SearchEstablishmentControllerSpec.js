@@ -237,6 +237,20 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		describe("when formatting the current schedule", function() {
 			var establishment, WeekDay;
 
+			var formatTime = function(value) {
+				var hours = value.getHours();
+				if (hours < 10) {
+					hours = "0" + hours;
+				}
+
+				var minutes = value.getMinutes();
+				if (minutes < 10) {
+					minutes = "0" + minutes;
+				}
+
+				return hours + ":" + minutes;
+			};
+
 			beforeEach(function() {
 				establishment = {};
 				establishment.parameters = {};
@@ -251,17 +265,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				WeekDay[6] = {number: 6, name: "Sábado"};
 
 				Mocked$filter.parseFunction = function(value) {
-					var hours = value.getHours();
-					if (hours < 10) {
-						hours = "0" + hours;
-					}
-
-					var minutes = value.getMinutes();
-					if (minutes < 10) {
-						minutes = "0" + minutes;
-					}
-
-					return hours + ":" + minutes;
+					return formatTime(value);
 				};
 			});
 
@@ -285,10 +289,10 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 				establishment.parameters.currentSchedule.weekDay = WeekDay[(new Date).getDay()];
 				establishment.parameters.currentSchedule.openingTime = new Date();
-				establishment.parameters.currentSchedule.openingTime.setHours(18, 0);
+				establishment.parameters.currentSchedule.openingTime.setHours(establishment.parameters.currentSchedule.openingTime.getHours() + 1, 0);
 
 				var result = scope.formatCurrentSchedule(establishment);
-				expect(result).toEqual("Abrirá hoje, às 18:00");
+				expect(result).toEqual("Abrirá hoje, às " + formatTime(establishment.parameters.currentSchedule.openingTime));
 			});
 
 			it("should return the tomorrow schedule time if the establishment is closed and opens tomorrow", function() {
@@ -304,7 +308,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				expect(result).toEqual("Abrirá amanhã, às 18:00");
 			});
 
-			it("should return the day of the week schedule that the establishment will open", function() {
+			it("should return the day of the week schedule that the establishment will open if it is a diferent day of the week", function() {
 				establishment.parameters.status = 'CLOSED';
 				establishment.parameters.currentSchedule = {};
 
@@ -315,6 +319,18 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 				var result = scope.formatCurrentSchedule(establishment);
 				expect(result).toEqual("Abrirá " + establishment.parameters.currentSchedule.weekDay.name + ", às 18:00");
+			});
+
+			it("should return the day of the week schedule that the establishment will open if the time has passed", function() {
+				establishment.parameters.status = 'CLOSED';
+				establishment.parameters.currentSchedule = {};
+
+				establishment.parameters.currentSchedule.openingTime = new Date();
+				establishment.parameters.currentSchedule.openingTime.setHours(establishment.parameters.currentSchedule.openingTime.getHours() - 1, 0);
+				establishment.parameters.currentSchedule.weekDay = WeekDay[establishment.parameters.currentSchedule.openingTime.getDay()];
+
+				var result = scope.formatCurrentSchedule(establishment);
+				expect(result).toEqual("Abrirá " + establishment.parameters.currentSchedule.weekDay.name + ", às " + formatTime(establishment.parameters.currentSchedule.openingTime));
 			});
 
 		});
