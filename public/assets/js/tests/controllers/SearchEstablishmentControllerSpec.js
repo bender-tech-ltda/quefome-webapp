@@ -85,9 +85,11 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			};
 
 			Mocked$filter = function() {
-				return function(value) {
-					return value + "";
-				};
+				return Mocked$filter.parseFunction;
+			};
+
+			Mocked$filter.parseFunction = function(value) {
+				return value + "";
 			};
 		});
 
@@ -273,6 +275,32 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 				var result = scope.formatDeliveryTime(establishment);
 				expect(result).toEqual(establishment.parameters.minimumDeliveryTime + " à " + establishment.parameters.maximumDeliveryTime + "min.");
+			});
+		});
+
+		describe("when formatting money", function() {
+			beforeEach(function() {
+				Mocked$filter.parseFunction = function(value) {
+					return value.toFixed(2);
+				}
+			});
+
+			it("should replace the point by a comma", function() {
+				var result = scope.formatMoney(2.10);
+				expect(result).toEqual("2,10");
+			});
+
+			it("should ifgnore the thousand separator", function() {
+				var result = scope.formatMoney(100000);
+				expect(result).toEqual("100000,00");
+			});
+
+			it("should have two decimal digits", function() {
+				var result = scope.formatMoney(2);
+				expect(result).toEqual("2,00");
+
+				result = scope.formatMoney(10.3);
+				expect(result).toEqual("10,30");
 			});
 		});
 	});
