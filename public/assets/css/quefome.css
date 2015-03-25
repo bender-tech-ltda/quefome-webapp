@@ -167,6 +167,11 @@ a:hover, a:focus {
 	border-radius: 2px;
 }
 
+.delivery-search-panel .query-search .query-field:focus {
+	border-color: #F46C21;
+	box-shadow: 0px 0px 8px rgba(244, 108, 33, 0.6);
+}
+
 .delivery-search-panel .query-search .query-button {
 	width: 95%;
 	margin: 10px 0px 10px;
@@ -659,16 +664,30 @@ input.invalid:focus, select.invalid:focus {
 	}
 
 	.delivery-search-panel .food-type-search {
-		width: 30%;
-		margin-left: 10%;
+		float: left;
+		width: 40%;
+		margin-top: 27px;
+		margin-left: 5%;
 	}
 
-	.delivery-search-panel .food-type-list li {
+	.delivery-search-panel .food-type-search .food-type-list li {
 		font-size: 12px;
 	}
 
-	.delivery-search-panel .food-type-list li a {
-		width: 32%;
+	.delivery-search-panel .food-type-search .food-type-list li a {
+		width: 31%;
+	}
+
+	.delivery-search-panel .query-search {
+		float: left;
+		width: 40%;
+		min-height: 246px;
+		margin-top: 27px;
+		margin-left: 7%;
+	}
+
+	.delivery-search-panel .query-search .query-field {
+		margin-top: 5%;
 	}
 
 	.delivery-search-page .search-form .food-type-list li {
@@ -828,6 +847,16 @@ input.invalid:focus, select.invalid:focus {
 @media (min-width: 992px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1199x300.jpg");
+	}
+
+	.delivery-search-panel .food-type-search {
+		width: 34%;
+		margin-left: 10%;
+	}
+
+	.delivery-search-panel .query-search {
+		width: 34%;
+		margin-left: 11%;
 	}
 
 	.delivery-search-page .search-result .establishment-list .establishment .information {
