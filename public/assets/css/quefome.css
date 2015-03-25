@@ -78,7 +78,7 @@ a:hover, a:focus {
 
 .delivery-search-panel {
 	width: 100%;
-	height: 300px;
+	min-height: 300px;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
@@ -96,7 +96,7 @@ a:hover, a:focus {
 	background-color: rgba(245, 245, 245, 0.9);
 	padding: 0 6px 10px 10px;
 	margin: 20px 15px;
-	min-height: 260px;
+	min-height: 246px;
 	width: 90%;
 	width: -webkit-calc(100% - 30px);
 	width: -moz-calc(100% - 30px);
@@ -109,15 +109,16 @@ a:hover, a:focus {
 	list-style: outside none none;
 	display: inline-block;
 	padding-left: 0px;
+	margin-bottom: 0px;
 	width: 100%;
 }
 
 .delivery-search-panel .food-type-search .food-type-list li a {
 	float: left;
 	width: 31%;
-	height: 80px;
+	min-height: 80px;
 	padding: 12px 1px;
-	margin: 0 3px 6px;
+	margin: 0px 3px 6px;
 	font-size: 11px;
 	line-height: 1.4;
 	text-decoration: none;
@@ -134,10 +135,50 @@ a:hover, a:focus {
 	background-color: #f46c21;
 }
 
-.delivery-search-panel .qf-icon {
+.delivery-search-panel .food-type-search .food-type-list li a .qf-icon {
 	margin-top: 3px;
 	margin-bottom: 4px;
 	font-size: 35px;
+}
+
+.delivery-search-panel .query-search {
+	border-radius: 4px;
+	display: inline-block;
+	background-color: rgba(245, 245, 245, 0.9);
+	padding: 0 6px 10px 10px;
+	margin: 0px 15px 20px;
+	min-height: 182px;
+	width: 90%;
+	width: -webkit-calc(100% - 30px);
+	width: -moz-calc(100% - 30px);
+	width: calc(100% - 30px);
+	text-align: center;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.delivery-search-panel .query-search .title {
+	font-size: 22px;
+}
+
+.delivery-search-panel .query-search .query-field {
+	width: 95%;
+	padding: 8px 10px;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+.delivery-search-panel .query-search .query-button {
+	width: 95%;
+	margin: 10px 0px 10px;
+	padding: 8px 18px;
+	border: none;
+	border-radius: 2px;
+	background: #F46C21;
+	color: #fff;
+}
+
+.delivery-search-panel .query-search .query-button:hover {
+	background-color: #FBCA0E;
 }
 
 .delivery-search-page .order-steps {
