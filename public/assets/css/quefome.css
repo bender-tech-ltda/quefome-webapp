@@ -118,7 +118,7 @@ a:hover, a:focus {
 	height: 80px;
 	padding: 12px 1px;
 	margin: 0 3px 6px;
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 1.4;
 	text-decoration: none;
 	text-align: center;
@@ -256,6 +256,7 @@ a:hover, a:focus {
 }
 
 .delivery-search-page .search-form .query-search .query-group {
+	width: 100%;
 	position: relative;
 	display: table;
 	border-collapse: separate;
