@@ -74,8 +74,21 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("HomeController", ["$scope", "ProductTypeService", function($scope, ProductTypeService) {
+	module.controller("HomeController", ["$scope", "$location", "EstablishmentService", "ProductTypeService", function($scope, $location, EstablishmentService, ProductTypeService) {
 		$scope.productTypes = [];
+		$scope.query = "";
+
+		$scope.searchEstablishmentsNames = function(query, callback) {
+			EstablishmentService.names(query).then(function(names) {
+				callback(names);
+			}, function() {
+				callback([]);
+			});
+		};
+
+		$scope.searchEstablishments = function() {
+			$location.path("/establishments/search").search({q: $scope.query});
+		};
 
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;

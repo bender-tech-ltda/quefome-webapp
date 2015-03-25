@@ -13,10 +13,10 @@
 		</ul>
 	</div>
 
-	<form name="querySearchForm" class="query-search">
+	<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()">
 		<h3 class="title">Procure pelo seu restaurante favorito</h3>
 
-		<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="querySearchForm.$submit()"/>
+		<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" />
 
 		<button type="submit" class="query-button">Pesquisar</button>
 	</form>

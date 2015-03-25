@@ -160,8 +160,16 @@ a:hover, a:focus {
 	font-size: 22px;
 }
 
-.delivery-search-panel .query-search .query-field {
+.delivery-search-panel .query-search .autocomplete {
 	width: 95%;
+}
+
+.delivery-search-panel .query-search .autocomplete .result .list .item.empty {
+	display: none;
+}
+
+.delivery-search-panel .query-search .query-field {
+	width: 100%;
 	padding: 8px 10px;
 	border: 1px solid #ccc;
 	border-radius: 2px;
@@ -545,6 +553,11 @@ input.invalid:focus, select.invalid:focus {
 	color: #fff;
 }
 
+.autocomplete {
+	width: 100%;
+	display: inline-block;
+}
+
 .autocomplete .result {
 	position: relative;
 }
@@ -566,7 +579,12 @@ input.invalid:focus, select.invalid:focus {
 
 .autocomplete .result .list .item {
 	padding: 10px;
+	text-align: left;
 	cursor: default;
+}
+
+.autocomplete .result .list .item + .item {
+	border-top: 1px solid #DCDCDC;
 }
 
 .autocomplete .result .list .item.highlighted {

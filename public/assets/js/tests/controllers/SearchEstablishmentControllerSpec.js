@@ -194,7 +194,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
-		describe("when searching for stablishments", function() {
+		describe("when searching for establishments", function() {
 			it("should get list of establishments", function() {
 				expect(function() {
 					scope.searchEstablishments();
