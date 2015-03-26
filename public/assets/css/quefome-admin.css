@@ -80,7 +80,7 @@ body {
 
 .navbar-quefome-admin .navbar-establishment-brand {
 	float: right;
-	padding: 11px;
+	margin: 10px;
 }
 
 .navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
@@ -242,7 +242,7 @@ body {
 	}
 
 	.navbar-quefome-admin .navbar-establishment-brand {
-		padding-right: 30px;
+		margin-right: 30px;
 	}
 
 	.navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
