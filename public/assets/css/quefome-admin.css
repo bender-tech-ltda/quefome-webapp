@@ -43,6 +43,9 @@ body {
 	border: 1px solid #f26c23;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
+}
+
+.login-page .login-panel .input-group-addon > * {
 	font-size: 18px;
 }
 
@@ -136,6 +139,10 @@ body {
 	transition: .20s ease-in-out;
 }
 
+.nav-sidebar .nav li a .qf-icon {
+	font-size: 16px;
+}
+
 .nav-sidebar .nav li a:hover, .nav-sidebar .nav li a:focus {
 	background-color: #2C2C2C;
 	color: #fff;
@@ -170,6 +177,7 @@ body {
 
 .content .partial-header .partial-icon > * {
 	top: 4px;
+	font-size: 42px;
 }
 
 .content .partial-header .partial-icon + .partial-title {
