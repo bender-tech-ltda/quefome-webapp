@@ -192,10 +192,14 @@ body {
 }
 
 .content .partial-header .partial-title .title {
-	margin-top: 0px;
+	margin-top: 15px;
 	margin-left: -2px;
 	font-size: 24px;
 	color: #EB3825;
+}
+
+.content .partial-header .partial-title .short-description + .title {
+	margin-top: 0px;
 }
 
 .footer {
