@@ -150,7 +150,9 @@ body {
 
 .footer .footer-content {
 	border-top: 1px solid #CCC;
+	color: #7A7A7A;
 	margin: 10px;
+	padding: 10px;
 	min-height: 50px;
 	text-align: center;
 }
@@ -274,10 +276,6 @@ body {
 
 	.content .partial-header .partial-title .title {
 		font-size: 32px;
-	}
-
-	.footer .footer-content {
-		margin-left: 270px;
 	}
 }
 
