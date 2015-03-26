@@ -78,15 +78,62 @@ body {
 	margin: 15px 10px 0px;
 }
 
-.navbar-quefome-admin .navbar-establishment-brand {
+.navbar-quefome-admin .establishment-info {
 	float: right;
 	margin: 10px;
 }
 
-.navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
+.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
 	background-color: rgba(255, 255, 255, 0.2);
 	padding: 3px;
 	width: 70px;
+}
+
+.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu.open {
+	display: block;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu {
+	display: none;
+	width: 60%;
+	top: 90px;
+	right: 0px;
+	background-color: #fff;
+	position: absolute;
+	border-bottom: 2px solid #EB3825;
+	border-left: 2px solid #EB3825;
+	border-right: 2px solid #EB3825;
+	padding: 8px 0px;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu:before {
+	top: -6px;
+	right: 37px;
+	position: absolute;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #FFF;
+	border-left: 7px solid transparent;
+	content: "";
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu li a {
+	display: block;
+	margin: 0px 8px;
+	padding: 7px;
+	color: #333;
+	background-color: #EEEEEE;
+	font-size: 12px;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu li a:hover {
+	text-decoration: none;
+	background-color: #EB3825;
+	color: #fff;
 }
 
 .content {
@@ -243,12 +290,45 @@ body {
 		margin-left: 20px;
 	}
 
-	.navbar-quefome-admin .navbar-establishment-brand {
-		margin-right: 30px;
+	.navbar-quefome-admin .establishment-info .navbar-establishment-brand {
+		float: left;
 	}
 
-	.navbar-quefome-admin .navbar-establishment-brand .navbar-establishment-photo {
+	.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
 		width: 90px;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu {
+		float: left;
+		width: 125px;
+		top: 0px;
+		left: 0px;
+		position: relative;
+		display: inline-block;
+		margin: 66px 0px 0px 7px;
+		padding: 0px;
+		list-style: outside none none;
+		background: none;
+		border: none;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu:before {
+		border: none;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu li a {
+		width: 100%;
+		padding: 4px 5px 3px;
+		margin: 0px;
+		background-color: rgba(255, 255, 255, 0.1) ;
+		color: #fff;
+		display: block;
+		font-size: 12px;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu li a:hover {
+		background-color: rgba(255, 255, 255, 0.3) ;
+		text-decoration: none;
 	}
 
 	.nav-sidebar {
