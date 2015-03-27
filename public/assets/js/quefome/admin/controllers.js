@@ -80,15 +80,19 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			var copiedOrder = angular.copy(order);
 			copiedOrder.status = newStatus;
 
-			OrderService.update(copiedOrder).then(function(updatedOrder) {
+			return OrderService.update(copiedOrder).then(function(updatedOrder) {
 				order.status = updatedOrder.status;
 				order.version = updatedOrder.version;
 
 				order.changingStatus = false;
 				$scope.$digest();
+
+				return true;
 			}, function(errorMessage) {
 				order.changingStatus = false;
 				$scope.$digest();
+
+				return false;
 			});
 		}
 
@@ -133,7 +137,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 			for (var scopeOrderIndex in $scope.orders) {
 				var scopeOrder = $scope.orders[scopeOrderIndex];
 
-				if (ordersIds.indexOf(scopeOrder.id) < 0) {
+				if (ordersIds.indexOf(scopeOrder.id) < 0 && scopeOrder.status != 'DELIVERED') {
 					totalModifiedOrders++;
 				}
 			}

@@ -160,6 +160,24 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				expect(scope.numberOfModifiedOrders).toEqual(1);
 			});
 
+			it("should count how many removed or delivered orders exists", function() {
+				MockedOrderService._orders = [];
+				scope.orders = [{id: -1, date: new Date(), status: "PRODUCTION"}];
+
+				scope.checkIncomingOrders();
+
+				expect(scope.numberOfModifiedOrders).toEqual(1);
+			});
+
+			it("should not count the modified orders coming from the server if the order was delivered locally", function() {
+				MockedOrderService._orders = [];
+				scope.orders = [{id: -1, date: new Date(), status: "DELIVERED"}];
+
+				scope.checkIncomingOrders();
+
+				expect(scope.numberOfModifiedOrders).toEqual(0);
+			});
+
 			it("should check for incoming orders from time to time", function() {
 				Mocked$timeout.whenCalling = function(func, time) {
 					expect(time).toBeDefined();
