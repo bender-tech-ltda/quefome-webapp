@@ -378,7 +378,7 @@ a:hover, a:focus {
 
 .delivery-search-page .search-result .establishment-list .establishment {
 	background-color: #f5f5f5;
-	min-height: 120px;
+	min-height: 161px;
 	width: 100%;
 	display: inline-block;
 	margin-bottom: -5px
@@ -403,9 +403,13 @@ a:hover, a:focus {
 .delivery-search-page .search-result .establishment-list .establishment .information {
 	float: left;
 	width: 57%;
+	width: -webkit-calc(100% - 130px);
+	width: -moz-calc(100% - 130px);
+	width: calc(100% - 130px);
 }
 
 .delivery-search-page .search-result .establishment-list .establishment .information .title {
+	min-height: 95px;
 	border-bottom: 1px solid #DCDCDC;
 }
 
@@ -416,44 +420,38 @@ a:hover, a:focus {
 .delivery-search-page .search-result .establishment-list .establishment .information .title .name {
 	margin-top: 15px;
 	margin-bottom: 5px;
-	font-size: 20px;
+	font-size: 18px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .title .description {
-	display: none;
-	color: #4C4E4E;
+.delivery-search-page .search-result .establishment-list .establishment .information .title .address {
+	color: #7A7A7A;
+	font-size: 13px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info {
-	margin-top: 9px;
+.delivery-search-page .search-result .establishment-list .establishment .additional-info {
+	margin: 9px 21px 13px -100px;
 	font-size: 11px;
 	color: #4C4E4E;
+
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .qf-icon {
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .qf-icon {
 	top: 3px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status {
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .status {
+	float: left;
+	width: 210px;
 	margin-bottom: 6px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status.open {
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .status.open {
 	color: #008000;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .delivery-time {
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .delivery-info {
 	float: left;
-	width: 55%;
-}
-
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value {
-	float: left;
-	width: 45%;
-}
-
-.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value .qf-icon {
-	top: 4px;
+	width: 165px;
 }
 
 .delivery-search-page .search-result .no-establishment-found {
@@ -786,8 +784,11 @@ input.invalid:focus, select.invalid:focus {
 		width: 75%;
 	}
 
+	.delivery-search-page .search-result .establishment-list .establishment {
+		min-height: 122px;
+	}
+
 	.delivery-search-page .search-result .establishment-list .establishment .information {
-		width: 79%;
 		margin-top: 15px;
 	}
 
@@ -801,32 +802,26 @@ input.invalid:focus, select.invalid:focus {
 
 	.delivery-search-page .search-result .establishment-list .establishment .information .title .name {
 		margin-top: 0px;
+		font-size: 20px;
 	}
 
-	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info {
+	.delivery-search-page .search-result .establishment-list .establishment .additional-info {
 		float: left;
 		width: 28%;
-		margin-top: 0px;
+		margin: 0px;
 		margin-left: 10px;
 		font-size: 12px;
 	}
 
-	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .status {
-		margin-bottom: 0px;
-	}
-
-	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .delivery-time {
+	.delivery-search-page .search-result .establishment-list .establishment .additional-info .status {
 		float: none;
 		width: 100%;
+		margin: 3px 0px 10px;
 	}
 
-	.delivery-search-page .search-result .establishment-list .establishment .information .additional-info .minimum-order-value {
+	.delivery-search-page .search-result .establishment-list .establishment .additional-info .delivery-info {
 		float: none;
-		width: 100%;	
-	}
-
-	.delivery-search-page .search-result .establishment-list .establishment .information .title .description {
-		display: block;
+		width: 100%;
 	}
 
 	.footer {
@@ -881,10 +876,6 @@ input.invalid:focus, select.invalid:focus {
 		margin-left: 11%;
 	}
 
-	.delivery-search-page .search-result .establishment-list .establishment .information {
-		width: 83%;
-	}
-
 	.delivery-search-page .search-result .establishment-list .establishment .information .title {
 		width: 70%;
 	}
@@ -901,10 +892,6 @@ input.invalid:focus, select.invalid:focus {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
-	}
-
-	.delivery-search-page .search-result .establishment-list .establishment .information {
-		width: 86%;
 	}
 }
 
