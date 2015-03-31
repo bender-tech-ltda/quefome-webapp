@@ -14,6 +14,11 @@ define([], function() {
 			reloadOnSearch: false
 		},
 		{
+			path: "/establishments/:establishmentUrl",
+			template: "<h1>Teste</h1>",
+			reloadOnSearch: false
+		},
+		{
 			path: "/order/finish/",
 			controller: "SelectPaymentMethodController",
 			templateUrl: "/partials/establishments/select-payment-method.html"

@@ -376,19 +376,22 @@ a:hover, a:focus {
 	margin-bottom: 0px;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment {
-	background-color: #f5f5f5;
+.delivery-search-page .search-result .establishment-list .establishment a {
 	min-height: 161px;
 	width: 100%;
+	margin-bottom: -5px;
 	display: inline-block;
-	margin-bottom: -5px
+	background-color: #f5f5f5;
+	color: #333;
+	cursor: pointer;
 }
 
 .delivery-search-page .search-result .establishment-list .establishment + .establishment {
 	border-top: 1px solid #D0D0D0;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment:hover {
+.delivery-search-page .search-result .establishment-list .establishment:hover,
+.delivery-search-page .search-result .establishment-list .establishment a:hover {
 	background-color: #DCDCDC;
 }
 
@@ -413,7 +416,7 @@ a:hover, a:focus {
 	border-bottom: 1px solid #DCDCDC;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment:hover .information .title {
+.delivery-search-page .search-result .establishment-list .establishment:hover .information .title{
 	border-color: #F5F5F5
 }
 
@@ -784,7 +787,7 @@ input.invalid:focus, select.invalid:focus {
 		width: 75%;
 	}
 
-	.delivery-search-page .search-result .establishment-list .establishment {
+	.delivery-search-page .search-result .establishment-list .establishment a {
 		min-height: 122px;
 	}
 
