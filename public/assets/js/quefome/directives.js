@@ -17,7 +17,142 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				return compileScope ? $compile(content)(compileScope) : content;
 			});
 		};
-	}])
+	}]);
+
+	module.service("Dialog", ["$q", "$rootScope", "TemplateResolver", function($q, $rootScope, TemplateResolver) {
+		this.create = function(params) {
+			var deferred = $q.defer();
+
+			var dialog = {
+				modal: null,
+
+				beforeShow: function(callback) {
+					if (this.modal && typeof(callback) === "function") {
+						this.modal.on("show.bs.modal", callback);
+					}
+				},
+
+				afterShow: function(callback) {
+					if (this.modal && typeof(callback) === "function") {
+						this.modal.on("shown.bs.modal", callback);
+					}	
+				},
+
+				show: function(callback) {
+					if (this.modal) {
+						var oldDialogs = angular.element(".modal");
+						if (oldDialogs && oldDialogs.length > 0) {
+							oldDialogs.modal("hide");
+						}
+
+						var parent = this.modal.parent();
+						if (!parent || parent.length <= 0) {					
+							angular.element("body").append(dialog.modal);
+						}
+
+						if (typeof(callback) === "function") {
+							this.modal.on("shown.bs.modal.afterShownCallback", function(event) {
+								this.modal.off("shown.bs.modal.afterShownCallback");
+								callback.call(this, event);
+							});
+						}
+						
+						this.modal.modal("show");
+					}
+				},
+
+				beforeHide: function(callback) {
+					if (this.modal && typeof(callback) === "function") {
+						this.modal.on("hide.bs.modal", callback);
+					}
+				},
+
+				afterHide: function(callback) {
+					if (this.modal && typeof(callback) === "function") {
+						this.modal.on("hidden.bs.modal", callback);
+					}	
+				},
+
+				hide: function(callback) {
+					if (this.modal) {
+						if (typeof(callback) === "function") {
+							this.modal.on("hidden.bs.modal.afterHiddenCallback", function() {
+								this.modal.off("shown.bs.modal.afterHiddenCallback");
+								callback.call(this, event);
+							});
+						}
+
+						this.modal.modal("hide");
+					}	
+				}
+			};
+
+			var applyTemplate = function(template) {
+				var element = angular.element(template);
+
+				if (element.hasClass("modal")) {
+					dialog.modal = element;
+				} else {
+					var contentDiv = angular.element('<div class="modal-content">');
+					contentDiv.append(element);
+
+					var dialogDiv = angular.element('<div class="modal-dialog">');
+					dialogDiv.append(contentDiv);
+					
+					dialog.modal = angular.element('<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
+					dialog.modal.append(dialogDiv);
+				}
+
+				if (params.size) {
+					if (scope.size.trim().toLowerCase() == "large") {
+						dialog.modal.removeClass("modal-sm").addClass("modal-lg");
+					} else if (scope.size.trim().toLowerCase() == "small") {
+						dialog.modal.removeClass("modal-lg").addClass("modal-sm");
+					}
+				}
+
+				if (params.beforeShow) {
+					dialog.beforeShow(params.beforeShow);
+				}
+
+				if (params.afterShow) {
+					dialog.afterShow(params.afterShow);
+				}
+
+				if (params.beforeHide) {
+					dialog.beforeHide(params.beforeHide);
+				}
+
+				if (params.afterHide) {
+					dialog.afterHide(params.afterHide);
+				}
+
+				dialog.modal.on("hidden.bs.modal.removeFromDOMOnClose", function() {
+					dialog.modal.remove();
+				});
+
+				dialog.modal.data("dialog", dialog);
+				deferred.resolve(dialog);
+
+				if (params.show) {
+					dialog.show();
+				}
+			};
+
+			if (params.template) {
+				applyTemplate(params.template);
+			} else if (params.templateUrl) {
+				var newScope = $rootScope.$new();
+				newScope.$dialog = dialog;
+
+				TemplateResolver.resolve(params.templateUrl, newScope).then(function(template) {
+					applyTemplate(template);
+				});
+			}
+
+			return deferred.promise;
+		};
+	}]);
 
 	module.directive("qfHref", ["$location", function($location) {
 		return {
@@ -44,7 +179,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
-	module.directive("qfClickDialogUrl", ["TemplateResolver", function(TemplateResolver) {
+	module.directive("qfClickDialogUrl", ["Dialog", function(Dialog) {
 		return {
 			restrict: "A",
 			scope: {
@@ -56,61 +191,11 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				var event = scope.event ? scope.event : "click";
 
 				element.on(event + ".qfClickDialogUrl", function() {
-					var content = angular.element('<div class="modal-content">');
-
-					var dialog = angular.element('<div class="modal-dialog">');
-					dialog.append(content);
-					
-					var modal = angular.element('<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">');
-					modal.append(dialog);
-
-					if (scope.size) {
-						if (scope.size.trim().toLowerCase() == "large") {
-							dialog.addClass("modal-lg");
-						} else if (scope.size.trim().toLowerCase() == "small") {
-							dialog.addClass("modal-sm");
-						}
-					}
-
-					modal.on("hidden.bs.modal", function() {
-						modal.remove();
+					Dialog.create({
+						templateUrl: scope.url,
+						size: scope.size,
+						show: true
 					});
-
-					var newScope = scope.$root.$new();
-
-					TemplateResolver.resolve(scope.url, newScope).then(function(html) {
-						var htmlEl = angular.element(html);
-
-						if (htmlEl.hasClass("modal")) {
-							modal = htmlEl;
-						} else {
-							content.html(html);
-						}
-
-						var show = function() {
-							angular.element("body").append(modal);
-							modal.modal("show");
-						};
-
-						if (scope.$parent.$dialog) {
-							scope.$parent.$dialog.close(show);
-						} else {
-							show();
-						}
-					});
-
-					newScope.$dialog = {
-						close: function(callback) {
-							if (typeof(callback) === "function") {
-								modal.on("hidden.bs.modal.afterCloseCallback", function() {
-									modal.off("hidden.bs.modal.afterCloseCallback");
-									callback.call(modal, modal);
-								});
-							}
-
-							modal.modal("hide");
-						}
-					};
 
 					return false;
 				});

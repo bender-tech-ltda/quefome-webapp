@@ -167,6 +167,16 @@ define(["angular"], function(angular) {
 				return address;
 			}, treatPromiseErrors($q));
 		};
+
+		var currentAddress = null;
+
+		this.getCurrentAddress = function() {
+			return currentAddress;
+		};
+
+		this.setCurrentAddress = function(address) {
+			currentAddress = address;
+		};
 	}]);
 
 	return module;

@@ -73,5 +73,18 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				$httpBackend.flush();
 			});
 		});
+
+		describe("the getCurrentAddress and setCurrentAddress function", function() {
+			it("should return null if has no address", function() {
+				expect(AddressService.getCurrentAddress()).toBeNull();
+			});
+
+			it("should return the address if it is setted", function() {
+				var address = {address: "Rua dos Alfeneiros"};
+
+				AddressService.setCurrentAddress(address);
+				expect(AddressService.getCurrentAddress()).toEqual(address);
+			});
+		});
 	});
 });

@@ -149,7 +149,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 	}]);
 
-	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, ProductTypeService, EstablishmentService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, Dialog, AddressService, ProductTypeService, EstablishmentService) {
 		$scope.productTypes = [];
 
 		$scope.establishments = [];
@@ -158,6 +158,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.searchFilter = {
 			query: searchObject.q || searchObject.query || "",
 			productType: searchObject["product-type"] || searchObject.productType || ""
+		};
+
+		$scope.checkUserAddress = function(event, establishment) {
+			var currentAddress = AddressService.getCurrentAddress();
+
+			if (!currentAddress) {
+				event.preventDefault();
+
+				Dialog.create({
+					templateUrl: "/partials/establishments/check-address.html",
+					show: true,
+					params: {
+						establishment: establishment
+					}
+				});
+			}
 		};
 
 		$scope.formatCurrentSchedule = function(establishment) {
