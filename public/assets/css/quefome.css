@@ -416,7 +416,7 @@ a:hover, a:focus {
 	border-bottom: 1px solid #DCDCDC;
 }
 
-.delivery-search-page .search-result .establishment-list .establishment:hover .information .title{
+.delivery-search-page .search-result .establishment-list .establishment:hover .information .title {
 	border-color: #F5F5F5
 }
 
@@ -463,8 +463,106 @@ a:hover, a:focus {
 	text-align: center;
 }
 
+.check-address-dialog .title {
+	font-size: 19px;
+	text-align: center;
+	color: #F26C23;
+}
+
+.check-address-dialog .message {
+	font-size: 16px;
+	text-align: center;
+}
+
+.check-address-dialog .zip-code-form {
+	margin-top: 30px;
+}
+
+.check-address-dialog .zip-code-form .zip-code-label {
+	width: 100%;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.check-address-dialog .zip-code-form .zip-code-input {
+	float: left;
+	width: 80%;
+	height: 40px;
+	font-size: 16px;
+	text-align: center;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.check-address-dialog .zip-code-form .zip-code-button {
+	float: left;
+	width: 20%;
+	height: 40px;
+	padding: 0px;
+	border: 1px solid #f46c21;
+	background: #f46c21;
+	color: #fff;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+
+.check-address-dialog .zip-code-form .zip-code-button:hover {
+	border-color: #fbca0e;
+	background-color: #fbca0e;
+}
+
+.check-address-dialog .zip-code-form .fail-message {
+	width: 100%;
+	display: block;
+	text-align: center;
+	color: #FF3D3D;
+}
+
+.check-address-dialog .zip-code-form .show-address-form-button {
+	width: 100%;
+	margin-top: 40px;
+	padding: 5px;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #a01608;
+	border-radius: 2px;
+	font-weight: normal;
+	color: #a01608;
+}
+
+.check-address-dialog .zip-code-form .show-address-form-button:hover {
+	background-color: #e6e6e6;
+	border-color: #CC4A3D;
+}
+
+.check-address-dialog .skip-address-check-button {
+	width: 100%;
+	margin-top: 5px;
+	padding: 5px;
+	border: 1px solid #EB3825;
+	border-radius: 2px;
+	background: #EB3825;
+	color: #fff;
+}
+
+.check-address-dialog .skip-address-check-button:hover {
+	background-color: #DE1F0B;
+	border-color: #DE1F0B;
+}
+
+.check-address-dialog .processing {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 20px;
+	color: #7A7A7A;
+}
+
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
 	border-radius: 6px;
+}
+
+.modal .modal-dialog .modal-content .modal-header {
+	text-align: center;
 }
 
 .footer {
@@ -825,6 +923,19 @@ input.invalid:focus, select.invalid:focus {
 	.delivery-search-page .search-result .establishment-list .establishment .additional-info .delivery-info {
 		float: none;
 		width: 100%;
+	}
+
+	.check-address-dialog .zip-code-form .show-address-form-button {
+		float: left;
+		width: 49%;
+		margin-top: 40px;
+	}
+
+	.check-address-dialog .skip-address-check-button {
+		float: left;
+		width: 49%;
+		margin-top: 40px;
+		margin-left: 2%;
 	}
 
 	.footer {

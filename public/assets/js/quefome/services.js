@@ -133,6 +133,23 @@ define(["angular"], function(angular) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
+
+		this.isAttendingAddress = function(establishment, address) {
+			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
+
+			var params = "";
+			if (address) {
+				params += address.zipCode + "/";
+				params += address.address + "/";
+				params += (typeof(address.neighborhood) === "object" ? address.neighborhood.name : address.neighborhood) + "/";
+				params += (typeof(address.city) === "object" ? address.city.name : address.neighborhood) + "/";
+				params += (typeof(address.city) === "object" ? (typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state) + "/";
+			}
+
+			$http.get("/api/establishments/" + establishment + "/attend-address/" + params).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
 	}]);
 
 	module.service("PaymentMethodService", ["$http", "$q", function($http, $q) {

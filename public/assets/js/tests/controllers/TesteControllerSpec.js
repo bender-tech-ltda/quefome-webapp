@@ -7,10 +7,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		beforeEach(module("qfControllers"));
 
-		beforeEach(inject(function($rootScope, $controller) {
-			scope = $rootScope.$new();
-			controller = $controller("TesteController", {"$scope": scope});
-		}));
+		beforeEach(function() {
+			var params = {};
+
+			return injectController("TesteController", false, params, function($scope) {
+				scope = $scope;
+			});
+		});
 
 		it("should have a teste property", function() {
 			expect(scope.teste).toBeDefined();

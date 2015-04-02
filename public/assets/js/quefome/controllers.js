@@ -280,6 +280,63 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.searchEstablishments();
 	}]);
 
+	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {
+		$scope.zipCode = "";
+		$scope.address = {};
+
+		$scope.addressChecked = false;
+		$scope.addressAttended = null;
+
+		$scope.processing = false;
+
+		$scope.establishment = {};
+
+		$scope.$on("$dialogParameters", function(event, params) {
+			if (params && params.establishment) {
+				$scope.establishment = params.establishment;
+			}
+		});
+
+		$scope.checkZipCode = function() {
+			if ($scope.zipCodeForm.$invalid) {
+				return;
+			}
+
+			$scope.processing = true;
+
+			AddressService.searchZipCode($scope.zipCode).then(function(address) {
+				EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
+					$scope.addressChecked = true;
+					$scope.addressAttended = isAttending;
+
+					$scope.processing = false;
+				}, function() {
+					$scope.addressChecked = false;
+					$scope.searchingZipCode = false;
+
+					$scope.processing = false;
+				});
+			}, function() {
+				$scope.processing = false;
+			});
+		};
+
+		$scope.showAddressForm = function() {
+
+		};
+
+		$scope.skipAddressVerification = function() {
+			AddressService.setCurrentAddress({skipped: true});
+
+			if ($scope.$dialog) {
+				$scope.$dialog.hide(function() {
+					$location.path("/establishments/" + $scope.establishment.url);
+					$scope.$apply();
+				});
+			}
+		};
+	}]);
+
 	module.controller("SelectPaymentMethodController", ["$scope", "PaymentMethodService", function($scope, PaymentMethodService) {
 		$scope.paymentCategories = [];
 		$scope.order = {

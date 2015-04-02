@@ -52,7 +52,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 						if (typeof(callback) === "function") {
 							this.modal.on("shown.bs.modal.afterShownCallback", function(event) {
-								this.modal.off("shown.bs.modal.afterShownCallback");
+								$(this).off("shown.bs.modal.afterShownCallback");
 								callback.call(this, event);
 							});
 						}
@@ -76,8 +76,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				hide: function(callback) {
 					if (this.modal) {
 						if (typeof(callback) === "function") {
-							this.modal.on("hidden.bs.modal.afterHiddenCallback", function() {
-								this.modal.off("shown.bs.modal.afterHiddenCallback");
+							this.modal.on("hidden.bs.modal.afterHiddenCallback", function(event) {
+								$(this).off("shown.bs.modal.afterHiddenCallback");
 								callback.call(this, event);
 							});
 						}
@@ -104,10 +104,10 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				}
 
 				if (params.size) {
-					if (scope.size.trim().toLowerCase() == "large") {
-						dialog.modal.removeClass("modal-sm").addClass("modal-lg");
-					} else if (scope.size.trim().toLowerCase() == "small") {
-						dialog.modal.removeClass("modal-lg").addClass("modal-sm");
+					if (params.size.trim().toLowerCase() == "large") {
+						dialog.modal.find(".modal-dialog").removeClass("modal-sm").addClass("modal-lg");
+					} else if (params.size.trim().toLowerCase() == "small") {
+						dialog.modal.find(".modal-dialog").removeClass("modal-lg").addClass("modal-sm");
 					}
 				}
 
@@ -146,6 +146,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				newScope.$dialog = dialog;
 
 				TemplateResolver.resolve(params.templateUrl, newScope).then(function(template) {
+					newScope.$broadcast("$dialogParameters", params.params);
 					applyTemplate(template);
 				});
 			}

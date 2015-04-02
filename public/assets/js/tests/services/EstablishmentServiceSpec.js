@@ -70,5 +70,26 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				$httpBackend.flush();
 			});
 		});
+
+		describe("the isAttendingAddress function", function() {
+			it("should check if a address is attended by an establishment", function() {
+				var establishment = {id: 2};
+				
+				var address = {
+					zipCode: "93336220",
+					address: "Rua A",
+					neighborhood: "Centro",
+					city: {
+						name: "Porto Alegre",
+						state: {acronym: "RS"}
+					}
+				};
+
+				$httpBackend.expectGET("/api/establishments/2/attend-address/93336220/Rua A/Centro/Porto Alegre/RS/").respond(200, true);
+				EstablishmentService.isAttendingAddress(establishment, address);
+
+				$httpBackend.flush();
+			});
+		});
 	});
 });
