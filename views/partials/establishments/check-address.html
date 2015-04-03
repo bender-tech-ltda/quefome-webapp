@@ -1,22 +1,33 @@
 <div class="modal-body check-address-dialog" ng-controller="CheckAddressController">
-	<h3 class="title">Segura essa fome só um pouco!</h3>
-	<h4 class="message">Precisamos garantir que esse estabelecimento entrega no seu endereço.</h4>
+	<div ng-hide="addressChecked">
+		<h3 class="title">Segura essa fome só um pouco!</h3>
+		<h4 class="message">Precisamos garantir que esse estabelecimento entrega no seu endereço.</h4>
 
-	<form class="zip-code-form" name="zipCodeForm" ng-submit="checkZipCode()" ng-hide="processing" novalidate>
-		<label class="zip-code-label" for="zipCode">Por favor, informe seu CEP:</label>
-		<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="zipCode" ng-required="true"/>
+		<form class="zip-code-form" name="zipCodeForm" ng-submit="checkZipCode()" ng-hide="processing || addressChecked" novalidate>
+			<label class="zip-code-label" for="zipCode">Por favor, informe seu CEP:</label>
+			<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="zipCode" ng-required="true"/>
 
-		<button type="submit" class="zip-code-button">Buscar</button>
+			<button type="submit" class="zip-code-button">Buscar</button>
 
-		<span class="fail-message" ng-show="zipCodeForm.$submitted && zipCodeForm.$invalid">O CEP que você inseriu não é válido!</span>
+			<span class="fail-message" ng-show="zipCodeForm.$submitted && zipCodeForm.$invalid">O CEP que você inseriu não é válido!</span>
 
-		<button class="show-address-form-button" ng-click="showAddressForm()">Não sei meu CEP</btn>
-		<button class="skip-address-check-button" ng-click="skipAddressVerification()">Pular a verificação de endereço</button>
-	</form>
+			<button class="show-address-form-button" ng-click="showAddressForm()">Não sei meu CEP</btn>
+			<button class="skip-address-check-button" ng-click="skipAddressVerification()">Pular a verificação de endereço</button>
+		</form>
+	</div>
 
 	<div class="processing" ng-show="processing">
 		<h5 class="message">Calma lá, estamos processando...</h5>
 		<span class="qf-icon icon-loading spin"></span>
+	</div>
+
+	<div class="result" ng-show="addressChecked">
+		<div class="fail" ng-hide="addressAttended">
+			<h5 class="message">Desculpe, mas esse estabelecimento não atende seu endereço.</h5>
+
+			<button class="back-to-search-button" ng-click="closeDialog()">Procurar outro estabelecimento</btn>
+			<button class="show-establishment-button" ng-click="goToEstablishmentPage()">Ir para a página do estabelecimento mesmo assim</button>
+		</div>
 	</div>
 
 	<div class="clearfix"></div>

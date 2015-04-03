@@ -306,11 +306,13 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 			AddressService.searchZipCode($scope.zipCode).then(function(address) {
 				EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
+					AddressService.setCurrentAddress(address);
+
 					$scope.addressChecked = true;
 					$scope.addressAttended = isAttending;
 
 					$scope.processing = false;
-				}, function() {
+				}, function(errorMessage) {
 					$scope.addressChecked = false;
 					$scope.searchingZipCode = false;
 
@@ -327,12 +329,23 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.skipAddressVerification = function() {
 			AddressService.setCurrentAddress({skipped: true});
+			$scope.goToEstablishmentPage();
+		};
 
+		$scope.goToEstablishmentPage = function() {
 			if ($scope.$dialog) {
-				$scope.$dialog.hide(function() {
+				$scope.$dialog.beforeHide(function() {
 					$location.path("/establishments/" + $scope.establishment.url);
 					$scope.$apply();
 				});
+
+				$scope.$dialog.hide();
+			}
+		};
+
+		$scope.closeDialog = function() {
+			if ($scope.$dialog) {
+				$scope.$dialog.hide();
 			}
 		};
 	}]);

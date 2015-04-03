@@ -146,7 +146,7 @@ define(["angular"], function(angular) {
 				params += (typeof(address.city) === "object" ? (typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state) + "/";
 			}
 
-			$http.get("/api/establishments/" + establishment + "/attend-address/" + params).then(function(response) {
+			return $http.get("/api/establishments/" + establishment + "/attend-address/" + params).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
@@ -169,19 +169,11 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.service("AddressService", ["$http", "$q", function($http, $q) {
-		var PORTO_ALEGRE_IBGE_CODE = "4314902";
-
 		this.searchZipCode = function(zipCode) {
 			zipCode = zipCode ? zipCode.trim().replace(/[^0-9]/g, "") : "";
 
 			return $http.get("/api/addresses/search/zip-code/" + zipCode).then(function(response) {
-				var address = response.data;
-
-				if (address.city.ibgeCode != PORTO_ALEGRE_IBGE_CODE) {
-					return $q.reject("Desculpe, mas estamos atendendo somente endereços dentro de Porto Alegre - RS.");
-				}
-
-				return address;
+				return response.data;
 			}, treatPromiseErrors($q));
 		};
 

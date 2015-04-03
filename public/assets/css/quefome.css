@@ -518,6 +518,48 @@ a:hover, a:focus {
 	color: #FF3D3D;
 }
 
+.check-address-dialog .result .fail {
+	text-align: center;
+}
+
+.check-address-dialog .result .fail .message {
+	font-size: 18px;
+	color: #FF0000;
+}
+
+
+.check-address-dialog .result .fail .back-to-search-button {
+	width: 100%;
+	margin-top: 40px;
+	padding: 5px;
+	text-align: center;
+	background-color: #F26C23;
+	border: 1px solid #F26C23;
+	border-radius: 2px;
+	font-weight: normal;
+	color: #fff;
+}
+
+.check-address-dialog .result .fail .back-to-search-button:hover {
+	background-color: #F05602;
+	border-color: #F05602;
+}
+
+.check-address-dialog .result .fail .show-establishment-button {
+	width: 100%;
+	margin-top: 5px;
+	padding: 5px;
+	border: 1px solid #EB3825;
+	border-radius: 2px;
+	background: #EB3825;
+	color: #fff;
+}
+
+.check-address-dialog .result .fail .show-establishment-button:hover {
+	background-color: #DE1F0B;
+	border-color: #DE1F0B;
+}
+
 .check-address-dialog .zip-code-form .show-address-form-button {
 	width: 100%;
 	margin-top: 40px;

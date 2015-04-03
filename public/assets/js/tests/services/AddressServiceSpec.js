@@ -52,20 +52,6 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				$httpBackend.flush();
 			});
 
-			it("should return an error if the zip code isn't from Porto Alegre", function() {
-				$httpBackend.expectGET("/api/addresses/search/zip-code/93336220").respond(200, invalidAddres);
-
-				AddressService.searchZipCode("93336220").then(function(address) {
-					console.log(address);
-					expect(false).toBe(true);
-				}, function(error) {
-					expect(error).toBeDefined();
-					expect(error.length).toBeGreaterThan(0);
-				});
-
-				$httpBackend.flush();
-			});
-
 			it("should get strip off all non-number characteres from the zip code", function() {
 				$httpBackend.expectGET("/api/addresses/search/zip-code/90570020").respond(200, validAddress);
 
