@@ -3,7 +3,7 @@
 		<h3 class="title">Segura essa fome só um pouco!</h3>
 		<h4 class="message">Precisamos garantir que esse estabelecimento entrega no seu endereço.</h4>
 
-		<form class="zip-code-form" name="zipCodeForm" ng-submit="checkZipCode()" ng-hide="processing || addressChecked" novalidate>
+		<form class="zip-code-form" name="zipCodeForm" ng-submit="checkZipCode()" ng-hide="processing || addressChecked || !isZipCodeFormVisible" novalidate>
 			<label class="zip-code-label" for="zipCode">Por favor, informe seu CEP:</label>
 			<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="zipCode" ng-required="true"/>
 
@@ -23,6 +23,7 @@
 
 	<div class="result" ng-show="addressChecked">
 		<div class="fail" ng-hide="addressAttended">
+			<p class="address">{{address.address}}, Bairro {{address.neighborhood}} - {{address.city.name}} - {{address.city.state.acronym}}</p>
 			<h5 class="message">Desculpe, mas esse estabelecimento não atende seu endereço.</h5>
 
 			<button class="back-to-search-button" ng-click="closeDialog()">Procurar outro estabelecimento</btn>

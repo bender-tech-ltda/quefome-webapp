@@ -114,6 +114,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.processing).toBeDefined();
 		});
 
+		it("should have a isZipCodeFormVisible property", function() {
+			expect(scope.isZipCodeFormVisible).toBeDefined();
+		});
+
 		it("should listen for a establishment as $dialogParameters", function() {
 			var params = {
 				establishment: {id: 1, name: "Blabla"}
@@ -208,6 +212,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.checkZipCode();
 
 				expect(MockedAddressService.getCurrentAddress()).toEqual(MockedAddressService._addresses[scope.zipCode]);
+			});
+		});
+
+		describe("when showing the address form", function() {
+			it("should set the isZipCodeFormVisible property to false", function() {
+				scope.showAddressForm();
+				expect(scope.isZipCodeFormVisible).toBe(false);
 			});
 		});
 

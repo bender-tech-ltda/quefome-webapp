@@ -284,6 +284,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.zipCode = "";
 		$scope.address = {};
 
+		$scope.isZipCodeFormVisible = true;
+
 		$scope.addressChecked = false;
 		$scope.addressAttended = null;
 
@@ -305,6 +307,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			$scope.processing = true;
 
 			AddressService.searchZipCode($scope.zipCode).then(function(address) {
+				$scope.address = address;
+				
 				EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
 					AddressService.setCurrentAddress(address);
 
@@ -324,7 +328,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		};
 
 		$scope.showAddressForm = function() {
-
+			$scope.isZipCodeFormVisible = false;
 		};
 
 		$scope.skipAddressVerification = function() {
