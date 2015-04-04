@@ -37,11 +37,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				},
 
-				_address: {},
+				_address: false,
 				setCurrentAddress: function(address) {
 					this._address = address;
 				},
+				_getCurrentAddressCaled: false,
 				getCurrentAddress: function() {
+					this._getCurrentAddressCaled = true;
 					return this._address;
 				}
 			};
@@ -136,6 +138,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		it("should have a invalidAddress property", function() {
 			expect(scope.invalidAddress).toBeDefined();
+		});
+
+		it("should check if the user already informed an address before", function() {
+			expect(MockedAddressService._getCurrentAddressCaled).toBe(true);
 		});
 
 		it("should listen for a establishment as $dialogParameters", function() {

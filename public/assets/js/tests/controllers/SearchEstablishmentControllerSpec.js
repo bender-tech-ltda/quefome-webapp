@@ -441,8 +441,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				expect(MockedDialog._called).toBe(true);
 			});
 
-			it("should not show a dialog if the user already informed its address", function() {
-				MockedAddressService._currentAddress = {address: "Rua tal"};
+			it("should not show a dialog if the user skipped the address check", function() {
+				MockedAddressService._currentAddress = {skipped: true};
 				scope.checkUserAddress({preventDefault: function() {}}, {});
 
 				expect(MockedDialog._called).toBe(false);

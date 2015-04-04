@@ -163,7 +163,7 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.checkUserAddress = function(event, establishment) {
 			var currentAddress = AddressService.getCurrentAddress();
 
-			if (!currentAddress) {
+			if (!currentAddress || !currentAddress.skipped) {
 				event.preventDefault();
 
 				Dialog.create({
@@ -289,8 +289,10 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 	}]);
 
 	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {
-		$scope.zipCode = "";
-		$scope.address = {};
+		var alreadyInformedAddress = AddressService.getCurrentAddress();
+
+		$scope.address = alreadyInformedAddress ? alreadyInformedAddress : {};
+		$scope.zipCode = $scope.address.zipCode ? $scope.address.zipCode : "";
 
 		$scope.isZipCodeFormVisible = true;
 
@@ -306,6 +308,13 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.$on("$dialogParameters", function(event, params) {
 			if (params && params.establishment) {
 				$scope.establishment = params.establishment;
+			}
+
+			if (alreadyInformedAddress) {
+				$scope.zipCode = alreadyInformedAddress.zipCode;
+				$scope.$digest(function() {
+					$scope.checkZipCode();
+				});
 			}
 		});
 
