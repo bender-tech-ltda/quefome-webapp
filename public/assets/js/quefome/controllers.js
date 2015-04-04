@@ -197,8 +197,16 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 					(today.getHours() == openingTime.getHours() && today.getMinutes() < openingTime.getMinutes())) {
 					weekDayName = "hoje";
 				}
-			} else if ((schedule.weekDay.number - today.getDay()) == 1) {
-				weekDayName = "amanhã";
+			} else {
+				var daysUntilWeekDay = schedule.weekDay.number - today.getDay();
+
+				if (daysUntilWeekDay < 0) {
+					daysUntilWeekDay += 7;
+				}
+
+				if (daysUntilWeekDay == 1) {
+					weekDayName = "amanhã";	
+				}
 			}
 
 			return "Abrirá " + weekDayName + ", às " + $filter("date")(schedule.openingTime, "HH:mm");
