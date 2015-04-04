@@ -220,6 +220,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.showAddressForm();
 				expect(scope.isZipCodeFormVisible).toBe(false);
 			});
+
+			it("should clear the zipCode property", function() {
+				scope.address = {address: "Rua B"};
+
+				scope.showAddressForm();
+				expect(scope.address).toEqual({});
+			});
+		});
+
+		describe("when showing the zip code form", function() {
+			it("should set the isZipCodeFormVisible property to true", function() {
+				scope.showZipCodeForm();
+				expect(scope.isZipCodeFormVisible).toBe(true);
+			});
+
+			it("should clear the address property", function() {
+				scope.zipCode = "93336220";
+				scope.showZipCodeForm();
+				expect(scope.zipCode).toEqual("");
+			});
 		});
 
 		describe("when skipping the address verification", function() {

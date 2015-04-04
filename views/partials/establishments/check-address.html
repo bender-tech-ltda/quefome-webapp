@@ -4,15 +4,44 @@
 		<h4 class="message">Precisamos garantir que esse estabelecimento entrega no seu endereço.</h4>
 
 		<form class="zip-code-form" name="zipCodeForm" ng-submit="checkZipCode()" ng-hide="processing || addressChecked || !isZipCodeFormVisible" novalidate>
-			<label class="zip-code-label" for="zipCode">Por favor, informe seu CEP:</label>
-			<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="zipCode" ng-required="true"/>
+			<label class="label" for="zipCode">Por favor, informe seu CEP:</label>
+			<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="zipCode" required/>
 
-			<button type="submit" class="zip-code-button">Buscar</button>
+			<button type="submit" class="btn btn-primary btn-check-zip-code">Buscar</button>
 
 			<span class="fail-message" ng-show="zipCodeForm.$submitted && zipCodeForm.$invalid">O CEP que você inseriu não é válido!</span>
 
-			<button class="show-address-form-button" ng-click="showAddressForm()">Não sei meu CEP</btn>
-			<button class="skip-address-check-button" ng-click="skipAddressVerification()">Pular a verificação de endereço</button>
+			<button type="button" class="btn btn-show-address-form" ng-click="showAddressForm()">Não sei meu CEP</btn>
+			<button type="button" class="btn btn-danger btn-skip-address-check" ng-click="skipAddressVerification()">Pular a verificação de endereço</button>
+		</form>
+
+		<form class="address-form" name="addressForm" ng-submit="checkAddress()" ng-hide="processing || addressChecked || isZipCodeFormVisible" novalidate>
+			<fieldset>
+				<legend class="message">Por favor, informe seu endereço</legend>
+
+				<div class="address-group">
+					<label for="address">Logradouro<span class="required">*</span></label>
+					<input type="text" class="form-control" name="address" placeholder="Rua, Avenida, Rodovia..." ng-model="address.address" required />
+					<span class="fail-message" ng-show="addressForm.$submitted && addressForm.address.$invalid">Por favor, informe seu logradouro.</span>
+				</div>
+
+				<div class="city-group">
+					<label>Cidade</label>
+					<span class="static-input">Porto Alegre</span>
+				</div>
+
+				<div class="state-group">
+					<label>Estado</label>
+					<span class="static-input">Rio Grande do Sul</span>
+				</div>
+
+				<span class="city-info">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+
+				<button type="submit" class="btn btn-primary btn-check-address">Verificar endereço</button>
+			</fieldset>
+
+			<button type="button" class="btn btn-show-zip-code-form" ng-click="showZipCodeForm()">Prefiro informar meu CEP</btn>
+			<button type="button" class="btn btn-danger btn-skip-address-check" ng-click="skipAddressVerification()">Pular a verificação de endereço</button>
 		</form>
 	</div>
 
@@ -26,8 +55,8 @@
 			<p class="address">{{address.address}}, Bairro {{address.neighborhood}} - {{address.city.name}} - {{address.city.state.acronym}}</p>
 			<h5 class="message">Desculpe, mas esse estabelecimento não atende seu endereço.</h5>
 
-			<button class="back-to-search-button" ng-click="closeDialog()">Procurar outro estabelecimento</btn>
-			<button class="show-establishment-button" ng-click="goToEstablishmentPage()">Ir para a página do estabelecimento mesmo assim</button>
+			<button type="button" class="btn back-to-search-button" ng-click="closeDialog()">Procurar outro estabelecimento</btn>
+			<button type="button" class="btn show-establishment-button" ng-click="goToEstablishmentPage()">Ir para a página do estabelecimento mesmo assim</button>
 		</div>
 	</div>
 

@@ -474,11 +474,18 @@ a:hover, a:focus {
 	text-align: center;
 }
 
+.check-address-dialog .fail-message {
+	width: 100%;
+	display: block;
+	text-align: center;
+	color: #FF3D3D;
+}
+
 .check-address-dialog .zip-code-form {
 	margin-top: 30px;
 }
 
-.check-address-dialog .zip-code-form .zip-code-label {
+.check-address-dialog .zip-code-form .label {
 	width: 100%;
 	font-size: 16px;
 	font-weight: normal;
@@ -494,60 +501,91 @@ a:hover, a:focus {
 	border-bottom-right-radius: 0px;
 }
 
-.check-address-dialog .zip-code-form .zip-code-button {
+.check-address-dialog .zip-code-form .btn-check-zip-code {
 	float: left;
 	width: 20%;
 	height: 40px;
-	padding: 0px;
-	border: 1px solid #f46c21;
-	background: #f46c21;
-	color: #fff;
-	border-top-right-radius: 2px;
-	border-bottom-right-radius: 2px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
 }
 
-.check-address-dialog .zip-code-form .zip-code-button:hover {
-	border-color: #fbca0e;
-	background-color: #fbca0e;
-}
-
-.check-address-dialog .zip-code-form .fail-message {
+.check-address-dialog .zip-code-form .btn-show-address-form {
 	width: 100%;
-	display: block;
-	text-align: center;
-	color: #FF3D3D;
-}
-
-.check-address-dialog .zip-code-form .show-address-form-button {
-	width: 100%;
-	margin-top: 40px;
-	padding: 5px;
-	text-align: center;
+	margin-top: 30px;
 	background-color: #fff;
 	border: 1px solid #a01608;
-	border-radius: 2px;
-	font-weight: normal;
 	color: #a01608;
 }
 
-.check-address-dialog .zip-code-form .show-address-form-button:hover {
+.check-address-dialog .zip-code-form .btn-show-address-form:hover {
 	background-color: #e6e6e6;
 	border-color: #CC4A3D;
 }
 
-.check-address-dialog .skip-address-check-button {
-	width: 100%;
-	margin-top: 5px;
-	padding: 5px;
-	border: 1px solid #EB3825;
-	border-radius: 2px;
-	background: #EB3825;
-	color: #fff;
+.check-address-dialog .address-form fieldset {
+	margin-top: 25px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #ccc;
 }
 
-.check-address-dialog .skip-address-check-button:hover {
-	background-color: #DE1F0B;
-	border-color: #DE1F0B;
+.check-address-dialog .address-form .message {
+	font-size: 16px;
+	text-align: left;
+}
+
+.check-address-dialog .address-form label {
+	width: 100%;
+}
+
+.check-address-dialog .address-form .fail-message {
+	margin-top: 5px;
+	text-align: left;
+}
+
+.check-address-dialog .address-form .static-input {
+	display: inline-block;
+	width: 100%;
+}
+
+.check-address-dialog .address-form .city-group,
+.check-address-dialog .address-form .state-group {
+	margin-top: 20px;
+}
+
+.check-address-dialog .address-form .city-group,
+.check-address-dialog .address-form .state-group {
+	float: left;
+	width: 50%;
+}
+
+.check-address-dialog .address-form .help-message,
+.check-address-dialog .address-form .city-info {
+	margin-top: 5px;
+	font-size: 12px;
+	color: #7a7a7a;
+}
+
+.check-address-dialog .address-form .btn-check-address {
+	width: 100%;
+	margin-top: 40px;
+}
+
+.check-address-dialog .address-form .btn-show-zip-code-form {
+	width: 100%;
+	margin-top: 40px;
+	background-color: #fff;
+	border: 1px solid #F26C23;
+	color: #F26C23;
+}
+
+.check-address-dialog .address-form .btn-show-zip-code-form:hover {
+	background-color: #e6e6e6;
+	color: #F05602;
+}
+
+.check-address-dialog .btn-skip-address-check {
+	width: 100%;
+	margin-top: 5px;
 }
 
 .check-address-dialog .processing {
@@ -643,6 +681,10 @@ input.invalid:focus, select.invalid:focus {
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px #CE8483;
 }
 
+label .required {
+	color: #ff0000;
+}
+
 /** --- Helper classes --- **/
 .helper-no-select {
 	-webkit-touch-callout: none;
@@ -670,14 +712,31 @@ input.invalid:focus, select.invalid:focus {
 }
 
 .btn.btn-primary {
-	background-color: #eb3825;
-	border-color: #eb3825;
+	color: #fff;
+	background-color: #f46c21;
+	border-color: #f46c21;
+}
+
+.btn.btn-primary:hover {
+	border-color: #fbca0e;
+	background-color: #fbca0e;
 }
 
 .btn.btn-default {
 	border-color: #cf4d0d;
 	background-color: #f15e18;
 	color: white;
+}
+
+.btn.btn-danger {
+	border: 1px solid #EB3825;
+	background: #EB3825;
+	color: #fff;
+}
+
+.btn.btn-danger:hover {
+	background-color: #DE1F0B;
+	border-color: #DE1F0B;
 }
 
 .panel {
@@ -971,16 +1030,15 @@ input.invalid:focus, select.invalid:focus {
 		width: 100%;
 	}
 
-	.check-address-dialog .zip-code-form .show-address-form-button {
+	.check-address-dialog .zip-code-form .btn-show-address-form,
+	.check-address-dialog .address-form .btn-show-zip-code-form,
+	.check-address-dialog .btn-skip-address-check {
 		float: left;
 		width: 49%;
 		margin-top: 40px;
 	}
 
-	.check-address-dialog .skip-address-check-button {
-		float: left;
-		width: 49%;
-		margin-top: 40px;
+	.check-address-dialog .btn-skip-address-check {
 		margin-left: 2%;
 	}
 
