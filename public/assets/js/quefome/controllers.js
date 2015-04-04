@@ -326,6 +326,10 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 				$scope.addressAttended = isAttending;
 
 				$scope.processing = false;
+
+				if (isAttending) {
+					$scope.goToEstablishmentPage();
+				}
 			}, function(errorMessage) {
 				$scope.addressChecked = false;
 				$scope.searchingZipCode = false;

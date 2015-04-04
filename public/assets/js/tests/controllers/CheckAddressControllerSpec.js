@@ -195,6 +195,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressAttended).toBe(true);
 			});
 
+			it("should go to the establishment page if the address is attended", function() {
+				MockedEstablishmentService.attendedZipCode = scope.zipCode;
+				scope.establishment = {url: "teste"};
+
+				scope.checkZipCode();
+				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
+			});
+
+
 			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
 				scope.zipCode = "95677229";
 				scope.$digest();
@@ -256,7 +265,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(MockedAddressService._searchAddressCalled).toBe(true);
 			});
 
-			it("should check if the establishment is attending the seached address", function() {
+			it("should check if the establishment is attending the searched address", function() {
 				scope.checkAddress();
 				expect(MockedEstablishmentService._isAttendingCalled).toBe(true);
 			});
@@ -280,6 +289,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.checkAddress();
 				expect(scope.addressAttended).toBe(true);
 			});
+
+			it("should go to the establishment page if the address is attended", function() {
+				MockedEstablishmentService.attendedZipCode = "93336220";
+				scope.establishment = {url: "teste"};
+
+				scope.checkAddress();
+				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
+			});
+
 
 			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
 				MockedEstablishmentService.attendedZipCode = "95677229";
