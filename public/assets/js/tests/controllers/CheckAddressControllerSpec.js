@@ -130,6 +130,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.isZipCodeFormVisible).toBeDefined();
 		});
 
+		it("should have a invalidZipCode property", function() {
+			expect(scope.invalidZipCode).toBeDefined();
+		});
+
+		it("should have a invalidAddress property", function() {
+			expect(scope.invalidAddress).toBeDefined();
+		});
+
 		it("should listen for a establishment as $dialogParameters", function() {
 			var params = {
 				establishment: {id: 1, name: "Blabla"}
@@ -160,7 +168,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressChecked).toBe(true);
 			});
 
-			it("should not check if the zipCode is invalid", function() {
+			it("should validate if the zipCode is invalid", function() {
 				scope.zipCode = "";
 				scope.$digest();
 
@@ -209,6 +217,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.checkZipCode();
 				expect(MockedAddressService.getCurrentAddress()).toEqual(MockedAddressService._addresses[scope.zipCode]);
 			});
+
+			it("should set the invalidZipCode to false if the zipCode is valid", function() {
+				scope.invalidZipCode = true;
+
+				scope.checkZipCode();
+				expect(scope.invalidZipCode).toBe(false);
+			});
+
+			it("should set the invalidZipCode to true if the zipCode is invalid", function() {
+				MockedAddressService.searchZipCode = function() {
+					return {
+						then: function(successCallback, failCallback) {
+							failCallback();
+						}
+					};
+				};
+
+				scope.checkZipCode();
+				expect(scope.invalidZipCode).toBe(true);
+			});
 		});
 
 		describe("when checking for the address", function() {
@@ -232,7 +260,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressChecked).toBe(true);
 			});
 
-			it("should not check if the zipCode is invalid", function() {
+			it("should validate if the zipCode is invalid", function() {
 				scope.address.address = "";
 				scope.$digest();
 
@@ -272,6 +300,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.checkAddress();
 				expect(MockedAddressService.getCurrentAddress()).toEqual(scope.address);
 			});
+
+			it("should set the invalidAddress to false if the zipCode is valid", function() {
+				scope.invalidAddress = true;
+
+				scope.checkAddress();
+				expect(scope.invalidAddress).toBe(false);
+			});
+
+			it("should set the invalidAddress to true if the address is invalid", function() {
+				MockedAddressService.searchAddress = function() {
+					return {
+						then: function(successCallback, failCallback) {
+							failCallback();
+						}
+					};
+				};
+
+				scope.checkAddress();
+				expect(scope.invalidAddress).toBe(true);
+			});
 		});
 
 		describe("when showing the address form", function() {
@@ -286,6 +334,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.showAddressForm();
 				expect(scope.address).toEqual({});
 			});
+
+			it("should set the invalidAddress property to false", function() {
+				scope.invalidAddress = true;
+				scope.showAddressForm();
+
+				expect(scope.invalidAddress).toBe(false);
+			});
+
+			it("should set the addressForm.$submitted property to false", function() {
+				scope.addressForm.$submitted = true;
+				scope.showAddressForm();
+
+				expect(scope.addressForm.$submitted).toBe(false);
+			});
 		});
 
 		describe("when showing the zip code form", function() {
@@ -298,6 +360,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.zipCode = "93336220";
 				scope.showZipCodeForm();
 				expect(scope.zipCode).toEqual("");
+			});
+
+			it("should set the invalidZipCode property to false", function() {
+				scope.invalidZipCode = true;
+				scope.showZipCodeForm();
+
+				expect(scope.invalidZipCode).toBe(false);
+			});
+
+			it("should set the zipCodeForm.$submitted property to false", function() {
+				scope.zipCodeForm.$submitted = true;
+				scope.showZipCodeForm();
+
+				expect(scope.zipCodeForm.$submitted).toBe(false);
 			});
 		});
 

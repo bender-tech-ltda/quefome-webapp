@@ -294,9 +294,11 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 		$scope.isZipCodeFormVisible = true;
 
+		$scope.invalidZipCode = false;
+		$scope.invalidAddress = false;
+
 		$scope.addressChecked = false;
 		$scope.addressAttended = null;
-
 		$scope.processing = false;
 
 		$scope.establishment = {};
@@ -332,9 +334,14 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 			AddressService.searchZipCode($scope.zipCode).then(function(address) {
 				$scope.address = address;
+				$scope.invalidZipCode = false;
+
 				checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
 				$scope.processing = false;
+				$scope.addressChecked = false;
+
+				$scope.invalidZipCode = true;
 			});
 		};
 
@@ -344,18 +351,34 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			}
 
 			$scope.processing = true;
+			var address = {
+				address: $scope.address.address,
+				city: {
+					name: "Porto Alegre",
+					state: {
+						acronym: "RS"
+					}
+				}
+			};
 
-			AddressService.searchAddress($scope.address).then(function(address) {
+			AddressService.searchAddress(address).then(function(address) {
 				$scope.address = address;
+				$scope.invalidAddress = false;
+
 				checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
 				$scope.processing = false;
+				$scope.addressChecked = false;
+
+				$scope.invalidAddress = true;
 			});
 		};
 
 		$scope.showAddressForm = function() {
 			$scope.isZipCodeFormVisible = false;
 			$scope.address = {};
+			$scope.invalidAddress = false;
+			$scope.addressForm.$submitted = false;
 
 			$scope.$digest();
 		};
@@ -363,6 +386,8 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.showZipCodeForm = function() {
 			$scope.isZipCodeFormVisible = true;
 			$scope.zipCode = "";
+			$scope.invalidZipCode = false;
+			$scope.zipCodeForm.$submitted = false;
 
 			$scope.$digest();
 		};
