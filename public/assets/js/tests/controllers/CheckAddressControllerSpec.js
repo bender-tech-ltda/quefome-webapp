@@ -25,6 +25,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				},
 
+				_searchAddressCalled: false,
+				searchAddress: function(address) {
+					this._searchAddressCalled = true;
+					address.zipCode = "93336220";
+
+					return {
+						then: function(callback) {
+							callback(address);
+						}
+					};
+				},
+
 				_address: {},
 				setCurrentAddress: function(address) {
 					this._address = address;
@@ -128,28 +140,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("when checking for the zip code", function() {
-			it("should search for the zip code address", function() {
+			beforeEach(function() {
 				scope.zipCode = "93336220";
 				scope.$digest();
+			});
 
+			it("should search for the zip code address", function() {
 				scope.checkZipCode();
 				expect(MockedAddressService._searchZipCodeCalled).toBe(true);
 			});
 
 			it("should check if the establishment is attending the seached address", function() {
-				scope.zipCode = "93336220";
-				scope.$digest();
-
 				scope.checkZipCode();
 				expect(MockedEstablishmentService._isAttendingCalled).toBe(true);
 			});
 
 			it("should set the addressChecked to true", function() {
-				scope.zipCode = "93336220";
-				scope.$digest();
-
 				scope.checkZipCode();
-
 				expect(scope.addressChecked).toBe(true);
 			});
 
@@ -158,32 +165,27 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.$digest();
 
 				scope.checkZipCode();
-
 				expect(MockedAddressService._searchZipCodeCalled).toBe(false);
 
 				scope.zipCode = "abc123";
+				scope.$digest();
+
 				scope.checkZipCode();
-				
 				expect(MockedAddressService._searchZipCodeCalled).toBe(false);
 			});
 
 			it("should set the addressAttended to true if the establishment attend the user zip code", function() {
-				scope.zipCode = "93336220";
-				scope.$digest();
-
 				MockedEstablishmentService.attendedZipCode = scope.zipCode;
 
 				scope.checkZipCode();
-
 				expect(scope.addressAttended).toBe(true);
 			});
 
-			it("should set the addressChecked to true event if the establishment doesn't attend that address", function() {
+			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
 				scope.zipCode = "95677229";
 				scope.$digest();
 
 				scope.checkZipCode();
-
 				expect(scope.addressChecked).toBe(true);
 			});
 
@@ -191,9 +193,6 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedEstablishmentService.isAttendingAddress = function() {
 					return {then: function() {}};
 				};
-
-				scope.zipCode = "93336220";
-				scope.$digest();
 
 				scope.checkZipCode();
 				expect(scope.processing).toBe(true);
@@ -205,13 +204,73 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("should set the user current address", function() {
-				scope.zipCode = "93336220";
 				MockedEstablishmentService.attendedZipCode = scope.zipCode;
 
-				scope.$digest();
 				scope.checkZipCode();
-
 				expect(MockedAddressService.getCurrentAddress()).toEqual(MockedAddressService._addresses[scope.zipCode]);
+			});
+		});
+
+		describe("when checking for the address", function() {
+			beforeEach(function() {
+				scope.address = {address: "Rua B", city: "Porto Alegre", state: "RS"};
+				scope.$digest();
+			});
+
+			it("should search for the address", function() {
+				scope.checkAddress();
+				expect(MockedAddressService._searchAddressCalled).toBe(true);
+			});
+
+			it("should check if the establishment is attending the seached address", function() {
+				scope.checkAddress();
+				expect(MockedEstablishmentService._isAttendingCalled).toBe(true);
+			});
+
+			it("should set the addressChecked to true", function() {
+				scope.checkAddress();
+				expect(scope.addressChecked).toBe(true);
+			});
+
+			it("should not check if the zipCode is invalid", function() {
+				scope.address.address = "";
+				scope.$digest();
+
+				scope.checkAddress();
+				expect(MockedAddressService._searchZipCodeCalled).toBe(false);				
+			});
+
+			it("should set the addressAttended to true if the establishment attend the address", function() {
+				MockedEstablishmentService.attendedZipCode = "93336220";
+
+				scope.checkAddress();
+				expect(scope.addressAttended).toBe(true);
+			});
+
+			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
+				MockedEstablishmentService.attendedZipCode = "95677229";
+
+				scope.checkAddress();
+				expect(scope.addressChecked).toBe(true);
+			});
+
+			it("should set the processing to true", function() {
+				MockedEstablishmentService.isAttendingAddress = function() {
+					return {then: function() {}};
+				};
+
+				scope.checkAddress();
+				expect(scope.processing).toBe(true);
+			});
+
+			it("should set the processing to false after finish", function() {
+				scope.checkAddress();
+				expect(scope.processing).toBe(false);
+			});
+
+			it("should set the user current address", function() {
+				scope.checkAddress();
+				expect(MockedAddressService.getCurrentAddress()).toEqual(scope.address);
 			});
 		});
 

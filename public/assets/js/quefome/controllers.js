@@ -307,6 +307,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			}
 		});
 
+		var checkIfEstablishmentAttendsTheAddress = function(address) {
+			EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
+				AddressService.setCurrentAddress(address);
+
+				$scope.addressChecked = true;
+				$scope.addressAttended = isAttending;
+
+				$scope.processing = false;
+			}, function(errorMessage) {
+				$scope.addressChecked = false;
+				$scope.searchingZipCode = false;
+
+				$scope.processing = false;
+			});
+		};
+
 		$scope.checkZipCode = function() {
 			if ($scope.zipCodeForm.$invalid) {
 				return;
@@ -316,20 +332,22 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 			AddressService.searchZipCode($scope.zipCode).then(function(address) {
 				$scope.address = address;
+				checkIfEstablishmentAttendsTheAddress(address);
+			}, function() {
+				$scope.processing = false;
+			});
+		};
 
-				EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
-					AddressService.setCurrentAddress(address);
+		$scope.checkAddress = function() {
+			if ($scope.addressForm.$invalid) {
+				return;
+			}
 
-					$scope.addressChecked = true;
-					$scope.addressAttended = isAttending;
+			$scope.processing = true;
 
-					$scope.processing = false;
-				}, function(errorMessage) {
-					$scope.addressChecked = false;
-					$scope.searchingZipCode = false;
-
-					$scope.processing = false;
-				});
+			AddressService.searchAddress($scope.address).then(function(address) {
+				$scope.address = address;
+				checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
 				$scope.processing = false;
 			});
