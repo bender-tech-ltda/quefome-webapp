@@ -13,6 +13,20 @@ define(["angular"], function(angular) {
 		};
 	};
 
+	var simplifyAddressObject = function(address) {
+		var simplifiedAddress = {};
+
+		if (address) {
+			simplifiedAddress.zipCode = address.zipCode;
+			simplifiedAddress.address = address.address;
+			simplifiedAddress.neighborhood = typeof(address.neighborhood) === "object" ? address.neighborhood.name : address.neighborhood;
+			simplifiedAddress.city = typeof(address.city) === "object" ? address.city.name : address.neighborhood;
+			simplifiedAddress.state = typeof(address.city) === "object" ? (typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state;
+		}
+
+		return simplifiedAddress;
+	};
+
 	module.service("AuthService", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 
@@ -136,17 +150,12 @@ define(["angular"], function(angular) {
 
 		this.isAttendingAddress = function(establishment, address) {
 			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
+			address = simplifyAddressObject(address);
 
-			var params = "";
-			if (address) {
-				params += address.zipCode + "/";
-				params += address.address + "/";
-				params += (typeof(address.neighborhood) === "object" ? address.neighborhood.name : address.neighborhood) + "/";
-				params += (typeof(address.city) === "object" ? address.city.name : address.neighborhood) + "/";
-				params += (typeof(address.city) === "object" ? (typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state) + "/";
-			}
+			var url = "/api/establishments/" + establishment + "/attend-address/";
+			url += address.zipCode + "/" + address.address + "/" + address.neighborhood + "/" + address.city + "/" + address.state + "/";
 
-			return $http.get("/api/establishments/" + establishment + "/attend-address/" + params).then(function(response) {
+			return $http.get(url).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
@@ -175,6 +184,18 @@ define(["angular"], function(angular) {
 			return $http.get("/api/addresses/search/zip-code/" + zipCode).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
+		};
+
+		this.searchAddress = function(address) {
+			address = simplifyAddressObject(address);
+
+			var url = "/api/addresses/search/address/";
+			url += address.state + "/" + address.city + "/" + address.address;
+
+			return $http.get("/api/addresses/search/address/" + address.state + "/" + address.city + "/" + address.address).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+
 		};
 
 		var currentAddress = null;

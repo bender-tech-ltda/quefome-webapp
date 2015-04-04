@@ -60,6 +60,26 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 		});
 
+		describe("the searchAddress function", function() {
+			it("should return an address for an address", function() {
+				var searchAddress = {
+					address: "Rua A", 
+					city: {
+						name: "Porto Alegre",
+						state: {acronym: "RS"}
+					}
+				};
+
+				var addressResponse = angular.copy(searchAddress);
+				addressResponse.zipCode = "92554778";
+
+				$httpBackend.expectGET("/api/addresses/search/address/RS/Porto Alegre/Rua A").respond(200, addressResponse);
+
+				AddressService.searchAddress(searchAddress);
+				$httpBackend.flush();
+			});
+		});
+
 		describe("the getCurrentAddress and setCurrentAddress function", function() {
 			it("should return null if has no address", function() {
 				expect(AddressService.getCurrentAddress()).toBeNull();
