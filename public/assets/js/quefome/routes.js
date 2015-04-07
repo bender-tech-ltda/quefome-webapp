@@ -15,7 +15,7 @@ define([], function() {
 		},
 		{
 			path: "/establishments/:establishmentUrl",
-			template: "<h1 class='text-center'>Página do Estabelecimento (em construção)</h1>",
+			templateUrl: "/partials/establishments/establishment.html",
 			reloadOnSearch: false
 		},
 		{

@@ -354,6 +354,7 @@ a:hover, a:focus {
 
 .delivery-search-page .search-form .query-search .query-button-wrapper .query-button > * {
 	top: 5px;
+	right: 10px;
 }
 
 .delivery-search-page .search-result {
@@ -461,6 +462,77 @@ a:hover, a:focus {
 	width: 100%;
 	margin-top: 40px;
 	text-align: center;
+}
+
+.establishment-page {
+	width: 100%;
+	min-height: 100px;
+}
+
+.establishment-page .establishment {
+	min-height: 138px;
+	padding: 10px 0px;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.establishment-page .establishment .logo {
+	float: left;
+	height: 100px;
+	width: 100px;
+	margin: 10px 10px 0px;
+}
+
+.establishment-page .establishment .information {
+	float: left;
+	width: 57%;
+	width: -webkit-calc(100% - 130px);
+	width: -moz-calc(100% - 130px);
+	width: calc(100% - 130px);
+	margin-bottom: 10px;
+}
+
+.establishment-page .establishment .information .title {
+	min-height: 72px;
+}
+
+.establishment-page .establishment .information .title .name {
+	margin: 15px 0px 0px;
+	font-size: 18px;
+	font-weight: bold;
+	color: #4C4C4C;
+}
+
+.establishment-page .establishment .information .title .description {
+	color: #7a7a7a;
+}
+
+.establishment-page .establishment .information .address {
+	color: #666;
+}
+
+.establishment-page .establishment .additional-info {
+	margin: 2px 15px;
+	border-top: 1px solid #dcdcdc;
+	padding: 10px 0px 0px;
+	font-size: 11px;
+	color: #4C4E4E;
+	clear: both;
+}
+
+.establishment-page .establishment .additional-info .status,
+.establishment-page .establishment .additional-info .delivery-info {
+	display: inline-block;
+	width: 49%;
+	text-align: center;
+}
+
+.establishment-page .establishment .additional-info .status .qf-icon,
+.establishment-page .establishment .additional-info .delivery-info .qf-icon {
+	top: 4px;
+}
+
+.establishment-page .establishment .additional-info .status.open {
+	color: #008000;
 }
 
 .check-address-dialog .title {
@@ -967,12 +1039,6 @@ label .required {
 		text-align: center;
 	}
 
-	.delivery-search-page .search-form .query-search {
-		float: left;
-		width: 45%;
-		margin: 0px;
-	}
-
 	.delivery-search-page .search-form .search-form-divisor .divisor-text {
 		background-color: #ffe171;
 		color: white;
@@ -983,6 +1049,16 @@ label .required {
 		text-transform: uppercase;
 		position: relative;
 		top: -0.7em;
+	}
+
+	.delivery-search-page .search-form .query-search {
+		float: left;
+		width: 45%;
+		margin: 0px;
+	}
+
+	.delivery-search-page .search-form .query-search .query-button-wrapper .query-button > * {
+		right: 4px;
 	}
 
 	.delivery-search-page .search-result {
@@ -1028,6 +1104,36 @@ label .required {
 	.delivery-search-page .search-result .establishment-list .establishment .additional-info .delivery-info {
 		float: none;
 		width: 100%;
+	}
+
+	.establishment-page .establishment {
+		padding: 10px 15%;
+	}
+
+	.establishment-page .establishment .information {
+		width: 40%;
+		width: -webkit-calc(100% - 400px);
+		width: -moz-calc(100% - 400px);
+		width: calc(100% - 400px);
+		margin-bottom: 0px;
+	}
+
+	.establishment-page .establishment .additional-info {
+		float: left;
+		clear: none;
+		width: 250px;
+		border-top: none;
+		border-left: 1px solid #dcdcdc;
+		padding-left: 10px;
+	}
+
+	.establishment-page .establishment .additional-info .status,
+	.establishment-page .establishment .additional-info .delivery-info {
+		float: none;
+		display: block;
+		width: 100%;
+		margin-bottom: 10px;
+		text-align: left;
 	}
 
 	.check-address-dialog .zip-code-form .btn-show-address-form,
