@@ -71,6 +71,18 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 		});
 
+		describe("the findByUrl function", function() {
+			it("should find a establishment with a url", function() {
+				var url = "teste";
+				var response = {id: -42, name: "Teste"};
+
+				$httpBackend.expectGET("/api/establishments/" + url).respond(200, response);
+
+				EstablishmentService.findByUrl(url);
+				$httpBackend.flush();
+			});
+		});
+
 		describe("the isAttendingAddress function", function() {
 			it("should check if a address is attended by an establishment", function() {
 				var establishment = {id: 2};

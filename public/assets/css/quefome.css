@@ -548,12 +548,46 @@ a:hover, a:focus {
 	border: 1px solid #ccc;
 	border-radius: 2px;
 	text-align: center;
+	color: #4C4C4C;
+}
+
+.establishment-page .establishment-products .product:hover {
+	background-color: #f5f5f5;
 }
 
 .establishment-page .establishment-products .product .image {
 	margin: 5px;
 	height: 130px;
 	width: 130px;
+}
+
+.establishment-page .establishment-products .product .title {
+	min-height: 80px;
+	margin-top: 5px;
+}
+
+.establishment-page .establishment-products .product .title .name {
+	margin: 0px 0px 1px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.establishment-page .establishment-products .product .title .description {
+	color: #7a7a7a;
+	font-size: 11px;
+}
+
+.establishment-page .establishment-products .product .price {
+	display: inline-block;
+	width: 100%;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.establishment-page .establishment-products .product .btn-add-product {
+	width: 93%;
+	margin: 10px 5px 10px;
+	padding: 4px 12px;
 }
 
 .check-address-dialog .title {
@@ -901,6 +935,12 @@ label .required {
 	}
 }
 
+@media(min-width: 640px) {
+	.establishment-page .establishment-products .product {
+		width: 23%;
+	}
+}
+
 @media (min-width: 768px) {
 	.navbar-quefome {
 		height: 122px;
@@ -921,7 +961,7 @@ label .required {
 	}
 
 	.navbar-quefome .login-quefome-icon {
-		margin-top: 25px;480
+		margin-top: 25px;
 		padding-left: 80px;
 		padding-top: 12px;
 		background: url("/assets/img/quefome_icon_70x75.png") no-repeat;
@@ -1128,9 +1168,9 @@ label .required {
 		float: none;
 		width: 100%;
 	}
-4px
+
 	.establishment-page .establishment {
-		padding: 10px 15%;
+		padding: 10px 12%;
 	}
 
 	.establishment-page .establishment .information {
@@ -1235,6 +1275,10 @@ label .required {
 		width: 70%;
 	}
 
+	.establishment-page .establishment-products .product {
+		width: 19%;
+	}
+
 	.footer .new-delivery {
 		margin-left: 10%;
 	}
@@ -1247,6 +1291,10 @@ label .required {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
+	}
+
+	.establishment-page .establishment-products .product {
+		width: 15%;
 	}
 }
 

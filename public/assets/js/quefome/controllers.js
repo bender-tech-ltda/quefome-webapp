@@ -288,6 +288,15 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 		$scope.searchEstablishments();
 	}]);
 
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "EstablishmentService", function($scope, $routeParams, EstablishmentService) {
+		$scope.establishment = false;
+
+		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
+			$scope.establishment = establishment;
+			$scope.$digest();
+		});
+	}]);
+
 	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {
 		var alreadyInformedAddress = AddressService.getCurrentAddress();
 

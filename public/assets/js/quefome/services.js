@@ -148,6 +148,12 @@ define(["angular"], function(angular) {
 			}, treatPromiseErrors($q));
 		};
 
+		this.findByUrl = function(url) {
+			return $http.get("/api/establishments/" + url).then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
+
 		this.isAttendingAddress = function(establishment, address) {
 			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
 			address = simplifyAddressObject(address);
