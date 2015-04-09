@@ -634,19 +634,20 @@ a:hover, a:focus {
 	height: 40px;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
+	padding: 0px;
 }
 
 .check-address-dialog .zip-code-form .btn-show-address-form {
 	width: 100%;
-	margin-top: 30px;
+	margin-top: 40px;
 	background-color: #fff;
-	border: 1px solid #a01608;
-	color: #a01608;
+	border: 1px solid #F26C23;
+	color: #F26C23;
 }
 
 .check-address-dialog .zip-code-form .btn-show-address-form:hover {
 	background-color: #e6e6e6;
-	border-color: #CC4A3D;
+	color: #F05602;
 }
 
 .check-address-dialog .address-form fieldset {
@@ -712,7 +713,15 @@ a:hover, a:focus {
 
 .check-address-dialog .btn-skip-address-check {
 	width: 100%;
+	background-color: #fff;
+	border: 1px solid #a01608;
+	color: #a01608;
 	margin-top: 5px;
+}
+
+.check-address-dialog .btn-skip-address-check:hover {
+	background-color: #e6e6e6;
+	border-color: #CC4A3D;
 }
 
 .check-address-dialog .processing {
@@ -736,7 +745,7 @@ a:hover, a:focus {
 	color: #7A7A7A;
 }
 
-.check-address-dialog .result .fail .back-to-search-button {
+.check-address-dialog .result .fail .btn-search-establishment {
 	width: 100%;
 	margin-top: 40px;
 	padding: 5px;
@@ -748,12 +757,12 @@ a:hover, a:focus {
 	color: #fff;
 }
 
-.check-address-dialog .result .fail .back-to-search-button:hover {
+.check-address-dialog .result .fail .btn-search-establishment:hover {
 	background-color: #F05602;
 	border-color: #F05602;
 }
 
-.check-address-dialog .result .fail .show-establishment-button {
+.check-address-dialog .result .fail .btn-new-address {
 	width: 100%;
 	margin-top: 5px;
 	padding: 5px;
@@ -763,17 +772,9 @@ a:hover, a:focus {
 	color: #fff;
 }
 
-.check-address-dialog .result .fail .show-establishment-button:hover {
+.check-address-dialog .result .fail .btn-new-address:hover {
 	background-color: #DE1F0B;
 	border-color: #DE1F0B;
-}
-
-.modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
-	border-radius: 6px;
-}
-
-.modal .modal-dialog .modal-content .modal-header {
-	text-align: center;
 }
 
 .footer {
@@ -882,6 +883,18 @@ label .required {
 .panel.panel-default .panel-heading {
 	background-color: #a6a6a6;
 	color: #fff;
+}
+
+.modal-open {
+	padding-right: 0px !important;
+}
+
+.modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
+	border-radius: 6px;
+}
+
+.modal .modal-dialog .modal-content .modal-header {
+	text-align: center;
 }
 
 .autocomplete {
@@ -1213,6 +1226,15 @@ label .required {
 		float: left;
 		width: 49%;
 		margin-top: 40px;
+	}
+
+	.check-address-dialog .result .fail .btn-search-establishment {
+		float: left;
+		width: 49%;
+	}
+
+	.check-address-dialog .result .fail .btn-skip-address-checkt {
+		width: 66%;
 	}
 
 	.check-address-dialog .btn-skip-address-check {

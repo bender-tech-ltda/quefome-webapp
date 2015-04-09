@@ -195,16 +195,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressAttended).toBe(true);
 			});
 
-			it("should go to the establishment page if the address is attended", function() {
+			it("should close the dialog if the zip code is attended", function() {
 				MockedEstablishmentService.attendedZipCode = scope.zipCode;
-				scope.establishment = {url: "teste"};
 
 				scope.checkZipCode();
-				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
+				expect(scope.$dialog._calledHide).toBe(true);
 			});
 
-
-			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
+			it("should set the addressChecked to true even if the establishment doesn't attend that zip code", function() {
 				scope.zipCode = "95677229";
 				scope.$digest();
 
@@ -290,14 +288,12 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressAttended).toBe(true);
 			});
 
-			it("should go to the establishment page if the address is attended", function() {
+				it("should close the dialog if the address is attended", function() {
 				MockedEstablishmentService.attendedZipCode = "93336220";
-				scope.establishment = {url: "teste"};
 
 				scope.checkAddress();
-				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
+				expect(scope.$dialog._calledHide).toBe(true);
 			});
-
 
 			it("should set the addressChecked to true even if the establishment doesn't attend that address", function() {
 				MockedEstablishmentService.attendedZipCode = "95677229";
@@ -411,26 +407,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.skipAddressVerification();
 				expect(scope.$dialog._calledHide).toBe(true);
 			});
-
-			it("should send to the establishment page", function() {
-				scope.establishment = {url: "teste"};
-
-				scope.skipAddressVerification();
-				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
-			});
 		});
 
-		describe("going to establishment page", function() {
+		describe("going to establishment search", function() {
 			it("should close the dialog", function() {
-				scope.goToEstablishmentPage();
+				scope.goToEstablishmentSearch();
 				expect(scope.$dialog._calledHide).toBe(true);
 			});
 
-			it("should send to the establishment page", function() {
-				scope.establishment = {url: "teste"};
-
-				scope.goToEstablishmentPage();
-				expect(Mocked$location.path()).toEqual("/establishments/" + scope.establishment.url);
+			it("should send to the establishment search page", function() {
+				scope.goToEstablishmentSearch();
+				expect(Mocked$location.path()).toEqual("/establishments/search/");
 			});
 		});
 

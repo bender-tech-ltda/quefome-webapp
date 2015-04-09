@@ -4,31 +4,12 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("SearchEstablishmentController", function() {
 		var scope, controller;
-		var MockedDialog;
-		var MockedAddressService, MockedProductTypeService, MockedEstablishmentService;
+		var MockedProductTypeService, MockedEstablishmentService;
 		var Mocked$location, Mocked$filter;
 
 		beforeEach(module("qfControllers"));
 
 		beforeEach(function() {
-			MockedDialog = {
-				_called: false,
-				_params: null,
-				create: function(params) {
-					this._called = true;
-					this._params = params;
-				}
-			};
-
-			MockedAddressService = {
-				_called: false,
-				_currentAddress: null,
-				getCurrentAddress: function() {
-					this._called = true;
-					return this._currentAddress;
-				}
-			};
-
 			MockedProductTypeService = {
 				called: false,
 
@@ -118,8 +99,6 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			var params = {
 				ProductTypeService: MockedProductTypeService,
 				EstablishmentService: MockedEstablishmentService,
-				AddressService: MockedAddressService,
-				Dialog: MockedDialog,
 				$location: Mocked$location,
 				$filter: Mocked$filter
 			};
@@ -254,27 +233,6 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				scope.searchEstablishments();
 
 				expect(MockedEstablishmentService.query.query).toEqual(query);
-			});
-		});
-
-		describe("when checking for user address", function() {
-			it("should check if the user already informed its address", function() {
-				scope.checkUserAddress({preventDefault: function() {}}, {});
-				expect(MockedAddressService._called).toBe(true);
-			});
-
-			it("should show a dialog if the user did not informed its address yet", function() {
-				MockedAddressService._currentAddress = false;
-				scope.checkUserAddress({preventDefault: function() {}}, {});
-
-				expect(MockedDialog._called).toBe(true);
-			});
-
-			it("should not show a dialog if the user skipped the address check", function() {
-				MockedAddressService._currentAddress = {skipped: true};
-				scope.checkUserAddress({preventDefault: function() {}}, {});
-
-				expect(MockedDialog._called).toBe(false);
 			});
 		});
 	});

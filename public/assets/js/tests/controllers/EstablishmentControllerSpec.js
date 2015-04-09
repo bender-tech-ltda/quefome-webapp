@@ -5,13 +5,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 	describe("EstablishmentController", function() {
 		var scope, controller;
 		var Mocked$routeParams;
-		var MockedEstablishmentService;
+		var MockedDialog;
+		var MockedEstablishmentService, MockedAddressService;
 
 		beforeEach(module("qfControllers"));
 
 		beforeEach(function() {
 			Mocked$routeParams = {
 				establishmentUrl: "url-restaurante"
+			};
+
+			MockedDialog = {
+				_called: false,
+				_params: null,
+				create: function(params) {
+					this._called = true;
+					this._params = params;
+				}
 			};
 
 			MockedEstablishmentService = {
@@ -47,12 +57,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				}
 			};
+
+			MockedAddressService = {
+				_called: false,
+				_currentAddress: null,
+				getCurrentAddress: function() {
+					this._called = true;
+					return this._currentAddress;
+				}
+			};
 		});
 
 		beforeEach(function() {
 			var params = {
 				$routeParams: Mocked$routeParams,
-				EstablishmentService: MockedEstablishmentService
+				Dialog: MockedDialog,
+				EstablishmentService: MockedEstablishmentService,
+				AddressService: MockedAddressService
 			};
 
 			return injectController("EstablishmentController", "views/partials/establishments/establishment.html", params, function($scope) {
@@ -81,6 +102,27 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should search for the establishment products using the current establishment", function() {
 				expect(MockedEstablishmentService.lastEstablishment).toBe(MockedEstablishmentService.urlEstablishment);
+			});
+		});
+
+		describe("when checking for user address", function() {
+			it("should check if the user already informed its address", function() {
+				scope.checkUserAddress({preventDefault: function() {}}, {});
+				expect(MockedAddressService._called).toBe(true);
+			});
+
+			it("should show a dialog if the user did not informed its address yet", function() {
+				MockedAddressService._currentAddress = false;
+				scope.checkUserAddress({preventDefault: function() {}}, {});
+
+				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should not show a dialog if the user skipped the address check", function() {
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.checkUserAddress({preventDefault: function() {}}, {});
+
+				expect(MockedDialog._called).toBe(false);
 			});
 		});
 	});

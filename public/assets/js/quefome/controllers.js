@@ -160,22 +160,6 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			productType: searchObject["product-type"] || searchObject.productType || ""
 		};
 
-		$scope.checkUserAddress = function(event, establishment) {
-			var currentAddress = AddressService.getCurrentAddress();
-
-			if (!currentAddress || !currentAddress.skipped) {
-				event.preventDefault();
-
-				Dialog.create({
-					templateUrl: "/partials/establishments/check-address.html",
-					show: true,
-					params: {
-						establishment: establishment
-					}
-				});
-			}
-		};
-
 		$scope.selectProductType = function(productType) {
 			$scope.searchFilter.productType = productType ? productType.name : false;
 			$scope.searchFilter.query = "";
@@ -228,9 +212,25 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "EstablishmentService", function($scope, $routeParams, EstablishmentService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "Dialog", "EstablishmentService", "AddressService", function($scope, $routeParams, Dialog, EstablishmentService, AddressService) {
 		$scope.establishment = false;
 		$scope.products = [];
+
+		$scope.checkUserAddress = function(event) {
+			var currentAddress = AddressService.getCurrentAddress();
+
+			if (!currentAddress || !currentAddress.skipped) {
+				event.preventDefault();
+
+				Dialog.create({
+					templateUrl: "/partials/establishments/check-address.html",
+					show: true,
+					params: {
+						establishment: $scope.establishment
+					}
+				});
+			}
+		};
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
@@ -283,7 +283,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.processing = false;
 
 				if (isAttending) {
-					$scope.goToEstablishmentPage();
+					$scope.closeDialog();
 				}
 			}, function(errorMessage) {
 				$scope.addressChecked = false;
@@ -345,8 +345,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.showAddressForm = function() {
 			$scope.isZipCodeFormVisible = false;
 			$scope.address = {};
+			
 			$scope.invalidAddress = false;
 			$scope.addressForm.$submitted = false;
+			
+			$scope.addressChecked = false;
+			$scope.addressAttended = null;
 
 			$scope.$digest();
 		};
@@ -354,21 +358,25 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.showZipCodeForm = function() {
 			$scope.isZipCodeFormVisible = true;
 			$scope.zipCode = "";
+
 			$scope.invalidZipCode = false;
 			$scope.zipCodeForm.$submitted = false;
+
+			$scope.addressChecked = false;
+			$scope.addressAttended = null;
 
 			$scope.$digest();
 		};
 
 		$scope.skipAddressVerification = function() {
 			AddressService.setCurrentAddress({skipped: true});
-			$scope.goToEstablishmentPage();
+			$scope.closeDialog();
 		};
 
-		$scope.goToEstablishmentPage = function() {
+		$scope.goToEstablishmentSearch = function() {
 			if ($scope.$dialog) {
 				$scope.$dialog.beforeHide(function() {
-					$location.path("/establishments/" + $scope.establishment.url);
+					$location.path("/establishments/search/");
 					$scope.$apply();
 				});
 
