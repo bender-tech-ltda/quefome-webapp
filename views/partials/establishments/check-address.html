@@ -11,8 +11,8 @@
 
 			<span class="fail-message" ng-show="(zipCodeForm.$submitted && zipCodeForm.$invalid) || invalidZipCode">O CEP que você inseriu não é válido!</span>
 
-			<button type="button" class="btn btn-show-address-form" ng-click="showAddressForm()">Não sei meu CEP</btn>
-			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()">Vou buscar meu pedido no balcão!</button>
+			<button type="button" class="btn btn-show-address-form" ng-class="{'half-width': establishment.parameters.canWithdraw}" ng-click="showAddressForm()">Não sei meu CEP</btn>
+			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()" ng-show="establishment.parameters.canWithdraw">Vou buscar meu pedido no balcão!</button>
 		</form>
 
 		<form class="address-form" name="addressForm" ng-submit="checkAddress()" ng-hide="processing || addressChecked || isZipCodeFormVisible" novalidate>
@@ -41,8 +41,8 @@
 				<button type="submit" class="btn btn-primary btn-check-address">Verificar endereço</button>
 			</fieldset>
 
-			<button type="button" class="btn btn-show-zip-code-form" ng-click="showZipCodeForm()">Prefiro informar meu CEP</btn>
-			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()">Vou buscar meu pedido no balcão!</button>
+			<button type="button" class="btn btn-show-zip-code-form" ng-class="{'half-width': establishment.parameters.canWithdraw}" ng-click="showZipCodeForm()">Prefiro informar meu CEP</btn>
+			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()" ng-show="establishment.parameters.canWithdraw">Vou buscar meu pedido no balcão!</button>
 		</form>
 	</div>
 
@@ -57,8 +57,8 @@
 			<h5 class="message">Desculpe, mas esse estabelecimento não atende seu endereço.</h5>
 			<button type="button" class="btn btn-new-address" ng-click="showZipCodeForm()">Informar outro endereço</button>
 
-			<button type="button" class="btn btn-search-establishment" ng-click="goToEstablishmentSearch()">Procurar outro estabelecimento</btn>
-			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()">Vou buscar meu pedido no balcão!</button>
+			<button type="button" class="btn btn-search-establishment" ng-class="{'half-width': establishment.parameters.canWithdraw}" ng-click="goToEstablishmentSearch()">Procurar outro estabelecimento</btn>
+			<button type="button" class="btn btn-skip-address-check" ng-click="skipAddressVerification()" ng-show="establishment.parameters.canWithdraw">Vou buscar meu pedido no balcão!</button>
 		</div>
 	</div>
 

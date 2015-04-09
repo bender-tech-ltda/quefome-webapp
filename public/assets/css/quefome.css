@@ -724,6 +724,10 @@ a:hover, a:focus {
 	border-color: #CC4A3D;
 }
 
+.check-address-dialog .btn-skip-address-check.no-skip {
+	display: none;
+}
+
 .check-address-dialog .processing {
 	margin-top: 20px;
 	text-align: center;
@@ -1222,14 +1226,15 @@ label .required {
 
 	.check-address-dialog .zip-code-form .btn-show-address-form,
 	.check-address-dialog .address-form .btn-show-zip-code-form,
-	.check-address-dialog .btn-skip-address-check {
+	.check-address-dialog .btn-skip-address-check,
+	.check-address-dialog .result .fail .btn-search-establishment {
 		float: left;
-		width: 49%;
 		margin-top: 40px;
 	}
 
-	.check-address-dialog .result .fail .btn-search-establishment {
-		float: left;
+	.check-address-dialog .zip-code-form .btn-show-address-form.half-width,
+	.check-address-dialog .address-form .btn-show-zip-code-form.half-width,
+	.check-address-dialog .result .fail .btn-search-establishment.half-width {
 		width: 49%;
 	}
 
