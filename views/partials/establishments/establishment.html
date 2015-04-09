@@ -28,15 +28,15 @@
 	</div>
 
 	<ul class="establishment-products">
-		<li class="product" ng-repeat="product in [0, 1, 2, 3, 4, 5, 6]">
+		<li class="product" ng-repeat="product in products">
 			<img class="image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" />
 
 			<div class="title">
-				<h5 class="name">Produto</h5>
-				<p class="description">Descrição</p>
+				<h5 class="name">{{product.name}}</h5>
+				<p class="description">{{product.description}}</p>
 			</div>
 
-			<span class="price">R$ 10,00</span>
+			<span class="price">R$ {{product.price | money}}</span>
 			<button type="button" class="btn btn-primary btn-add-product">Adicionar</button>
 		</li>
 	</ul>
