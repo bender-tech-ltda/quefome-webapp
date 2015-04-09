@@ -165,6 +165,14 @@ define(["angular"], function(angular) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};
+
+		this.products = function(establishment) {
+			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
+
+			return $http.get("/api/establishments/" + establishment + "/products/").then(function(response) {
+				return response.data;
+			});
+		};
 	}]);
 
 	module.service("PaymentMethodService", ["$http", "$q", function($http, $q) {

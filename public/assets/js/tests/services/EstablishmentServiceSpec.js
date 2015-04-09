@@ -66,7 +66,9 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				var response = ["Xis"];
 				$httpBackend.expectGET("/api/establishments/names/?q=" + query).respond(200, response);
 
-				EstablishmentService.names(query);
+				EstablishmentService.names(query).then(function(names) {
+					expect(names).toEqual(response);
+				});
 				$httpBackend.flush();
 			});
 		});
@@ -78,7 +80,10 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				$httpBackend.expectGET("/api/establishments/" + url).respond(200, response);
 
-				EstablishmentService.findByUrl(url);
+				EstablishmentService.findByUrl(url).then(function(establishment) {
+					expect(establishment).toEqual(response);
+				});
+
 				$httpBackend.flush();
 			});
 		});
@@ -98,7 +103,23 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				};
 
 				$httpBackend.expectGET("/api/establishments/2/attend-address/93336220/Rua A/Centro/Porto Alegre/RS/").respond(200, true);
-				EstablishmentService.isAttendingAddress(establishment, address);
+				EstablishmentService.isAttendingAddress(establishment, address).then(function(isAttendingAddress) {
+					expect(isAttendingAddress).toBe(true);
+				});
+
+				$httpBackend.flush();
+			});
+		});
+
+		describe("the products function", function() {
+			it("should search for products", function() {
+				var establishment = {id: 2};
+				var response = [{id: 1, name: "Teste"}];
+
+				$httpBackend.expectGET("/api/establishments/2/products/").respond(200, response);
+				EstablishmentService.products(establishment).then(function(products) {
+					expect(products).toEqual(response);
+				});
 
 				$httpBackend.flush();
 			});

@@ -29,6 +29,22 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 							callback(establishment);
 						}
 					};
+				},
+
+				productsCalled: false,
+				lastEstablishment: null,
+				_products: [{id: -42, name: "Pastel"}],
+				products: function(establishment) {
+					this.productsCalled = true;
+					this.lastEstablishment = establishment;
+
+					var products = this._products;
+
+					return {
+						then: function(callback) {
+							callback(products);
+						}
+					};
 				}
 			};
 		});
@@ -51,10 +67,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		describe("on startup", function() {
 			it("should search for a establishment", function() {
 				expect(MockedEstablishmentService.findCalled).toBe(true);
+				expect(scope.establishment).toEqual(MockedEstablishmentService.urlEstablishment);
 			});
 
 			it("should search for a establishment using the $routeParams.establishmentUrl property", function() {
 				expect(MockedEstablishmentService.lastFindUrl).toEqual(Mocked$routeParams.establishmentUrl);
+			});
+
+			it("should search for the establishment products", function() {
+				expect(MockedEstablishmentService.productsCalled).toBe(true);
+				expect(scope.products).toEqual(MockedEstablishmentService._products);
+			});
+
+			it("should search for the establishment products using the current establishment", function() {
+				expect(MockedEstablishmentService.lastEstablishment).toBe(MockedEstablishmentService.urlEstablishment);
 			});
 		});
 	});

@@ -230,22 +230,16 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 	module.controller("EstablishmentController", ["$scope", "$routeParams", "EstablishmentService", function($scope, $routeParams, EstablishmentService) {
 		$scope.establishment = false;
-
-		$scope.formatCurrentSchedule = function(establishment) {
-			//return EstablishmentService.formatCurrentSchedule(establishment);
-		};
-
-		$scope.formatDeliveryTime = function(establishment) {
-			//return EstablishmentService.formatDeliveryTime(establishment);
-		};
-
-		$scope.formatMoney = function(value) {
-
-		};
+		$scope.products = [];
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
 			$scope.$digest();
+
+			EstablishmentService.products(establishment).then(function(products) {
+				$scope.products = products;
+				$scope.$digest();
+			});
 		});
 	}]);
 
