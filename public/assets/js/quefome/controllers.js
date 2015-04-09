@@ -1,7 +1,7 @@
-define(["angular", "quefome/services", "quefome/directives"], function(angular) {
+define(["angular", "quefome/services", "quefome/directives", "quefome/filters"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfControllers", ["qfServices", "qfDirectives"]);
+	var module = angular.module("qfControllers", ["qfServices", "qfDirectives", "qfFilters"]);
 
 	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.loginView = "/partials/login/login";
@@ -176,66 +176,6 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 			}
 		};
 
-		$scope.formatCurrentSchedule = function(establishment) {
-			if (!establishment || !establishment.parameters || !establishment.parameters.currentSchedule) {
-				return;
-			}
-
-			var status = establishment.parameters.status;
-			var schedule = establishment.parameters.currentSchedule;
-
-			if (status == 'OPEN') {
-				return $filter("date")(schedule.openingTime, "HH:mm") + " até " + $filter("date")(schedule.closingTime, "HH:mm");
-			}
-
-			var weekDayName = schedule.weekDay.name;
-			var today = new Date();
-			if (schedule.weekDay.number == today.getDay()) {
-				var openingTime = new Date(schedule.openingTime);
-
-				if (today.getHours() < openingTime.getHours() ||
-					(today.getHours() == openingTime.getHours() && today.getMinutes() < openingTime.getMinutes())) {
-					weekDayName = "hoje";
-				}
-			} else {
-				var daysUntilWeekDay = schedule.weekDay.number - today.getDay();
-
-				if (daysUntilWeekDay < 0) {
-					daysUntilWeekDay += 7;
-				}
-
-				if (daysUntilWeekDay == 1) {
-					weekDayName = "amanhã";	
-				}
-			}
-
-			return "Abrirá " + weekDayName + ", às " + $filter("date")(schedule.openingTime, "HH:mm");
-
-		};
-
-		$scope.formatDeliveryTime = function(establishment) {
-			if (!establishment || !establishment.parameters) {
-				return "";
-			}
-
-			var parameters = establishment.parameters;
-			if (parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
-				return parameters.minimumDeliveryTime + "min."
-			} else if (!parameters.minimumDeliveryTime && parameters.maximumDeliveryTime) {
-				return parameters.maximumDeliveryTime + "min.";
-			} else if (!parameters.minimumDeliveryTime && !parameters.maximumDeliveryTime) {
-				return "0min."
-			} else if (parameters.minimumDeliveryTime == parameters.maximumDeliveryTime) {
-				return parameters.minimumDeliveryTime + "min."
-			} else {
-				return parameters.minimumDeliveryTime + " à " + parameters.maximumDeliveryTime + "min.";
-			}
-		};
-
-		$scope.formatMoney = function(money) {
-			return $filter('number')(money, 2).replace(",", "").replace(".", ",");
-		};
-
 		$scope.selectProductType = function(productType) {
 			$scope.searchFilter.productType = productType ? productType.name : false;
 			$scope.searchFilter.query = "";
@@ -290,6 +230,18 @@ define(["angular", "quefome/services", "quefome/directives"], function(angular) 
 
 	module.controller("EstablishmentController", ["$scope", "$routeParams", "EstablishmentService", function($scope, $routeParams, EstablishmentService) {
 		$scope.establishment = false;
+
+		$scope.formatCurrentSchedule = function(establishment) {
+			//return EstablishmentService.formatCurrentSchedule(establishment);
+		};
+
+		$scope.formatDeliveryTime = function(establishment) {
+			//return EstablishmentService.formatDeliveryTime(establishment);
+		};
+
+		$scope.formatMoney = function(value) {
+
+		};
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;

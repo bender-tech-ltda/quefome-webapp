@@ -15,7 +15,7 @@ define([], function() {
 		},
 		{
 			path: "/establishments/:establishmentUrl",
-			controller: "EstablishmentController"
+			controller: "EstablishmentController",
 			templateUrl: "/partials/establishments/establishment.html",
 			reloadOnSearch: false
 		},

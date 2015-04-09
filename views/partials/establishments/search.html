@@ -57,12 +57,12 @@
 								<div class="additional-info">
 									<div class="status" ng-class="{open: establishment.parameters.status == 'OPEN', closed: establishment.parameters.status != 'OPEN'}" title="Horário de Funcionamento">
 										<span class="qf-icon" ng-class="{'icon-event-open': establishment.parameters.status == 'OPEN', 'icon-event-closed': establishment.parameters.status != 'OPEN'}"></span>
-										<span class="text">{{establishment.parameters.status == 'OPEN' ? 'Aberto' : 'Fechado'}} </span>
-										<span class="schedule" ng-show="establishment.parameters.currentSchedule"> ({{formatCurrentSchedule(establishment)}})</span>
+										<span class="text">{{establishment | establishmentStatus}} </span>
+										<span class="schedule" ng-show="establishment.parameters.currentSchedule"> ({{establishment | establishmentSchedule}})</span>
 									</div>
 									<div class="delivery-info" title="Tempo e custo de entrega">
 										<span class="qf-icon icon-bike"></span>
-										<span>{{formatDeliveryTime(establishment)}} - R$ {{formatMoney(establishment.parameters.deliverTax)}}</span>
+										<span>{{establishment | establishmentDeliveryTime}} - R$ {{establishment.parameters.deliverTax | money}}</span>
 									</div>
 
 									<div class="clearfix"></div>
