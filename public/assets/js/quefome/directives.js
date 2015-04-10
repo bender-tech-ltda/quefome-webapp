@@ -180,6 +180,39 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
+	module.directive("qfStickyScroll", [function() {
+		return {
+			restrict: "A",
+			link: function(scope, element, attrs) {
+				var elementTopPosition = 0;
+				var nextElementOriginalMarginTop = 0;
+
+				var nextElement = element.next();
+
+				if (!nextElement || nextElement.length <= 0) {
+					nextElement = angular.element("body");
+				}
+
+				angular.element(window).on("scroll.qfStickyScroll", function() {
+					var currentScrollHeight = angular.element(this).scrollTop();
+
+					if (!element.hasClass("stick-top")) {
+						elementTopPosition = element.position().top + (element.outerHeight() / 2);
+						nextElementOriginalMarginTop = element.css("margin-top");
+					}
+
+					if (currentScrollHeight > elementTopPosition) {
+						element.addClass("stick-top");
+						nextElement.css("margin-top", element.outerHeight(true) + "px");
+					} else {
+						element.removeClass("stick-top");
+						nextElement.css("margin-top", nextElementOriginalMarginTop);
+					}
+				});
+			}
+		};
+	}]);
+
 	module.directive("qfClickDialogUrl", ["Dialog", function(Dialog) {
 		return {
 			restrict: "A",

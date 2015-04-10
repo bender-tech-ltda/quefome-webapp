@@ -16,6 +16,11 @@ a:hover, a:focus {
 	color: #a01608;
 }
 
+.stick-top {
+	position: fixed;
+	top:0;
+}
+
 /** --- Application specific style --- **/
 .navbar-quefome {
 	background-color: #FDE09C;
@@ -532,6 +537,69 @@ a:hover, a:focus {
 
 .establishment-page .establishment .additional-info .status.open {
 	color: #008000;
+}
+
+.establishment-page .establishment-product-types-panel {
+	width: 100%;
+	min-height: 59px;
+	padding: 8px 2%;
+	background-color: #FFE171;
+	margin-bottom: 10px;
+}
+
+.establishment-page .establishment-product-types-panel .title {
+	margin-top: 1px;
+	text-align: center;
+	color: #F46C21;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types {
+	list-style: outside none none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type {
+	float: left;
+	width: 20%;
+	height: 38px;
+	padding: 3px 1px;
+	line-height: 1.4;
+	text-align: center;
+	background-color: #fff;
+	border: 2px solid #ffe171;
+	border-radius: 0px;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type .qf-icon {
+	font-size: 26px;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type.active,
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:hover {
+	color: #fff;
+	background-color: #F46C21;
+	cursor: pointer;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(1),
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(1) ~ li {
+	width: 100%;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(2),
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(2) ~ li {
+	width: 50%;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(3),
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(3) ~ li {
+	width: 33.33%;
+}
+
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(4),
+.establishment-page .establishment-product-types-panel .establishment-product-types .product-type:first-child:nth-last-child(4) ~ li {
+	width: 25%;
 }
 
 .establishment-page .establishment-products {

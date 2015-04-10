@@ -27,6 +27,18 @@
 		<div class="clearfix"></div>
 	</div>
 
+	<div class="establishment-product-types-panel" qf-sticky-scroll qf-stick-before-element=".establishment-page .establishment">
+		<h5 class="title">Selecione um tipo de produto</h5>
+
+		<ul class="establishment-product-types">
+			<li class="product-type" ng-repeat="productType in [0, 1, 2]">
+				<span class="qf-icon icon-burger"></span>
+			</li>
+		</ul>
+
+		<div class="clearfix"></div>
+	</div>
+
 	<ul class="establishment-products">
 		<li class="product" ng-repeat="product in products">
 			<img class="image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" />
