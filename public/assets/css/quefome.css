@@ -1284,6 +1284,11 @@ label .required {
 		text-align: left;
 	}
 
+	.establishment-page .establishment-product-types-panel .establishment-product-types {
+		width: 40%;
+		margin: 0px auto;
+	}
+
 	.establishment-page .establishment-products {
 		margin: 10px 10%;
 	}

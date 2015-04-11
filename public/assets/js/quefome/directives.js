@@ -185,28 +185,22 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			restrict: "A",
 			link: function(scope, element, attrs) {
 				var elementTopPosition = 0;
-				var nextElementOriginalMarginTop = 0;
-
-				var nextElement = element.next();
-
-				if (!nextElement || nextElement.length <= 0) {
-					nextElement = angular.element("body");
-				}
+				var fakeElement = angular.element("<div class='sticky-fake'>");
 
 				angular.element(window).on("scroll.qfStickyScroll", function() {
 					var currentScrollHeight = angular.element(this).scrollTop();
 
 					if (!element.hasClass("stick-top")) {
-						elementTopPosition = element.position().top + (element.outerHeight() / 2);
-						nextElementOriginalMarginTop = element.css("margin-top");
+						elementTopPosition = element.position().top;
+						fakeElement.css("height", element.outerHeight() + "px");
 					}
 
 					if (currentScrollHeight > elementTopPosition) {
+						element.after(fakeElement);
 						element.addClass("stick-top");
-						nextElement.css("margin-top", element.outerHeight(true) + "px");
 					} else {
+						fakeElement.remove();
 						element.removeClass("stick-top");
-						nextElement.css("margin-top", nextElementOriginalMarginTop);
 					}
 				});
 			}
