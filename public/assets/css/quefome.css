@@ -1307,12 +1307,9 @@ label .required {
 
 	.check-address-dialog .zip-code-form .btn-show-address-form.half-width,
 	.check-address-dialog .address-form .btn-show-zip-code-form.half-width,
-	.check-address-dialog .result .fail .btn-search-establishment.half-width {
+	.check-address-dialog .result .fail .btn-search-establishment.half-width,
+	.check-address-dialog .btn-skip-address-check {
 		width: 49%;
-	}
-
-	.check-address-dialog .result .fail .btn-skip-address-checkt {
-		width: 66%;
 	}
 
 	.check-address-dialog .btn-skip-address-check {
