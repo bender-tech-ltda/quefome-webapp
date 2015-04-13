@@ -1284,13 +1284,42 @@ label .required {
 		text-align: left;
 	}
 
+	.establishment-page .establishment-product-types-panel {
+		float: left;
+		width: 12%;
+		padding: 8px 0%;
+		background-color: #fff;
+		padding: 8px 0px 0px;
+		border: 1px solid #ccc;
+		border-top: none;
+		border-radius: 2px;
+		border-top-right-radius: 0px;
+		border-top-left-radius: 0px;
+	}
+
+	.establishment-page .establishment-product-types-panel .title {
+		font-size: 16px;
+	}
+
+	.establishment-page .establishment-product-types-panel .establishment-product-types .product-type {
+		width: 100% !important;
+		border: none;
+		border-top: 1px solid #ccc;
+	}
+
+	.establishment-page .sticky-fake {
+		display: none;
+	}
+
+	/**
 	.establishment-page .establishment-product-types-panel .establishment-product-types {
 		width: 40%;
 		margin: 0px auto;
 	}
+	*/
 
 	.establishment-page .establishment-products {
-		margin: 10px 10%;
+		margin: 10px 10% 10px 13%;
 	}
 
 	.establishment-page .establishment-products .product {
