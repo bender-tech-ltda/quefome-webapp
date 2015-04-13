@@ -214,7 +214,58 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 	module.controller("EstablishmentController", ["$scope", "$routeParams", "Dialog", "EstablishmentService", "AddressService", function($scope, $routeParams, Dialog, EstablishmentService, AddressService) {
 		$scope.establishment = false;
-		$scope.products = [];
+		$scope.productTypes = [];
+
+		$scope.selectedProductType = null;
+
+		$scope.toggleProductType = function(productType) {
+			if ($scope.selectedProductType && $scope.selectedProductType.id == productType.id) {
+				$scope.selectedProductType = null;
+			} else {
+				$scope.selectedProductType = productType;
+			}
+
+			$scope.$digest();
+		};
+
+		$scope.isProductTypeSelected = function(productType) {
+			return $scope.selectedProductType && productType && $scope.selectedProductType.id == productType.id;
+		};
+
+		$scope.filterProductTypes = function(productType) {
+			if (!$scope.selectedProductType) {
+				return true;
+			}
+
+			return $scope.isProductTypeSelected(productType);
+		};
+
+		$scope.groupProducts = function(products) {
+			var productTypes = [];
+
+			for (var i in products) {
+				var product = products[i];
+				var productType = null;
+
+				if (!productTypes[product.type.id]) {
+					productType = angular.copy(product.type);
+					productType.products = [];
+
+					productTypes[productType.id] = productType;
+				} else {
+					productType = productTypes[product.type.id];
+				}
+
+				productType.products.push(product);
+			}
+
+			$scope.productTypes = [];
+			for (var i in productTypes) {
+				$scope.productTypes.push(productTypes[i]);
+			}
+
+			$scope.$digest();
+		};
 
 		$scope.checkUserAddress = function(event) {
 			var currentAddress = AddressService.getCurrentAddress();
@@ -237,8 +288,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.$digest();
 
 			EstablishmentService.products(establishment).then(function(products) {
-				$scope.products = products;
-				$scope.$digest();
+				$scope.groupProducts(products);
 			});
 		});
 	}]);
