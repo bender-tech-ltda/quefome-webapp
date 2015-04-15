@@ -50,6 +50,13 @@ var Address = function() {
 		});
 	};
 
+	var addressReplaces = [
+		{search: new RegExp("^av\\."), replaceBy: "avenida"},
+		{search: new RegExp("^av "), replaceBy: "avenida "},
+		{search: new RegExp("^r\\."), replaceBy: "rua"},
+		{search: new RegExp("^r "), replaceBy: "rua "}
+	];
+
 	this.searchAddress = function(address) {
 		address = simplifyAddress(address);
 
@@ -57,7 +64,15 @@ var Address = function() {
 		address.city = address.city.trim().toLowerCase();
 		address.address = address.address.trim().toLowerCase();
 
-		address.address = address.address.replace(new RegExp("^(av\.|av )"), "avenida");
+		for (var i in addressReplaces) {
+			var replace = addressReplaces[i];
+			address.address = address.address.replace(replace.search, replace.replaceBy);
+		}
+
+		if (address.address.indexOf(",") >= 0) {
+			var splittedAddress = address.address.split(",");
+			address.address = splittedAddress[0];
+		}
 
 		var url = "http://viacep.com.br/ws/";
 		url += encodeURI(address.state) + "/" + encodeURI(address.city) + "/" + encodeURI(address.address) + "/json/";
