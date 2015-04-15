@@ -60,7 +60,7 @@ var Address = function() {
 		address.address = address.address.replace(new RegExp("^(av\.|av )"), "avenida");
 
 		var url = "http://viacep.com.br/ws/";
-		url += address.state + "/" + address.city + "/" + address.address + "/json/";
+		url += encodeURI(address.state) + "/" + encodeURI(address.city) + "/" + encodeURI(address.address) + "/json/";
 
 		return webservice.get(url).then(function(response) {
 			if (response.body && response.body.length > 0) {

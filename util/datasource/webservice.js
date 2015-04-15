@@ -34,7 +34,18 @@ var WebService = function(config) {
 			if (!options.url) {
 				options.url = config.baseUrl;
 			} else if (!options.url.match(/^http.*/)) {
-				options.url = (config.baseUrl.replace(/\/$/, "") + "/" + options.url.replace(/^\//, ""));
+				var url = "";
+				var paths = options.url.split("/");
+				for (var i in paths) {
+					var path = paths[i];
+					url += encodeURI(path);
+
+					if (i < (paths.length-1)) {
+						url += "/";
+					}
+				}
+
+				options.url = (config.baseUrl.replace(/\/$/, "") + "/" + url.replace(/^\//, ""));
 			}	
 		}
 
