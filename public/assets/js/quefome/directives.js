@@ -180,6 +180,24 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
+	module.directive("qfRandomClass", [function() {
+		return {
+			restrict: "A",
+			link: function(scope, element, attrs) {
+				if (!attrs.qfRandomClass) {
+					return;
+				}
+
+				var classes = attrs.qfRandomClass.split(",");
+
+				var randomIndex = Math.floor(Math.random() * classes.length);
+				var randomClass = classes[randomIndex];
+
+				element.addClass(randomClass.trim());
+			}
+		};
+	}]);
+
 	module.directive("qfStickyScroll", [function() {
 		return {
 			restrict: "A",

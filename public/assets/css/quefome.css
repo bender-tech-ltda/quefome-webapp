@@ -95,6 +95,10 @@ a:hover, a:focus {
 	background-image: url("/assets/img/banner_burger_761x504.jpg");
 }
 
+.delivery-search-panel.banner-pizza {
+	background-image: url("/assets/img/banner_pizza_761x504.jpg");	
+}
+
 .delivery-search-panel .food-type-search {
 	border-radius: 4px;
 	display: inline-block;
@@ -1127,6 +1131,10 @@ label .required {
 		background-image: url("/assets/img/banner_burger_991x300.jpg");
 	}
 
+	.delivery-search-panel.banner-pizza {
+		background-image: url("/assets/img/banner_pizza_991x300.jpg");	
+	}
+
 	.delivery-search-panel .food-type-search {
 		float: left;
 		width: 40%;
@@ -1394,6 +1402,10 @@ label .required {
 		background-image: url("/assets/img/banner_burger_1199x300.jpg");
 	}
 
+	.delivery-search-panel.banner-pizza {
+		background-image: url("/assets/img/banner_pizza_1199x300.jpg");	
+	}
+
 	.delivery-search-panel .food-type-search {
 		width: 34%;
 		margin-left: 10%;
@@ -1424,6 +1436,10 @@ label .required {
 @media (min-width: 1200px) {
 	.delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
+	}
+
+	.delivery-search-panel.banner-pizza {
+		background-image: url("/assets/img/banner_pizza_1920x300.jpg");	
 	}
 
 	.establishment-page .establishment-products .products .product {
