@@ -619,6 +619,7 @@ a:hover, a:focus {
 
 .establishment-page .establishment-products > .title .qf-icon {
 	font-size: 25px;
+	z-index: -1;
 }
 
 .establishment-page .establishment-products .products {

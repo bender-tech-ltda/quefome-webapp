@@ -283,6 +283,16 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 		};
 
+		$scope.customizeProduct = function(product) {
+			Dialog.create({
+				templateUrl: "/partials/products/customize.html",
+				show: true,
+				params: {
+					product: product
+				}
+			});
+		};
+
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
 			$scope.$digest();
@@ -291,6 +301,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.groupProducts(products);
 			});
 		});
+	}]);
+
+	module.controller("CustomizeProductController", ["$scope", function($scope) {
+		
 	}]);
 
 	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {

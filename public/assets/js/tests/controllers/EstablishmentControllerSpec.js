@@ -176,5 +176,19 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.isProductTypeSelected({id: -2, name: "Teste 2"})).toBe(false);
 			});
 		});
+
+		describe("when customizing the selected product", function() {
+			it("should show a dialog", function() {
+				scope.customizeProduct();
+				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should pass a product as a parameter to the dialog", function() {
+				var product = {id: -2, name: "Produto de Teste"};
+
+				scope.customizeProduct(product);
+				expect(MockedDialog._params.params.product).toEqual(product);
+			});
+		});
 	});
 });
