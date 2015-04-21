@@ -677,6 +677,71 @@ a:hover, a:focus {
 	padding: 4px 12px;
 }
 
+.customize-product-dialog .product .info {
+	text-align: center;
+}
+
+.customize-product-dialog .product .info .name {
+	margin: 5px 0px 0px;
+}
+
+.customize-product-dialog .product .info .description {
+	color: #7a7a7a;
+}
+
+.customize-product-dialog .product-components {
+	margin-top: 0px;
+	padding-top: 10px;
+	border-top: 1px solid #E5E5E5;
+}
+
+.customize-product-dialog .product-components .title {
+	margin-bottom: 5px;
+}
+
+.customize-product-dialog .product-components .component {
+	float: left;
+	width: 50%;
+	margin: 0px;
+	padding: 7px 0px;
+}
+
+.customize-product-dialog .product-components .component .price {
+	color: #008000;
+	font-size: 11px;
+}
+
+.customize-product-dialog .quantity {
+	float: left;
+	width: 50%;
+}
+
+.customize-product-dialog .quantity {
+	text-align: left;
+}
+
+.customize-product-dialog .quantity input {
+	display: inline-block;
+	width: 33%;
+	padding: 6px;
+}
+
+.customize-product-dialog .total {
+	float: left;
+	width: 50%;
+	margin-top: 6px;
+	font-size: 16px;
+}
+
+.customize-product-dialog .total .price {
+	color: #008000;
+}
+
+.customize-product-dialog .btn-add-product {
+	width: 100%;
+	margin-top: 13px;
+}
+
 .check-address-dialog .title {
 	font-size: 19px;
 	text-align: center;

@@ -1,3 +1,48 @@
-<div class="modal-body customize-product-dialog" ng-controller="CustomizeProductController">
-	<h3>Aqui vai a personalização do produto :)</h3>
-</div>
+<form class="customize-product-dialog" name="productForm" ng-controller="CustomizeProductController">
+	<div class="modal-body">
+		<div class="product">
+			<div class="info">
+				<h3 class="name">{{product.name}}</h3>
+				<p class="description">{{product.description}}</p>
+			</div>
+		</div>
+
+		<div class="product-components" ng-show="componentCategories && componentCategories.length > 0">
+			<fieldset class="component-category" ng-repeat="category in componentCategories">
+				<legend class="title">{{category.name}}</legend>
+
+				<div class="component" ng-repeat="component in category.components | orderBy: component.order">
+					<div class="checkbox" ng-hide="component.options && component.options.length > 0">
+						<input type="checkbox" />
+
+						<span>{{component.name}}</span>
+						<span class="price" ng-show="component.price && component.price > 0"> + R$ {{component.price | money}}</span>						
+					</div>
+
+					<div class="radio" ng-hide="component.options && component.options.length > 0" ng-repeat="option in component.options | orderBy: option.order">
+						<input type="radio" />
+
+						<span>{{option.name}}</span>
+						<span class="price" ng-show="component.price && component.price > 0"> + R$ {{option.price | money}}</span>						
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<div class="quantity">
+			<label>Quantidade:</label>
+			<input type="number" class="form-control" name="quantity" value="1" required />
+		</div>
+
+		<div class="total">
+			<b>Total:</b>
+			<span class="price">R$ {{product.price | money}}</span>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<button class="btn btn-primary btn-add-product">Adicionar ao Pedido</button>
+	</div>
+</form>

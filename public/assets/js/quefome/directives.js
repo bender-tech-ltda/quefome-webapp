@@ -20,6 +20,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 	}]);
 
 	module.service("Dialog", ["$q", "$rootScope", "TemplateResolver", function($q, $rootScope, TemplateResolver) {
+		var Dialog = this;
+
 		this.create = function(params) {
 			var deferred = $q.defer();
 
@@ -40,10 +42,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 				show: function(callback) {
 					if (this.modal) {
-						var oldDialogs = angular.element(".modal");
-						if (oldDialogs && oldDialogs.length > 0) {
-							oldDialogs.modal("hide");
-						}
+						Dialog.hideAll();
 
 						var parent = this.modal.parent();
 						if (!parent || parent.length <= 0) {					
@@ -153,6 +152,22 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 			return deferred.promise;
 		};
+
+		this.hideAll = function() {
+			var oldDialogs = angular.element(".modal");
+			if (oldDialogs && oldDialogs.length > 0) {
+				oldDialogs.modal("hide");
+			}
+		};
+
+		$rootScope.$on("$locationChangeStart", function(event) {
+			var visibleDialogs = angular.element(".modal:visible");
+
+			if (visibleDialogs && visibleDialogs.length > 0) {
+				event.preventDefault();
+				visibleDialogs.modal("hide");
+			}
+		});
 	}]);
 
 	module.directive("qfHref", ["$location", function($location) {

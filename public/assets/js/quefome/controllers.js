@@ -304,7 +304,50 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 	}]);
 
 	module.controller("CustomizeProductController", ["$scope", function($scope) {
-		
+		$scope.product = null;
+		$scope.componentCategories = null;
+
+		$scope.groupProductComponents = function(product) {
+			if (!product || !product.components || product.components.length <= 0) {
+				$scope.componentCategories = null;
+				return;
+			}
+
+			var categories = {};
+			for (var i in product.components) {
+				var component = product.components[i];
+
+				var categoryKey = null;
+				var category = null;
+
+				if (component.options) {
+					categoryKey = component.name;
+				} else {
+					categoryKey = component.category;
+				};
+
+				if (!categories[categoryKey]) {
+					category = {name: categoryKey, components: []};
+					categories[categoryKey] = category;
+				} else {
+					category = categories[categoryKey];
+				}
+
+				category.components.push(component);
+			}
+
+			$scope.componentCategories = [];
+			for (var i in categories) {
+				$scope.componentCategories.push(categories[i]);
+			}
+		};
+
+		$scope.$on("$dialogParameters", function(event, params) {
+			if (params && params.product) {
+				$scope.product = params.product;
+				$scope.groupProductComponents($scope.product);
+			}
+		});
 	}]);
 
 	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {
