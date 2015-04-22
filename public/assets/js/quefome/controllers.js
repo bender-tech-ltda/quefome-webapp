@@ -307,6 +307,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.product = null;
 		$scope.componentCategories = null;
 
+		$scope.quantity = 1;
+
 		$scope.groupProductComponents = function(product) {
 			if (!product || !product.components || product.components.length <= 0) {
 				$scope.componentCategories = null;
@@ -319,15 +321,28 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 				var categoryKey = null;
 				var category = null;
+				var categorySequence = null;
 
 				if (component.options) {
 					categoryKey = component.name;
+					categorySequence = component.sequence;
+
+					for (var o in component.options) {
+						if (component.options[o].defaultOption) {
+							component.option = component.options[o];
+							break;
+						}
+					}
 				} else {
 					categoryKey = component.category;
+					categorySequence = component.categorySequence;
+
+					component.value = component.defaultValue ? true : false;
 				};
 
 				if (!categories[categoryKey]) {
-					category = {name: categoryKey, components: []};
+					category = {name: categoryKey, sequence: categorySequence, components: []};
+
 					categories[categoryKey] = category;
 				} else {
 					category = categories[categoryKey];
@@ -340,6 +355,36 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			for (var i in categories) {
 				$scope.componentCategories.push(categories[i]);
 			}
+
+			$scope.$digest();
+		};
+
+		$scope.calculateTotalPrice = function() {
+			if (!$scope.product) {
+				return 0;
+			}
+
+			var total = $scope.product.price || 0.0;
+
+			if ($scope.product.components) {
+				for (var i in $scope.product.components) {
+					var component = $scope.product.components[i];
+
+					if (typeof(component.value) !== "boolean" && component.defaultValue) {
+						total += (component.price || 0.0);
+					} else if (component.value) {
+						total += (component.price || 0.0);
+					} else if (component.option) {
+						total += (component.option.price || 0.0);
+					} else if (component.defaultOption) {
+						total += (component.defaultOption.price || 0.0);
+					}
+				}
+			}
+
+			var quantity = typeof($scope.quantity) === "number" && $scope.quantity > 0 ? $scope.quantity : 0; 
+
+			return total * quantity;
 		};
 
 		$scope.$on("$dialogParameters", function(event, params) {

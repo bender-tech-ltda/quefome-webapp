@@ -8,22 +8,26 @@
 		</div>
 
 		<div class="product-components" ng-show="componentCategories && componentCategories.length > 0">
-			<fieldset class="component-category" ng-repeat="category in componentCategories">
+			<fieldset class="component-category" ng-repeat="category in componentCategories | orderBy: ['sequence', 'name']">
 				<legend class="title">{{category.name}}</legend>
 
-				<div class="component" ng-repeat="component in category.components | orderBy: component.order">
+				<div class="component" ng-repeat="component in category.components | orderBy: ['sequence', 'name']">
 					<div class="checkbox" ng-hide="component.options && component.options.length > 0">
-						<input type="checkbox" />
+						<label>
+							<input type="checkbox" ng-model="component.value"/>
 
-						<span>{{component.name}}</span>
-						<span class="price" ng-show="component.price && component.price > 0"> + R$ {{component.price | money}}</span>						
+							<span>{{component.name}}</span>
+							<p class="price" ng-show="component.price && component.price > 0"> + R$ {{component.price | money}}</p>
+						</label>
 					</div>
 
-					<div class="radio" ng-hide="component.options && component.options.length > 0" ng-repeat="option in component.options | orderBy: option.order">
-						<input type="radio" />
+					<div class="radio" ng-show="component.options && component.options.length > 0" ng-repeat="option in component.options | orderBy: ['sequence', 'name']">
+						<label>
+							<input type="radio" ng-model="component.option" ng-value="option" />
 
-						<span>{{option.name}}</span>
-						<span class="price" ng-show="component.price && component.price > 0"> + R$ {{option.price | money}}</span>						
+							<span>{{option.name}}</span>
+							<p class="price" ng-show="option.price && option.price > 0">+ R$ {{option.price | money}}</p>						
+						</label>
 					</div>
 				</div>
 			</fieldset>
@@ -33,12 +37,12 @@
 	<div class="modal-footer">
 		<div class="quantity">
 			<label>Quantidade:</label>
-			<input type="number" class="form-control" name="quantity" value="1" required />
+			<input type="number" class="form-control" name="quantity" ng-model="quantity" required min="1" />
 		</div>
 
 		<div class="total">
 			<b>Total:</b>
-			<span class="price">R$ {{product.price | money}}</span>
+			<span class="price">R$ {{calculateTotalPrice() | money}}</span>
 		</div>
 
 		<div class="clearfix"></div>

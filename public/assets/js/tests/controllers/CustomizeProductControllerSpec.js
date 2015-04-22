@@ -23,6 +23,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.componentCategories).toBeDefined();
 		});
 
+		it("should have a quantity property", function() {
+			expect(scope.quantity).toBeDefined();
+		});
+
 		describe("when listining for $dialogParameters", function() {
 			it("should listen for a product", function() {
 				var params = {
@@ -93,6 +97,126 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.groupProductComponents(product);
 				expect(scope.componentCategories).toBeNull();
 			});
+
+			it("should set the value property with the defaultValue property", function() {
+				product.components = [
+					{name: "Fritas", category: "Teste", defaultValue: true}
+				];
+
+				scope.groupProductComponents(product);
+				expect(product.components[0].value).toEqual(product.components[0].defaultValue);
+			});
+
+			it("should set the option property with the defaultOption", function() {
+				product.components = [
+					{name: "Fritas", options: [{name: "Teste", defaultOption: true}]}
+				];
+
+				scope.groupProductComponents(product);
+				expect(product.components[0].option).toEqual(product.components[0].options[0]);
+			});
+		});
+
+		describe("when calculating the total value", function() {
+			beforeEach(function() {
+				scope.product = {
+					id: -2,
+					name: "Teste"
+				};
+			});
+
+			it("should use the product price", function() {
+				scope.product.price = 10;
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.price);
+			});
+
+			it("should use the selected components", function() {
+				scope.product.components = [
+					{value: true, price: 2.50},
+					{value: true, price: 3.0}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[0].price + scope.product.components[1].price);
+			});
+
+			it("should use the default selected components", function() {
+				scope.product.components = [
+					{defaultValue: true, price: 2.50},
+					{defaultValue: true, price: 3.0},
+					{defaultValue: true}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[0].price + scope.product.components[1].price);
+			});
+
+			it("should use the selected components over the default selected components", function() {
+				scope.product.components = [
+					{value: false, defaultValue: true, price: 2.50},
+					{value: true, defaultValue: false, price: 3.0}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[1].price);
+			});
+
+			it("should use the selected option", function() {
+				scope.product.components = [
+					{option: {price: 2.0}},
+					{option: {price: 3.5}},
+					{option: {}},
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[0].option.price + scope.product.components[1].option.price);
+			});
+
+			it("should use the default selected option", function() {
+				scope.product.components = [
+					{defaultOption: {price: 3.0}},
+					{defaultOption: {price: 1.5}}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[0].defaultOption.price + scope.product.components[1].defaultOption.price);
+			});
+
+			it("should use the selected option over the default selected option", function() {
+				scope.product.components = [
+					{option: {price: 2.0}, defaultOption: {price: 3.0}},
+					{option: {price: 1.5}, defaultOption: {price: 1.5}}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.product.components[0].option.price + scope.product.components[1].option.price);
+			});
+
+			it("should be multiplied by the quantity", function() {
+				scope.quantity = 3;
+				scope.product.price = 10.0;
+
+				scope.product.components = [
+					{value: true, price: 2.50},
+					{option: {price: 1.5}}
+				];
+
+				var result = scope.calculateTotalPrice();
+				var expectedResult = scope.quantity * (scope.product.price + scope.product.components[0].price + scope.product.components[1].option.price);
+
+				expect(result).toEqual(expectedResult);
+			});
+
+			it("should be 0 if the quantity is less or equal to 0", function() {
+				scope.quantity = 0;
+				scope.product.price = 10;
+				
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(0);
+			});
+
 		});
 	});
 });

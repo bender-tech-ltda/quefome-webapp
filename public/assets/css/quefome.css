@@ -695,20 +695,26 @@ a:hover, a:focus {
 	border-top: 1px solid #E5E5E5;
 }
 
-.customize-product-dialog .product-components .title {
-	margin-bottom: 5px;
+.customize-product-dialog .product-components .component-category {
+	margin-bottom: 20px; 
 }
 
-.customize-product-dialog .product-components .component {
+.customize-product-dialog .product-components .component-category .title {
+	margin-bottom: 0px;
+}
+
+.customize-product-dialog .product-components .component-category .component .checkbox,
+.customize-product-dialog .product-components .component-category .component .radio {
 	float: left;
 	width: 50%;
 	margin: 0px;
 	padding: 7px 0px;
 }
 
-.customize-product-dialog .product-components .component .price {
+.customize-product-dialog .product-components .component-category .component .price {
 	color: #008000;
 	font-size: 11px;
+	margin: -3px 0px 0px
 }
 
 .customize-product-dialog .quantity {
@@ -718,6 +724,10 @@ a:hover, a:focus {
 
 .customize-product-dialog .quantity {
 	text-align: left;
+}
+
+.customize-product-dialog .quantity label {
+	font-size: 13px;
 }
 
 .customize-product-dialog .quantity input {
@@ -1405,6 +1415,11 @@ label .required {
 
 	.establishment-page .establishment-products .products .product {
 		width: 23%;
+	}
+
+	.customize-product-dialog .product-components .component-category .component .checkbox,
+	.customize-product-dialog .product-components .component-category .component .radio {
+		width: 25%;
 	}
 
 	.check-address-dialog .zip-code-form .btn-show-address-form,
