@@ -212,9 +212,13 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "Dialog", "EstablishmentService", "AddressService", function($scope, $routeParams, Dialog, EstablishmentService, AddressService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "Dialog", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, Dialog, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.productTypes = [];
+
+		$scope.order = {
+			items: []
+		};
 
 		$scope.selectedProductType = null;
 
@@ -289,12 +293,22 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				show: true,
 				params: {
 					product: product
+				},
+				onResponse: function(orderItem) {
+					$scope.order.items.push(orderItem);
+					OrderService.store($scope.order);
 				}
 			});
 		};
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
+
+			$scope.order = OrderService.retrieve(establishment) || $scope.order;
+			$scope.order.establishment = establishment;
+
+			console.log($scope.order);
+
 			$scope.$digest();
 
 			EstablishmentService.products(establishment).then(function(products) {
@@ -385,6 +399,37 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			var quantity = typeof($scope.quantity) === "number" && $scope.quantity > 0 ? $scope.quantity : 0; 
 
 			return total * quantity;
+		};
+
+		$scope.createOrderItem = function() {
+			var orderItem = {
+				product: $scope.product,
+				components: [],
+				quantity: $scope.quantity,
+				price: $scope.calculateTotalPrice()
+			};
+
+			for (var i in $scope.product.components) {
+				var component = $scope.product.components[i];
+
+				var itemComponent = {
+					component: component
+				};
+
+				if (component.option) {
+					itemComponent.selectedOption = component.option;
+				} else {
+					itemComponent.value = component.value
+				}
+
+				orderItem.components.push(itemComponent);
+			}
+
+			if ($scope.$dialog) {
+				$scope.$dialog.hide(orderItem);
+			}
+
+			return orderItem;
 		};
 
 		$scope.$on("$dialogParameters", function(event, params) {

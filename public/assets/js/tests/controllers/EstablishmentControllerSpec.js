@@ -6,7 +6,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		var scope, controller;
 		var Mocked$routeParams;
 		var MockedDialog;
-		var MockedEstablishmentService, MockedAddressService;
+		var MockedEstablishmentService, MockedAddressService, MockedOrderService;
 
 		beforeEach(module("qfControllers"));
 
@@ -66,6 +66,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return this._currentAddress;
 				}
 			};
+
+			MockedOrderService = {
+				_storedOrder: null,
+				store: function(order) {
+					this._storedOrder = order;
+				},
+
+				_retrieveOrder: {items: []},
+				_retrievedEstablishment: null,
+				retrieve: function(establishment) {
+					this._retrievedEstablishment = establishment;
+					return this._retrieveOrder;
+				}
+			};
 		});
 
 		beforeEach(function() {
@@ -73,7 +87,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				$routeParams: Mocked$routeParams,
 				Dialog: MockedDialog,
 				EstablishmentService: MockedEstablishmentService,
-				AddressService: MockedAddressService
+				AddressService: MockedAddressService,
+				OrderService: MockedOrderService
 			};
 
 			return injectController("EstablishmentController", "views/partials/establishments/establishment.html", params, function($scope) {
@@ -86,12 +101,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		it("should have a productTypes property", function() {
-			expect(scope.productTypes).toBeDefined();		});
+			expect(scope.productTypes).toBeDefined();
+		});
+
+		it("should have a order property", function() {
+			expect(scope.order).toBeDefined();
+		});
 
 		describe("on startup", function() {
 			it("should search for a establishment", function() {
 				expect(MockedEstablishmentService.findCalled).toBe(true);
 				expect(scope.establishment).toEqual(MockedEstablishmentService.urlEstablishment);
+				expect(scope.order.establishment).toEqual(MockedEstablishmentService.urlEstablishment);
 			});
 
 			it("should search for a establishment using the $routeParams.establishmentUrl property", function() {
@@ -105,6 +126,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should search for the establishment products using the current establishment", function() {
 				expect(MockedEstablishmentService.lastEstablishment).toBe(MockedEstablishmentService.urlEstablishment);
+			});
+
+			it("should retrieve any stored order", function() {
+				expect(scope.order).toEqual(MockedOrderService._retrieveOrder);
 			});
 		});
 
@@ -188,6 +213,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.customizeProduct(product);
 				expect(MockedDialog._params.params.product).toEqual(product);
+			});
+
+			it("should expect a orderItem in return", function() {
+				var product = {id: -2, name: "Produto de Teste"};
+				scope.customizeProduct(product);
+
+				expect(MockedDialog._params.onResponse).toBeDefined();
+
+				var orderItem = {product: product};
+				MockedDialog._params.onResponse(orderItem);
+
+				expect(scope.order.items[0]).toEqual(orderItem);
+			});
+
+			it("should store the order after customizing", function() {
+				var product = {id: -2, name: "Produto de Teste", establishment: {id: -10}};
+				scope.customizeProduct(product);
+				MockedDialog._params.onResponse({product: product});
+
+				expect(MockedOrderService._storedOrder).toEqual(scope.order);
 			});
 		});
 	});

@@ -2,7 +2,7 @@
 
 define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
-	describe("AuthService", function() {
+	describe("UserService", function() {
 		var $httpBackend, UserService, AuthService;
 
 		beforeEach(module("qfServices"));

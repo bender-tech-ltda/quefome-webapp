@@ -27,6 +27,29 @@ define(["angular"], function(angular) {
 		return simplifiedAddress;
 	};
 
+	module.service("$localStorage", [function() {
+		var localStorage = window.localStorage;
+
+		this.__setLocalStorage = function(_localStorage) {
+			localStorage = _localStorage;
+		}
+
+		this.set = function(key, value) {
+			var serializedValue = JSON.stringify(value);
+			localStorage.setItem(key, serializedValue);
+		};
+
+		this.get = function(key) {
+			var value = localStorage.getItem(key);
+
+			if (value) {
+				return JSON.parse(value);
+			}
+
+			return false;
+		};
+	}]);
+
 	module.service("AuthService", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 
@@ -220,6 +243,18 @@ define(["angular"], function(angular) {
 
 		this.setCurrentAddress = function(address) {
 			currentAddress = address;
+		};
+	}]);
+
+	module.service("OrderService", ["$localStorage", function($localStorage) {
+		this.store = function(order) {
+			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
+			$localStorage.set("OrderService_store_" + establishment, order);
+		};
+
+		this.retrieve = function(establishment) {
+			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
+			return $localStorage.get("OrderService_store_" + establishment);
 		};
 	}]);
 

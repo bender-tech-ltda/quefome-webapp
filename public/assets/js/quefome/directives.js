@@ -72,13 +72,15 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					}	
 				},
 
-				hide: function(callback) {
+				hide: function(callbackOrResponse) {
 					if (this.modal) {
-						if (typeof(callback) === "function") {
+						if (typeof(callbackOrResponse) === "function") {
 							this.modal.on("hidden.bs.modal.afterHiddenCallback", function(event) {
 								$(this).off("shown.bs.modal.afterHiddenCallback");
-								callback.call(this, event);
+								callbackOrResponse.call(this, event);
 							});
+						} else if (typeof(params.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
+							params.onResponse(callbackOrResponse);
 						}
 
 						this.modal.modal("hide");

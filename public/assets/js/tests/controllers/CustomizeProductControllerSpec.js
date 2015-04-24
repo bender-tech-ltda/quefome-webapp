@@ -216,7 +216,83 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				var result = scope.calculateTotalPrice();
 				expect(result).toEqual(0);
 			});
+		});
 
+		describe("when creating order item", function() {
+			beforeEach(function() {
+				scope.product = {
+					id: -2,
+					name: "Pudim"
+				};
+
+				scope.$dialog = {
+					hide: function() {}
+				};
+			});
+
+			it("it should use the current product", function() {
+				var orderItem = scope.createOrderItem();
+				expect(orderItem.product).toEqual(scope.product);
+			});
+
+			it("should use the current product components", function() {
+				scope.product.components = [
+					{name: "Cebola"},
+					{name: "Borda", options: [{name: "Sem borda"}, {name: "Borda de Chocolate"}]}
+				];
+
+				var orderItem = scope.createOrderItem();
+
+				expect(orderItem.components[0].component).toEqual(scope.product.components[0]);
+				expect(orderItem.components[1].component).toEqual(scope.product.components[1]);
+			});
+
+			it("should use the selected quantity", function() {
+				scope.quantity = 10;
+
+				var orderItem = scope.createOrderItem();
+				expect(orderItem.quantity).toEqual(scope.quantity);
+			});
+
+			it("should have a property with the total cost", function() {
+				scope.quantity = 2;
+				scope.product.price = 10.0;
+				scope.product.components = [
+					{value: true, price: 2.50},
+					{option: {price: 1.5}}
+				];
+
+				var orderItem = scope.createOrderItem();
+				
+				var totalPrice = scope.quantity * (scope.product.price + scope.product.components[0].price + scope.product.components[1].option.price);
+				expect(orderItem.price).toEqual(totalPrice);
+			});
+
+			it("should hide the current dialog", function() {
+				var hideCalled = false;
+
+				scope.$dialog = {
+					hide: function() {
+						hideCalled = true;
+					}
+				};
+
+				scope.createOrderItem();
+				expect(hideCalled).toBe(true);
+			});
+
+			it("should pass the orderItem as parameter to the dialog hide function", function() {
+				var sentOrderItem = null;
+
+				scope.$dialog = {
+					hide: function(orderItem) {
+						sentOrderItem = orderItem;
+					}
+				};
+
+				var expectedOrderItem = scope.createOrderItem();
+				expect(sentOrderItem).toEqual(expectedOrderItem);
+			});
 		});
 	});
 });

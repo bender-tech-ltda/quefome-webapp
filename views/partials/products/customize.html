@@ -1,4 +1,4 @@
-<form class="customize-product-dialog" name="productForm" ng-controller="CustomizeProductController">
+<form class="customize-product-dialog" name="productForm" ng-submit="createOrderItem()" ng-controller="CustomizeProductController">
 	<div class="modal-body">
 		<div class="product">
 			<div class="info">
@@ -47,6 +47,6 @@
 
 		<div class="clearfix"></div>
 
-		<button class="btn btn-primary btn-add-product">Adicionar ao Pedido</button>
+		<button type="submit" class="btn btn-primary btn-add-product">Adicionar ao Pedido</button>
 	</div>
 </form>
