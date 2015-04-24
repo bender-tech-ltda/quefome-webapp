@@ -307,8 +307,6 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.order = OrderService.retrieve(establishment) || $scope.order;
 			$scope.order.establishment = establishment;
 
-			console.log($scope.order);
-
 			$scope.$digest();
 
 			EstablishmentService.products(establishment).then(function(products) {
@@ -320,6 +318,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 	module.controller("CustomizeProductController", ["$scope", function($scope) {
 		$scope.product = null;
 		$scope.componentCategories = null;
+
+		$scope.selectedFlavors = [];
 
 		$scope.quantity = 1;
 
@@ -380,6 +380,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			var total = $scope.product.price || 0.0;
 
+			for (var i in $scope.selectedFlavors) {
+				var flavor = $scope.selectedFlavors[i];
+				total += (flavor.price || 0.0)
+			}
+
 			if ($scope.product.components) {
 				for (var i in $scope.product.components) {
 					var component = $scope.product.components[i];
@@ -401,12 +406,27 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			return total * quantity;
 		};
 
+		$scope.toggleSelectedFlavor = function(flavor) {
+			var flavorIndex = $scope.selectedFlavors.indexOf(flavor);
+			if (flavorIndex >= 0) {
+				$scope.selectedFlavors.splice(flavorIndex, 1);
+			} else {
+				$scope.selectedFlavors.push(flavor);
+			}
+
+			$scope.$digest();
+		};
+
+		$scope.isFlavorDisabled = function(flavor) {
+			return !flavor.selected && $scope.selectedFlavors.length >= $scope.product.flavorsAmount;
+		};
+
 		$scope.createOrderItem = function() {
 			var orderItem = {
 				product: $scope.product,
 				components: [],
-				quantity: $scope.quantity,
-				price: $scope.calculateTotalPrice()
+				flavors: $scope.selectedFlavors,
+				quantity: $scope.quantity
 			};
 
 			for (var i in $scope.product.components) {

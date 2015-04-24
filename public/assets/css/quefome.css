@@ -699,10 +699,22 @@ a:hover, a:focus {
 	margin-bottom: 20px; 
 }
 
+.customize-product-dialog .flavors .title,
 .customize-product-dialog .product-components .component-category .title {
 	margin-bottom: 0px;
 }
 
+.customize-product-dialog .flavors .title .error {
+	color: #FF2826;
+	font-size: 12px;
+}
+
+.customize-product-dialog .flavors .title .warning {
+	color: #EF6815;
+	font-size: 12px;
+}
+
+.customize-product-dialog .flavors .flavor,
 .customize-product-dialog .product-components .component-category .component .checkbox,
 .customize-product-dialog .product-components .component-category .component .radio {
 	float: left;
@@ -711,10 +723,19 @@ a:hover, a:focus {
 	padding: 7px 0px;
 }
 
+.customize-product-dialog .flavors .flavor.disabled {
+	color: #808080;
+}
+
+.customize-product-dialog .flavors .flavor .price,
 .customize-product-dialog .product-components .component-category .component .price {
 	color: #008000;
 	font-size: 11px;
 	margin: -3px 0px 0px
+}
+
+.customize-product-dialog .flavors .flavor.disabled .price {
+	color: #808080;
 }
 
 .customize-product-dialog .quantity {
@@ -1417,9 +1438,16 @@ label .required {
 		width: 23%;
 	}
 
+	.customize-product-dialog .flavors .flavor,
 	.customize-product-dialog .product-components .component-category .component .checkbox,
 	.customize-product-dialog .product-components .component-category .component .radio {
 		width: 25%;
+	}
+
+	.customize-product-dialog .flavors .title .error,
+	.customize-product-dialog .flavors .title .warning {
+		display: inline;
+		font-size: 15px;
 	}
 
 	.check-address-dialog .zip-code-form .btn-show-address-form,

@@ -27,6 +27,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.quantity).toBeDefined();
 		});
 
+		it("should have a selectedFlavors property", function() {
+			expect(scope.selectedFlavors).toBeDefined();
+		});
+
 		describe("when listining for $dialogParameters", function() {
 			it("should listen for a product", function() {
 				var params = {
@@ -194,6 +198,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(result).toEqual(scope.product.components[0].option.price + scope.product.components[1].option.price);
 			});
 
+			it("should use the selected flavors price", function() {
+				scope.selectedFlavors = [
+					{price: 2.10},
+					{price: 3.55}
+				];
+
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(scope.selectedFlavors[0].price + scope.selectedFlavors[1].price);
+			});
+
 			it("should be multiplied by the quantity", function() {
 				scope.quantity = 3;
 				scope.product.price = 10.0;
@@ -203,8 +217,12 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					{option: {price: 1.5}}
 				];
 
+				scope.selectedFlavors = [
+					{price: 2.05}
+				];
+
 				var result = scope.calculateTotalPrice();
-				var expectedResult = scope.quantity * (scope.product.price + scope.product.components[0].price + scope.product.components[1].option.price);
+				var expectedResult = scope.quantity * (scope.product.price + scope.product.components[0].price + scope.product.components[1].option.price + scope.selectedFlavors[0].price);
 
 				expect(result).toEqual(expectedResult);
 			});
@@ -215,6 +233,53 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				
 				var result = scope.calculateTotalPrice();
 				expect(result).toEqual(0);
+			});
+		});
+
+		describe("when toggling a flavor", function() {
+			it("should add the flavor to the selectedFlavors if it doesn't exists yet", function() {
+				scope.selectedFlavors = [];
+				var flavor = {id: -2, name: "Mussarela"};
+
+				scope.toggleSelectedFlavor(flavor);
+				expect(scope.selectedFlavors[0]).toEqual(flavor);
+			});
+
+			it("should remove the flavor if it already exists", function() {
+				var flavor = {id: -2, name: "Mussarela"};
+				scope.selectedFlavors = [flavor];
+
+				scope.toggleSelectedFlavor(flavor);
+				expect(scope.selectedFlavors.length).toEqual(0);
+			});
+		});
+
+		describe("when checking if the flavor is disable", function() {
+			it("should return false if the flavor is selected", function() {
+				var result = scope.isFlavorDisabled({selected: true});
+				expect(result).toBe(false);
+			});
+
+			it("should return false if the selectedFlavors.length is lower then the product flavors limit", function() {
+				scope.product = {
+					flavorsAmount: 1
+				};
+
+				scope.selectedFlavors = [];
+
+				var result = scope.isFlavorDisabled({});
+				expect(result).toBe(false);
+			});
+
+			it("should return true if the flavor is not selected and the selectedFlavors.length is higher or equal to then the product flavors limit", function() {
+				scope.product = {
+					flavorsAmount: 1,
+				};
+
+				scope.selectedFlavors = [{}];
+
+				var result = scope.isFlavorDisabled({});
+				expect(result).toBe(true);
 			});
 		});
 
@@ -254,18 +319,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(orderItem.quantity).toEqual(scope.quantity);
 			});
 
-			it("should have a property with the total cost", function() {
-				scope.quantity = 2;
-				scope.product.price = 10.0;
-				scope.product.components = [
-					{value: true, price: 2.50},
-					{option: {price: 1.5}}
+			it("should use the selected flavors", function() {
+				scope.selectedFlavors = [
+					{id: -1, name: "Sardinha"},
+					{id: -2, name: "Mussarela"}
 				];
 
 				var orderItem = scope.createOrderItem();
-				
-				var totalPrice = scope.quantity * (scope.product.price + scope.product.components[0].price + scope.product.components[1].option.price);
-				expect(orderItem.price).toEqual(totalPrice);
+				expect(orderItem.flavors).toEqual(scope.selectedFlavors);
 			});
 
 			it("should hide the current dialog", function() {

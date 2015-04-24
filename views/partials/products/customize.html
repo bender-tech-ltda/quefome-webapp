@@ -7,7 +7,25 @@
 			</div>
 		</div>
 
-		<div class="product-components" ng-show="componentCategories && componentCategories.length > 0">
+		<div class="product-components" ng-show="(componentCategories && componentCategories.length > 0) || (product.flavors && product.flavors.length > 0)">
+			<fieldset class="flavors" ng-show="product.flavors && product.flavors.length > 0">
+				<legend class="title">
+					<span>Sabores ({{selectedFlavors.length}}/{{product.flavorsAmount}})</span>
+
+					<p class="error" ng-show="selectedFlavors.length == 0">Você precisa escolher pelo menos um sabor!</p>
+					<p class="warning" ng-show="selectedFlavors.length > 0 && product.flavorsAmount == 1">Você pode escolher somente um sabor</p>
+					<p class="warning" ng-show="selectedFlavors.length > 0 && product.flavorsAmount > 1">Você pode escolher até {{product.flavorsAmount}} sabores</p>
+				</legend>
+
+				<div class="flavor checkbox" ng-class="{disabled: isFlavorDisabled(flavor)}" ng-repeat="flavor in product.flavors | orderBy: 'name'">
+					<label>
+						<input type="checkbox" ng-disabled="isFlavorDisabled(flavor)" ng-model="flavor.selected" ng-change="toggleSelectedFlavor(flavor)"/>
+						<span>{{flavor.name}}</span>
+						<p class="price" ng-show="flavor.price && flavor.price > 0"> + R$ {{flavor.price | money}}</p>
+					</label>
+				</div>
+			</fieldset>
+
 			<fieldset class="component-category" ng-repeat="category in componentCategories | orderBy: ['sequence', 'name']">
 				<legend class="title">{{category.name}}</legend>
 
