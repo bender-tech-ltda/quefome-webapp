@@ -234,6 +234,19 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				expect(MockedOrderService._storedOrder).toEqual(scope.order);
 			});
+
+			it("should check user user address after customizing", function() {
+				var checkCalled = false;
+				scope.checkUserAddress = function() {
+					checkCalled = true;
+				};
+
+				var product = {id: -2, name: "Produto de Teste", establishment: {id: -10}};
+				scope.customizeProduct(product);
+				MockedDialog._params.onResponse({product: product});
+
+				expect(checkCalled).toEqual(true);
+			});
 		});
 	});
 });

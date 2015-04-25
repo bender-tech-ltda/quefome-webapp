@@ -237,16 +237,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("when toggling a flavor", function() {
-			it("should add the flavor to the selectedFlavors if it doesn't exists yet", function() {
+			it("should add the flavor to the selectedFlavors if it doesn't exists yet and the flavor is selected", function() {
 				scope.selectedFlavors = [];
-				var flavor = {id: -2, name: "Mussarela"};
+				var flavor = {id: -2, name: "Mussarela", selected: true};
 
 				scope.toggleSelectedFlavor(flavor);
 				expect(scope.selectedFlavors[0]).toEqual(flavor);
 			});
 
-			it("should remove the flavor if it already exists", function() {
-				var flavor = {id: -2, name: "Mussarela"};
+			it("should remove the flavor if it already exists and the flavor is selected", function() {
+				var flavor = {id: -2, name: "Mussarela", selected: false};
 				scope.selectedFlavors = [flavor];
 
 				scope.toggleSelectedFlavor(flavor);

@@ -783,7 +783,8 @@ a:hover, a:focus {
 .customize-product-dialog .btn-cancel {
 	width: 100%;
 	margin-top: 20px;
-	border: 1px solid #ccc;
+	border: 1px solid #A01608;
+	color: #A01608;
 } 
 
 .check-address-dialog .title {

@@ -275,7 +275,9 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			var currentAddress = AddressService.getCurrentAddress();
 
 			if (!currentAddress || !currentAddress.skipped) {
-				event.preventDefault();
+				if (event) {
+					event.preventDefault();
+				}
 
 				Dialog.create({
 					templateUrl: "/partials/establishments/check-address.html",
@@ -298,6 +300,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					if (orderItem) {
 						$scope.order.items.push(orderItem);
 						OrderService.store($scope.order);
+
+						$scope.checkUserAddress();
 					}
 				}
 			});
@@ -410,9 +414,9 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.toggleSelectedFlavor = function(flavor) {
 			var flavorIndex = $scope.selectedFlavors.indexOf(flavor);
-			if (flavorIndex >= 0) {
+			if (flavorIndex >= 0 && !flavor.selected) {
 				$scope.selectedFlavors.splice(flavorIndex, 1);
-			} else {
+			} else if (flavorIndex < 0 && flavor.selected) {
 				$scope.selectedFlavors.push(flavor);
 			}
 
@@ -436,7 +440,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				return false;
 			}
 
-			if ($scope.productForm.quantity.$invalid) {
+			if ($scope.productForm && $scope.productForm.quantity.$invalid) {
 				return false;
 			}
 
