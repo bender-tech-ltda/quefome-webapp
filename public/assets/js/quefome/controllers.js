@@ -421,7 +421,31 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			return !flavor.selected && $scope.selectedFlavors.length >= $scope.product.flavorsAmount;
 		};
 
+		$scope.isOrderItemValid = function() {
+			if (!$scope.product) {
+				return false;
+			}
+
+			if ($scope.product.flavors && $scope.product.flavors.length > 0 && $scope.selectedFlavors.length == 0) {
+				return false;
+			}
+
+			if ($scope.product.flavorsAmount && $scope.selectedFlavors.length > $scope.product.flavorsAmount) {
+				return false;
+			}
+
+			if ($scope.productForm.quantity.$invalid) {
+				return false;
+			}
+
+			return true;
+		};
+
 		$scope.createOrderItem = function() {
+			if (!$scope.isOrderItemValid()) {
+				return false;
+			}
+
 			var orderItem = {
 				product: $scope.product,
 				components: [],

@@ -10,7 +10,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function() {
 			var params = {};
 
-			return injectController("CustomizeProductController", false, params, function($scope) {
+			return injectController("CustomizeProductController", "views/partials/products/customize.html", params, function($scope) {
 				scope = $scope;
 			});
 		});
@@ -283,6 +283,48 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
+		describe("when validating the order item", function() {
+			it("should return false if the product has flavors e none flavor was selected", function() {
+				scope.product = {
+					flavors: [
+						{id: -1, name: "Portuguesa"}
+					]
+				};
+
+				scope.selectedFlavors = [];
+
+				var result = scope.isOrderItemValid();
+				expect(result).toBe(false);
+			});
+
+			it("should return false if the there is more selected flavors then the product flavor limit", function() {
+				scope.product = {
+					flavorsAmount: 1,
+				};
+
+				scope.selectedFlavors = [{}, {}];
+
+				var result = scope.isOrderItemValid();
+				expect(result).toBe(false);
+			});
+
+			it("should return false if quantity is null", function() {
+				scope.quantity = null;
+				scope.$digest();
+
+				var result = scope.isOrderItemValid();
+				expect(result).toBe(false);
+			});
+
+			it("should return false if quantity is lower then 1", function() {
+				scope.quantity = 0;
+				scope.$digest();
+
+				var result = scope.isOrderItemValid();
+				expect(result).toBe(false);
+			});
+		});
+
 		describe("when creating order item", function() {
 			beforeEach(function() {
 				scope.product = {
@@ -295,7 +337,39 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				};
 			});
 
-			it("it should use the current product", function() {
+			it("should not create if the product has flavors e none flavor was selected", function() {
+				scope.product = {
+					flavors: [
+						{id: -1, name: "Portuguesa"}
+					]
+				};
+
+				scope.selectedFlavors = [];
+
+				var result = scope.createOrderItem();
+				expect(result).toBe(false);
+			});
+
+			it("should not create if the there is more selected flavors then the product flavor limit", function() {
+				scope.product = {
+					flavorsAmount: 1,
+				};
+
+				scope.selectedFlavors = [{}, {}];
+
+				var result = scope.createOrderItem();
+				expect(result).toBe(false);
+			});
+
+			it("should not create if quantity is invalid", function() {
+				scope.quantity = null;
+				scope.$digest();
+
+				var result = scope.createOrderItem();
+				expect(result).toBe(false);
+			});
+
+			it("should use the current product", function() {
 				var orderItem = scope.createOrderItem();
 				expect(orderItem.product).toEqual(scope.product);
 			});

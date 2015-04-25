@@ -768,9 +768,16 @@ a:hover, a:focus {
 	color: #008000;
 }
 
+.customize-product-dialog .error-messages {
+	margin-top: 13px;
+	text-align: center;
+	font-size: 12px;
+	color: #FF2826;
+}
+
 .customize-product-dialog .btn-add-product {
 	width: 100%;
-	margin-top: 13px;
+	margin-top: 5px;
 }
 
 .check-address-dialog .title {
@@ -1447,6 +1454,10 @@ label .required {
 	.customize-product-dialog .flavors .title .error,
 	.customize-product-dialog .flavors .title .warning {
 		display: inline;
+		font-size: 15px;
+	}
+
+	.customize-product-dialog .error-messages {
 		font-size: 15px;
 	}
 

@@ -65,6 +65,12 @@
 
 		<div class="clearfix"></div>
 
-		<button type="submit" class="btn btn-primary btn-add-product">Adicionar ao Pedido</button>
+		<div class="error-messages">
+			<span ng-show="product.flavors && product.flavors.length > 0 && selectedFlavors.length == 0">Você precisa escolher pelo menos um sabor!</span>
+			<span ng-show="productForm.quantity.$error.required">Você precisa informar uma quantidade!</span>
+			<span ng-show="productForm.quantity.$error.min">Você precisa informar uma quantidade maior que zero!</span>
+		</div>
+
+		<button type="submit" class="btn btn-primary btn-add-product" ng-disabled="!isOrderItemValid()">Adicionar ao Pedido</button>
 	</div>
 </form>
