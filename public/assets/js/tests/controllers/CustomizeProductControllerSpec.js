@@ -429,5 +429,34 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(sentOrderItem).toEqual(expectedOrderItem);
 			});
 		});
+
+		describe("when closing the dialog", function() {
+			it("should hide the current dialog", function() {
+				var hideCalled = false;
+
+				scope.$dialog = {
+					hide: function() {
+						hideCalled = true;
+					}
+				};
+
+				scope.closeDialog();
+				expect(hideCalled).toBe(true);
+			});
+
+			it("should pass a paramter to the dialog hide function", function() {
+				var sentParameter = null;
+
+				scope.$dialog = {
+					hide: function(parameter) {
+						sentParameter = parameter;
+					}
+				};
+
+				var parameter = "pudim";
+				scope.closeDialog(parameter);
+				expect(sentParameter).toEqual(parameter);
+			});
+		});
 	});
 });

@@ -295,8 +295,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					product: product
 				},
 				onResponse: function(orderItem) {
-					$scope.order.items.push(orderItem);
-					OrderService.store($scope.order);
+					if (orderItem) {
+						$scope.order.items.push(orderItem);
+						OrderService.store($scope.order);
+					}
 				}
 			});
 		};
@@ -469,11 +471,15 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				orderItem.components.push(itemComponent);
 			}
 
-			if ($scope.$dialog) {
-				$scope.$dialog.hide(orderItem);
-			}
+			$scope.closeDialog(orderItem);
 
 			return orderItem;
+		};
+
+		$scope.closeDialog = function(parameter) {
+			if ($scope.$dialog) {
+				$scope.$dialog.hide(parameter);
+			}
 		};
 
 		$scope.$on("$dialogParameters", function(event, params) {
