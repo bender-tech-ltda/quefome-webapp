@@ -49,6 +49,13 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function () {
 			return injectController("NewUserController", "views/partials/users/register.html", {UserService: MockedUserService, AuthService: MockedAuthService}, function($scope) {
 				scope = $scope;
+
+				scope.$dialog = {
+					_hideCalled: false,
+					hide: function() {
+						this._hideCalled = true;
+					}
+				};
 			});
 		});
 
@@ -146,6 +153,11 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
 
 			expect(scope.isUserLoggedIn()).toBe(true);
+		});
+
+		it("should close the current dialog", function() {
+			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+			expect(scope.$dialog._hideCalled).toBe(true);
 		});
 	});
 });

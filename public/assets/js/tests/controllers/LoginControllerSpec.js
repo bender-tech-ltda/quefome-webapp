@@ -50,21 +50,15 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 		beforeEach(function() {
 			return injectController("LoginController", "views/partials/login/login.html", {AuthService: MockedAuthService}, function($scope) {
 				scope = $scope;
-			})
+
+				scope.$dialog = {
+					_hideCalled: false,
+					hide: function() {
+						this._hideCalled = true;
+					}
+				};
+			});
 		});
-
-		var login = function(email, password) {
-			scope.email = email;
-			scope.password = password;
-
-			scope.$digest();
-
-			scope.login();
-		};
-
-		var defaultLogin = function() {
-			login("teste@teste.com", "teste");
-		};
 
 		it("should not have a user logged in", function() {
 			expect(scope.isLogged()).toBe(false);
@@ -90,52 +84,72 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			expect(scope.registerView).toBeDefined();
 		});
 
-		it("should show a error message when the email is not filled", function() {
-			login("", "teste");
+		describe("when loging in", function() {
+			var login = function(email, password) {
+				scope.email = email;
+				scope.password = password;
 
-			expect(scope.isLogged()).toBe(false);
+				scope.$digest();
 
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
-		});
+				scope.login();
+			};
 
-		it("should show a error message when the password is not filled", function() {
-			login("teste@teste.com");
+			var defaultLogin = function() {
+				login("teste@teste.com", "teste");
+			};
 
-			expect(scope.isLogged()).toBe(false);
+			it("should show a error message when the email is not filled", function() {
+				login("", "teste");
 
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
-		});
+				expect(scope.isLogged()).toBe(false);
 
-		it("should show a error message when the email is invalid", function() {
-			login("teste", "teste");
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
 
-			expect(scope.isLogged()).toBe(false);
+			it("should show a error message when the password is not filled", function() {
+				login("teste@teste.com");
 
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
-		});
+				expect(scope.isLogged()).toBe(false);
 
-		it("should login the user", function() {
-			defaultLogin();
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
 
-			expect(scope.isLogged()).toBe(true);
-			expect(scope.getUser()).toBeDefined();
-		});
+			it("should show a error message when the email is invalid", function() {
+				login("teste", "teste");
 
-		it("should clear the password property after login for security", function() {
-			defaultLogin();
+				expect(scope.isLogged()).toBe(false);
 
-			expect(scope.password.trim()).toBe("");
-		});
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
 
-		it("should keep the user logged in", function() {
-			scope.keepLoggedIn = true;
-			defaultLogin();
+			it("should login the user", function() {
+				defaultLogin();
 
-			expect(scope.isLogged()).toBe(true);
-			expect(scope.getUser().keepLoggedIn).toBe(true);
+				expect(scope.isLogged()).toBe(true);
+				expect(scope.getUser()).toBeDefined();
+			});
+
+			it("should clear the password property after login for security", function() {
+				defaultLogin();
+
+				expect(scope.password.trim()).toBe("");
+			});
+
+			it("should keep the user logged in", function() {
+				scope.keepLoggedIn = true;
+				defaultLogin();
+
+				expect(scope.isLogged()).toBe(true);
+				expect(scope.getUser().keepLoggedIn).toBe(true);
+			});
+
+			it("should close the current dialog", function() {
+				defaultLogin();
+				expect(scope.$dialog._hideCalled).toBe(true);				
+			});
 		});
 	});
 });
