@@ -64,7 +64,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					$scope.$apply();
 
 					if ($scope.$dialog) {
-						$scope.$dialog.close();
+						$scope.$dialog.hide();
 					}
 				}, function(error) {
 					$scope.errorMessage = error;
@@ -137,7 +137,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					$scope.$apply();
 
 					if ($scope.$dialog) {
-						$scope.$dialog.close();
+						$scope.$dialog.hide();
 					}
 
 					$scope.processing = false;
