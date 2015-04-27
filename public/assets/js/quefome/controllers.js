@@ -136,8 +136,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				UserService.save($scope.user, true).then(function() {
 					$scope.$apply();
 
-					if ($scope.$parent.$dialog) {
-						$scope.$parent.$dialog.close();
+					if ($scope.$dialog) {
+						$scope.$dialog.close();
 					}
 
 					$scope.processing = false;
