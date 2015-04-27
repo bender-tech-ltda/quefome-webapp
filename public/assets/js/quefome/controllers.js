@@ -63,8 +63,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 					$scope.$apply();
 
-					if ($scope.$parent.$dialog) {
-						$scope.$parent.$dialog.close();
+					if ($scope.$dialog) {
+						$scope.$dialog.close();
 					}
 				}, function(error) {
 					$scope.errorMessage = error;
