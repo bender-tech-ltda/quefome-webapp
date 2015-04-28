@@ -61,4 +61,16 @@
 
 		<div class="clearfix"></div>
 	</div>
+
+	<div class="order-panel" qf-sticky-scroll="bottom">
+		<div class="title-panel">
+			<span class="title">Seu Pedido</span>
+		</div>
+		
+		<button type="button" class="btn btn-show-order-details">Visualizar pedido</button>
+
+		<div class="total">
+			<span>Total: R$ {{getOrderTotalPrice() | money}}</span>
+		</div>
+	</div>
 </div>

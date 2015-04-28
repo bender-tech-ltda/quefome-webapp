@@ -27,5 +27,10 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 			result = moneyFilter(10.3);
 			expect(result).toEqual("10,30");
 		});
+
+		it("should not ignore 0 values", function() {
+			var result = moneyFilter(0);
+			expect(result).toEqual("0,00");
+		});
 	});
 });

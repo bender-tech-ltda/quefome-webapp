@@ -222,20 +222,41 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				var elementTopPosition = 0;
 				var fakeElement = angular.element("<div class='sticky-fake'>");
 
-				angular.element(window).on("scroll.qfStickyScroll", function() {
-					var currentScrollHeight = angular.element(this).scrollTop();
+				var reference = attrs.qfStickyScroll ? attrs.qfStickyScroll : "top";
 
-					if (!element.hasClass("stick-top")) {
-						elementTopPosition = element.position().top;
-						fakeElement.css("height", element.outerHeight() + "px");
+				angular.element(window).on("scroll.qfStickyScroll", function() {
+					var $window = angular.element(this);
+					var currentScrollHeight = $window.scrollTop();
+
+					var stickyClass = "stick-top";
+
+					if (reference === "bottom") {
+						currentScrollHeight	+= $window.height();				
+						stickyClass = "stick-bottom";
 					}
 
-					if (currentScrollHeight > elementTopPosition) {
-						element.after(fakeElement);
-						element.addClass("stick-top");
+					if (!element.hasClass(stickyClass)) {
+						elementTopPosition = element.position().top;
+						fakeElement.css("height", element.outerHeight() + "px");
+
+						if (reference === "bottom") {
+							elementTopPosition += element.outerHeight();
+						}
+					}
+
+					var isntThere = reference === "bottom" ? currentScrollHeight < elementTopPosition : currentScrollHeight > elementTopPosition;
+
+					if (isntThere) {
+						if (reference === "bottom") {
+							element.before(fakeElement);
+						} else {
+							element.after(fakeElement);
+						}
+						
+						element.addClass(stickyClass);
 					} else {
 						fakeElement.remove();
-						element.removeClass("stick-top");
+						element.removeClass(stickyClass);
 					}
 				});
 			}

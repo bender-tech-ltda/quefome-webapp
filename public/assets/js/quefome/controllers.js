@@ -307,6 +307,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			});
 		};
 
+		$scope.getOrderTotalPrice = function() {
+			return 0;
+		};
+
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
 

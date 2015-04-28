@@ -5,7 +5,7 @@ define(["angular"], function(angular) {
 
 	module.filter("money", ["$filter", function($filter) {
 		return function(value) {
-			if (!value) {
+			if (typeof(value) === "undefined") {
 				return "";
 			}
 
