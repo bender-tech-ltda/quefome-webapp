@@ -62,12 +62,12 @@
 		<div class="clearfix"></div>
 	</div>
 
-	<div class="order-panel" qf-sticky-scroll="bottom">
+	<div class="order-panel" qf-sticky-scroll="bottom" ng-class="{'opened': orderDetailPanelOpen}" qf-toggle-class="no-overflow" qf-toggle-target="body" qf-toggle="orderDetailPanelOpen">
 		<div class="title-panel">
 			<span class="title">Seu Pedido</span>
 		</div>
 		
-		<button type="button" class="btn btn-show-order-details">Visualizar pedido</button>
+		<button type="button" class="btn btn-show-order-details" ng-click="toggleOrderDetailPanel()">{{orderDetailPanelOpen ? 'Esconder pedido': 'Visualizar pedido'}}</button>
 
 		<div class="total">
 			<span>Total: R$ {{getOrderTotalPrice() | money}}</span>

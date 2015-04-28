@@ -221,6 +221,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.selectedProductType = null;
+		$scope.orderDetailPanelOpen = false;
 
 		$scope.toggleProductType = function(productType) {
 			if ($scope.selectedProductType && $scope.selectedProductType.id == productType.id) {
@@ -273,6 +274,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.checkUserAddress = function(event) {
 			var currentAddress = AddressService.getCurrentAddress();
+			console.log(currentAddress);
 
 			if (!currentAddress || !currentAddress.skipped) {
 				if (event) {
@@ -307,9 +309,21 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			});
 		};
 
+		$scope.toggleOrderDetailPanel = function() {
+			$scope.orderDetailPanelOpen = !$scope.orderDetailPanelOpen;
+			$scope.$digest();
+		};
+
 		$scope.getOrderTotalPrice = function() {
 			return 0;
 		};
+
+		$scope.$on("$locationChangeStart", function(event) {
+			if ($scope.orderDetailPanelOpen) {
+				event.preventDefault();
+				$scope.toggleOrderDetailPanel();
+			}
+		});
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;

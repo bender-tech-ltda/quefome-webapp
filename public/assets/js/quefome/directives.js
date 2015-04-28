@@ -215,7 +215,97 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
-	module.directive("qfStickyScroll", [function() {
+	module.directive("qfToggleClass", [function() {
+		return {
+			restrict: "A",
+			scope: {
+				cssClass: "@qfToggleClass",
+				targetElement: "@qfToggleTarget",
+				on: "=qfToggle"
+			},
+			link: function(scope, element, attrs) {
+				var cssClass = scope.cssClass;
+				var targetElement = scope.targetElement ? angular.element(scope.targetElement) : element;
+
+				var toggleFunction = function(toggle) {
+					targetElement.toggleClass(cssClass, toggle);
+				};
+
+				if (attrs.qfToggle) {
+					scope.$watch("on", function(value) {
+						toggleFunction(value);
+					});
+
+					toggleFunction(scope.on);
+				} else {
+					toggleFunction();
+				}
+			}
+		};
+	}]);
+
+	module.directive("qfStickyScroll", ["$timeout", function($timeout) {
+		var $document = angular.element(document);
+		var $window = angular.element(window);
+
+		var events = {
+			heightChangeCallbacks: [],
+			onDocumentHeightChange: function(callback) {
+				this.heightChangeCallbacks.push(callback);
+
+				var that = this;
+				return function() {
+					var callbackIndex = that.heightChangeCallbacks.indexOf(callback);
+					console.log("cancelado height " + callbackIndex);
+
+					if (callbackIndex >= 0) {
+						that.heightChangeCallbacks.splice(callbackIndex, 1);
+					}
+				};
+			},
+
+			triggerDocumentHeightChange: function(newHeight, oldHeight) {
+				for (var i in this.heightChangeCallbacks) {
+					var callback = this.heightChangeCallbacks[i];
+					callback.call($document, oldHeight, newHeight, $document);
+				}
+			},
+
+			scrollChangeCallbacks: [],
+			onScrollChange: function(callback) {
+				this.scrollChangeCallbacks.push(callback);
+
+				var that = this;
+				return function() {
+					var callbackIndex = that.scrollChangeCallbacks.indexOf(callback);
+					console.log("cancelado scroll " + callbackIndex);
+
+					if (callbackIndex >= 0) {
+						that.scrollChangeCallbacks.splice(callbackIndex, 1);
+					}
+				};
+			},
+			triggerScrollChange: function(event) {
+				for (var i in this.scrollChangeCallbacks) {
+					var callback = this.scrollChangeCallbacks[i];
+					callback.call($window, event);
+				}
+			}
+		};
+
+		$window.on("scroll.qfStickyScroll", function(event) {
+			events.triggerScrollChange(event);
+		});
+
+		var lastDocumentHeight = $document.height();
+		$timeout(function() {
+			var documentHeight = $document.height();
+
+			if (lastDocumentHeight != documentHeight) {
+				events.triggerDocumentHeightChange(documentHeight, lastDocumentHeight);
+			}
+		}, 500);
+
 		return {
 			restrict: "A",
 			link: function(scope, element, attrs) {
@@ -224,8 +314,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 				var reference = attrs.qfStickyScroll ? attrs.qfStickyScroll : "top";
 
-				angular.element(window).on("scroll.qfStickyScroll", function() {
-					var $window = angular.element(this);
+				var applyStickyScroll = function() {
 					var currentScrollHeight = $window.scrollTop();
 
 					var stickyClass = "stick-top";
@@ -258,6 +347,14 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 						fakeElement.remove();
 						element.removeClass(stickyClass);
 					}
+				};
+
+				var cancelScrollChange = events.onScrollChange(applyStickyScroll);
+				var cancelHeightChange = events.onDocumentHeightChange(applyStickyScroll);
+
+				scope.$on('$destroy', function() {
+					cancelHeightChange();
+					cancelScrollChange();
 				});
 			}
 		};
