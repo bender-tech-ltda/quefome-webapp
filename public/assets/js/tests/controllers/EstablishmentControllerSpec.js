@@ -346,6 +346,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.removeOrderItem(orderItem);
 				expect(scope.order.items.length).toEqual(0);
 			});
+
+			it("should store the current order", function() {
+				Mocked$window._confirmReturn = true;
+
+				var orderItem = {product: {id: -2}};
+				scope.order = {
+					items: [orderItem]
+				};
+
+				scope.removeOrderItem(orderItem);
+				expect(MockedOrderService._storedOrder).toEqual(scope.order);
+			});
 		});
 	});
 });

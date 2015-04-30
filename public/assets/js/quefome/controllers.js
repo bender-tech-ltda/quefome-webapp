@@ -321,6 +321,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			var orderIndex = $scope.order.items.indexOf(orderItem);
 			if (orderIndex >= 0) {
 				$scope.order.items.splice(orderIndex, 1);
+				OrderService.store($scope.order);
 			}
 		};
 
