@@ -5,6 +5,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 	describe("EstablishmentController", function() {
 		var scope, controller;
 		var Mocked$routeParams;
+		var Mocked$window;
 		var MockedDialog;
 		var MockedEstablishmentService, MockedAddressService, MockedOrderService;
 
@@ -13,6 +14,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function() {
 			Mocked$routeParams = {
 				establishmentUrl: "url-restaurante"
+			};
+
+			Mocked$window = {
+				_confirmReturn: false,
+				_confirmCalled: false, 
+				confirm: function() {
+					this._confirmCalled = true;
+					return this._confirmReturn;
+				}
 			};
 
 			MockedDialog = {
@@ -99,6 +109,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function() {
 			var params = {
 				$routeParams: Mocked$routeParams,
+				$window: Mocked$window,
 				Dialog: MockedDialog,
 				EstablishmentService: MockedEstablishmentService,
 				AddressService: MockedAddressService,
@@ -315,6 +326,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.getOrderItemPrice(orderItem);
 
 				expect(MockedOrderService._getOrderItemPriceOrderItem).toEqual(orderItem);
+			});
+		});
+
+		describe("when removing an order item", function() {
+			it("should ask confirmation to the user", function() {
+				scope.removeOrderItem({});
+				expect(Mocked$window._confirmCalled).toBe(true);
+			});
+
+			it("should remove from the order.items", function() {
+				Mocked$window._confirmReturn = true;
+
+				var orderItem = {product: {id: -2}};
+				scope.order = {
+					items: [orderItem]
+				};
+
+				scope.removeOrderItem(orderItem);
+				expect(scope.order.items.length).toEqual(0);
 			});
 		});
 	});

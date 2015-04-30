@@ -212,7 +212,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "Dialog", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, Dialog, EstablishmentService, AddressService, OrderService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "Dialog", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, Dialog, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.productTypes = [];
 
@@ -311,6 +311,17 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.toggleOrderDetailPanel = function() {
 			$scope.orderDetailPanelOpen = !$scope.orderDetailPanelOpen;
 			$scope.$digest();
+		};
+
+		$scope.removeOrderItem = function(orderItem) {
+			if (!$window.confirm("Deseja remover esse item do seu pedido?")) {
+				return;
+			}
+
+			var orderIndex = $scope.order.items.indexOf(orderItem);
+			if (orderIndex >= 0) {
+				$scope.order.items.splice(orderIndex, 1);
+			}
 		};
 
 		$scope.getOrderTotalPrice = function() {
