@@ -256,6 +256,46 @@ define(["angular"], function(angular) {
 			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
 			return $localStorage.get("OrderService_store_" + establishment);
 		};
+
+		this.getOrderPrice = function(order) {
+			if (!order || !order.items) {
+				return false;
+			}
+
+			var total = 0;
+
+			for (var itemIndex in order.items) {
+				var item = order.items[itemIndex];
+				total += this.getOrderItemPrice(item);
+			}
+
+			return total;
+		};
+
+		this.getOrderItemPrice = function(orderItem) {
+			var total = (orderItem.product ? orderItem.product.price : 0.0);
+
+			if (orderItem.flavors && orderItem.flavors.length > 0) {
+				for (var flavorIndex in orderItem.flavors) {
+					var flavor = orderItem.flavors[flavorIndex];
+					total += (flavor.price ? flavor.price : 0.0);
+				}
+			}
+
+			if (orderItem.components && orderItem.components.length > 0) {
+				for (var componentIndex in orderItem.components) {
+					var itemComponent = orderItem.components[componentIndex];
+
+					if (itemComponent.component && itemComponent.value) {
+						total += (itemComponent.component.price ? itemComponent.component.price : 0.0);
+					} else if (itemComponent.selectedOption) {
+						total += (itemComponent.selectedOption.price ? itemComponent.selectedOption.price : 0.0);
+					}
+				}
+			}
+
+			return total;
+		};
 	}]);
 
 	return module;

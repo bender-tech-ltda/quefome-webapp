@@ -274,7 +274,6 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.checkUserAddress = function(event) {
 			var currentAddress = AddressService.getCurrentAddress();
-			console.log(currentAddress);
 
 			if (!currentAddress || !currentAddress.skipped) {
 				if (event) {
@@ -315,7 +314,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.getOrderTotalPrice = function() {
-			return 0;
+			return OrderService.getOrderPrice($scope.order);
+		};
+
+		$scope.getOrderItemPrice = function(orderItem) {
+			return  OrderService.getOrderItemPrice(orderItem);;
 		};
 
 		$scope.$on("$locationChangeStart", function(event) {

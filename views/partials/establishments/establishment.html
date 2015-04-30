@@ -63,14 +63,41 @@
 	</div>
 
 	<div class="order-panel" qf-sticky-scroll="bottom" ng-class="{'opened': orderDetailPanelOpen}" qf-toggle-class="no-overflow" qf-toggle-target="body" qf-toggle="orderDetailPanelOpen">
-		<div class="title-panel">
-			<span class="title">Seu Pedido</span>
-		</div>
+		<div class="header">
+			<div class="title-panel">
+				<span class="title">Seu Pedido</span>
+			</div>
 		
-		<button type="button" class="btn btn-show-order-details" ng-click="toggleOrderDetailPanel()">{{orderDetailPanelOpen ? 'Esconder pedido': 'Visualizar pedido'}}</button>
+			<button type="button" class="btn btn-show-order-details" ng-click="toggleOrderDetailPanel()">{{orderDetailPanelOpen ? 'Esconder detalhes': 'Exibir/Finalizar Pedido'}}</button>
 
-		<div class="total">
-			<span>Total: R$ {{getOrderTotalPrice() | money}}</span>
+			<div class="total">
+				<span>Total: R$ {{getOrderTotalPrice() | money}}</span>
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">
+			<div class="panel-heading">
+				<h4 class="title">Produtos</h4>
+			</div>
+
+			<div class="panel-body">
+				<ul class="items">
+					<li class="order-item" ng-repeat="item in order.items track by $index">
+						<div class="product-name">{{item.product.name}}</div>
+						<div class="price">R$ {{getOrderItemPrice(item) | money}}</div>
+						
+						<div class="quantity">Quantidade: {{item.quantity}}</div>
+						<div class="actions">
+							<button type="button" class="btn btn-link btn-edit-order-item">editar</button>
+							<button type="button" class="btn btn-link btn-remove-order-item">remover</button>
+						</div>
+
+						<div class="clearfix"></div>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

@@ -78,6 +78,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				retrieve: function(establishment) {
 					this._retrievedEstablishment = establishment;
 					return this._retrieveOrder;
+				},
+
+				_getOrderPriceCalled: false,
+				_getOrderPriceOrder: null,
+				getOrderPrice: function(order) {
+					this._getOrderPriceCalled = true;
+					this._getOrderPriceOrder = order;
 				}
 			};
 		});
@@ -106,6 +113,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		it("should have a order property", function() {
 			expect(scope.order).toBeDefined();
+		});
+
+		it("should have a orderDetailPanelOpen property", function() {
+			expect(scope.orderDetailPanelOpen).toBeDefined();
 		});
 
 		describe("on startup", function() {
@@ -246,6 +257,43 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedDialog._params.onResponse({product: product});
 
 				expect(checkCalled).toEqual(true);
+			});
+		});
+
+		describe("when toggling the order detail panel", function() {
+			it("should set the orderDetailPanelOpen to true if it is false", function() {
+				scope.orderDetailPanelOpen = false;
+				scope.toggleOrderDetailPanel();
+
+				expect(scope.orderDetailPanelOpen).toBe(true);
+			});
+
+			it("should set the orderDetailPanelOpen to false if it is true", function() {
+				scope.orderDetailPanelOpen = true;
+				scope.toggleOrderDetailPanel();
+
+				expect(scope.orderDetailPanelOpen).toBe(false);
+			});
+
+			it("should set the orderDetailPanelOpen to false if the $locationChangeStart is fired", function() {
+				scope.orderDetailPanelOpen = true;
+				scope.$broadcast("$locationChangeStart");
+
+				expect(scope.orderDetailPanelOpen).toBe(false);
+			});
+		});
+
+		describe("when getting the order total price", function() {
+			it("should call the OrderService to get the total price", function() {
+				scope.getOrderTotalPrice();
+				expect(MockedOrderService._getOrderPriceCalled).toBe(true);
+			});
+
+			it("should pass the current order as parameter", function() {
+				scope.order = {};
+				scope.getOrderTotalPrice();
+
+				expect(MockedOrderService._getOrderPriceOrder).toEqual(scope.order);
 			});
 		});
 	});
