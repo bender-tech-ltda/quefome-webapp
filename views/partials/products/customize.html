@@ -19,7 +19,7 @@
 
 				<div class="flavor checkbox" ng-class="{disabled: isFlavorDisabled(flavor)}" ng-repeat="flavor in product.flavors | orderBy: 'name'">
 					<label>
-						<input type="checkbox" ng-disabled="isFlavorDisabled(flavor)" ng-model="flavor.selected" ng-checked="false" ng-click="toggleSelectedFlavor(flavor)"/>
+						<input type="checkbox" ng-disabled="isFlavorDisabled(flavor)" ng-model="flavor.selected" ng-checked="flavor.selected" ng-click="toggleSelectedFlavor(flavor)"/>
 						<span>{{flavor.name}}</span>
 						<p class="price" ng-show="flavor.price && flavor.price > 0"> + R$ {{flavor.price | money}}</p>
 					</label>

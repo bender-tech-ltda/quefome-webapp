@@ -59,6 +59,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(called).toBe(true);
 				expect(calledProduct).toEqual(params.product);
 			});
+
+			it("should listen for a orderItem", function() {
+				var params = {
+					orderItem: {
+						product: {id: 1, name: "Xis do Demo"}
+					}
+				};
+
+				scope.$broadcast("$dialogParameters", params);
+				expect(scope.product).toEqual(params.orderItem.product);			
+			});
 		});
 
 		describe("when groupping the product components", function() {
@@ -427,6 +438,57 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				var expectedOrderItem = scope.createOrderItem();
 				expect(sentOrderItem).toEqual(expectedOrderItem);
+			});
+		});
+
+		describe("when extracting an order item", function() {
+			var orderItem;
+
+			beforeEach(function() {
+				orderItem = {};
+			});
+
+			it("should use the order item product", function() {
+				orderItem.product = {id: -1};
+				scope.extractOrderItem(orderItem);
+
+				expect(scope.product).toEqual(orderItem.product);
+			});
+
+			it("should use the order item product flavors", function() {
+				var flavor = {id: -9, name: "Paprica"};
+
+				orderItem.product = {id: -1, flavors: [flavor]};
+				orderItem.flavors = [angular.copy(flavor)];
+
+				scope.extractOrderItem(orderItem);
+				expect(scope.product.flavors[0].selected).toBe(true);
+				expect(scope.selectedFlavors[0]).toEqual(flavor);
+			});
+
+			it("should use the order item product selected component", function() {
+				var itemComponent = {value: true, component: {id: -2}};
+
+				orderItem.product = {id: -1, components: [itemComponent.component]};
+				orderItem.components = [itemComponent];
+
+				scope.extractOrderItem(orderItem);
+				expect(scope.componentCategories[0].components[0].value).toEqual(true);
+			});
+
+			it("should use the order item product selected option", function() {
+				var itemComponent = {selectedOption: {id: -7}, component: {id: -2, options: [{id: -7}]}};
+
+				orderItem.product = {id: -1, components: [itemComponent.component]};
+				orderItem.components = [itemComponent];
+
+				scope.extractOrderItem(orderItem);
+				expect(scope.componentCategories[0].components[0].option).toEqual(itemComponent.component.options[0]);
+			});
+
+			it("should use the order item quantity", function() {
+				scope.extractOrderItem({product: {}, quantity: 10});
+				expect(scope.quantity).toEqual(10);
 			});
 		});
 

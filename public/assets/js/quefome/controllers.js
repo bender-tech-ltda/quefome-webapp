@@ -313,6 +313,26 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.$digest();
 		};
 
+		$scope.editOrderItem = function(orderItem) {
+			Dialog.create({
+				templateUrl: "/partials/products/customize.html",
+				show: true,
+				params: {
+					orderItem: orderItem
+				},
+				onResponse: function(modifiedOrderItem) {
+					if (modifiedOrderItem != orderItem) {
+						var orderItemIndex = $scope.order.items.indexOf(orderItem);
+						if (orderItemIndex >= 0) {
+							$scope.order.items.splice(orderItemIndex, 1, modifiedOrderItem);
+						}
+					}
+
+					OrderService.store($scope.order);
+				}
+			});
+		};
+
 		$scope.removeOrderItem = function(orderItem) {
 			if (!$window.confirm("Deseja remover esse item do seu pedido?")) {
 				return;
@@ -519,10 +539,132 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 		};
 
+		$scope.extractOrderItem = function(orderItem) {
+			$scope.product = orderItem.product;
+			$scope.groupProductComponents(orderItem.product);
+
+			$scope.quantity = orderItem.quantity ? orderItem.quantity : 1;
+
+			var indexedComponents = false;
+			var indexedOptions = false;
+			var indexedFlavors = false;
+
+			if ($scope.product.flavors && $scope.product.flavors.length > 0) {
+				indexedFlavors = {};
+
+				for (var flavorIndex in $scope.product.flavors) {
+					var flavor = $scope.product.flavors[flavorIndex];
+					indexedFlavors[flavor.id] = flavor;
+				}
+			}
+
+			if ($scope.componentCategories && $scope.componentCategories.length > 0) {
+				indexedComponents = {};
+				indexedOptions = {};
+
+				for (var categoryIndex in $scope.componentCategories) {
+					var category = $scope.componentCategories[categoryIndex];
+
+					for (var componentIndex in category.components) {
+						var component = category.components[componentIndex];
+						indexedComponents[component.id] = component;
+
+						if (component.options && component.options.length > 0) {
+							for (var optionIndex in component.options) {
+								var option = component.options[optionIndex];
+								indexedOptions[option.id] = option;
+							}
+						}
+					}
+				}
+			}
+
+			if (orderItem.flavors && orderItem.flavors.length > 0 && indexedFlavors) {
+				$scope.selectedFlavors = [];
+
+				for (var flavorIndex in orderItem.flavors) {
+					var flavor = orderItem.flavors[flavorIndex];
+
+					var productFlavor = indexedFlavors[flavor.id];
+					if (productFlavor) {
+						productFlavor.selected = true;
+						$scope.selectedFlavors.push(productFlavor);
+					}
+				}
+			}
+
+			if (orderItem.components && orderItem.components.length > 0 && indexedComponents) {
+				for (var itemComponentIndex in orderItem.components) {
+					var itemComponent = orderItem.components[itemComponentIndex];
+
+					if (!itemComponent.component) {
+						continue;
+					}
+
+					var component = indexedComponents[itemComponent.component.id];
+					if (!component) {
+						continue;
+					}
+
+					if (itemComponent.selectedOption) {
+						var option = indexedOptions[itemComponent.selectedOption.id];
+						if (option) {
+							component.option = option;
+						}
+					} else if (typeof(itemComponent.value) !== "undefined") {
+						component.value = itemComponent.value;
+					}
+				}
+			}
+
+			$scope.$digest();
+
+			/**
+			if ($scope.product.)
+
+			if (orderItem.components) {
+				var indexedComponents = [];
+				
+				for (var i in orderItem.components) {
+					var itemComponent = orderItem.components[i]
+					indexedComponents[itemComponent.component.id] = itemComponent;
+				}
+
+				for (var i in $scope.product.components) {
+					var component = $scope.product.components[i];
+
+					var itemComponent = indexedComponents[component.id];
+					if (itemComponent) {
+						if (itemComponent.selectedOption && compoment.options && compoment.options.length > 0) {
+							for (var optionIndex in compoment.options) {
+
+							}
+							component.value = itemComponent.value;
+						} else {
+							component.value = itemComponent.value;
+						}
+						if (typeof(itemComponent.value) !== "undefined") {
+							component = itemComponent.value;
+						} else if (typeof(itemComponent.selectedOption) !== "undefined") {
+
+						}
+
+					}
+				}
+			}
+			**/
+		};
+
 		$scope.$on("$dialogParameters", function(event, params) {
-			if (params && params.product) {
-				$scope.product = params.product;
-				$scope.groupProductComponents($scope.product);
+			if (params) {
+				if(params.product) {
+					$scope.product = params.product;
+					$scope.groupProductComponents($scope.product);
+				}
+
+				if(params.orderItem) {
+					$scope.extractOrderItem(params.orderItem)
+				}
 			}
 		});
 	}]);

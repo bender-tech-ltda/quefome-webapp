@@ -329,6 +329,47 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
+		describe("when editing an order item", function() {
+			it("should call the order item dialog", function() {
+				scope.editOrderItem({});
+				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should pass the order item as a parameter to the dialog", function() {
+				var orderItem = {product: {id: -2, name: "Produto de Teste"}};
+
+				scope.editOrderItem(orderItem);
+				expect(MockedDialog._params.params.orderItem).toEqual(orderItem);
+			});
+
+			it("should receive an order item as return", function() {
+				var orderItem = {product: {id: -2, name: "Produto de Teste"}};
+				scope.order = {
+					items: [orderItem]
+				};
+
+				scope.editOrderItem(orderItem);
+				expect(MockedDialog._params.onResponse).toBeDefined();
+
+				var modifiedOrderItem = {product: {id: -2}, components: []};
+				MockedDialog._params.onResponse(modifiedOrderItem);
+
+				expect(scope.order.items[0]).toEqual(modifiedOrderItem);
+			});
+
+			it("should store the order after customizing", function() {
+				var orderItem = {product: {id: -2, name: "Produto de Teste"}};
+				scope.order = {
+					items: [orderItem]
+				};
+
+				scope.editOrderItem(orderItem);
+				MockedDialog._params.onResponse({product: {id: -2}, components: []});
+				
+				expect(MockedOrderService._storedOrder).toEqual(scope.order);
+			});
+		});
+
 		describe("when removing an order item", function() {
 			it("should ask confirmation to the user", function() {
 				scope.removeOrderItem({});
