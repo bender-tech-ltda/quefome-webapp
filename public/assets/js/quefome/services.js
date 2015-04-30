@@ -294,6 +294,12 @@ define(["angular"], function(angular) {
 				}
 			}
 
+			if (typeof(orderItem.quantity) === "undefined") {
+				orderItem.quantity = 1;
+			}
+
+			total = (total * orderItem.quantity);
+
 			return total;
 		};
 	}]);

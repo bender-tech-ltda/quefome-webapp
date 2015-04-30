@@ -117,6 +117,89 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				var result = OrderService.getOrderPrice(order);
 				expect(result).toEqual(order.items[0].components[0].selectedOption.price + order.items[1].components[0].selectedOption.price);
 			});
+
+			it("it should use the product quantity from each item", function() {
+				order.items.push({
+					quantity: 10,
+					product: {price: 5.60},
+					flavors: [{price: 2.72}],
+					components: [{value: true, component: {price: 2.72}}]
+				}, {
+					quantity: 2,
+					product: {price: 10.50},
+					components: [{selectedOption: {price: 3.50}}]
+				});
+
+				var item1Price = order.items[0].product.price + order.items[0].flavors[0].price;
+				item1Price += order.items[0].components[0].component.price;
+				item1Price *= order.items[0].quantity;
+
+				var item2Price = order.items[1].product.price + order.items[1].components[0].selectedOption.price;
+				item2Price *= order.items[1].quantity;
+
+				var result = OrderService.getOrderPrice(order);
+				expect(result).toEqual(item1Price + item2Price);		
+			});
+		});
+
+		describe("when calculating the order item price", function() {
+			var orderItem;
+
+			beforeEach(function() {
+				orderItem = {};
+			});
+
+			it("should use the product price", function() {
+				orderItem.product = {price: 5.50};
+
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(orderItem.product.price);
+			});
+
+			it("should use the product selected flavors price", function() {
+				orderItem.flavors = [{price: 2.72}, {price: 3.70}, {}];
+
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(orderItem.flavors[0].price + orderItem.flavors[1].price);
+			});
+
+			it("should use the product selected components from each item", function() {
+				orderItem.components = [
+					{value: true, component: {price: 2.72}},
+					{value: true, component: {price: 3.37}}
+				];
+
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(orderItem.components[0].component.price + orderItem.components[1].component.price);
+			});
+
+			it("should use the product selected components options from each item", function() {
+				orderItem.components = [
+					{selectedOption: {price: 2.0}},
+					{selectedOption: {price: 3.50}}
+				];
+
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(orderItem.components[0].selectedOption.price + orderItem.components[1].selectedOption.price);
+			});
+
+			it("it should use the product quantity from each item", function() {
+				orderItem.quantity = 7;
+				orderItem.product = {price: 5.00};
+				orderItem.flavors = [
+					{price: 2.50}
+				];
+				orderItem.components = [
+					{selectedOption: {price: 3.50}}
+				];
+
+				var itemPrice = orderItem.product.price + orderItem.flavors[0].price;
+				itemPrice += orderItem.components[0].selectedOption.price;
+				itemPrice *= orderItem.quantity;
+
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(itemPrice);
+			});
 		});
 	});
 });

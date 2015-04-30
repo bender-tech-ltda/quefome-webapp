@@ -85,6 +85,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				getOrderPrice: function(order) {
 					this._getOrderPriceCalled = true;
 					this._getOrderPriceOrder = order;
+				},
+
+				_getOrderItemPriceCalled: false,
+				_getOrderItemPriceOrderItem: null,
+				getOrderItemPrice: function(orderItem) {
+					this._getOrderItemPriceCalled = true;
+					this._getOrderItemPriceOrderItem = orderItem;
 				}
 			};
 		});
@@ -294,6 +301,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.getOrderTotalPrice();
 
 				expect(MockedOrderService._getOrderPriceOrder).toEqual(scope.order);
+			});
+		});
+
+		describe("when getting the order item price", function() {
+			it("should call the OrderService to get the price", function() {
+				scope.getOrderItemPrice({});
+				expect(MockedOrderService._getOrderItemPriceCalled).toBe(true);
+			});
+
+			it("should accept a orderItem as parameter", function() {
+				var orderItem = {product: {id: -2}};
+				scope.getOrderItemPrice(orderItem);
+
+				expect(MockedOrderService._getOrderItemPriceOrderItem).toEqual(orderItem);
 			});
 		});
 	});

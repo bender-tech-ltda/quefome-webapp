@@ -746,7 +746,7 @@ a:hover, a:focus {
 }
 
 .establishment-page .order-panel .header .btn-show-order-details:hover {
-	color: #FFE171;
+	color: #DCDCDC;
 }
 
 .establishment-page .order-panel .header .total {
@@ -793,6 +793,10 @@ a:hover, a:focus {
 .establishment-page .order-panel .order-items .items .order-item:hover {
 	background-color: #DCDCDC;
 	cursor: pointer;
+}
+
+.establishment-page .order-panel .order-items .items .order-item + .order-item {
+	margin-top: -5px;
 }
 
 .establishment-page .order-panel .order-items .items .order-item .product-name {
