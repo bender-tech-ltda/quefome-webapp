@@ -547,6 +547,36 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
+	module.directive("qfInputPrecision", [function() {
+		return {
+			restrict: "A",
+			link: function(scope, element, attrs) {
+				var precision = parseInt(attrs.qfInputPrecision);
+
+				element.on("keypress.qfInputPrecision", function(event) {
+					var value = element.val();
+
+					if (event.charCode) {
+						value += String.fromCharCode(event.charCode);
+					}
+
+					value = value.replace(",", ".");
+
+					var digits = (value + "").split(".");
+					if (digits.length > 1) {
+						if (precision <= 0) {
+							event.preventDefault();
+							return false;
+						} else if (digits[1].length > precision) {
+							event.preventDefault();
+							return false;
+						}
+					}
+				});
+			}
+		};
+	}]);
+
 	module.directive("qfLoseFocusOnSubmit", [function() {
 		return {
 			restrict: "A",
