@@ -85,10 +85,10 @@
 			<div class="panel-body">
 				<ul class="items">
 					<li class="order-item" ng-repeat="item in order.items track by $index">
-						<div class="product-name">{{item.product.name}}</div>
-						<div class="price">R$ {{getOrderItemPrice(item) | money}}</div>
+						<div class="product-name" ng-click="editOrderItem(item)">{{item.product.name}}</div>
+						<div class="price" ng-click="editOrderItem(item)">R$ {{getOrderItemPrice(item) | money}}</div>
 						
-						<div class="quantity">Quantidade: {{item.quantity}}</div>
+						<div class="quantity" ng-click="editOrderItem(item)">Quantidade: {{item.quantity}}</div>
 						<div class="actions">
 							<button type="button" class="btn btn-link btn-edit-order-item" ng-click="editOrderItem(item)">editar</button>
 							<button type="button" class="btn btn-link btn-remove-order-item" ng-click="removeOrderItem(item)">remover</button>
