@@ -685,7 +685,7 @@ a:hover, a:focus {
 
 .establishment-page .order-panel {
 	width: 100%;
-	height: 55px;
+	height: 57px;
 
 	transition: height 0.2s;
 	-moz-transition: height 0.2s;
@@ -712,7 +712,7 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .wrapper {
 	width: 100%;
-	height: 100%;
+	min-height: 100%;
 }
 
 .establishment-page .order-panel .header {
@@ -767,10 +767,10 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .order-items {
 	width: 100%;
-	height: 78%;
-	height: -webkit-calc(100% - 102px);
-	height: -moz-calc(100% - 102px);
-	height: calc(100% - 102px);
+	min-height: 78%;
+	min-height: -webkit-calc(100% - 102px);
+	min-height: -moz-calc(100% - 102px);
+	min-height: calc(100% - 102px);
 	margin-bottom: 0px;
 	background-color: #FFF;
 	color: #333;
@@ -789,10 +789,10 @@ a:hover, a:focus {
 .establishment-page .order-panel .order-items .items {
 	list-style: none;
 	padding-left: 0px;
+	margin-bottom: 0px;
 }
 
 .establishment-page .order-panel .order-items .items .order-item {
-	display: inline-block;
 	width: 100%;
 	min-height: 60px;
 	padding: 10px;
@@ -806,7 +806,7 @@ a:hover, a:focus {
 }
 
 .establishment-page .order-panel .order-items .items .order-item + .order-item {
-	margin-top: -5px;
+
 }
 
 .establishment-page .order-panel .order-items .items .order-item .product-name {
