@@ -441,6 +441,46 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
+		describe("when setting the current product", function() {
+			it("should set the product property", function() {
+				var product = {id: -2};
+				scope.setCurrentProduct(product);
+
+				expect(scope.product).toEqual(product);
+			});
+
+			it("should set the flavors selected property to false", function() {
+				var product = {
+					id: -2,
+					flavors: [{}, {}]
+				};
+
+				scope.setCurrentProduct(product);
+
+				expect(scope.product.flavors[0].selected).toBe(false);
+				expect(scope.product.flavors[1].selected).toBe(false);
+			});
+
+			it("should call the groupProductComponents function", function() {
+				var product = {
+					id: -2
+				};
+
+				var called = false;
+				var passedProduct = null;
+
+				scope.groupProductComponents = function(product) {
+					called = true;
+					passedProduct = product;
+				};
+
+				scope.setCurrentProduct(product);
+
+				expect(called).toBe(true);
+				expect(passedProduct).toBe(product);
+			});
+		});
+
 		describe("when extracting an order item", function() {
 			var orderItem;
 
@@ -506,7 +546,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(hideCalled).toBe(true);
 			});
 
-			it("should pass a paramter to the dialog hide function", function() {
+			it("should pass a parameter to the dialog hide function", function() {
 				var sentParameter = null;
 
 				scope.$dialog = {

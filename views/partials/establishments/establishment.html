@@ -100,7 +100,7 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0">Finalizar Pedido</button>
+				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0" ng-click="finishOrder()">Finalizar Pedido</button>
 			</div>
 
 			<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">

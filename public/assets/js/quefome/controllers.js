@@ -354,6 +354,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			return  OrderService.getOrderItemPrice(orderItem);;
 		};
 
+		$scope.finishOrder = function() {
+			alert("Em desenvolvimento...");
+		};
+
 		$scope.$on("$locationChangeStart", function(event) {
 			if ($scope.orderDetailPanelOpen) {
 				event.preventDefault();
@@ -382,6 +386,18 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.selectedFlavors = [];
 
 		$scope.quantity = 1;
+
+		$scope.setCurrentProduct = function(product) {
+			$scope.product = product;
+
+			if ($scope.product && $scope.product.flavors) {
+				for (var i in $scope.product.flavors) {
+					$scope.product.flavors[i].selected = false;
+				}
+			}
+
+			$scope.groupProductComponents(product);
+		};
 
 		$scope.groupProductComponents = function(product) {
 			if (!product || !product.components || product.components.length <= 0) {
@@ -541,8 +557,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.extractOrderItem = function(orderItem) {
-			$scope.product = orderItem.product;
-			$scope.groupProductComponents(orderItem.product);
+			$scope.setCurrentProduct(orderItem.product);
 
 			$scope.quantity = orderItem.quantity ? orderItem.quantity : 1;
 
@@ -619,48 +634,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 
 			$scope.$digest();
-
-			/**
-			if ($scope.product.)
-
-			if (orderItem.components) {
-				var indexedComponents = [];
-				
-				for (var i in orderItem.components) {
-					var itemComponent = orderItem.components[i]
-					indexedComponents[itemComponent.component.id] = itemComponent;
-				}
-
-				for (var i in $scope.product.components) {
-					var component = $scope.product.components[i];
-
-					var itemComponent = indexedComponents[component.id];
-					if (itemComponent) {
-						if (itemComponent.selectedOption && compoment.options && compoment.options.length > 0) {
-							for (var optionIndex in compoment.options) {
-
-							}
-							component.value = itemComponent.value;
-						} else {
-							component.value = itemComponent.value;
-						}
-						if (typeof(itemComponent.value) !== "undefined") {
-							component = itemComponent.value;
-						} else if (typeof(itemComponent.selectedOption) !== "undefined") {
-
-						}
-
-					}
-				}
-			}
-			**/
 		};
 
 		$scope.$on("$dialogParameters", function(event, params) {
 			if (params) {
 				if(params.product) {
-					$scope.product = params.product;
-					$scope.groupProductComponents($scope.product);
+					$scope.setCurrentProduct(params.product);
 				}
 
 				if(params.orderItem) {
