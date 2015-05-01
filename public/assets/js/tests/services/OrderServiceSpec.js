@@ -144,13 +144,13 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			it("should check if the order is not going to be withdraw and sum the establishment delivery tax", function() {
 				order.withdraw = false;
 				order.establishment = {
-					parameters: {deliveryTax: 2.0}
+					parameters: {deliverTax: 2.0}
 				};
 
 				order.items = [{product: {price: 4.50}}];
 
 				var result = OrderService.getOrderPrice(order);
-				expect(result).toEqual(order.establishment.parameters.deliveryTax + order.items[0].product.price);
+				expect(result).toEqual(order.establishment.parameters.deliverTax + order.items[0].product.price);
 			});
 		});
 

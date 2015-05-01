@@ -270,7 +270,7 @@ define(["angular"], function(angular) {
 			}
 
 			if (!order.withdraw && order.establishment && order.establishment.parameters) {
-				total += (order.establishment.parameters.deliveryTax ? order.establishment.parameters.deliveryTax : 0.0);
+				total += (order.establishment.parameters.deliverTax ? order.establishment.parameters.deliverTax : 0.0);
 			}
 
 			return total;
