@@ -713,6 +713,7 @@ a:hover, a:focus {
 .establishment-page .order-panel .wrapper {
 	width: 100%;
 	min-height: 100%;
+	background-color: #fff;
 }
 
 .establishment-page .order-panel .header {
@@ -723,12 +724,8 @@ a:hover, a:focus {
 }
 
 .establishment-page .order-panel.opened .header {
-	height: 102px;
-}
-
-.establishment-page .order-panel.opened .header .btn-finish-order {
-	width: 100%;
-	margin-top: 10px;
+	height: initial;
+	min-height: 100px;
 }
 
 .establishment-page .order-panel .header .title-panel {
@@ -765,12 +762,29 @@ a:hover, a:focus {
 	font-size: 17px;
 }
 
+.establishment-page .order-panel .header .delivery-price {
+	width: 100%;
+	text-align: right;
+}
+
+.establishment-page .order-panel .delivery-type {
+	width: 100%;
+	text-align: center;
+}
+
+.establishment-page .order-panel .delivery-type .radio {
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+}
+
+.establishment-page .order-panel.opened .header .btn-finish-order {
+	width: 100%;
+	margin-top: 10px;
+}
+
 .establishment-page .order-panel .order-items {
 	width: 100%;
-	min-height: 78%;
-	min-height: -webkit-calc(100% - 102px);
-	min-height: -moz-calc(100% - 102px);
-	min-height: calc(100% - 102px);
 	margin-bottom: 0px;
 	background-color: #FFF;
 	color: #333;

@@ -80,7 +80,27 @@
 
 				<div class="clearfix"></div>
 
-				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen">Finalizar Pedido!</button>
+				<div class="delivery-price" ng-show="orderDetailPanelOpen && !order.withdraw">
+					Taxa de entrega: R$ {{order.establishment.parameters.deliverTax | money}}
+				</div>
+
+				<div class="delivery-type" ng-show="orderDetailPanelOpen">
+					<div class="radio">
+						<label>
+							<input type="radio" ng-model="order.withdraw" ng-value="false"/> Tele-entrega
+						</label>
+					</div>
+
+					<div class="radio">
+						<label>
+							<input type="radio" ng-model="order.withdraw" ng-value="true"/> Retirar no balcão
+						</label>
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+
+				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0">Finalizar Pedido</button>
 			</div>
 
 			<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">

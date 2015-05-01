@@ -217,6 +217,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.productTypes = [];
 
 		$scope.order = {
+			withdraw: false,
 			items: []
 		};
 
