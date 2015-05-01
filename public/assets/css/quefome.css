@@ -710,6 +710,11 @@ a:hover, a:focus {
 	-ms-transition: height 0.5s;
 }
 
+.establishment-page .order-panel .wrapper {
+	width: 100%;
+	height: 100%;
+}
+
 .establishment-page .order-panel .header {
 	padding: 10px;
 	background-color: #E73724;
@@ -762,17 +767,17 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .order-items {
 	width: 100%;
-	height: 84%;
-	height: -webkit-calc(100% - 55px);
-	height: -moz-calc(100% - 55px);
-	height: calc(100% - 55px);
+	height: 78%;
+	height: -webkit-calc(100% - 102px);
+	height: -moz-calc(100% - 102px);
+	height: calc(100% - 102px);
 	margin-bottom: 0px;
 	background-color: #FFF;
 	color: #333;
 	border: none;
 }
 
-.establishment-page .order-panel .order-items > .panel-body {
+.establishment-page .order-panel .order-items .panel-body {
 	padding: 0px;
 }
 
@@ -1611,7 +1616,7 @@ label .required {
 		border-top: 1px solid #ccc;
 	}
 
-	.establishment-page .sticky-fake {
+	.establishment-page .stick-top + .sticky-fake {
 		display: none;
 	}
 
@@ -1621,6 +1626,23 @@ label .required {
 
 	.establishment-page .establishment-products .products .product {
 		width: 23%;
+	}
+
+	.establishment-page .order-panel {
+		padding: 0px 25%;
+		background-color: #E73724;
+
+		transition: height 0.2s, background 0.5s;
+	}
+
+	.establishment-page .order-panel.opened {
+		background-color: rgba(0, 0, 0, 0.45);
+		
+		transition: height 0.5s, background 0.5s;
+	}
+
+	.establishment-page .order-panel.opened .wrapper {
+		box-shadow: 8px 0 8px -7px rgba(0,0,0, 0.8), -6px 0 8px -4px rgba(0,0,0, 0.8)
 	}
 
 	.customize-product-dialog .flavors .flavor,
@@ -1720,6 +1742,10 @@ label .required {
 
 	.establishment-page .establishment-products .products .product {
 		width: 19%;
+	}
+
+	.establishment-page .order-panel {
+		padding: 0px 30%;
 	}
 
 	.footer .new-delivery {

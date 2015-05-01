@@ -63,45 +63,47 @@
 	</div>
 
 	<div class="order-panel" qf-sticky-scroll="bottom" ng-class="{'opened': orderDetailPanelOpen}" qf-toggle-class="no-overflow" qf-toggle-target="body" qf-toggle="orderDetailPanelOpen">
-		<div class="header">
-			<div class="title-panel">
-				<span class="title">Seu Pedido</span>
-			</div>
+		<div class="wrapper">
+			<div class="header">
+				<div class="title-panel">
+					<span class="title">Seu Pedido</span>
+				</div>
 		
-			<button type="button" class="btn btn-show-order-details" ng-class="{dropup: !orderDetailPanelOpen}" ng-click="toggleOrderDetailPanel()">
-				<span class="caret"></span>
-				<span>{{orderDetailPanelOpen ? 'Esconder detalhes': 'Exibir/Finalizar Pedido'}}</span>
-			</button>
+				<button type="button" class="btn btn-show-order-details" ng-class="{dropup: !orderDetailPanelOpen}" ng-click="toggleOrderDetailPanel()">
+					<span class="caret"></span>
+					<span>{{orderDetailPanelOpen ? 'Esconder detalhes': 'Exibir/Finalizar Pedido'}}</span>
+				</button>
 
-			<div class="total">
-				<span>Total: R$ {{getOrderTotalPrice() | money}}</span>
+				<div class="total">
+					<span>Total: R$ {{getOrderTotalPrice() | money}}</span>
+				</div>
+
+				<div class="clearfix"></div>
+
+				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen">Finalizar Pedido!</button>
 			</div>
 
-			<div class="clearfix"></div>
+			<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">
+				<div class="panel-heading">
+					<h4 class="title">Produtos</h4>
+				</div>
 
-			<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen">Finalizar Pedido!</button>
-		</div>
-
-		<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">
-			<div class="panel-heading">
-				<h4 class="title">Produtos</h4>
-			</div>
-
-			<div class="panel-body">
-				<ul class="items">
-					<li class="order-item" ng-repeat="item in order.items track by $index">
-						<div class="product-name" ng-click="editOrderItem(item)">{{item.product.name}}</div>
-						<div class="price" ng-click="editOrderItem(item)">R$ {{getOrderItemPrice(item) | money}}</div>
+				<div class="panel-body">
+					<ul class="items">
+						<li class="order-item" ng-repeat="item in order.items track by $index">
+							<div class="product-name" ng-click="editOrderItem(item)">{{item.product.name}}</div>
+							<div class="price" ng-click="editOrderItem(item)">R$ {{getOrderItemPrice(item) | money}}</div>
 						
-						<div class="quantity" ng-click="editOrderItem(item)">Quantidade: {{item.quantity}}</div>
-						<div class="actions">
-							<button type="button" class="btn btn-link btn-edit-order-item" ng-click="editOrderItem(item)">editar</button>
-							<button type="button" class="btn btn-link btn-remove-order-item" ng-click="removeOrderItem(item)">remover</button>
-						</div>
+							<div class="quantity" ng-click="editOrderItem(item)">Quantidade: {{item.quantity}}</div>
+							<div class="actions">
+								<button type="button" class="btn btn-link btn-edit-order-item" ng-click="editOrderItem(item)">editar</button>
+								<button type="button" class="btn btn-link btn-remove-order-item" ng-click="removeOrderItem(item)">remover</button>
+							</div>
 
-						<div class="clearfix"></div>
-					</li>
-				</ul>
+							<div class="clearfix"></div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
