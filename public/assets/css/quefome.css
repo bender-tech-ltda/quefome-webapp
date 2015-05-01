@@ -1633,12 +1633,20 @@ label .required {
 		background-color: #E73724;
 
 		transition: height 0.2s, background 0.5s;
+		-moz-transition: height 0.2s, background 0.5s;
+		-webkit-transition: height 0.2s, background 0.5s;
+		-o-transition: height 0.2s, background 0.5s;
+		-ms-transition: height 0.2s, background 0.5s;
 	}
 
 	.establishment-page .order-panel.opened {
 		background-color: rgba(0, 0, 0, 0.45);
 		
 		transition: height 0.5s, background 0.5s;
+		-moz-transition: height 0.5s, background 0.5s;
+		-webkit-transition: height 0.5s, background 0.5s;
+		-o-transition: height 0.5s, background 0.5s;
+		-ms-transition: height 0.5s, background 0.5s;
 	}
 
 	.establishment-page .order-panel.opened .wrapper {
