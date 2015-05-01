@@ -385,6 +385,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.selectedFlavors = [];
 
+		$scope.instructions = "";
 		$scope.quantity = 1;
 
 		$scope.setCurrentProduct = function(product) {
@@ -526,7 +527,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				product: $scope.product,
 				components: [],
 				flavors: $scope.selectedFlavors,
-				quantity: $scope.quantity
+				quantity: $scope.quantity,
+				instructions: $scope.instructions
 			};
 
 			for (var i in $scope.product.components) {
@@ -559,6 +561,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.extractOrderItem = function(orderItem) {
 			$scope.setCurrentProduct(orderItem.product);
 
+			$scope.instructions = orderItem.instructions ? orderItem.instructions : "";
 			$scope.quantity = orderItem.quantity ? orderItem.quantity : 1;
 
 			var indexedComponents = false;

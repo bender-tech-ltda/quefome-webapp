@@ -27,6 +27,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.quantity).toBeDefined();
 		});
 
+		it("should have a instructions property", function() {
+			expect(scope.instructions).toBeDefined();
+		});
+
 		it("should have a selectedFlavors property", function() {
 			expect(scope.selectedFlavors).toBeDefined();
 		});
@@ -414,6 +418,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(orderItem.flavors).toEqual(scope.selectedFlavors);
 			});
 
+			it("should use the instructions", function() {
+				scope.instructions = "Blablablablabla";
+
+				var orderItem = scope.createOrderItem();
+				expect(orderItem.instructions).toEqual(scope.instructions);
+			});
+
 			it("should hide the current dialog", function() {
 				var hideCalled = false;
 
@@ -529,6 +540,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should use the order item quantity", function() {
 				scope.extractOrderItem({product: {}, quantity: 10});
 				expect(scope.quantity).toEqual(10);
+			});
+
+			it("should use the order item instructions", function() {
+				orderItem.instructions = "teste";
+				orderItem.product = {};
+
+				scope.extractOrderItem(orderItem);
+				expect(scope.instructions).toEqual(orderItem.instructions);
 			});
 		});
 

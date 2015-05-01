@@ -7,7 +7,7 @@
 			</div>
 		</div>
 
-		<div class="product-components" ng-show="(componentCategories && componentCategories.length > 0) || (product.flavors && product.flavors.length > 0)">
+		<div class="product-details" ng-show="(componentCategories && componentCategories.length > 0) || (product.flavors && product.flavors.length > 0)">
 			<fieldset class="flavors" ng-show="product.flavors && product.flavors.length > 0">
 				<legend class="title">
 					<span>Sabores ({{selectedFlavors.length}}/{{product.flavorsAmount}})</span>
@@ -53,6 +53,11 @@
 	</div>
 
 	<div class="modal-footer">
+		<div class="instructions">
+			<label>Instruções adicionais</label>
+			<textarea class="form-control" name="instructions" ng-model="instructions" placeholder="Instruções adicionais"></textarea>
+		</div>
+
 		<div class="quantity">
 			<label>Quantidade:</label>
 			<input type="number" class="form-control" name="quantity" ng-model="quantity" required min="1" qf-input-precision="0" />
