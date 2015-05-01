@@ -244,7 +244,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
-	module.directive("qfStickyScroll", ["$timeout", function($timeout) {
+	module.directive("qfStickyScroll", ["$interval", function($interval) {
 		var $document = angular.element(document);
 		var $window = angular.element(window);
 
@@ -298,7 +298,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		});
 
 		var lastDocumentHeight = $document.height();
-		$timeout(function() {
+		$interval(function() {
 			var documentHeight = $document.height();
 
 			if (lastDocumentHeight != documentHeight) {
