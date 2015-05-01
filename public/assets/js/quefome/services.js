@@ -269,6 +269,10 @@ define(["angular"], function(angular) {
 				total += this.getOrderItemPrice(item);
 			}
 
+			if (!order.withdraw && order.establishment && order.establishment.parameters) {
+				total += (order.establishment.parameters.deliveryTax ? order.establishment.parameters.deliveryTax : 0.0);
+			}
+
 			return total;
 		};
 
