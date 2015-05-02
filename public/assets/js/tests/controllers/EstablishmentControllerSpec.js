@@ -65,6 +65,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 							callback(products);
 						}
 					};
+				},
+
+				_isAttendingAddressCalled: false,
+				_isAttendingAddressEstablishment: null,
+				_isAttendingAddressAddress: null,
+				_isAttendingAddressReturn: true,
+				isAttendingAddress: function(establishment, address) {
+					this._isAttendingAddressCalled = true;
+
+					this._isAttendingAddressEstablishment = establishment;
+					this._isAttendingAddressAddress = address;
+
+					var that = this;
+
+					return {
+						then: function(callback) {
+							callback(that._isAttendingAddressReturn);
+						}
+					};
 				}
 			};
 
@@ -218,6 +237,30 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.refreshOrder();
 				expect(scope.order.address).toEqual(MockedAddressService._currentAddress);
 			});
+
+			it("should verify the user address if the order has an address", function() {
+				MockedAddressService._currentAddress = {address: "blabla"};
+				var establishment = {id: -2};
+
+				scope.refreshOrder(establishment);
+				expect(MockedEstablishmentService._isAttendingAddressCalled).toBe(true);
+				expect(MockedEstablishmentService._isAttendingAddressEstablishment).toBe(establishment);
+				expect(MockedEstablishmentService._isAttendingAddressAddress).toBe(MockedAddressService._currentAddress);
+
+				expect(scope.isUserAddressAttended).toBe(MockedEstablishmentService._isAttendingAddressReturn);
+			});
+
+			it("should not verify the user address if the order have no address", function() {
+				var establishment = {id: -2};
+
+				MockedAddressService._currentAddress = null;
+				scope.refreshOrder(establishment);
+				expect(MockedEstablishmentService._isAttendingAddressCalled).toBe(false);
+
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.refreshOrder(establishment);
+				expect(MockedEstablishmentService._isAttendingAddressCalled).toBe(false);
+			});
 		});
 
 		describe("when checking for user address", function() {
@@ -342,6 +385,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should show a dialog", function() {
 				scope.customizeProduct();
 				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should not show the dialog if the user address is not attended", function() {
+				scope.isUserAddressAttended = false;
+				scope.customizeProduct();
+
+				expect(MockedDialog._params.templateUrl.indexOf("customize")).toEqual(-1);
 			});
 
 			it("should pass a product as a parameter to the dialog", function() {

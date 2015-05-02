@@ -219,7 +219,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.selectedProductType = null;
 		$scope.orderDetailPanelOpen = false;
 
-		$scope.isUserAddressAttended = false;
+		$scope.isUserAddressAttended = null;
 
 		$scope.order = {
 			withdraw: false,
@@ -248,6 +248,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			} else {
 				$scope.order.withdraw = false;
 				$scope.order.address = null;
+			}
+
+			if ($scope.order.address) {
+				EstablishmentService.isAttendingAddress(establishment, $scope.order.address).then(function(isAttending) {
+					$scope.isUserAddressAttended = (isAttending ? true : false);
+				});
 			}
 		};
 
@@ -337,6 +343,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.customizeProduct = function(product) {
+			if ($scope.isUserAddressAttended === false) {
+				$scope.checkUserAddress();
+				return;
+			}
+
 			Dialog.create({
 				templateUrl: "/partials/products/customize.html",
 				show: true,
