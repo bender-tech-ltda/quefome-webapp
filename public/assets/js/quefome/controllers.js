@@ -779,7 +779,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.skipAddressVerification = function() {
 			AddressService.setCurrentAddress({skipped: true});
-			$scope.closeDialog();
+			$scope.closeDialog(true);
 		};
 
 		$scope.goToEstablishmentSearch = function() {
@@ -793,9 +793,15 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 		};
 
-		$scope.closeDialog = function() {
+		$scope.closeDialog = function(skipped) {
+			var response = {
+				address: $scope.address,
+				isAttended: $scope.addressAttended ? true : false,
+				skipped: skipped ? true : false
+			};
+
 			if ($scope.$dialog) {
-				$scope.$dialog.hide();
+				$scope.$dialog.hide(response);
 			}
 		};
 	}]);

@@ -84,7 +84,7 @@
 					Taxa de entrega: R$ {{order.establishment.parameters.deliverTax | money}}
 				</div>
 
-				<div class="delivery-type" ng-show="orderDetailPanelOpen">
+				<div class="delivery-type" ng-show="orderDetailPanelOpen && establishment.parameters.canWithDraw">
 					<div class="radio">
 						<label>
 							<input type="radio" ng-model="order.withdraw" ng-value="false"/> Tele-entrega

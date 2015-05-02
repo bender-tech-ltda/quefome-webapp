@@ -96,8 +96,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					},
 
 					_calledHide: false,
-					hide: function() {
+					_hideParams: null,
+					hide: function(params) {
 						this._calledHide = true;
+						this._hideParams = params;
 						this._beforeHideCallback();
 					}
 				};
@@ -425,6 +427,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should close the dialog", function() {
 				scope.closeDialog();
 				expect(scope.$dialog._calledHide).toBe(true);
+			});
+
+			it("should send a response", function() {
+				scope.address = {address: "123"};
+				scope.addressAttended = true;
+
+				scope.closeDialog(false);
+
+				expect(scope.$dialog._hideParams.address).toEqual(scope.address);
+				expect(scope.$dialog._hideParams.isAttended).toBe(scope.addressAttended);
+				expect(scope.$dialog._hideParams.skipped).toBe(false);
 			});
 		});
 	});
