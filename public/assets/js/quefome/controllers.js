@@ -216,13 +216,40 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.establishment = false;
 		$scope.productTypes = [];
 
+		$scope.selectedProductType = null;
+		$scope.orderDetailPanelOpen = false;
+
+		$scope.isUserAddressAttended = false;
+
 		$scope.order = {
 			withdraw: false,
+			address: null,
 			items: []
 		};
 
-		$scope.selectedProductType = null;
-		$scope.orderDetailPanelOpen = false;
+		$scope.refreshOrder = function(establishment) {
+			if (!establishment) {
+				establishment = {};
+			}
+
+			$scope.order = OrderService.retrieve(establishment) || $scope.order;
+			$scope.order.establishment = establishment;
+
+			var currentAddress = AddressService.getCurrentAddress();
+
+			if (currentAddress) {
+				if (currentAddress.skipped) {
+					$scope.order.withdraw = (establishment.parameters && establishment.parameters.canWithdraw ? true : false);
+					$scope.order.address = null;
+				} else {
+					$scope.order.withdraw = false;
+					$scope.order.address = currentAddress;
+				}
+			} else {
+				$scope.order.withdraw = false;
+				$scope.order.address = null;
+			}
+		};
 
 		$scope.toggleProductType = function(productType) {
 			if ($scope.selectedProductType && $scope.selectedProductType.id == productType.id) {
@@ -274,9 +301,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.checkUserAddress = function(event) {
-			var currentAddress = AddressService.getCurrentAddress();
+			if ($scope.order.withdraw) {
+				return;
+			}
 
-			if (!currentAddress || !currentAddress.skipped) {
+			if (!$scope.order.address || !$scope.isUserAddressAttended) {
 				if (event) {
 					event.preventDefault();
 				}
@@ -286,6 +315,20 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					show: true,
 					params: {
 						establishment: $scope.establishment
+					},
+					onResponse: function(response) {
+						if (response) {
+							$scope.order.address = response.address;
+							$scope.isUserAddressAttended = response.isAttended;
+
+							if (response.skipped) {
+								$scope.order.withdraw = $scope.establishment.parameters.canWithdraw ? true : false;
+							} else {
+								$scope.order.withdraw = false;
+							}
+
+							$scope.$digest();
+						}
 					}
 				});
 			}
@@ -367,9 +410,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
-
-			$scope.order = OrderService.retrieve(establishment) || $scope.order;
-			$scope.order.establishment = establishment;
+			$scope.refreshOrder(establishment);
 
 			$scope.$digest();
 
@@ -677,7 +718,9 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			if (alreadyInformedAddress) {
 				$scope.zipCode = alreadyInformedAddress.zipCode;
 				$scope.$digest(function() {
-					$scope.checkZipCode();
+					if ($scope.zipCode) {
+						$scope.checkZipCode();
+					}
 				});
 			}
 		});

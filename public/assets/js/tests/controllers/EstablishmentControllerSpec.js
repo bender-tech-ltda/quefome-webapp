@@ -160,26 +160,133 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should retrieve any stored order", function() {
 				expect(scope.order).toEqual(MockedOrderService._retrieveOrder);
 			});
+
+			it("should check if the user already informed its address", function() {
+				expect(MockedAddressService._called).toBe(true);
+			});
+		});
+
+		describe("when refreshing the order", function() {
+			it("should retrieve any stored order", function() {
+				MockedOrderService._retrieveOrder = {items: []};
+
+				scope.refreshOrder();
+				expect(scope.order).toEqual(MockedOrderService._retrieveOrder);
+			});
+
+			it("should set the order.establishment", function() {
+				var establishment = {id: -2};
+
+				scope.refreshOrder(establishment);
+				expect(scope.order.establishment).toEqual(establishment);
+			});
+
+			it("should set the order.withdraw to false if the user didn't informed it's address", function() {
+				MockedAddressService._currentAddress = null;
+				scope.refreshOrder();
+
+				expect(scope.order.withdraw).toBe(false);
+			});
+
+			it("should set the order.address to null if the user didn't informed it's address", function() {
+				MockedAddressService._currentAddress = null;
+				scope.refreshOrder();
+
+				expect(scope.order.address).toBeNull();
+			});
+
+			it("should set the order.withdraw based on the user address and the establishment parameters", function() {
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.refreshOrder({parameters: {canWithdraw: true}});
+				expect(scope.order.withdraw).toBe(true);
+
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.refreshOrder({parameters: {canWithdraw: false}});
+				expect(scope.order.withdraw).toBe(false);
+
+				MockedAddressService._currentAddress = {skipped: false};
+				scope.refreshOrder({parameters: {canWithdraw: true}});
+				expect(scope.order.withdraw).toBe(false);
+			});
+
+			it("should set the order.address based on the user address", function() {
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.refreshOrder();
+				expect(scope.order.address).toBeNull();
+
+				MockedAddressService._currentAddress = {address: "teste"};
+				scope.refreshOrder();
+				expect(scope.order.address).toEqual(MockedAddressService._currentAddress);
+			});
 		});
 
 		describe("when checking for user address", function() {
-			it("should check if the user already informed its address", function() {
-				scope.checkUserAddress({preventDefault: function() {}}, {});
-				expect(MockedAddressService._called).toBe(true);
+			it("should not show a dialog if the user will withdraw the order", function() {
+				scope.order.withdraw = true;
+				scope.checkUserAddress();
+
+				expect(MockedDialog._called).toBe(false);
 			});
 
-			it("should show a dialog if the user did not informed its address yet", function() {
-				MockedAddressService._currentAddress = false;
-				scope.checkUserAddress({preventDefault: function() {}}, {});
+			it("should show a dialog if the order address is null", function() {
+				scope.order.address = null;
+				scope.checkUserAddress();
 
 				expect(MockedDialog._called).toBe(true);
 			});
 
-			it("should not show a dialog if the user skipped the address check", function() {
-				MockedAddressService._currentAddress = {skipped: true};
-				scope.checkUserAddress({preventDefault: function() {}}, {});
+			it("should show a dialog if the user address is invalid", function() {
+				scope.order.address = {address: "teste"};
+				scope.isUserAddressAttended = false;
+				scope.checkUserAddress();
+
+				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should not show a dialog if the user address is valid", function() {
+				scope.order.address = {address: "teste"};
+				scope.isUserAddressAttended = true;
+				scope.checkUserAddress();
 
 				expect(MockedDialog._called).toBe(false);
+			});
+
+			it("should set order address with the response from the dialog", function() {
+				scope.checkUserAddress();
+
+				expect(MockedDialog._params.onResponse).toBeDefined();
+
+				var response = {address: {address: ""}};
+				MockedDialog._params.onResponse(response);
+
+				expect(scope.order.address).toEqual(response.address);
+			});
+
+			it("should set the isUserAddressAttended with the response from the dialog", function() {
+				scope.checkUserAddress();
+				var response = {address: {address: ""}, isAttended: true};
+				MockedDialog._params.onResponse(response);
+
+				expect(scope.isUserAddressAttended).toBe(true);
+			});
+
+			it("should set the order withdraw with establishment.parameters.canWithdraw and the response from the dialog", function() {
+				scope.establishment = {
+					parameters: {canWithdraw: true}
+				};
+
+				scope.checkUserAddress();
+
+				MockedDialog._params.onResponse({skipped: true});
+				expect(scope.order.withdraw).toBe(true);
+
+				scope.establishment.parameters.canWithdraw = false;
+				MockedDialog._params.onResponse({skipped: true});
+				expect(scope.order.withdraw).toBe(false);
+
+				scope.establishment.parameters.canWithdraw = true;
+				MockedDialog._params.onResponse({skipped: false});
+				expect(scope.order.withdraw).toBe(false);
 			});
 		});
 
