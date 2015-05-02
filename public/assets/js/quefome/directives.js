@@ -21,9 +21,14 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 	module.service("Dialog", ["$q", "$rootScope", "TemplateResolver", function($q, $rootScope, TemplateResolver) {
 		var Dialog = this;
+		Dialog._closing = false;
 
 		this.create = function(params) {
 			var deferred = $q.defer();
+
+			if (!params) {
+				params = {};
+			}
 
 			var dialog = {
 				modal: null,
@@ -56,7 +61,10 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 							});
 						}
 						
-						this.modal.modal("show");
+						this.modal.modal({
+							backdrop: typeof(params.backdrop) === "undefined" ? true : params.backdrop,
+							keyboard: typeof(params.hideOnEsc) === "undefined" ? true : params.hideOnEsc,
+						});
 					}
 				},
 
@@ -74,15 +82,21 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 				hide: function(callbackOrResponse) {
 					if (this.modal) {
-						if (typeof(callbackOrResponse) === "function") {
-							this.modal.on("hidden.bs.modal.afterHiddenCallback", function(event) {
-								$(this).off("shown.bs.modal.afterHiddenCallback");
+						this.modal.on("hidden.bs.modal.afterHiddenCallback", function(event) {
+							$(this).off("shown.bs.modal.afterHiddenCallback");
+
+							if (typeof(callbackOrResponse) === "function") {
 								callbackOrResponse.call(this, event);
-							});
-						} else if (typeof(params.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
+							}
+
+							Dialog._closing = false;
+						});
+						
+						if (typeof(params.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
 							params.onResponse(callbackOrResponse);
 						}
 
+						Dialog._closing = true;
 						this.modal.modal("hide");
 					}	
 				}
@@ -163,6 +177,10 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 
 		$rootScope.$on("$locationChangeStart", function(event) {
+			if (Dialog._closing) {
+				return;
+			}
+
 			var visibleDialogs = angular.element(".modal:visible");
 
 			if (visibleDialogs && visibleDialogs.length > 0) {

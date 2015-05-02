@@ -313,6 +313,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				Dialog.create({
 					templateUrl: "/partials/establishments/check-address.html",
 					show: true,
+					backdrop: "static",
+					hideOnEsc: false,
 					params: {
 						establishment: $scope.establishment
 					},
