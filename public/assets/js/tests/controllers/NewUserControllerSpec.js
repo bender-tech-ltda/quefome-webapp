@@ -3,7 +3,10 @@
 define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("NewUserController", function() {
-		var scope, MockedUserService, MockedAuthService, savedUsers;
+		var scope;
+		var MockedDialog;
+		var MockedUserService, MockedAuthService;
+		var savedUsers;
 
 		beforeEach(module("qfControllers"));
 
@@ -13,6 +16,21 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					name: "Zaphod Beeblebrox",
 					email: "beeblebrox@gmail.com",
 					password: "imreallycrazy"
+				}
+			};
+
+			MockedDialog = {
+				_createdDialog: {},
+				_createCalled: false,
+				create: function() {
+					this._createCalled = true;
+					var dialog = this._createdDialog;
+
+					return {
+						then: function(callback) {
+							callback(dialog);
+						}
+					};
 				}
 			};
 
@@ -47,7 +65,12 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		});
 
 		beforeEach(function () {
-			return injectController("NewUserController", "views/partials/users/register.html", {UserService: MockedUserService, AuthService: MockedAuthService}, function($scope) {
+			var params = {
+				Dialog: MockedDialog,
+				UserService: MockedUserService,
+				AuthService: MockedAuthService
+			};
+			return injectController("NewUserController", "views/partials/users/register.html", params, function($scope) {
 				scope = $scope;
 
 				scope.$dialog = {
@@ -77,10 +100,6 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 		it("should have a errorMessage property", function() {
 			expect(scope.errorMessage).toBeDefined();
-		});
-
-		it("should have a loginView property", function() {
-			expect(scope.loginView).toBeDefined();
 		});
 
 		describe("should show a error message", function() {
@@ -158,6 +177,25 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		it("should close the current dialog", function() {
 			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
 			expect(scope.$dialog._hideCalled).toBe(true);
+		});
+
+		describe("when showing the login dialog", function() {
+			it("should create a dialog", function() {
+				scope.showLoginDialog();
+				expect(MockedDialog._createCalled).toBe(true);
+			});
+
+			it("it should pass the current dialog onResponse function", function() {
+				var onResponseFunction = function() {};
+
+				scope.$dialog = {
+					onResponse: onResponseFunction,
+					hide: function() {}
+				};
+
+				scope.showLoginDialog();
+				expect(MockedDialog._createdDialog.onResponse).toEqual(onResponseFunction);
+			});
 		});
 	});
 });

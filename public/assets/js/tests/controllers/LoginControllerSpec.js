@@ -3,11 +3,28 @@
 define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], function(angular) {
 
 	describe("LoginController", function() {
-		var scope, MockedAuthService;
+		var scope;
+		var MockedDialog;
+		var MockedAuthService;
 
 		beforeEach(module("qfControllers"));
 
 		beforeEach(function() {
+			MockedDialog = {
+				_createdDialog: {},
+				_createCalled: false,
+				create: function() {
+					this._createCalled = true;
+					var dialog = this._createdDialog;
+
+					return {
+						then: function(callback) {
+							callback(dialog);
+						}
+					};
+				}
+			};
+
 			MockedAuthService = {
 				_user: false,
 
@@ -48,7 +65,12 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 		});
 
 		beforeEach(function() {
-			return injectController("LoginController", "views/partials/login/login.html", {AuthService: MockedAuthService}, function($scope) {
+			var params = {
+				Dialog: MockedDialog,
+				AuthService: MockedAuthService
+			};
+
+			return injectController("LoginController", "views/partials/login/login.html", params, function($scope) {
 				scope = $scope;
 
 				scope.$dialog = {
@@ -78,10 +100,6 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 
 		it("should have a errorMessage property", function() {
 			expect(scope.errorMessage).toBeDefined();
-		});
-
-		it("should have a registerView property", function() {
-			expect(scope.registerView).toBeDefined();
 		});
 
 		describe("when loging in", function() {
@@ -149,6 +167,25 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			it("should close the current dialog", function() {
 				defaultLogin();
 				expect(scope.$dialog._hideCalled).toBe(true);				
+			});
+		});
+
+		describe("when showing the register dialog", function() {
+			it("should create a dialog", function() {
+				scope.showRegisterDialog();
+				expect(MockedDialog._createCalled).toBe(true);
+			});
+
+			it("it should pass the current dialog onResponse function", function() {
+				var onResponseFunction = function() {};
+
+				scope.$dialog = {
+					onResponse: onResponseFunction,
+					hide: function() {}
+				};
+
+				scope.showRegisterDialog();
+				expect(MockedDialog._createdDialog.onResponse).toEqual(onResponseFunction);
 			});
 		});
 	});

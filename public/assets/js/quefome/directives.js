@@ -80,6 +80,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					}	
 				},
 
+				onResponse: null,
+
 				hide: function(callbackOrResponse) {
 					if (this.modal) {
 						this.modal.on("hidden.bs.modal.afterHiddenCallback", function(event) {
@@ -92,8 +94,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 							Dialog._closing = false;
 						});
 						
-						if (typeof(params.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
-							params.onResponse(callbackOrResponse);
+						if (typeof(this.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
+							this.onResponse(callbackOrResponse);
 						}
 
 						Dialog._closing = true;
@@ -101,6 +103,10 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					}	
 				}
 			};
+
+			if (typeof(params.onResponse) === "function") {
+				dialog.onResponse = params.onResponse;
+			}
 
 			var applyTemplate = function(template) {
 				var element = angular.element(template);

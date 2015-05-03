@@ -17,15 +17,13 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 	}]);
 	
-	module.controller("LoginController", ["$scope", "AuthService", function($scope, AuthService) {
+	module.controller("LoginController", ["$scope", "Dialog", "AuthService", function($scope, Dialog, AuthService) {
 		$scope.email = "";
 		$scope.password = "";
 		$scope.keepLoggedIn = false;
 
 		$scope.processing = false;
 		$scope.errorMessage = false;
-
-		$scope.registerView = "/partials/users/register";
 
 		$scope.isLogged = function() {
 			return AuthService.isLogged();
@@ -72,15 +70,32 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				});
 			}
 		};
+
+		$scope.showRegisterDialog = function() {
+			Dialog.create({
+				templateUrl: "/partials/users/register.html"
+			}).then(function(dialog) {
+				if ($scope.$dialog) {
+					if ($scope.$dialog.onResponse) {
+						dialog.onResponse = $scope.$dialog.onResponse;
+						$scope.$dialog.onResponse = null;
+					}
+
+					$scope.$dialog.hide(function() {
+						dialog.show();
+					});
+				} else {
+					dialog.show();
+				}
+			});
+		};
 	}]);
 
-	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
+	module.controller("NewUserController", ["$scope", "Dialog", "AuthService", "UserService", function($scope, Dialog, AuthService, UserService) {
 		$scope.user = {};
 
 		$scope.processing = false;
 		$scope.errorMessage = "";
-
-		$scope.loginView = "/partials/login/login";
 
 		$scope.isUserLoggedIn = function() {
 			return AuthService.isLogged();
@@ -124,6 +139,25 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					$scope.processing = false;
 				});
 			}
+		};
+
+		$scope.showLoginDialog = function() {
+			Dialog.create({
+				templateUrl: "/partials/login/login.html"
+			}).then(function(dialog) {
+				if ($scope.$dialog) {
+					if ($scope.$dialog.onResponse) {
+						dialog.onResponse = $scope.$dialog.onResponse;
+						$scope.$dialog.onResponse = null;
+					}
+
+					$scope.$dialog.hide(function() {
+						dialog.show();
+					});
+				} else {
+					dialog.show();
+				}
+			});
 		};
 	}]);
 
