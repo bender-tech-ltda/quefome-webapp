@@ -7,7 +7,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		var Mocked$routeParams;
 		var Mocked$window;
 		var MockedDialog;
-		var MockedEstablishmentService, MockedAddressService, MockedOrderService;
+		var MockedAuthService, MockedEstablishmentService, MockedAddressService, MockedOrderService;
 
 		beforeEach(module("qfControllers"));
 
@@ -22,6 +22,11 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				confirm: function() {
 					this._confirmCalled = true;
 					return this._confirmReturn;
+				},
+
+				_alertCalled: false,
+				alert: function() {
+					this._alertCalled = true;
 				}
 			};
 
@@ -31,6 +36,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				create: function(params) {
 					this._called = true;
 					this._params = params;
+				}
+			};
+
+			MockedAuthService = {
+				_currentUser: null,
+				isLogged: function() {
+					return this._currentUser ? true : false;
 				}
 			};
 
@@ -130,6 +142,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				$routeParams: Mocked$routeParams,
 				$window: Mocked$window,
 				Dialog: MockedDialog,
+				AuthService: MockedAuthService,
 				EstablishmentService: MockedEstablishmentService,
 				AddressService: MockedAddressService,
 				OrderService: MockedOrderService
@@ -555,6 +568,30 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.removeOrderItem(orderItem);
 				expect(MockedOrderService._storedOrder).toEqual(scope.order);
+			});
+		});
+
+		describe("when finishing the order", function() {
+			it("should show the login dialog if the user is not logged in", function() {
+				MockedAuthService._currentUser = null;
+				scope.finishOrder();
+
+				expect(MockedDialog._called).toBe(true);
+			});
+
+			it("should show an alert when the user log in", function() {
+				MockedAuthService._currentUser = null;
+				scope.finishOrder();
+
+				MockedDialog._params.onResponse({name: "Blablabla"});
+				expect(Mocked$window._alertCalled).toBe(true);
+			});
+
+			it("should show an alert if the user is already logged", function() {
+				MockedAuthService._currentUser = {name: "Blablabla"};
+				scope.finishOrder();
+
+				expect(Mocked$window._alertCalled).toBe(true);
 			});
 		});
 	});

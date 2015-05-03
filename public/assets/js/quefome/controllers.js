@@ -64,7 +64,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					$scope.$apply();
 
 					if ($scope.$dialog) {
-						$scope.$dialog.hide();
+						$scope.$dialog.hide(user);
 					}
 				}, function(error) {
 					$scope.errorMessage = error;
@@ -72,28 +72,6 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				});
 			}
 		};
-	}]);
-
-	module.controller("HomeController", ["$scope", "$location", "EstablishmentService", "ProductTypeService", function($scope, $location, EstablishmentService, ProductTypeService) {
-		$scope.productTypes = [];
-		$scope.query = "";
-
-		$scope.searchEstablishmentsNames = function(query, callback) {
-			EstablishmentService.names(query).then(function(names) {
-				callback(names);
-			}, function() {
-				callback([]);
-			});
-		};
-
-		$scope.searchEstablishments = function() {
-			$location.path("/establishments/search").search({q: $scope.query});
-		};
-
-		ProductTypeService.list().then(function(productTypes) {
-			$scope.productTypes = productTypes;
-			$scope.$digest();
-		});
 	}]);
 
 	module.controller("NewUserController", ["$scope", "AuthService", "UserService", function($scope, AuthService, UserService) {
@@ -133,11 +111,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.saveAndLogin = function() {
 			if ($scope.isUserFormValid()) {
 				$scope.processing = true;
-				UserService.save($scope.user, true).then(function() {
+				UserService.save($scope.user, true).then(function(user) {
 					$scope.$apply();
 
 					if ($scope.$dialog) {
-						$scope.$dialog.hide();
+						$scope.$dialog.hide(user);
 					}
 
 					$scope.processing = false;
@@ -147,6 +125,28 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				});
 			}
 		};
+	}]);
+
+	module.controller("HomeController", ["$scope", "$location", "EstablishmentService", "ProductTypeService", function($scope, $location, EstablishmentService, ProductTypeService) {
+		$scope.productTypes = [];
+		$scope.query = "";
+
+		$scope.searchEstablishmentsNames = function(query, callback) {
+			EstablishmentService.names(query).then(function(names) {
+				callback(names);
+			}, function() {
+				callback([]);
+			});
+		};
+
+		$scope.searchEstablishments = function() {
+			$location.path("/establishments/search").search({q: $scope.query});
+		};
+
+		ProductTypeService.list().then(function(productTypes) {
+			$scope.productTypes = productTypes;
+			$scope.$digest();
+		});
 	}]);
 
 	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, Dialog, AddressService, ProductTypeService, EstablishmentService) {
@@ -212,7 +212,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "Dialog", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, Dialog, EstablishmentService, AddressService, OrderService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.productTypes = [];
 
@@ -411,7 +411,25 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.finishOrder = function() {
-			alert("Em desenvolvimento...");
+			var confirmAddress = function() {
+				$window.alert("Funcionalidade em desenvolvimento...");
+			};
+
+			if (!AuthService.isLogged()) {
+				Dialog.create({
+					templateUrl: "/partials/login/login.html",
+					show: true,
+					onResponse: function(user) {
+						if (user) {
+							confirmAddress();
+						}
+					}
+				});
+
+				return;
+			}
+
+			confirmAddress();
 		};
 
 		$scope.$on("$locationChangeStart", function(event) {
