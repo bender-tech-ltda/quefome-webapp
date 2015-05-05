@@ -253,7 +253,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.selectedProductType = null;
 		$scope.orderDetailPanelOpen = false;
 
-		$scope.isUserAddressAttended = null;
+		$scope.isUserAddressAttended = false;
 
 		$scope.order = {
 			withdraw: false,
@@ -360,13 +360,16 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					},
 					onResponse: function(response) {
 						if (response) {
-							$scope.order.address = response.address;
-							$scope.isUserAddressAttended = response.isAttended;
-
 							if (response.skipped) {
+								$scope.order.address = null;
 								$scope.order.withdraw = $scope.establishment.parameters.canWithdraw ? true : false;
+
+								$scope.isUserAddressAttended = false;
 							} else {
+								$scope.order.address = response.address;
 								$scope.order.withdraw = false;
+
+								$scope.isUserAddressAttended = response.isAttended ? true : false;
 							}
 
 							$scope.$digest();
@@ -377,7 +380,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.customizeProduct = function(product) {
-			if ($scope.isUserAddressAttended === false) {
+			if ($scope.order.address && !$scope.order.withdraw && !$scope.isUserAddressAttended) {
 				$scope.checkUserAddress();
 				return;
 			}

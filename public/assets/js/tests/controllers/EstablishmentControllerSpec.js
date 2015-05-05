@@ -400,8 +400,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(MockedDialog._called).toBe(true);
 			});
 
-			it("should not show the dialog if the user address is not attended", function() {
+			it("should not show the dialog if the user informed its address but it is not attended", function() {
 				scope.isUserAddressAttended = false;
+				scope.order.address = {address: "Blablabla"};
+				
 				scope.customizeProduct();
 
 				expect(MockedDialog._params.templateUrl.indexOf("customize")).toEqual(-1);
