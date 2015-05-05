@@ -42,7 +42,7 @@ module.exports = {
 				res.status(response.statusCode).send(response.body);
 			}, function(response) {
 				response = response ? response : {};
-				res.status(response.status ? response.status : 500).send(response.body ? response.body : "");
+				res.status(response.statusCode ? response.statusCode : 500).send(response.body ? response.body : "");
 			});
 		});
 	}

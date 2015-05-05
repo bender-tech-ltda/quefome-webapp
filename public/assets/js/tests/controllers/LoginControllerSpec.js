@@ -48,7 +48,10 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 							if (user) {
 								success(user);
 							} else {
-								fail();
+								fail({
+									isBusinessError: true,
+									message: "Usuário/senha inválidos"
+								});
 							}
 						}
 					};
@@ -140,6 +143,14 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 				expect(scope.isLogged()).toBe(false);
 
 				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
+
+			it("should show an error if the user and password are incorrect", function() {
+				login("pudim@pudim.com.br", "euamopudim");
+
+				expect(scope.isLogged()).toBe(false);
+
 				expect(scope.errorMessage.length).toBeGreaterThan(0);
 			});
 

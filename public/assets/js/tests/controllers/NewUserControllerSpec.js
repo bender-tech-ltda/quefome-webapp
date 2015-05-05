@@ -47,7 +47,10 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					if (savedUsers[user.email]) {
 						return {then: function(successCallback, failCallback) {
 							if (failCallback) {
-								failCallback("O email " + user.email + " já esta sendo utilizado!");
+								failCallback({
+									isBusinessError: true,
+									message: "O email " + user.email + " já esta sendo utilizado!"
+								});
 							}
 						}};
 					} else {

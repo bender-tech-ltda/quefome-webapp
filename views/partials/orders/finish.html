@@ -1,1 +1,9 @@
-<h1>Em desenvolvimento...</h1>
+<div ng-show="establishmentNotFound" class="not-found establishment-not-found">
+	<h2>Estabelecimento não encontrado</h2>
+
+	<a qf-href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
+</div>
+
+<div ng-hide="establishmentNotFound">
+	<h1>Em desenvolvimento...</h1>
+</div>

@@ -5,11 +5,28 @@ define(["angular"], function(angular) {
 
 	var treatPromiseErrors = function($q) {
 		return function(response) {
-			if (response.status == 900 && typeof(response.data) === "object") {
-				return $q.reject(response.data.message);
+			var statusObject = {
+				status: response.status,
+				message: response.data,
+				isBusinessError: false,
+				isNotFoundError: false,
+				isError: false
+			};
+
+			if (response.status == 900) {
+				statusObject.isBusinessError = true;
+				statusObject.message = "";
+
+				if (typeof(response.data) === "object") {
+					statusObject.message = response.data.message;
+				}
+			} else if (response.status == 404) {
+				statusObject.isNotFoundError = true;
 			} else {
-				return $q.reject(false);
+				statusObject.isError = true;
 			}
+
+			return $q.reject(statusObject);
 		};
 	};
 

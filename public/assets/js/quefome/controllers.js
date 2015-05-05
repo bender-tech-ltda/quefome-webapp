@@ -65,8 +65,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 						$scope.$dialog.hide(user);
 					}
 				}, function(error) {
-					$scope.errorMessage = error;
 					$scope.processing = false;
+
+					if (error.isBusinessError) {
+						$scope.errorMessage = error.message;
+					}
 				});
 			}
 		};
@@ -135,8 +138,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 					$scope.processing = false;
 				}, function(error) {
-					$scope.errorMessage = error;
 					$scope.processing = false;
+
+					if (error.isBusinessError) {
+						$scope.errorMessage = error.message;
+					}
 				});
 			}
 		};
@@ -248,6 +254,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
+		$scope.establishmentNotFound = false;
+
 		$scope.productTypes = [];
 
 		$scope.selectedProductType = null;
@@ -486,6 +494,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			EstablishmentService.products(establishment).then(function(products) {
 				$scope.groupProducts(products);
 			});
+		}, function(error) {
+			$scope.establishmentNotFound = error.isNotFoundError ? true : false;
 		});
 	}]);
 
@@ -806,7 +816,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				if (isAttending) {
 					$scope.closeDialog();
 				}
-			}, function(errorMessage) {
+			}, function() {
 				$scope.addressChecked = false;
 				$scope.searchingZipCode = false;
 
@@ -916,6 +926,41 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.$dialog.hide(response);
 			}
 		};
+	}]);
+
+	module.controller("OrderFinishController", ["$scope", "$routeParams", "$location", "AuthService", "EstablishmentService", "OrderService", function($scope, $routeParams, $location, AuthService, EstablishmentService, OrderService) {
+		$scope.establishment = null;
+		$scope.establishmentNotFound = false;
+
+		$scope.order = null;
+
+		var goToEstablishmentPage = function() {
+			$location.path("/establishments/" + $routeParams.establishmentUrl);
+		};
+
+		$scope.startup = function() {
+			if (!$routeParams.establishmentUrl) {
+				$location.path("/establishments/search/");
+			}
+
+			if (!AuthService.isLogged()) {
+				goToEstablishmentPage();
+				return;
+			}
+
+			EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
+				$scope.establishment = establishment;
+				$scope.order = OrderService.retrieve(establishment);
+
+				if (!$scope.order || !$scope.order.items || $scope.order.items.length == 0) {
+					goToEstablishmentPage();
+				}
+			}, function(error) {
+				$scope.establishmentNotFound = error.isNotFoundError ? true : false;
+			});
+		};
+
+		$scope.startup();
 	}]);
 
 	module.controller("SelectPaymentMethodController", ["$scope", "PaymentMethodService", function($scope, PaymentMethodService) {

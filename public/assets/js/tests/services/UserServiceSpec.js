@@ -43,7 +43,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			$httpBackend.whenPOST("/api/users/", user).respond(900, {message: "O email " + user.email + " já estando sendo utilizado"});
 			UserService.save(user).then(null, function(response) {
-				expect(typeof(response)).toEqual("string");
+				expect(response.isBusinessError).toBe(true);
 				expect(AuthService.isLogged()).toBe(false);
 			});
 

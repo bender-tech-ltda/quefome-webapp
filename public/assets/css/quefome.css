@@ -1193,6 +1193,16 @@ a:hover, a:focus {
 	margin-top: 10px;
 }
 
+.not-found {
+	margin: 10px 5%;
+	text-align: center;
+}
+
+.not-found.establishment-not-found {
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
 label.invalid {
 	color: #A94442;
 }

@@ -169,6 +169,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.establishment).toBeDefined();
 		});
 
+		it("should have a establishmentNotFound property", function() {
+			expect(scope.establishmentNotFound).toBeDefined();
+		});
+
 		it("should have a productTypes property", function() {
 			expect(scope.productTypes).toBeDefined();
 		});
