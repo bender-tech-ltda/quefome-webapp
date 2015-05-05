@@ -246,7 +246,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.productTypes = [];
 
@@ -449,7 +449,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.finishOrder = function() {
 			var confirmAddress = function() {
-				$window.alert("Funcionalidade em desenvolvimento...");
+				$scope.orderDetailPanelOpen = false;
+				$location.path("/establishments/" + $scope.establishment.url + "/order/finish/");
 			};
 
 			if (!AuthService.isLogged()) {

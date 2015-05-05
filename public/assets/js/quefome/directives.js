@@ -93,13 +93,13 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 							Dialog._closing = false;
 						});
-						
-						if (typeof(this.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
-							this.onResponse(callbackOrResponse);
-						}
 
 						Dialog._closing = true;
 						this.modal.modal("hide");
+
+						if (typeof(this.onResponse) === "function" && typeof(callbackOrResponse) !== "undefined") {
+							this.onResponse(callbackOrResponse);
+						}
 					}	
 				}
 			};

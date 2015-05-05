@@ -4,8 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("EstablishmentController", function() {
 		var scope, controller;
-		var Mocked$routeParams;
-		var Mocked$window;
+		var Mocked$routeParams, Mocked$window, Mocked$location;
 		var MockedDialog;
 		var MockedAuthService, MockedEstablishmentService, MockedAddressService, MockedOrderService;
 
@@ -27,6 +26,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				_alertCalled: false,
 				alert: function() {
 					this._alertCalled = true;
+				}
+			};
+
+			Mocked$location = {
+				_currentQuery: {},
+				_currentLocation: "",
+
+				path: function(location) {
+					if (location) {
+						this._currentLocation = location;
+						return this;
+					}
 				}
 			};
 
@@ -141,6 +152,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			var params = {
 				$routeParams: Mocked$routeParams,
 				$window: Mocked$window,
+				$location: Mocked$location,
 				Dialog: MockedDialog,
 				AuthService: MockedAuthService,
 				EstablishmentService: MockedEstablishmentService,
@@ -403,7 +415,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should not show the dialog if the user informed its address but it is not attended", function() {
 				scope.isUserAddressAttended = false;
 				scope.order.address = {address: "Blablabla"};
-				
+
 				scope.customizeProduct();
 
 				expect(MockedDialog._params.templateUrl.indexOf("customize")).toEqual(-1);
@@ -581,19 +593,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(MockedDialog._called).toBe(true);
 			});
 
-			it("should show an alert when the user log in", function() {
+			it("should send the user to the finish order page", function() {
+				scope.establishment = {url: "teste"};
+
 				MockedAuthService._currentUser = null;
 				scope.finishOrder();
 
 				MockedDialog._params.onResponse({name: "Blablabla"});
-				expect(Mocked$window._alertCalled).toBe(true);
+				expect(scope.orderDetailPanelOpen).toBe(false);
+				expect(Mocked$location._currentLocation).toEqual("/establishments/teste/order/finish/");
 			});
 
 			it("should show an alert if the user is already logged", function() {
+				scope.establishment = {url: "teste"};
+
 				MockedAuthService._currentUser = {name: "Blablabla"};
 				scope.finishOrder();
 
-				expect(Mocked$window._alertCalled).toBe(true);
+				expect(scope.orderDetailPanelOpen).toBe(false);
+				expect(Mocked$location._currentLocation).toEqual("/establishments/teste/order/finish/");
 			});
 		});
 	});
