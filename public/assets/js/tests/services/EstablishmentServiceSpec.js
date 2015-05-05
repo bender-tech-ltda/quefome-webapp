@@ -86,6 +86,20 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				$httpBackend.flush();
 			});
+
+			it("should send a 404 if the url is not found", function() {
+				var url = "teste-blablabla";
+
+				$httpBackend.expectGET("/api/establishments/" + url).respond(404, {});
+
+				EstablishmentService.findByUrl(url).then(function() {
+					expect(null).toBe("should not get in here");
+				}, function(error) {
+					expect(error.isNotFoundError).toBe(true);
+				});
+
+				$httpBackend.flush();
+			});
 		});
 
 		describe("the isAttendingAddress function", function() {
