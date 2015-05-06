@@ -1174,6 +1174,87 @@ a:hover, a:focus {
 	border-color: #DE1F0B;
 }
 
+.order-finish-page {
+	margin: auto 5% 20px;
+}
+
+.order-finish-page > .title {
+	font-size: 25px;
+	margin-bottom: 2px;
+}
+
+.order-finish-page > .description {
+	font-size: 15px;
+	color: #808080;
+	margin-top: 0px;
+}
+
+.order-finish-page .help-block {
+	display: inline-block;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	font-size: 12px;
+	color: #7A7A7A;
+	clear: both;
+}
+
+.order-finish-page .address-panel > .title {
+	margin-bottom: 10px;
+}
+
+.order-finish-page .address-panel .address-input-method {
+	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .address-input-method .radio {
+	float: left;
+	width: 50%;
+	margin: 0px;
+	text-align: left;
+}
+
+.order-finish-page .address-panel .static-input {
+	display: block;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group {
+	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .city-group,
+.order-finish-page .address-panel .zip-code-input-method-panel .state-group {
+	float: left;
+	width: 50%;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .neighborhood-group,
+.order-finish-page .address-panel .zip-code-input-method-panel .address-group {
+	float: left;
+	width: 50%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .number-group,
+.order-finish-page .address-panel .zip-code-input-method-panel .complement-group {
+	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .number-group {
+	padding-top: 10px;
+	border-top: 1px solid #e5e5e5;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .address-group {
+	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .city-group,
+.order-finish-page .address-panel .address-input-method-panel .state-group {
+	float: left;
+	width: 50%;
+}
+
 .footer {
 	width: 100%;
 	height: 164px;

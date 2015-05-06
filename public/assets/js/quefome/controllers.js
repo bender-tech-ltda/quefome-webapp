@@ -934,6 +934,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.order = null;
 
+		$scope.addressInputMethod = 'zip-code';
+
 		var goToEstablishmentPage = function() {
 			$location.path("/establishments/" + $routeParams.establishmentUrl);
 		};

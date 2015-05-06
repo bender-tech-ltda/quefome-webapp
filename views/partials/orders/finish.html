@@ -4,6 +4,91 @@
 	<a qf-href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
 </div>
 
-<div ng-hide="establishmentNotFound">
-	<h1>Em desenvolvimento...</h1>
-</div>
+<form ng-hide="establishmentNotFound" name="finishOrderForm" class="order-finish-page">
+	<h2 class="title">Bora matar essa fome?</h2>
+	<h3 class="description">Só precisamos de mais duas coisinhas...</h3> 
+
+	<fieldset class="address-panel">
+		<legend class="title">Onde entregar seu pedido?</legend>
+
+		<div class="address-input-method">
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="addressInputMethod" value="zip-code" /> Sei meu CEP
+				</label>
+			</div>
+
+			<div class="radio">
+				<label>
+					<input type="radio" ng-model="addressInputMethod" value="address" /> Não sei meu CEP
+				</label>
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'">
+			<div class="zip-code-group">
+				<label for="zipCode">CEP<span class="required">*</span></label>
+				<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="order.address.zipCode" required qf-show-validation-state />
+				<span class="help-block">Informe seu CEP para buscarmos seu endereço.</span>
+			</div>
+
+			<div ng-show="isZipCodeValid">
+				<div class="city-group">
+					<label>Cidade</label>
+					<span class="static-input">Porto Alegre</span>
+				</div>
+
+				<div class="state-group">
+					<label>Estado</label>
+					<span class="static-input">Rio Grande do Sul</span>
+				</div>
+
+				<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+
+				<div class="neighborhood-group">
+					<label>Bairro</label>
+					<span class="static-input">{{order.address.neighborhood}}</span>
+				</div>
+
+				<div class="address-group">
+					<label>Endereço</label>
+					<span class="static-input">Endereço</span>
+				</div>
+
+				<div class="clearfix"></div>
+
+				<div class="number-group">
+					<label for="number">Número<span class="required">*</span></label>
+					<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="adasdasd" required qf-show-validation-state />
+				</div>
+
+				<div class="complement-group">
+					<label for="complement">Complemento</label>
+					<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="asdasdewr" />
+				</div>
+			</div>
+		</div>
+
+		<div class="address-input-method-panel" ng-show="addressInputMethod == 'address'">
+			<div class="address-group">
+				<label for="address">Endereço<span class="required">*</span></label>
+				<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="order.address.address" required qf-show-validation-state />
+				<span class="help-block">Informe seu endereço para buscarmos seu CEP</span>
+			</div>
+
+			<div class="city-group">
+				<label>Cidade</label>
+				<span class="static-input">Porto Alegre</span>
+			</div>
+
+			<div class="state-group">
+				<label>Estado</label>
+				<span class="static-input">Rio Grande do Sul</span>
+			</div>
+
+			<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+		</div>
+	</fieldset>
+</form>
