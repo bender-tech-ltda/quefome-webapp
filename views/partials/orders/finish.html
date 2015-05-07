@@ -112,6 +112,11 @@
 					<h4 class="title">Esse endereço parece não existir em Porto Alegre.</h4>
 					<h5 class="message">Informa o endereço certo aí!</h5>
 				</div>
+
+				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
+					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
+					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
+				</div>
 			</div>
 
 			<div class="processing-panel" ng-show="addressStatus.processing">

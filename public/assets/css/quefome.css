@@ -1294,16 +1294,6 @@ a:hover, a:focus {
 	margin-bottom: 10px;
 }
 
-.order-finish-page .address-panel .zip-code-input-method-panel .number-group,
-.order-finish-page .address-panel .zip-code-input-method-panel .complement-group {
-	margin-bottom: 20px;
-}
-
-.order-finish-page .address-panel .zip-code-input-method-panel .number-group {
-	padding-top: 10px;
-	border-top: 1px solid #e5e5e5;
-}
-
 .order-finish-page .address-panel .address-input-method-panel .address-group {
 	margin-bottom: 20px;
 }
@@ -1334,6 +1324,16 @@ a:hover, a:focus {
 .order-finish-page .address-panel .address-input-method-panel .state-group {
 	float: left;
 	width: 50%;
+}
+
+.order-finish-page .address-panel .address-number-panel .number-group,
+.order-finish-page .address-panel .address-number-panel .complement-group {
+	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .address-number-panel .number-group {
+	padding-top: 10px;
+	border-top: 1px solid #e5e5e5;
 }
 
 .footer {
