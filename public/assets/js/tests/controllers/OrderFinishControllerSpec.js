@@ -5,7 +5,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 	describe("OrderFinishController", function() {
 		var scope, controller;
 		var Mocked$location, Mocked$routeParams;
-		var MockedAuthService, MockedEstablishmentService, MockedOrderService;
+		var MockedAuthService, MockedEstablishmentService, MockedOrderService, MockedAddressService;
 
 		beforeEach(module("qfControllers"));
 
@@ -54,6 +54,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 							}
 						}
 					};
+				},
+
+				_isAttendind: true,
+				_isAttendingCalled: false,
+				isAttendingAddress: function(establishment, address) {
+					if (!address) {
+						address = {};
+					}
+
+					this._isAttendingCalled = true;
+					var attend = this._isAttendind;
+
+					return {
+						then: function(callback) {
+							callback(attend);
+						}
+					};
 				}
 			};
 
@@ -67,6 +84,60 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return this._retrieveOrder;
 				}
 			};
+
+			MockedAddressService = {
+				_searchZipCodeAddress: {address: "Rua Marechal Camara", neighborhood: "Ideal", zipCode: "93336220"},
+				_searchZipCodeZipCode: null,
+				_searchZipCodeCalled: false,
+				searchZipCode: function(zipCode) {
+					this._searchZipCodeCalled = true;
+					this._searchZipCodeZipCode = zipCode;
+
+					var address = this._searchZipCodeAddress;
+
+					return {
+						then: function(success, fail) {
+							if (address) {
+								success(address);
+							} else {
+								fail();
+							}
+						}
+					};
+				},
+
+				_searchAddressZipCode: "93336220",
+				_searchAddressAddress: null,
+				_searchAddressCalled: false,
+				searchAddress: function(address) {
+					this._searchAddressCalled = true;
+					this._searchAddressAddress = address;
+
+					address.zipCode = this._searchAddressZipCode;
+
+					return {
+						then: function(success, fail) {
+							if (address.zipCode) {
+								success(address);
+							} else {
+								fail();
+							}
+						}
+					};
+				},
+
+				_currentAddress: false,
+				_setCurrentAddressCalled: false,
+				setCurrentAddress: function(address) {
+					this._setCurrentAddressCalled = true;
+					this._currentAddress = address;
+				},
+				_getCurrentAddressCalled: false,
+				getCurrentAddress: function() {
+					this._getCurrentAddressCalled = true;
+					return this._currentAddress;
+				}
+			};
 		});
 
 		beforeEach(function() {
@@ -75,10 +146,11 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				$location: Mocked$location,
 				AuthService: MockedAuthService,
 				EstablishmentService: MockedEstablishmentService,
-				OrderService: MockedOrderService
+				OrderService: MockedOrderService,
+				AddressService: MockedAddressService
 			};
 
-			return injectController("OrderFinishController", false, params, function($scope) {
+			return injectController("OrderFinishController", "views/partials/orders/finish.html", params, function($scope) {
 				scope = $scope;
 			});
 		});
@@ -93,6 +165,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		it("should have an order property", function() {
 			expect(scope.order).toBeDefined();
+		});
+
+		it("should have an addressInputMethod property", function() {
+			expect(scope.addressInputMethod).toBeDefined();
+		});
+
+		it("should have an addressStatus property", function() {
+			expect(scope.addressStatus).toBeDefined();
 		});
 
 		describe("on startup", function() {
@@ -146,6 +226,333 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.startup();
 
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+			});
+
+			it("should get the current address", function() {
+				expect(MockedAddressService._getCurrentAddressCalled).toBe(true);
+			});
+		});
+
+		describe("when checking the zip code", function() {
+			beforeEach(function() {
+				scope.address = {};
+				scope.$digest();
+			});
+
+			it("should validate the zip code", function() {
+				scope.address.zipCode = "";
+				scope.$digest();
+
+				scope.checkZipCode();
+				expect(scope.addressStatus.addressChecked).toBe(false);
+
+				scope.address.zipCode = "abc";
+				scope.$digest();
+
+				scope.checkZipCode();
+				expect(scope.addressStatus.addressChecked).toBe(false);
+			});
+
+			it("should set processing to true", function() {
+				scope.address.zipCode = "93336-220";
+				scope.$digest();
+
+				MockedAddressService.searchZipCode = function() {
+					return {then: function() {}}
+				};
+
+				scope.checkZipCode();
+				expect(scope.addressStatus.processing).toBe(true);
+			});
+
+			it("should search using the informed zipCode", function() {
+				scope.address.zipCode = "93336-220";
+				scope.$digest();
+
+				MockedAddressService._searchZipCodeAddress.zipCode = scope.address.zipCode;
+
+				scope.checkZipCode();
+
+				expect(MockedAddressService._searchZipCodeCalled).toBe(true);
+				expect(MockedAddressService._searchZipCodeZipCode).toEqual(scope.address.zipCode);
+			});
+
+			describe("when zip code is invalid", function() {
+				beforeEach(function() {
+					scope.address.zipCode = "99999-999";
+					scope.$digest();
+
+					MockedAddressService._searchZipCodeAddress = null;
+				});
+
+				it("should set processing to false", function() {
+					scope.addressStatus.processing = true;
+
+					scope.checkZipCode();
+					expect(scope.addressStatus.processing).toBe(false);
+				});
+
+				it("should set zip code checked", function() {
+					scope.addressStatus.zipCodeChecked = false;
+
+					scope.checkZipCode();
+					expect(scope.addressStatus.zipCodeChecked).toBe(true);
+				});
+
+				it("should set zipCode invalid", function() {
+					scope.addressStatus.zipCodeValid = true;
+
+					scope.checkZipCode();
+					expect(scope.addressStatus.zipCodeValid).toBe(false);
+				});
+			});
+
+			describe("when zip code is valid", function() {
+				beforeEach(function() {
+					scope.address.zipCode = "99999-999";
+					scope.$digest();
+
+					MockedAddressService._searchZipCodeAddress = {
+						zipCode: "99999-999",
+						addresss: "Rua Tal"
+					};
+				});
+
+				it("should check if the address is attended", function() {
+					var called = false;
+
+					scope.checkIfEstablishmentAttendsTheAddress = function() {
+						called = true;
+					};
+
+					scope.checkZipCode();
+					expect(called).toBe(true);
+				});
+			});
+		});
+
+		describe("when checking address", function() {
+			beforeEach(function() {
+				scope.address = {};
+				scope.$digest();
+			});
+
+			it("should validate the address", function() {
+				scope.address.address = "";
+				scope.$digest();
+
+				scope.checkAddress();
+				expect(scope.addressStatus.addressChecked).toBe(false);
+			});
+
+			it("should set processing to true", function() {
+				scope.address.address = "Rua tal";
+				scope.$digest();
+
+				MockedAddressService.searchAddress = function() {
+					return {then: function() {}}
+				};
+
+				scope.checkAddress();
+				expect(scope.addressStatus.processing).toBe(true);
+			});
+
+			it("should search using the informed address", function() {
+				scope.address.address = "Rua Tal";
+				scope.$digest();
+
+				scope.checkAddress();
+
+				expect(MockedAddressService._searchAddressCalled).toBe(true);
+				expect(MockedAddressService._searchAddressAddress.address).toEqual(scope.order.address.address);
+			});
+
+			describe("when address is invalid", function() {
+				beforeEach(function() {
+					scope.address.address = "Av. Principal";
+					scope.$digest();
+
+					MockedAddressService._searchAddressZipCode = null;
+				});
+
+				it("should set processing to false", function() {
+					scope.addressStatus.processing = true;
+
+					scope.checkAddress();
+					expect(scope.addressStatus.processing).toBe(false);
+				});
+
+				it("should set address checked", function() {
+					scope.addressStatus.addressChecked = false;
+
+					scope.checkAddress();
+					expect(scope.addressStatus.addressChecked).toBe(true);
+				});
+
+				it("should set address invalid", function() {
+					scope.addressStatus.addressValid = true;
+
+					scope.checkAddress();
+					expect(scope.addressStatus.addressValid).toBe(false);
+				});
+			});
+
+			describe("when address is valid", function() {
+				beforeEach(function() {
+					scope.address.address = "Rua Doze";
+					scope.$digest();
+
+					MockedAddressService._searchAddressZipCode = "99999-999";
+				});
+
+				it("should check if the address is attended", function() {
+					var called = false;
+
+					scope.checkIfEstablishmentAttendsTheAddress = function() {
+						called = true;
+					};
+
+					scope.checkAddress();
+					expect(called).toBe(true);
+				});
+			});
+		});
+
+		describe("when checking if the establishment attends the address", function() {
+			var address;
+
+			beforeEach(function() {
+				address = {
+					address: "Rua Tal", 
+					zipCode: "99999-999", 
+					neighborhood: "Teste", 
+					city: {name: "POA"}
+				};
+			});
+
+			it("should set the order address", function() {
+				scope.checkIfEstablishmentAttendsTheAddress(address);
+
+				expect(scope.order.address.zipCode).toEqual(address.zipCode);
+				expect(scope.order.address.address).toEqual(address.address);
+				expect(scope.order.address.neighborhood.name).toEqual(address.neighborhood);
+				expect(scope.order.address.city).toEqual(address.city);
+			});
+
+			it("should set processing to true", function() {
+				scope.addressStatus.processing = false;
+				MockedEstablishmentService.isAttendingAddress = function() {
+					return {then: function() {}};
+				};
+
+				scope.checkIfEstablishmentAttendsTheAddress(address);
+				expect(scope.addressStatus.processing).toBe(true);
+			});
+
+			it("should set the current address", function() {
+				scope.checkIfEstablishmentAttendsTheAddress(address);
+				expect(MockedAddressService._currentAddress).toEqual(address);
+			});
+
+			it("should set the check the address", function() {
+				scope.checkIfEstablishmentAttendsTheAddress(address);
+				expect(MockedEstablishmentService._isAttendingCalled).toBe(true);
+			});
+
+			describe("when the address is attended", function() {
+				beforeEach(function() {
+					MockedEstablishmentService._isAttendind = true;
+				});
+
+				it("should set the processing to false", function() {
+					scope.checkIfEstablishmentAttendsTheAddress(address);
+					expect(scope.addressStatus.processing).toBe(false);
+				});
+
+				it("should set the address atended to true", function() {
+					scope.checkIfEstablishmentAttendsTheAddress(address);
+					expect(scope.addressStatus.addressAttended).toBe(true);
+				});
+			});
+
+			describe("when the address is not attended", function() {
+				beforeEach(function() {
+					MockedEstablishmentService._isAttendind = false;
+				});
+
+				it("should set the processing to false", function() {
+					scope.checkIfEstablishmentAttendsTheAddress(address);
+					expect(scope.addressStatus.processing).toBe(false);
+				});
+
+				it("should set the address atended to false", function() {
+					scope.checkIfEstablishmentAttendsTheAddress(address);
+					expect(scope.addressStatus.addressAttended).toBe(false);
+				});
+			});
+		});
+
+		describe("when changing the address input method", function() {
+			describe("and is zip-code", function() {
+				beforeEach(function() {
+					scope.addressInputMethod = 'zip-code';
+				});
+
+				it("should set the zip code checked and zipCodeValid to false", function() {
+					scope.lastAddressInputMethod = null;
+
+					scope.changeAddressInputMethod();
+
+					expect(scope.addressStatus.zipCodeChecked).toBe(false);
+					expect(scope.addressStatus.zipCodeValid).toBe(false);
+				});
+
+				it("should check the zip code if the zip code is filled", function() {
+					scope.lastAddressInputMethod = null;
+
+					var called = false;
+					scope.checkZipCode = function() {
+						called = true;
+					};
+
+					scope.address.zipCode = "99999-999";
+					scope.$digest();
+
+					scope.changeAddressInputMethod();
+
+					expect(called).toBe(true);
+				});
+			});
+
+			describe("and is address", function() {
+				beforeEach(function() {
+					scope.addressInputMethod = 'address';
+				});
+
+				it("should set the address checked and address valid to false", function() {
+					scope.lastAddressInputMethod = null;
+
+					scope.changeAddressInputMethod();
+
+					expect(scope.addressStatus.addressChecked).toBe(false);
+					expect(scope.addressStatus.addressValid).toBe(false);
+				});
+
+				it("should check the address if the address is filled", function() {
+					scope.lastAddressInputMethod = null;
+
+					var called = false;
+					scope.checkAddress = function() {
+						called = true;
+					};
+
+					scope.address.address = "Rua 666";
+					scope.$digest();
+
+					scope.changeAddressInputMethod();
+
+					expect(called).toBe(true);
+				});
 			});
 		});
 	});

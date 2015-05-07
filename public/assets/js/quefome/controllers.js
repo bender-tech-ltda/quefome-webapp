@@ -936,40 +936,66 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.addressInputMethod = 'zip-code';
 
+		$scope.address = {
+			zipCode: "",
+			address: ""
+		};
+
 		$scope.addressStatus = {
 			zipCodeValid: false,
+			zipCodeChecked: false,
 			addressValid: false,
 			addressChecked: false,
 			addressAttended: false,
 			processing: false
 		};
 
-		var checkIfEstablishmentAttendsTheAddress = function(address) {
-			$scope.order.address.address = address.address;
-			$scope.order.address.city = address.city;
+		$scope.lastAddressInputMethod = null;
+		$scope.changeAddressInputMethod = function() {
+			if ($scope.lastAddressInputMethod == $scope.addressInputMethod) {
+				return;
+			}
 
-			//TODO procurar bairro
-			$scope.order.address.neighborhood = {
-				name: address.neighborhood
-			};
+			$scope.lastAddressInputMethod = $scope.addressInputMethod;
 
-			EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
-				AddressService.setCurrentAddress(address);
-
-				$scope.addressStatus.zipCodeValid = true;
-				$scope.addressStatus.addressValid = true;
-
-				$scope.addressStatus.addressChecked = true;
-				$scope.addressStatus.addressAttended = isAttending;
-
-				$scope.addressStatus.processing = false;
-			}, function() {
+			if ($scope.addressInputMethod == 'zip-code') {
+				$scope.addressStatus.zipCodeChecked = false;
 				$scope.addressStatus.zipCodeValid = false;
+
+				if ($scope.address.zipCode) {
+					$scope.checkZipCode();
+				}
+			} else {
+				$scope.addressStatus.addressChecked = false;
 				$scope.addressStatus.addressValid = false;
 
-				$scope.addressStatus.addressChecked = true;
-				$scope.addressStatus.addressAttended = false;
+				if ($scope.address.address) {
+					$scope.checkAddress();
+				}
+			}
+		};
 
+		$scope.checkIfEstablishmentAttendsTheAddress = function(address) {
+			$scope.addressStatus.processing = true;
+
+			AddressService.setCurrentAddress(address);
+
+			EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
+				$scope.addressStatus.addressAttended = isAttending;
+				$scope.addressStatus.processing = false;
+
+				//TODO procurar bairro
+				$scope.order.address = {
+					zipCode: address.zipCode,
+					address: address.address,
+					neighborhood: {name: address.neighborhood},
+					city: address.city,
+					number: "",
+					complement: ""
+				};
+			}, function() {
+				$scope.order.address = {};
+				$scope.addressStatus.addressAttended = false;
 				$scope.addressStatus.processing = false;
 			});
 		};
@@ -979,20 +1005,22 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				return;
 			}
 
-			$scope.addressStatus.addressChecked = false;
+			$scope.addressStatus.zipCodeChecked = false;
 			$scope.addressStatus.processing = true;
 
-			AddressService.searchZipCode($scope.order.address.zipCode).then(function(address) {
-				checkIfEstablishmentAttendsTheAddress(address);
+			AddressService.searchZipCode($scope.address.zipCode).then(function(address) {
+				$scope.addressStatus.zipCodeChecked = true;
+				$scope.addressStatus.zipCodeValid = true;
+
+				$scope.address.address = address.address;
+
+				$scope.checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
-				$scope.order.address = {
-					zipCode: $scope.order.address.zipCode
-				};
+				$scope.order.address = {};
 
 				$scope.addressStatus.zipCodeValid = false;
-				$scope.addressStatus.addressValid = false;
+				$scope.addressStatus.zipCodeChecked = true;
 
-				$scope.addressStatus.addressChecked = true;
 				$scope.addressStatus.addressAttended = false;
 
 				$scope.addressStatus.processing = false;
@@ -1000,7 +1028,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.checkAddress = function() {
-			if ($scope.addressForm.$invalid) {
+			if ($scope.addressForm.address.$invalid) {
 				return;
 			}
 
@@ -1008,7 +1036,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.addressStatus.processing = true;
 
 			var address = {
-				address: $scope.order.address.address,
+				address: $scope.address.address,
 				city: {
 					name: "Porto Alegre",
 					state: {
@@ -1018,13 +1046,15 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			};
 
 			AddressService.searchAddress(address).then(function(address) {
-				checkIfEstablishmentAttendsTheAddress(address);
-			}, function() {
-				$scope.order.address = {
-					address: $scope.order.address.address
-				};
+				$scope.addressStatus.addressChecked = true;
+				$scope.addressStatus.addressValid = true;
 
-				$scope.addressStatus.zipCodeValid = false;
+				$scope.address.zipCode = address.zipCode;
+
+				$scope.checkIfEstablishmentAttendsTheAddress(address);
+			}, function() {
+				$scope.order.address = {};
+
 				$scope.addressStatus.addressValid = false;
 
 				$scope.addressStatus.addressChecked = true;
@@ -1054,7 +1084,18 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 				if (!$scope.order || !$scope.order.items || $scope.order.items.length == 0) {
 					goToEstablishmentPage();
+					return;
 				}
+
+				var address = AddressService.getCurrentAddress();
+				if (address && !address.skipped) {
+					$scope.address = {
+						zipCode: address.zipCode,
+						address: address.address
+					};
+				}
+
+				$scope.changeAddressInputMethod();
 			}, function(error) {
 				$scope.establishmentNotFound = error.isNotFoundError ? true : false;
 			});

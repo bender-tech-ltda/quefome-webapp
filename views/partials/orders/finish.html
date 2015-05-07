@@ -14,13 +14,13 @@
 		<div class="address-input-method">
 			<div class="radio">
 				<label>
-					<input type="radio" ng-model="addressInputMethod" value="zip-code" /> Sei meu CEP
+					<input type="radio" ng-model="addressInputMethod" value="zip-code" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Sei meu CEP
 				</label>
 			</div>
 
 			<div class="radio">
 				<label>
-					<input type="radio" ng-model="addressInputMethod" value="address" /> Não sei meu CEP
+					<input type="radio" ng-model="addressInputMethod" value="address" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Não sei meu CEP
 				</label>
 			</div>
 
@@ -30,7 +30,7 @@
 		<form name="zipCodeForm" class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'" ng-submit="checkZipCode()">
 			<div class="zip-code-group">
 				<label for="zipCode">CEP<span class="required">*</span></label>
-				<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="order.address.zipCode" required qf-show-validation-state />
+				<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="address.zipCode" required qf-show-validation-state />
 
 				<button type="submit" class="btn btn-primary btn-check-zip-code" ng-disabled="zipCodeForm.zipCode.$invalid || addressStatus.processing">
 					<span ng-hide="addressStatus.processing">Buscar</span>
@@ -41,17 +41,17 @@
 			</div>
 
 			<div ng-hide="addressStatus.processing">
-				<div class="error-message" ng-show="addressStatus.addressChecked && !addressStatus.zipCodeValid">
+				<div class="error-message" ng-show="addressStatus.zipCodeChecked && !addressStatus.zipCodeValid">
 					<h4 class="title">CEP não encontrado.</h4>
 					<h5 class="message">Informa o CEP certo aí!</h5>
 				</div>
 
-				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
+				<div class="error-message" ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
 					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
 					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
 				</div>
 
-				<div ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid">
+				<div ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid">
 					<div class="city-group">
 						<label>Cidade</label>
 						<span class="static-input">{{order.address.city.name}}</span>
@@ -85,7 +85,7 @@
 		<form name="addressForm" class="address-input-method-panel" ng-show="addressInputMethod == 'address'" ng-submit="checkAddress()">
 			<div class="address-group">
 				<label for="address">Endereço<span class="required">*</span></label>
-				<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="order.address.address" required qf-show-validation-state />
+				<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="address.address" required qf-show-validation-state />
 
 				<button type="submit" class="btn btn-primary btn-check-address" ng-disabled="addressForm.address.$invalid || addressStatus.processing">
 					<span ng-hide="addressStatus.processing">Buscar</span>
@@ -113,7 +113,7 @@
 					<h5 class="message">Informa o endereço certo aí!</h5>
 				</div>
 
-				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
+				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.addressValid && !addressStatus.addressAttended">
 					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
 					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
 				</div>
@@ -128,12 +128,12 @@
 		<form class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressChecked && addressStatus.addressAttended">
 			<div class="number-group">
 				<label for="number">Número<span class="required">*</span></label>
-				<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="adasdasd" required qf-show-validation-state />
+				<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="order.address.number" required qf-show-validation-state />
 			</div>
 
 			<div class="complement-group">
 				<label for="complement">Complemento</label>
-				<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="asdasdewr" />
+				<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="order.address.complement" />
 			</div>
 		</form>
 	</fieldset>
