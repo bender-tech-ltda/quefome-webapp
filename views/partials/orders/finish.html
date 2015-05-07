@@ -4,7 +4,7 @@
 	<a qf-href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
 </div>
 
-<form ng-hide="establishmentNotFound" name="finishOrderForm" class="order-finish-page">
+<div ng-hide="establishmentNotFound" class="order-finish-page">
 	<h2 class="title">Bora matar essa fome?</h2>
 	<h3 class="description">Só precisamos de mais duas coisinhas...</h3> 
 
@@ -27,55 +27,72 @@
 			<div class="clearfix"></div>
 		</div>
 
-		<div class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'">
+		<form name="zipCodeForm" class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'" ng-submit="checkZipCode()">
 			<div class="zip-code-group">
 				<label for="zipCode">CEP<span class="required">*</span></label>
 				<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="order.address.zipCode" required qf-show-validation-state />
-				<span class="help-block">Informe seu CEP para buscarmos seu endereço.</span>
+
+				<button type="submit" class="btn btn-primary btn-check-zip-code" ng-disabled="zipCodeForm.zipCode.$invalid || addressStatus.processing">
+					<span ng-hide="addressStatus.processing">Buscar</span>
+					<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
+				</button>
+
+				<span class="help-block" ng-class="{'error': zipCodeForm.zipCode.$dirty && zipCodeForm.zipCode.$invalid}">Informe seu CEP para buscarmos seu endereço.</span>
 			</div>
 
-			<div ng-show="isZipCodeValid">
-				<div class="city-group">
-					<label>Cidade</label>
-					<span class="static-input">Porto Alegre</span>
+			<div ng-hide="addressStatus.processing">
+				<div class="error-message" ng-show="addressStatus.addressChecked && !addressStatus.zipCodeValid">
+					<h4 class="title">CEP não encontrado.</h4>
+					<h5 class="message">Informa o CEP certo aí!</h5>
 				</div>
 
-				<div class="state-group">
-					<label>Estado</label>
-					<span class="static-input">Rio Grande do Sul</span>
+				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
+					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
+					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
 				</div>
 
-				<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+				<div ng-show="addressStatus.addressChecked && addressStatus.zipCodeValid">
+					<div class="city-group">
+						<label>Cidade</label>
+						<span class="static-input">{{order.address.city.name}}</span>
+					</div>
 
-				<div class="neighborhood-group">
-					<label>Bairro</label>
-					<span class="static-input">{{order.address.neighborhood}}</span>
-				</div>
+					<div class="state-group">
+						<label>Estado</label>
+						<span class="static-input">{{order.address.city.state.acronym}}</span>
+					</div>
 
-				<div class="address-group">
-					<label>Endereço</label>
-					<span class="static-input">Endereço</span>
-				</div>
+					<div class="neighborhood-group">
+						<label>Bairro</label>
+						<span class="static-input">{{order.address.neighborhood.name}}</span>
+					</div>
 
-				<div class="clearfix"></div>
+					<div class="address-group">
+						<label>Endereço</label>
+						<span class="static-input">{{order.address.address}}</span>
+					</div>
 
-				<div class="number-group">
-					<label for="number">Número<span class="required">*</span></label>
-					<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="adasdasd" required qf-show-validation-state />
-				</div>
-
-				<div class="complement-group">
-					<label for="complement">Complemento</label>
-					<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="asdasdewr" />
+					<div class="clearfix"></div>
 				</div>
 			</div>
-		</div>
 
-		<div class="address-input-method-panel" ng-show="addressInputMethod == 'address'">
+			<div class="processing-panel" ng-show="addressStatus.processing">
+				<h5 class="message">Procurando CEP...</h5>
+				<span class="qf-icon icon-loading spin"></span>
+			</div>
+		</form>
+
+		<form name="addressForm" class="address-input-method-panel" ng-show="addressInputMethod == 'address'" ng-submit="checkAddress()">
 			<div class="address-group">
 				<label for="address">Endereço<span class="required">*</span></label>
 				<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="order.address.address" required qf-show-validation-state />
-				<span class="help-block">Informe seu endereço para buscarmos seu CEP</span>
+
+				<button type="submit" class="btn btn-primary btn-check-address" ng-disabled="addressForm.address.$invalid || addressStatus.processing">
+					<span ng-hide="addressStatus.processing">Buscar</span>
+					<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
+				</button>
+
+				<span class="help-block" ng-class="{'error': addressForm.address.$dirty && addressForm.address.$invalid}">Informe seu endereço para buscarmos seu CEP</span>
 			</div>
 
 			<div class="city-group">
@@ -89,6 +106,30 @@
 			</div>
 
 			<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
-		</div>
+
+			<div ng-hide="addressStatus.processing">
+				<div class="error-message" ng-show="addressStatus.addressChecked && !addressStatus.addressValid">
+					<h4 class="title">Esse endereço parece não existir em Porto Alegre.</h4>
+					<h5 class="message">Informa o endereço certo aí!</h5>
+				</div>
+			</div>
+
+			<div class="processing-panel" ng-show="addressStatus.processing">
+				<h5 class="message">Procurando endereço...</h5>
+				<span class="qf-icon icon-loading spin"></span>
+			</div>
+		</form>
+
+		<form class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressChecked && addressStatus.addressAttended">
+			<div class="number-group">
+				<label for="number">Número<span class="required">*</span></label>
+				<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="adasdasd" required qf-show-validation-state />
+			</div>
+
+			<div class="complement-group">
+				<label for="complement">Complemento</label>
+				<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="asdasdewr" />
+			</div>
+		</form>
 	</fieldset>
-</form>
+</div>

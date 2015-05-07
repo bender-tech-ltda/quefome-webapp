@@ -1198,6 +1198,36 @@ a:hover, a:focus {
 	clear: both;
 }
 
+.order-finish-page .help-block.error {
+	color: #A94442;
+}
+
+.order-finish-page .error-message {
+	color: red;
+	text-align: center;
+	margin: 10px 0px;
+}
+
+.order-finish-page .error-message > .title {
+	margin: 0px;
+}
+
+.order-finish-page .error-message > .message {
+	margin: 0px;
+	color: #7A7A7A;
+}
+
+.order-finish-page .error-message a {
+	color: #EF6815;
+}
+
+.order-finish-page .processing-panel {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 20px;
+	color: #7A7A7A;
+}
+
 .order-finish-page .address-panel > .title {
 	margin-bottom: 10px;
 }
@@ -1219,6 +1249,35 @@ a:hover, a:focus {
 
 .order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group {
 	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group label {
+	display: block;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group .zip-code-input {
+	float: left;
+	width: 70%;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group .btn-check-zip-code {
+	float: left;
+	width: 30%;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group .btn-check-zip-code .qf-icon {
+	font-size: 16px;
+}
+
+.order-finish-page .address-panel .zip-code-input-method-panel .zip-code-group .zip-code-input {
+	float: left;
+	width: 70%;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 .order-finish-page .address-panel .zip-code-input-method-panel .city-group,
@@ -1247,6 +1306,28 @@ a:hover, a:focus {
 
 .order-finish-page .address-panel .address-input-method-panel .address-group {
 	margin-bottom: 20px;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .address-group label {
+	display: block;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .address-group .address-input {
+	float: left;
+	width: 70%;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .address-group .btn-check-address {
+	float: left;
+	width: 30%;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.order-finish-page .address-panel .address-input-method-panel .address-group .btn-check-address .qf-icon {
+	font-size: 16px;
 }
 
 .order-finish-page .address-panel .address-input-method-panel .city-group,
@@ -1284,7 +1365,12 @@ a:hover, a:focus {
 	margin-bottom: 10%;
 }
 
-label.invalid {
+label.label {
+	color: #333;
+	font-weight: bold;
+}
+
+label.invalid, label.label.invalid {
 	color: #A94442;
 }
 
@@ -1340,6 +1426,13 @@ label .required {
 .btn.btn-primary:hover {
 	border-color: #fbca0e;
 	background-color: #fbca0e;
+}
+
+.btn.btn-primary.disabled, .btn.btn-primary[disabled],
+.btn.btn-primary.disabled:focus, .btn.btn-primary[disabled]:focus,
+.btn.btn-primary.disabled:hover, .btn.btn-primary[disabled]:hover {
+	border-color: #F89F6E;
+	background-color: #F89F6E;
 }
 
 .btn.btn-default {

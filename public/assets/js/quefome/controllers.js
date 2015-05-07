@@ -928,13 +928,111 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 	}]);
 
-	module.controller("OrderFinishController", ["$scope", "$routeParams", "$location", "AuthService", "EstablishmentService", "OrderService", function($scope, $routeParams, $location, AuthService, EstablishmentService, OrderService) {
+	module.controller("OrderFinishController", ["$scope", "$routeParams", "$location", "AuthService", "EstablishmentService", "OrderService", "AddressService", function($scope, $routeParams, $location, AuthService, EstablishmentService, OrderService, AddressService) {
 		$scope.establishment = null;
 		$scope.establishmentNotFound = false;
 
-		$scope.order = null;
+		$scope.order = {};
 
 		$scope.addressInputMethod = 'zip-code';
+
+		$scope.addressStatus = {
+			zipCodeValid: false,
+			addressValid: false,
+			addressChecked: false,
+			addressAttended: false,
+			processing: false
+		};
+
+		var checkIfEstablishmentAttendsTheAddress = function(address) {
+			$scope.order.address.address = address.address;
+			$scope.order.address.city = address.city;
+
+			//TODO procurar bairro
+			$scope.order.address.neighborhood = {
+				name: address.neighborhood
+			};
+
+			EstablishmentService.isAttendingAddress($scope.establishment, address).then(function(isAttending) {
+				AddressService.setCurrentAddress(address);
+
+				$scope.addressStatus.zipCodeValid = true;
+				$scope.addressStatus.addressValid = true;
+
+				$scope.addressStatus.addressChecked = true;
+				$scope.addressStatus.addressAttended = isAttending;
+
+				$scope.addressStatus.processing = false;
+			}, function() {
+				$scope.addressStatus.zipCodeValid = false;
+				$scope.addressStatus.addressValid = false;
+
+				$scope.addressStatus.addressChecked = true;
+				$scope.addressStatus.addressAttended = false;
+
+				$scope.addressStatus.processing = false;
+			});
+		};
+
+		$scope.checkZipCode = function() {
+			if ($scope.zipCodeForm.zipCode.$invalid) {
+				return;
+			}
+
+			$scope.addressStatus.addressChecked = false;
+			$scope.addressStatus.processing = true;
+
+			AddressService.searchZipCode($scope.order.address.zipCode).then(function(address) {
+				checkIfEstablishmentAttendsTheAddress(address);
+			}, function() {
+				$scope.order.address = {
+					zipCode: $scope.order.address.zipCode
+				};
+
+				$scope.addressStatus.zipCodeValid = false;
+				$scope.addressStatus.addressValid = false;
+
+				$scope.addressStatus.addressChecked = true;
+				$scope.addressStatus.addressAttended = false;
+
+				$scope.addressStatus.processing = false;
+			});
+		};
+
+		$scope.checkAddress = function() {
+			if ($scope.addressForm.$invalid) {
+				return;
+			}
+
+			$scope.addressStatus.addressChecked = false;
+			$scope.addressStatus.processing = true;
+
+			var address = {
+				address: $scope.order.address.address,
+				city: {
+					name: "Porto Alegre",
+					state: {
+						acronym: "RS"
+					}
+				}
+			};
+
+			AddressService.searchAddress(address).then(function(address) {
+				checkIfEstablishmentAttendsTheAddress(address);
+			}, function() {
+				$scope.order.address = {
+					address: $scope.order.address.address
+				};
+
+				$scope.addressStatus.zipCodeValid = false;
+				$scope.addressStatus.addressValid = false;
+
+				$scope.addressStatus.addressChecked = true;
+				$scope.addressStatus.addressAttended = false;
+
+				$scope.addressStatus.processing = false;
+			});
+		};
 
 		var goToEstablishmentPage = function() {
 			$location.path("/establishments/" + $routeParams.establishmentUrl);
