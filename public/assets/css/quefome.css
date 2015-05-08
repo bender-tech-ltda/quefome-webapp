@@ -1234,13 +1234,16 @@ a:hover, a:focus {
 }
 
 .order-finish-page .delivery-type-panel,
-.order-finish-page .address-panel {
+.order-finish-page .address-panel,
+.order-finish-page .phone-number-panel {
 	padding: 15px 5%;
 	margin-bottom: 10px;
 	background-color: #F2F0F0;
 }
 
-.order-finish-page .delivery-type-panel > .title {
+.order-finish-page .delivery-type-panel > .title,
+.order-finish-page .address-panel > .title,
+.order-finish-page .phone-number-panel > .title {
 	margin-top: 0px;
 	margin-bottom: 10px;
 	padding-bottom: 4px;
@@ -1251,13 +1254,6 @@ a:hover, a:focus {
 	float: left;
 	width: 50%;
 	margin: 0px;
-}
-
-.order-finish-page .address-panel > .title {
-	margin-top: 0px;
-	margin-bottom: 10px;
-	padding-bottom: 4px;
-	border-bottom: 1px solid #E5E5E5;
 }
 
 .order-finish-page .address-panel .address-input-method {

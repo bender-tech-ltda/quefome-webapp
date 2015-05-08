@@ -28,6 +28,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				isLogged: function() {
 					this._isLoggedCalled = true;
 					return this._currentUser ? true : false;
+				},
+
+				getUser: function() {
+					return this._currentUser;
 				}
 			};
 
@@ -233,6 +237,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.startup();
 
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+			});
+
+			it("should set the order user with the logged user", function() {
+				MockedOrderService._retrieveOrder = {items: [{}]};
+				MockedAuthService._currentUser = {name: "Bla", phone: "5135934949"};
+
+				scope.startup();
+
+				expect(scope.order.phone).toEqual(MockedAuthService._currentUser.phone);
 			});
 
 			it("should get the current address and set in the address", function() {
