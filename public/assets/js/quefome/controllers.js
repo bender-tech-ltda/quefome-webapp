@@ -6,12 +6,6 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.loginView = "/partials/login/login";
 
-		$scope.logout = function() {
-			AuthService.logout().then(function() {
-				$scope.$apply();
-			});
-		};
-
 		$scope.isUserLogged = function() {
 			return AuthService.isLogged();
 		};
@@ -1138,6 +1132,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.startup();
 			});
 		}
+
+		$scope.$on("$userLogout", function() {
+			$scope.goToEstablishmentPage();
+		});
 	}]);
 
 	module.controller("SelectPaymentMethodController", ["$scope", "PaymentMethodService", function($scope, PaymentMethodService) {
@@ -1260,6 +1258,13 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			doItSafe.call(this, "__$apply", callback);
 		};
 		
+		$rootScope.logoutUser = function() {
+			AuthService.logout().then(function() {
+				$rootScope.$broadcast("$userLogout");
+				$rootScope.$apply();
+			});
+		};
+
 		$rootScope.isUserLogged = function() {
 			return AuthService.isLogged();
 		};

@@ -725,5 +725,12 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
 			});
 		});
+
+		describe("when the user logout", function() {
+			it("should go to the establishment page", function() {
+				scope.$broadcast("$userLogout");
+				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+			});
+		});
 	});
 });
