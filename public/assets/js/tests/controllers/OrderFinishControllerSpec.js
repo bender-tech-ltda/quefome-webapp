@@ -82,6 +82,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				retrieve: function(establishment) {
 					this._retrieveEstablishment = establishment;
 					return this._retrieveOrder;
+				},
+
+				_getOrderPriceCalled: false,
+				_getOrderPriceOrder: null,
+				getOrderPrice: function(order) {
+					this._getOrderPriceCalled = true;
+					this._getOrderPriceOrder = order;
 				}
 			};
 
@@ -228,8 +235,99 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
 			});
 
-			it("should get the current address", function() {
+			it("should get the current address and set in the address", function() {
+				MockedAddressService._getCurrentAddressCalled = false;
+				MockedAddressService._currentAddress = {zipCode: "99999-999", address: "Rua Tal"};
+
+				scope.changeDeliveryType = function() {};
+
+				scope.startup();
+
 				expect(MockedAddressService._getCurrentAddressCalled).toBe(true);
+				expect(scope.address.zipCode).toEqual(MockedAddressService._currentAddress.zipCode);
+				expect(scope.address.address).toEqual(MockedAddressService._currentAddress.address);
+			});
+
+			it("should ignore the address if it was skipped", function() {
+				MockedAddressService._getCurrentAddressCalled = false;
+				MockedAddressService._currentAddress = {skipped: true};
+				scope.startup();
+
+				expect(scope.address.zipCode).toEqual("");
+				expect(scope.address.address).toEqual("");
+			});
+
+			it("should call the changeDeliveryType function", function() {
+				var called = false;
+				scope.changeDeliveryType = function() {
+					called = true;
+				};
+
+				scope.startup();
+				expect(called).toBe(true);
+			});
+
+			it("should set the order.withdraw to false if the establishment doesn't accept withdraw", function() {
+				scope.establishment = {
+					parameters: {canWithdraw: false}
+				};
+
+				MockedOrderService._retrieveOrder = {items: [{}], withdraw: true};
+
+				scope.startup();
+				expect(scope.order.withdraw).toBe(false);
+			});
+
+			it("should set the order.withdraw to false if it is undefined", function() {
+				MockedOrderService._retrieveOrder = {items: [{}]};
+
+				scope.startup();
+				expect(scope.order.withdraw).toBe(false);
+			});
+		});
+
+		describe("when changing the delivery type", function() {
+			describe("when it is withdraw", function() {
+				beforeEach(function() {
+					scope.order.withdraw = true;
+				});
+
+				it("should clear the address", function() {
+					scope.lastDeliveryType = null;
+
+					scope.order.address = {};
+					scope.changeDeliveryType();
+
+					expect(scope.order.address).toBeNull();
+				});
+			});
+
+			describe("when it is not withdraw", function() {
+				beforeEach(function() {
+					scope.order.withdraw = false;
+				});
+
+				it("should set the lastAddressInputMethod to null", function() {
+					scope.lastAddressInputMethod = "address";
+
+					scope.changeAddressInputMethod = function() {};
+
+					scope.changeDeliveryType();
+					expect(scope.lastAddressInputMethod).toBeNull();
+				});
+
+				it("should trigger changeDeliveryType", function() {
+					scope.lastDeliveryType = null;
+
+					var called = false;
+					scope.changeAddressInputMethod = function() {
+						called = true;
+					};
+
+					scope.changeDeliveryType();
+
+					expect(called).toBe(true);
+				});
 			});
 		});
 
@@ -304,6 +402,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 					scope.checkZipCode();
 					expect(scope.addressStatus.zipCodeValid).toBe(false);
+				});
+
+				it("should clear the order address", function() {
+					scope.order.address = {};
+					scope.checkZipCode();
+
+					expect(scope.order.address).toBeNull();
 				});
 			});
 
@@ -394,6 +499,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 					scope.checkAddress();
 					expect(scope.addressStatus.addressValid).toBe(false);
+				});
+
+				it("should clear the order address", function() {
+					scope.order.address = {};
+					scope.checkAddress();
+
+					expect(scope.order.address).toBeNull();
 				});
 			});
 
@@ -553,6 +665,27 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 					expect(called).toBe(true);
 				});
+			});
+		});
+
+		describe("when getting the order price", function() {
+			it("should call the OrderService", function() {
+				scope.getOrderTotalPrice();
+				expect(MockedOrderService._getOrderPriceCalled).toBe(true);
+			});
+
+			it("should pass the order as parameter", function() {
+				scope.order = {id: -2};
+				scope.getOrderTotalPrice();
+
+				expect(MockedOrderService._getOrderPriceOrder).toEqual(scope.order);
+			});
+		});
+
+		describe("when going to the establishment page", function() {
+			it("should use the $routeParams", function() {
+				scope.goToEstablishmentPage();
+				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
 			});
 		});
 	});

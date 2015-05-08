@@ -131,7 +131,7 @@ a:hover, a:focus {
 .delivery-search-panel .food-type-search .food-type-list li a {
 	float: left;
 	width: 31%;
-	min-height: 80px;
+	height: 80px;
 	padding: 12px 1px;
 	margin: 0px 3px 6px;
 	font-size: 11px;
@@ -1174,19 +1174,24 @@ a:hover, a:focus {
 	border-color: #DE1F0B;
 }
 
+/**
 .order-finish-page {
 	margin: auto 5% 20px;
 }
+**/
 
 .order-finish-page > .title {
 	font-size: 25px;
 	margin-bottom: 2px;
+	text-align: center;
+	color: #F26C23;
 }
 
 .order-finish-page > .description {
 	font-size: 15px;
 	color: #808080;
 	margin-top: 0px;
+	text-align: center;
 }
 
 .order-finish-page .help-block {
@@ -1228,8 +1233,31 @@ a:hover, a:focus {
 	color: #7A7A7A;
 }
 
-.order-finish-page .address-panel > .title {
+.order-finish-page .delivery-type-panel,
+.order-finish-page .address-panel {
+	padding: 15px 5%;
 	margin-bottom: 10px;
+	background-color: #F2F0F0;
+}
+
+.order-finish-page .delivery-type-panel > .title {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.order-finish-page .delivery-type-panel .radio {
+	float: left;
+	width: 50%;
+	margin: 0px;
+}
+
+.order-finish-page .address-panel > .title {
+	margin-top: 0px;
+	margin-bottom: 10px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .order-finish-page .address-panel .address-input-method {
@@ -1334,6 +1362,39 @@ a:hover, a:focus {
 .order-finish-page .address-panel .address-number-panel .number-group {
 	padding-top: 10px;
 	border-top: 1px solid #e5e5e5;
+}
+
+.order-finish-page .resume-panel {
+	display: inline-block;
+	width: 100%;
+	min-height: 67px;
+	padding: 0px 10px;
+	background-color: #E73724;
+	color: #fff;
+	z-index: 1001;
+}
+
+.order-finish-page .resume-panel .establishment-name {
+	text-align: center;
+	margin-bottom: 5px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.order-finish-page .resume-panel .btn-back {
+	float: left;
+	padding: 0px;
+	font-size: 15px;
+    color: #fff;
+    text-decoration: underline;
+    text-align: left;
+}
+
+.order-finish-page .resume-panel .order-price {
+	float: right;
+	width: 50%;
+	font-weight: bold;
+	font-size: 15px;
+	text-align: right;
 }
 
 .footer {

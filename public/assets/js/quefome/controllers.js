@@ -457,6 +457,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.finishOrder = function() {
 			var confirmAddress = function() {
+				OrderService.store($scope.order);
+
 				$scope.orderDetailPanelOpen = false;
 				$location.path("/establishments/" + $scope.establishment.url + "/order/finish/");
 			};
@@ -950,6 +952,21 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			processing: false
 		};
 
+		$scope.lastDeliveryType = null;
+		$scope.changeDeliveryType = function() {
+			if ($scope.lastDeliveryType == $scope.order.withdraw) {
+				return;
+			}
+
+			if (!$scope.order.withdraw) {
+				$scope.lastAddressInputMethod = null;
+				$scope.changeAddressInputMethod();
+			} else {
+				$scope.order.address = null;
+			}
+
+		};
+
 		$scope.lastAddressInputMethod = null;
 		$scope.changeAddressInputMethod = function() {
 			if ($scope.lastAddressInputMethod == $scope.addressInputMethod) {
@@ -994,14 +1011,14 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					complement: ""
 				};
 			}, function() {
-				$scope.order.address = {};
+				$scope.order.address = null;
 				$scope.addressStatus.addressAttended = false;
 				$scope.addressStatus.processing = false;
 			});
 		};
 
 		$scope.checkZipCode = function() {
-			if ($scope.zipCodeForm.zipCode.$invalid) {
+			if (!$scope.address.zipCode) {
 				return;
 			}
 
@@ -1016,7 +1033,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 				$scope.checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
-				$scope.order.address = {};
+				$scope.order.address = null;
 
 				$scope.addressStatus.zipCodeValid = false;
 				$scope.addressStatus.zipCodeChecked = true;
@@ -1053,7 +1070,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 				$scope.checkIfEstablishmentAttendsTheAddress(address);
 			}, function() {
-				$scope.order.address = {};
+				$scope.order.address = null;
 
 				$scope.addressStatus.addressValid = false;
 
@@ -1064,7 +1081,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			});
 		};
 
-		var goToEstablishmentPage = function() {
+		$scope.getOrderTotalPrice = function() {
+			return OrderService.getOrderPrice($scope.order);
+		};
+
+		$scope.goToEstablishmentPage = function() {
 			$location.path("/establishments/" + $routeParams.establishmentUrl);
 		};
 
@@ -1074,7 +1095,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 
 			if (!AuthService.isLogged()) {
-				goToEstablishmentPage();
+				$scope.goToEstablishmentPage();
 				return;
 			}
 
@@ -1083,8 +1104,14 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.order = OrderService.retrieve(establishment);
 
 				if (!$scope.order || !$scope.order.items || $scope.order.items.length == 0) {
-					goToEstablishmentPage();
+					$scope.goToEstablishmentPage();
 					return;
+				}
+
+				if (establishment.parameters && establishment.parameters.canWithdraw) {
+					$scope.order.withdraw = $scope.order.withdraw ? true : false;
+				} else {
+					$scope.order.withdraw = false;
 				}
 
 				var address = AddressService.getCurrentAddress();
@@ -1095,7 +1122,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					};
 				}
 
-				$scope.changeAddressInputMethod();
+				$scope.changeDeliveryType();
 			}, function(error) {
 				$scope.establishmentNotFound = error.isNotFoundError ? true : false;
 			});

@@ -608,6 +608,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(Mocked$location._currentLocation).toEqual("/establishments/teste/order/finish/");
 			});
 
+			it("should store the current order", function() {
+				scope.establishment = {url: "teste"};
+				MockedAuthService._currentUser = {name: "Blablabla"};
+				
+				MockedOrderService._storedOrder = null;
+
+				scope.order = {product: {id: -2}};
+				scope.finishOrder();
+
+				expect(MockedOrderService._storedOrder).toEqual(scope.order);
+			});
+
 			it("should show an alert if the user is already logged", function() {
 				scope.establishment = {url: "teste"};
 

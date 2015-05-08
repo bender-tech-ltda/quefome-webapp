@@ -9,6 +9,10 @@ define(["angular"], function(angular) {
 				return "";
 			}
 
+			if (!value) {
+				value = 0;
+			}
+
 			if (typeof(value) === "number") {
 				value = value.toFixed(2);
 			}

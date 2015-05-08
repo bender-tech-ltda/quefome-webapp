@@ -5,11 +5,37 @@
 </div>
 
 <div ng-hide="establishmentNotFound" class="order-finish-page">
-	<h2 class="title">Bora matar essa fome?</h2>
-	<h3 class="description">Só precisamos de mais duas coisinhas...</h3> 
+	<div class="resume-panel" qf-sticky-scroll="top">
+		<h4 class="establishment-name">{{establishment.name}}</h4>
 
-	<fieldset class="address-panel">
-		<legend class="title">Onde entregar seu pedido?</legend>
+		<button type="button" class="btn btn-link btn-back" ng-click="goToEstablishmentPage()">Editar pedido</button>
+		<p class="order-price">Total: R$ {{getOrderTotalPrice() | money}}</p>
+	</div>
+
+	<h2 class="title">Bora matar essa fome?</h2>
+	<h3 class="description">Só precisamos de mais algumas coisinhas...</h3>
+
+	<fieldset class="delivery-type-panel" ng-show="establishment.parameters.canWithdraw">
+		<h4 class="title">Como você quer receber seu pedido?</h4>
+
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="order.withdraw" ng-value="false" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()" /> Por tele-entrega
+			</label>
+		</div>
+
+		<div class="radio">
+			<label>
+				<input type="radio" ng-model="order.withdraw" ng-value="true" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()"/> Vou retirar no balcão
+			</label>
+		</div>
+
+		<span class="help-block" ng-show="establishment.parameters.deliverTax && establishment.parameters.deliverTax > 0">O custo da tele-entrega é de R$ {{establishment.parameters.deliverTax | money}}.</span>
+		<span class="help-block" ng-show="establishment.parameters.deliverTax === 0 || establishment.parameters.deliverTax < 0">A tele-entrega desse estabelecimento é gratuita.</span>
+	</fieldset>
+
+	<fieldset class="address-panel" ng-hide="order.withdraw">
+		<h4 class="title">Onde entregar seu pedido?</h4>
 
 		<div class="address-input-method">
 			<div class="radio">
