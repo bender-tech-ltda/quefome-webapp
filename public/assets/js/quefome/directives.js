@@ -326,6 +326,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			var documentHeight = $document.height();
 
 			if (lastDocumentHeight != documentHeight) {
+				lastDocumentHeight = documentHeight;
 				events.triggerDocumentHeightChange(documentHeight, lastDocumentHeight);
 			}
 		}, 500);
