@@ -44,9 +44,13 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.filter("establishmentSchedule", ["$filter", function($filter) {
-		return function(establishment) {
+		return function(establishment, today) {
 			if (!establishment || !establishment.parameters || !establishment.parameters.currentSchedule) {
 				return "";
+			}
+
+			if (!today || !(today instanceof Date)) {
+				today = new Date();
 			}
 
 			var status = establishment.parameters.status;
@@ -57,7 +61,6 @@ define(["angular"], function(angular) {
 			}
 
 			var weekDayName = schedule.weekDay.name;
-			var today = new Date();
 			if (schedule.weekDay.number == today.getDay()) {
 				var openingTime = new Date(schedule.openingTime);
 
