@@ -1131,7 +1131,13 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			});
 		};
 
-		$scope.startup();
+		if (AuthService.hasCheckedForLoggedUser()) {
+			$scope.startup();
+		} else {
+			$scope.$on("$userLoginChecked", function() {
+				$scope.startup();
+			});
+		}
 	}]);
 
 	module.controller("SelectPaymentMethodController", ["$scope", "PaymentMethodService", function($scope, PaymentMethodService) {
@@ -1273,7 +1279,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		//a verificacao pelo usuario precisa ser chamada no modulo principal
 		//se nao, os testes comecam a falhar por causa da requisicao HTTP inesperada
 		$rootScope.checkForLoggedUser = function() {
-			return AuthService.checkForLoggedUser().then(function() {
+			return AuthService.checkForLoggedUser().then(function(user) {
+				$rootScope.$broadcast("$userLoginChecked", user);
 				$rootScope.$apply();
 			});
 		};

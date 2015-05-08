@@ -32,6 +32,11 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				getUser: function() {
 					return this._currentUser;
+				},
+
+				_hasCheckedForLoggedUser: false,
+				hasCheckedForLoggedUser: function() {
+					return this._hasCheckedForLoggedUser;
 				}
 			};
 
@@ -187,6 +192,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("on startup", function() {
+			it("should not be called if the user login was not checked yet", function() {
+				var called = false;
+				scope.startup = function() {
+					called = true;
+				};
+
+				expect(called).toBe(false);
+			});
+
+			it("and should be called when the $userLoginChecked event is triggered", function() {
+				var called = false;
+				scope.startup = function() {
+					called = true;
+				};
+
+				scope.$broadcast("$userLoginChecked");
+				expect(called).toBe(true);
+			});
+
 			it("should check if the user is logged", function() {
 				MockedAuthService._isLoggedCalled = false;
 				scope.startup();
