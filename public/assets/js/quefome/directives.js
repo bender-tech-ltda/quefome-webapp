@@ -350,7 +350,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					}
 
 					if (!element.hasClass(stickyClass)) {
-						elementTopPosition = element.position().top;
+						elementTopPosition = element.offset().top;
 						fakeElement.css("height", element.outerHeight() + "px");
 
 						if (reference === "bottom") {

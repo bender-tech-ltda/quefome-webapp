@@ -1181,20 +1181,18 @@ a:hover, a:focus {
 	border-color: #DE1F0B;
 }
 
-/**
 .order-finish-page {
-	margin: auto 5% 20px;
+	position: relative;
 }
-**/
 
-.order-finish-page > .title {
+.order-finish-page .panel-wrapper > .title {
 	font-size: 25px;
 	margin-bottom: 2px;
 	text-align: center;
 	color: #F26C23;
 }
 
-.order-finish-page > .description {
+.order-finish-page .panel-wrapper > .description {
 	font-size: 15px;
 	color: #808080;
 	margin-top: 0px;
@@ -1959,6 +1957,33 @@ label .required {
 
 	.check-address-dialog .btn-skip-address-check {
 		margin-left: 2%;
+	}
+
+	.order-finish-page .resume-panel {
+		position: absolute;
+		top: 66px;
+		right: 14%;
+		width: 25%;
+	}
+
+	.order-finish-page .resume-panel.stick-top {
+		position: fixed;
+		top: 0px;
+	}
+
+	.order-finish-page .resume-panel + .sticky-fake {
+		display: none;
+	}
+
+	.order-finish-page .panel-wrapper {
+		width: 50%;
+		margin-right: 1%;
+		margin-left: 10%;
+	}
+
+	.order-finish-page .panel-wrapper > .description {
+		border-bottom: 1px solid rgb(204, 204, 204);
+		padding-bottom: 7px;
 	}
 
 	.footer {

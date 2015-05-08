@@ -12,168 +12,170 @@
 		<p class="order-price">Total: R$ {{getOrderTotalPrice() | money}}</p>
 	</div>
 
-	<h2 class="title">Bora matar essa fome?</h2>
-	<h3 class="description">Só precisamos de mais algumas coisinhas...</h3>
+	<div class="panel-wrapper">
+		<h2 class="title">Bora matar essa fome?</h2>
+		<h3 class="description">Só precisamos de mais algumas coisinhas...</h3>
 
-	<fieldset class="delivery-type-panel" ng-show="establishment.parameters.canWithdraw">
-		<h4 class="title">Como você quer receber seu pedido?</h4>
+		<fieldset class="delivery-type-panel" ng-show="establishment.parameters.canWithdraw">
+			<h4 class="title">Como você quer receber seu pedido?</h4>
 
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="order.withdraw" ng-value="false" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()" /> Por tele-entrega
-			</label>
-		</div>
-
-		<div class="radio">
-			<label>
-				<input type="radio" ng-model="order.withdraw" ng-value="true" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()"/> Vou retirar no balcão
-			</label>
-		</div>
-
-		<span class="help-block" ng-show="establishment.parameters.deliverTax && establishment.parameters.deliverTax > 0">O custo da tele-entrega é de R$ {{establishment.parameters.deliverTax | money}}.</span>
-		<span class="help-block" ng-show="establishment.parameters.deliverTax === 0 || establishment.parameters.deliverTax < 0">A tele-entrega desse estabelecimento é gratuita.</span>
-	</fieldset>
-
-	<fieldset class="address-panel" ng-hide="order.withdraw">
-		<h4 class="title">Onde entregar seu pedido?</h4>
-
-		<div class="address-input-method">
 			<div class="radio">
 				<label>
-					<input type="radio" ng-model="addressInputMethod" value="zip-code" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Sei meu CEP
+					<input type="radio" ng-model="order.withdraw" ng-value="false" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()" /> Por tele-entrega
 				</label>
 			</div>
 
 			<div class="radio">
 				<label>
-					<input type="radio" ng-model="addressInputMethod" value="address" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Não sei meu CEP
+					<input type="radio" ng-model="order.withdraw" ng-value="true" ng-disabled="addressStatus.processing" ng-click="changeDeliveryType()"/> Vou retirar no balcão
 				</label>
 			</div>
 
-			<div class="clearfix"></div>
-		</div>
+			<span class="help-block" ng-show="establishment.parameters.deliverTax && establishment.parameters.deliverTax > 0">O custo da tele-entrega é de R$ {{establishment.parameters.deliverTax | money}}.</span>
+			<span class="help-block" ng-show="establishment.parameters.deliverTax === 0 || establishment.parameters.deliverTax < 0">A tele-entrega desse estabelecimento é gratuita.</span>
+		</fieldset>
 
-		<form name="zipCodeForm" class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'" ng-submit="checkZipCode()">
-			<div class="zip-code-group">
-				<label for="zipCode">CEP<span class="required">*</span></label>
-				<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="address.zipCode" required qf-show-validation-state />
+		<fieldset class="address-panel" ng-hide="order.withdraw">
+			<h4 class="title">Onde entregar seu pedido?</h4>
 
-				<button type="submit" class="btn btn-primary btn-check-zip-code" ng-disabled="zipCodeForm.zipCode.$invalid || addressStatus.processing">
-					<span ng-hide="addressStatus.processing">Buscar</span>
-					<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
-				</button>
+			<div class="address-input-method">
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="addressInputMethod" value="zip-code" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Sei meu CEP
+					</label>
+				</div>
 
-				<span class="help-block" ng-class="{'error': zipCodeForm.zipCode.$dirty && zipCodeForm.zipCode.$invalid}">Informe seu CEP para buscarmos seu endereço.</span>
+				<div class="radio">
+					<label>
+						<input type="radio" ng-model="addressInputMethod" value="address" ng-click="changeAddressInputMethod()" ng-disabled="addressStatus.processing"/> Não sei meu CEP
+					</label>
+				</div>
+
+				<div class="clearfix"></div>
 			</div>
 
-			<div ng-hide="addressStatus.processing">
-				<div class="error-message" ng-show="addressStatus.zipCodeChecked && !addressStatus.zipCodeValid">
-					<h4 class="title">CEP não encontrado.</h4>
-					<h5 class="message">Informa o CEP certo aí!</h5>
+			<form name="zipCodeForm" class="zip-code-input-method-panel" ng-show="addressInputMethod == 'zip-code'" ng-submit="checkZipCode()">
+				<div class="zip-code-group">
+					<label for="zipCode">CEP<span class="required">*</span></label>
+					<input type="tel" class="zip-code-input form-control" name="zipCode" placeholder="00000-000" pattern="[0-9]{5}(-){0,1}[0-9]{3}" ng-model="address.zipCode" required qf-show-validation-state />
+
+					<button type="submit" class="btn btn-primary btn-check-zip-code" ng-disabled="zipCodeForm.zipCode.$invalid || addressStatus.processing">
+						<span ng-hide="addressStatus.processing">Buscar</span>
+						<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
+					</button>
+
+					<span class="help-block" ng-class="{'error': zipCodeForm.zipCode.$dirty && zipCodeForm.zipCode.$invalid}">Informe seu CEP para buscarmos seu endereço.</span>
 				</div>
 
-				<div class="error-message" ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
-					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
-					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
-				</div>
-
-				<div ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid">
-					<div class="city-group">
-						<label>Cidade</label>
-						<span class="static-input">{{order.address.city.name}}</span>
+				<div ng-hide="addressStatus.processing">
+					<div class="error-message" ng-show="addressStatus.zipCodeChecked && !addressStatus.zipCodeValid">
+						<h4 class="title">CEP não encontrado.</h4>
+						<h5 class="message">Informa o CEP certo aí!</h5>
 					</div>
 
-					<div class="state-group">
-						<label>Estado</label>
-						<span class="static-input">{{order.address.city.state.acronym}}</span>
+					<div class="error-message" ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
+						<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
+						<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
 					</div>
 
-					<div class="neighborhood-group">
-						<label>Bairro</label>
-						<span class="static-input">{{order.address.neighborhood.name}}</span>
+					<div ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid">
+						<div class="city-group">
+							<label>Cidade</label>
+							<span class="static-input">{{order.address.city.name}}</span>
+						</div>
+
+						<div class="state-group">
+							<label>Estado</label>
+							<span class="static-input">{{order.address.city.state.acronym}}</span>
+						</div>
+
+						<div class="neighborhood-group">
+							<label>Bairro</label>
+							<span class="static-input">{{order.address.neighborhood.name}}</span>
+						</div>
+
+						<div class="address-group">
+							<label>Endereço</label>
+							<span class="static-input">{{order.address.address}}</span>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+				<div class="processing-panel" ng-show="addressStatus.processing">
+					<h5 class="message">Procurando CEP...</h5>
+					<span class="qf-icon icon-loading spin"></span>
+				</div>
+			</form>
+
+			<form name="addressForm" class="address-input-method-panel" ng-show="addressInputMethod == 'address'" ng-submit="checkAddress()">
+				<div class="address-group">
+					<label for="address">Endereço<span class="required">*</span></label>
+					<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="address.address" required qf-show-validation-state />
+
+					<button type="submit" class="btn btn-primary btn-check-address" ng-disabled="addressForm.address.$invalid || addressStatus.processing">
+						<span ng-hide="addressStatus.processing">Buscar</span>
+						<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
+					</button>
+
+					<span class="help-block" ng-class="{'error': addressForm.address.$dirty && addressForm.address.$invalid}">Informe seu endereço para buscarmos seu CEP</span>
+				</div>
+
+				<div class="city-group">
+					<label>Cidade</label>
+					<span class="static-input">Porto Alegre</span>
+				</div>
+
+				<div class="state-group">
+					<label>Estado</label>
+					<span class="static-input">Rio Grande do Sul</span>
+				</div>
+
+				<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+
+				<div ng-hide="addressStatus.processing">
+					<div class="error-message" ng-show="addressStatus.addressChecked && !addressStatus.addressValid">
+						<h4 class="title">Esse endereço parece não existir em Porto Alegre.</h4>
+						<h5 class="message">Informa o endereço certo aí!</h5>
 					</div>
 
-					<div class="address-group">
-						<label>Endereço</label>
-						<span class="static-input">{{order.address.address}}</span>
+					<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.addressValid && !addressStatus.addressAttended">
+						<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
+						<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
 					</div>
-
-					<div class="clearfix"></div>
-				</div>
-			</div>
-
-			<div class="processing-panel" ng-show="addressStatus.processing">
-				<h5 class="message">Procurando CEP...</h5>
-				<span class="qf-icon icon-loading spin"></span>
-			</div>
-		</form>
-
-		<form name="addressForm" class="address-input-method-panel" ng-show="addressInputMethod == 'address'" ng-submit="checkAddress()">
-			<div class="address-group">
-				<label for="address">Endereço<span class="required">*</span></label>
-				<input type="text" class="address-input form-control" name="address" placeholder="Rua, avenida, etc." ng-model="address.address" required qf-show-validation-state />
-
-				<button type="submit" class="btn btn-primary btn-check-address" ng-disabled="addressForm.address.$invalid || addressStatus.processing">
-					<span ng-hide="addressStatus.processing">Buscar</span>
-					<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
-				</button>
-
-				<span class="help-block" ng-class="{'error': addressForm.address.$dirty && addressForm.address.$invalid}">Informe seu endereço para buscarmos seu CEP</span>
-			</div>
-
-			<div class="city-group">
-				<label>Cidade</label>
-				<span class="static-input">Porto Alegre</span>
-			</div>
-
-			<div class="state-group">
-				<label>Estado</label>
-				<span class="static-input">Rio Grande do Sul</span>
-			</div>
-
-			<span class="city-info help-block">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
-
-			<div ng-hide="addressStatus.processing">
-				<div class="error-message" ng-show="addressStatus.addressChecked && !addressStatus.addressValid">
-					<h4 class="title">Esse endereço parece não existir em Porto Alegre.</h4>
-					<h5 class="message">Informa o endereço certo aí!</h5>
 				</div>
 
-				<div class="error-message" ng-show="addressStatus.addressChecked && addressStatus.addressValid && !addressStatus.addressAttended">
-					<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
-					<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
+				<div class="processing-panel" ng-show="addressStatus.processing">
+					<h5 class="message">Procurando endereço...</h5>
+					<span class="qf-icon icon-loading spin"></span>
 				</div>
-			</div>
+			</form>
 
-			<div class="processing-panel" ng-show="addressStatus.processing">
-				<h5 class="message">Procurando endereço...</h5>
-				<span class="qf-icon icon-loading spin"></span>
-			</div>
-		</form>
+			<form class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressAttended">
+				<div class="number-group">
+					<label for="number">Número<span class="required">*</span></label>
+					<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="order.address.number" required qf-show-validation-state />
+				</div>
 
-		<form class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressAttended">
-			<div class="number-group">
-				<label for="number">Número<span class="required">*</span></label>
-				<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="order.address.number" required qf-show-validation-state />
-			</div>
+				<div class="complement-group">
+					<label for="complement">Complemento</label>
+					<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="order.address.complement" />
+				</div>
+			</form>
+		</fieldset>
 
-			<div class="complement-group">
-				<label for="complement">Complemento</label>
-				<input type="text" class="complement-input form-control" name="complement" placeholder="Apartamento, sala, etc." ng-model="order.address.complement" />
-			</div>
-		</form>
-	</fieldset>
+		<fieldset class="phone-number-panel">
+			<h4 class="title">Qual seu telefone?</h4>
 
-	<fieldset class="phone-number-panel">
-		<h4 class="title">Qual seu telefone?</h4>
+			<form name="phoneForm">
+				<div class="phone-group">
+					<label for="phone">Telefone<span class="required">*</span></label>
+					<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" required qf-show-validation-state />
 
-		<form name="phoneForm">
-			<div class="phone-group">
-				<label for="phone">Telefone<span class="required">*</span></label>
-				<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" required qf-show-validation-state />
-
-				<span class="help-block" ng-class="{'error': phoneForm.phone.$dirty && phoneForm.phone.$invalid}">O telefone é obrigatório, mas fica tranquilo, ele é só para caso der algum problema.</span>
-			</div>
-		</form>
-	</fieldset>
+					<span class="help-block" ng-class="{'error': phoneForm.phone.$dirty && phoneForm.phone.$invalid}">O telefone é obrigatório, mas fica tranquilo, ele é só para caso der algum problema.</span>
+				</div>
+			</form>
+		</fieldset>
+	</div>
 </div>
