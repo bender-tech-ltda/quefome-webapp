@@ -28,6 +28,11 @@
 				<span class="qf-icon icon-bike"></span>
 				<span>{{establishment | establishmentDeliveryTime}} - R$ {{establishment.parameters.deliverTax | money}}</span>
 			</div>
+
+			<div class="price-info" title="Pedido mínimo">
+				<span class="qf-icon icon-money"></span>
+				<span>Pedido mínimo: R$ {{establishment.parameters.minimumOrderValue | money}}</span>
+			</div>
 		</div>
 
 		<div class="clearfix"></div>

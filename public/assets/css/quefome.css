@@ -533,15 +533,22 @@ a:hover, a:focus {
 	clear: both;
 }
 
-.establishment-page .establishment .additional-info .status,
-.establishment-page .establishment .additional-info .delivery-info {
+.establishment-page .establishment .additional-info .status {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
+
+.establishment-page .establishment .additional-info .delivery-info,
+.establishment-page .establishment .additional-info .price-info {
 	display: inline-block;
 	width: 49%;
 	text-align: center;
 }
 
 .establishment-page .establishment .additional-info .status .qf-icon,
-.establishment-page .establishment .additional-info .delivery-info .qf-icon {
+.establishment-page .establishment .additional-info .delivery-info .qf-icon,
+.establishment-page .establishment .additional-info .price-info .qf-icon {
 	top: 4px;
 }
 
@@ -1850,7 +1857,8 @@ label .required {
 	}
 
 	.establishment-page .establishment .additional-info .status,
-	.establishment-page .establishment .additional-info .delivery-info {
+	.establishment-page .establishment .additional-info .delivery-info,
+	.establishment-page .establishment .additional-info .price-info {
 		float: none;
 		display: block;
 		width: 100%;
