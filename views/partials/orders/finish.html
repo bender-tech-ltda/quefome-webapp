@@ -171,11 +171,11 @@
 			<form name="phoneForm">
 				<div class="phone-group">
 					<label for="phone">Telefone<span class="required">*</span></label>
-					<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" pattern="^.{0,1}([0-9]{1} {0,}[^0-9]{0,1} {0,}){8,}$" required qf-show-validation-state />
+					<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" pattern="^ {0,1}.{0,1} {0,1}([0-9]{1} {0,}[^0-9]{0,1} {0,}){8,}$" required qf-show-validation-state />
 
 					<span class="help-block" ng-hide="phoneForm.phone.$touched && phoneForm.phone.$error.pattern" ng-class="{'error': phoneForm.phone.$touched && phoneForm.phone.$invalid}">O telefone é obrigatório, mas fica tranquilo, ele é só para caso der algum problema.</span>
-					
-					<span class="help-block error" ng-show="phoneForm.phone.$touched && phoneForm.phone.$error.pattern">O telefone informado não é válido. Você pode informar seu telefone no formato 0000-0000.</span>
+
+					<span class="help-block error" ng-show="phoneForm.phone.$touched && phoneForm.phone.$error.pattern">Esse telefone não é válido. Você pode informar seu telefone usando o formato 0000-0000.</span>
 				</div>
 			</form>
 		</fieldset>
