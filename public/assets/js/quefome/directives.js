@@ -588,14 +588,9 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 					value = value.replace(",", ".");
 
 					var digits = (value + "").split(".");
-					if (digits.length > 1) {
-						if (precision <= 0) {
-							event.preventDefault();
-							return false;
-						} else if (digits[1].length > precision) {
-							event.preventDefault();
-							return false;
-						}
+					if (digits.length > 1 && precision <= 0) {
+						event.preventDefault();
+						return false;
 					}
 				});
 			}
@@ -633,7 +628,6 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 
 				var checkAndApplyState = function(touched) {
 					var property = formController[attrs.name];
-					var invalid = property.$dirty && property.$invalid;
 
 					var elementsToApplyState = findElementsToApplyState();
 
@@ -655,6 +649,11 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				var findElementsToApplyState = function() {
 					var elementsToApplyState = element;
 					var parent = element.parent();
+
+					if (parent.hasClass("input-group")) {
+						elementsToApplyState = elementsToApplyState.add(parent);
+						parent = parent.parent();
+					}
 
 					var elementLabel = parent.find("[for='" + attrs.name + "']");
 					if (elementLabel && elementLabel.length > 0) {

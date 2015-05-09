@@ -64,7 +64,7 @@
 						<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
 					</button>
 
-					<span class="help-block" ng-class="{'error': zipCodeForm.zipCode.$dirty && zipCodeForm.zipCode.$invalid}">Informe seu CEP para buscarmos seu endereço.</span>
+					<span class="help-block" ng-class="{'error': zipCodeForm.zipCode.$touched && zipCodeForm.zipCode.$invalid}">Informe seu CEP para buscarmos seu endereço.</span>
 				</div>
 
 				<div ng-hide="addressStatus.processing">
@@ -119,7 +119,7 @@
 						<span ng-show="addressStatus.processing" class="qf-icon icon-loading spin"></span>
 					</button>
 
-					<span class="help-block" ng-class="{'error': addressForm.address.$dirty && addressForm.address.$invalid}">Informe seu endereço para buscarmos seu CEP</span>
+					<span class="help-block" ng-class="{'error': addressForm.address.$touched && addressForm.address.$invalid}">Informe seu endereço para buscarmos seu CEP</span>
 				</div>
 
 				<div class="city-group">
@@ -171,9 +171,11 @@
 			<form name="phoneForm">
 				<div class="phone-group">
 					<label for="phone">Telefone<span class="required">*</span></label>
-					<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" required qf-show-validation-state />
+					<input type="tel" class="number-input form-control" name="phone" placeholder="Telefone fixo, do trabalho, celular, etc." ng-model="order.phone" pattern="^.{0,1}([0-9]{1} {0,}[^0-9]{0,1} {0,}){8,}$" required qf-show-validation-state />
 
-					<span class="help-block" ng-class="{'error': phoneForm.phone.$dirty && phoneForm.phone.$invalid}">O telefone é obrigatório, mas fica tranquilo, ele é só para caso der algum problema.</span>
+					<span class="help-block" ng-hide="phoneForm.phone.$touched && phoneForm.phone.$error.pattern" ng-class="{'error': phoneForm.phone.$touched && phoneForm.phone.$invalid}">O telefone é obrigatório, mas fica tranquilo, ele é só para caso der algum problema.</span>
+					
+					<span class="help-block error" ng-show="phoneForm.phone.$touched && phoneForm.phone.$error.pattern">O telefone informado não é válido. Você pode informar seu telefone no formato 0000-0000.</span>
 				</div>
 			</form>
 		</fieldset>
@@ -194,6 +196,18 @@
 								<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
 							</label>
 						</div>
+					</div>
+
+					<div class="change-group" ng-show="showChangeField(category)">
+						<label for="change-{{category.key}}">Troco para quantos reais?</label>
+
+						<div class="input-group">
+							<span class="input-group-addon">R$</span>
+							<input type="number" class="form-control" name="change-{{category.key}}" placeholder="Troco para 20? 50? 100?" ng-model="order.change" min="0.00" step="10" qf-show-validation-state qf-validate-always="true" />
+						</div>
+
+						<span class="help-block" ng-hide="isFieldChangeInvalid(category)">Deixe em branco caso não precise de troco.</span>
+						<span class="help-block error" ng-show="isFieldChangeInvalid(category)">O valor que você informou não é um número.</span>
 					</div>
 				</fieldset>
 			</form>

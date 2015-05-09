@@ -1455,6 +1455,10 @@ label.label {
 	font-weight: bold;
 }
 
+label .required {
+	color: #ff0000;
+}
+
 label.invalid, label.label.invalid {
 	color: #A94442;
 }
@@ -1468,8 +1472,9 @@ input.invalid:focus, select.invalid:focus {
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px #CE8483;
 }
 
-label .required {
-	color: #ff0000;
+.input-group.invalid, .input-group.invalid .input-group-addon {
+	border-color: #A94442;
+	color: #A94442;
 }
 
 /** --- Helper classes --- **/
@@ -1488,6 +1493,12 @@ label .required {
 }
 
 /** --- Override bootstrap style --- **/
+.input-group-addon:first-child {
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+
 .form-control {
 	box-shadow: none;
 	border-radius: 2px;
@@ -1618,10 +1629,9 @@ label .required {
 	}
 
 	.order-finish-page .payment-method-panel .payment-method-category {
-		float: left;
 		width: 46%;
 		margin-right: 4%;
-		display: table-cell;
+		display: inline;
 		vertical-align: top;
 	}
 

@@ -975,6 +975,28 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 		};
 
+		$scope.showChangeField = function(category) {
+			if (!$scope.order.paymentMethod || !category.hasChange) {
+				return false;
+			}
+
+			return category.paymentMethods.indexOf($scope.order.paymentMethod) >= 0
+		};
+
+		$scope.isFieldChangeInvalid = function(category) {
+			if (!$scope.paymentForm) {
+				return false;
+			}
+
+			var field = $scope.paymentForm["change-" + category.key];
+
+			if (!field) {
+				return false;
+			}
+
+			return field.$dirty && field.$invalid;
+		};
+
 		$scope.lastDeliveryType = null;
 		$scope.changeDeliveryType = function() {
 			if ($scope.lastDeliveryType == $scope.order.withdraw) {
