@@ -1134,6 +1134,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				$scope.order.user = AuthService.getUser();
 				$scope.order.phone = $scope.order.user.phone || "";
 
+				$scope.order.paymentMethod = null;
+
 				if (establishment.parameters && establishment.parameters.canWithdraw) {
 					$scope.order.withdraw = $scope.order.withdraw ? true : false;
 				} else {
