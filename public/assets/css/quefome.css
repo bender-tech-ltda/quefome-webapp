@@ -1618,6 +1618,7 @@ label .required {
 	}
 
 	.order-finish-page .payment-method-panel .payment-method-category {
+		float: left;
 		width: 46%;
 		margin-right: 4%;
 		display: table-cell;
