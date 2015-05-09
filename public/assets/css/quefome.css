@@ -2110,6 +2110,11 @@ label .required {
 	.establishment-page .establishment-products .products .product {
 		width: 15%;
 	}
+
+	.order-finish-page .payment-method-panel .payment-method-category .payment-method {
+		float: left;
+		width: 50%;
+	}
 }
 
 /*Workaround para impedir que o browser mobile dê um zoom desnecessário na página*/

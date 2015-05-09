@@ -946,10 +946,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			processing: false
 		};
 
-		$scope.paymentMethodCategories = [];
+		$scope.paymentCategories = [];
 
 		$scope.categorizePaymentMethods = function() {
-			$scope.paymentMethodCategories = [];
+			$scope.paymentCategories = [];
 
 			if (!$scope.establishment || !$scope.establishment.parameters || !$scope.establishment.parameters.paymentMethods) {
 				return;
@@ -966,7 +966,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					category.paymentMethods = [];
 
 					categories[method.category.name] = category;
-					$scope.paymentMethodCategories.push(category);
+					$scope.paymentCategories.push(category);
 				} else {
 					category = categories[method.category.name];
 				}

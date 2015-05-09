@@ -182,7 +182,7 @@
 			<h4 class="title">Como você quer pagar?</h4>
 
 			<form name="paymentForm">
-				<fieldset class="payment-method-category" ng-repeat="category in paymentMethodCategories | orderBy: ['order', 'name']">
+				<fieldset class="payment-method-category" ng-repeat="category in paymentCategories | orderBy: ['sequence', 'name']">
 					<legend class="category-name">
 						<span>{{category.name}}</span>
 						<span class="qf-icon icon-{{category.key}}">
