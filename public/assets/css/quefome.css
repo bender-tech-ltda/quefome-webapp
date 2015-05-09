@@ -1238,9 +1238,43 @@ a:hover, a:focus {
 	color: #7A7A7A;
 }
 
+.order-finish-page .resume-panel {
+	display: inline-block;
+	width: 100%;
+	min-height: 67px;
+	padding: 0px 10px;
+	background-color: #E73724;
+	color: #fff;
+	z-index: 1001;
+}
+
+.order-finish-page .resume-panel .establishment-name {
+	text-align: center;
+	margin-bottom: 5px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.order-finish-page .resume-panel .btn-back {
+	float: left;
+	padding: 0px;
+	font-size: 15px;
+    color: #fff;
+    text-decoration: underline;
+    text-align: left;
+}
+
+.order-finish-page .resume-panel .order-price {
+	float: right;
+	width: 50%;
+	font-weight: bold;
+	font-size: 15px;
+	text-align: right;
+}
+
 .order-finish-page .delivery-type-panel,
 .order-finish-page .address-panel,
-.order-finish-page .phone-number-panel {
+.order-finish-page .phone-number-panel,
+.order-finish-page .payment-method-panel {
 	padding: 15px 5%;
 	margin-bottom: 10px;
 	background-color: #F2F0F0;
@@ -1248,7 +1282,8 @@ a:hover, a:focus {
 
 .order-finish-page .delivery-type-panel > .title,
 .order-finish-page .address-panel > .title,
-.order-finish-page .phone-number-panel > .title {
+.order-finish-page .phone-number-panel > .title,
+.order-finish-page .payment-method-panel > .title {
 	margin-top: 0px;
 	margin-bottom: 10px;
 	padding-bottom: 4px;
@@ -1365,37 +1400,25 @@ a:hover, a:focus {
 	border-top: 1px solid #e5e5e5;
 }
 
-.order-finish-page .resume-panel {
-	display: inline-block;
-	width: 100%;
-	min-height: 67px;
-	padding: 0px 10px;
-	background-color: #E73724;
-	color: #fff;
-	z-index: 1001;
+.order-finish-page .payment-method-panel .payment-method-category {
+	margin-top: 10px;
 }
 
-.order-finish-page .resume-panel .establishment-name {
-	text-align: center;
-	margin-bottom: 5px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+.order-finish-page .payment-method-panel .payment-method-category .category-name {
+	margin-bottom: 0px;
+	font-size: 18px;
+	color: #6E6E6E;
 }
 
-.order-finish-page .resume-panel .btn-back {
-	float: left;
-	padding: 0px;
-	font-size: 15px;
-    color: #fff;
-    text-decoration: underline;
-    text-align: left;
-}
-
-.order-finish-page .resume-panel .order-price {
+.order-finish-page .payment-method-panel .payment-method-category .category-name .qf-icon {
+	font-size: 24px;
+	top: 2px;
 	float: right;
+}
+
+.order-finish-page .payment-method-panel .payment-method-category .payment-method {
+	float: left;
 	width: 50%;
-	font-weight: bold;
-	font-size: 15px;
-	text-align: right;
 }
 
 .footer {
@@ -1592,6 +1615,18 @@ label .required {
 @media(min-width: 480px) {
 	.establishment-page .establishment-products .products .product {
 		width: 31%;
+	}
+
+	.order-finish-page .payment-method-panel .payment-method-category {
+		width: 46%;
+		margin-right: 4%;
+		display: table-cell;
+		vertical-align: top;
+	}
+
+	.order-finish-page .payment-method-panel .payment-method-category .payment-method {
+		float: none;
+		width: 100%;
 	}
 }
 

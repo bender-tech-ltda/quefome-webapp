@@ -946,6 +946,35 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			processing: false
 		};
 
+		$scope.paymentMethodCategories = [];
+
+		$scope.categorizePaymentMethods = function() {
+			$scope.paymentMethodCategories = [];
+
+			if (!$scope.establishment || !$scope.establishment.parameters || !$scope.establishment.parameters.paymentMethods) {
+				return;
+			}
+
+			var categories = []
+
+			for (var i in $scope.establishment.parameters.paymentMethods) {
+				var method = $scope.establishment.parameters.paymentMethods[i];
+				var category = null;
+
+				if (!categories[method.category.name]) {
+					category = angular.copy(method.category);
+					category.paymentMethods = [];
+
+					categories[method.category.name] = category;
+					$scope.paymentMethodCategories.push(category);
+				} else {
+					category = categories[method.category.name];
+				}
+
+				category.paymentMethods.push(method);
+			}
+		};
+
 		$scope.lastDeliveryType = null;
 		$scope.changeDeliveryType = function() {
 			if ($scope.lastDeliveryType == $scope.order.withdraw) {
@@ -1119,6 +1148,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					};
 				}
 
+				$scope.categorizePaymentMethods();
 				$scope.changeDeliveryType();
 			}, function(error) {
 				$scope.establishmentNotFound = error.isNotFoundError ? true : false;

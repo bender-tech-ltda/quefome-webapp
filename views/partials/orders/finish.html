@@ -177,5 +177,26 @@
 				</div>
 			</form>
 		</fieldset>
+
+		<fieldset class="payment-method-panel">
+			<h4 class="title">Como você quer pagar?</h4>
+
+			<form name="paymentForm">
+				<fieldset class="payment-method-category" ng-repeat="category in paymentMethodCategories | orderBy: ['order', 'name']">
+					<legend class="category-name">
+						<span>{{category.name}}</span>
+						<span class="qf-icon icon-{{category.key}}">
+					</legend>
+
+					<div class="payment-method" ng-repeat="method in category.paymentMethods">
+						<div class="radio">
+							<label title="{{method.name}}">
+								<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
+							</label>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</fieldset>
 	</div>
 </div>
