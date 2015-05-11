@@ -3,6 +3,7 @@
 define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 	describe("OrderService", function() {
+		var $httpBackend;
 		var Mocked$localStorage, OrderService;
 
 		beforeEach(module("qfServices"));
@@ -21,6 +22,11 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				get: function(key) {
 					this._lastGettedKey = key;
 					return this._returnSettedValue;
+				},
+
+				_lastRemovedKey: null,
+				remove: function(key) {
+					this._lastRemovedKey = key;
 				}
 			};
 
@@ -29,9 +35,40 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 		});
 
-		beforeEach(inject(function(_OrderService_) {
+		beforeEach(inject(function(_OrderService_, _$httpBackend_) {
 			OrderService = _OrderService_;
+			$httpBackend = _$httpBackend_;
 		}));
+
+		describe("when creating an order", function() {
+			it("should create an order", function() {
+				var order = {items: [{product: {name: "Xis Cebola"}}]};
+
+				$httpBackend.whenPOST("/api/orders/", order).respond(200, order);
+
+				var success = false;
+				var responseOrder = null;
+				OrderService.create(order).then(function(createdOrder) {
+					success = true;
+					responseOrder = createdOrder;
+				});
+
+				$httpBackend.flush();
+
+				expect(success).toBe(true);
+				expect(responseOrder).toEqual(order);
+			});
+
+			it("should remove the order from storage", function() {
+				var order = {establishment: {id: -42}};
+				$httpBackend.whenPOST("/api/orders/", order).respond(200, order);
+
+				OrderService.create(order);
+				$httpBackend.flush();
+
+				expect(Mocked$localStorage._lastRemovedKey).toBe("OrderService_store_-42");
+			});
+		});
 
 		describe("when storing an order", function() {
 			it("should store using the establishment as key", function() {
@@ -58,6 +95,15 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				var order = OrderService.retrieve({id: -10});
 				expect(order).toEqual(Mocked$localStorage._returnSettedValue);
+			});
+		});
+
+		describe("when removing an order", function() {
+			it("should remove using the order establishment", function() {
+				var order = {establishment: {id: -2}};
+				OrderService.remove(order);
+
+				expect(Mocked$localStorage._lastRemovedKey).toEqual("OrderService_store_-2");
 			});
 		});
 

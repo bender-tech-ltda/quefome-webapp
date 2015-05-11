@@ -65,6 +65,10 @@ define(["angular"], function(angular) {
 
 			return false;
 		};
+
+		this.remove = function(key) {
+			localStorage.removeItem(key);
+		};
 	}]);
 
 	module.service("AuthService", ["$http", "$q", function($http, $q) {
@@ -263,7 +267,17 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
-	module.service("OrderService", ["$localStorage", function($localStorage) {
+	module.service("OrderService", ["$http", "$q", "$localStorage", function($http, $q, $localStorage) {
+		var that = this;
+
+		this.create = function(order) {
+			return $http.post("/api/orders/", order).then(function(response) {
+				that.remove(order);
+
+				return response.data;
+			},treatPromiseErrors($q));
+		};
+
 		this.store = function(order) {
 			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
 			$localStorage.set("OrderService_store_" + establishment, order);
@@ -272,6 +286,11 @@ define(["angular"], function(angular) {
 		this.retrieve = function(establishment) {
 			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
 			return $localStorage.get("OrderService_store_" + establishment);
+		};
+
+		this.remove = function(order) {
+			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
+			$localStorage.remove("OrderService_store_" + establishment);
 		};
 
 		this.getOrderPrice = function(order) {

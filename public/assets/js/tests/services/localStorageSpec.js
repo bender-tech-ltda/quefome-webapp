@@ -26,6 +26,11 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				getItem: function(key) {
 					this._lastGettedKey = key;
 					return this._returnGettedItem;
+				},
+
+				_lastRemovedKey: null,
+				removeItem: function(key) {
+					this._lastRemovedKey = key;
 				}
 			};
 
@@ -83,6 +88,13 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				MockedLocalStorage._returnGettedItem = JSON.stringify(false);
 				var value = $localStorage.get("key");
 				expect(value).toEqual(false);
+			});
+		});
+
+		describe("when removing items", function() {
+			it("should remove based on the key", function() {
+				$localStorage.remove("key");
+				expect(MockedLocalStorage._lastRemovedKey).toEqual("key");
 			});
 		});
 	});
