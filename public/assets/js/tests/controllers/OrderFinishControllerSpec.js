@@ -98,6 +98,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				getOrderPrice: function(order) {
 					this._getOrderPriceCalled = true;
 					this._getOrderPriceOrder = order;
+				},
+
+				_createCalled: false,
+				_createOrder: null,
+				_createSuccess: true,
+				create: function(order) {
+					this._createCalled = true;
+					this._createOrder = order;
+
+					var createSuccess = this._createSuccess;
+
+					return {
+						then: function(success, fail) {
+							if (createSuccess) {
+								success();
+							} else {
+								fail();
+							}
+						}
+					};
 				}
 			};
 
@@ -187,8 +207,24 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.addressInputMethod).toBeDefined();
 		});
 
+		it("should have an address property", function() {
+			expect(scope.address).toBeDefined();
+		});
+
 		it("should have an addressStatus property", function() {
 			expect(scope.addressStatus).toBeDefined();
+		});
+
+		it("should have an processingOrder property", function() {
+			expect(scope.processingOrder).toBeDefined();
+		});
+
+		it("should have an paymentCategories property", function() {
+			expect(scope.paymentCategories).toBeDefined();
+		});
+
+		it("should have an errorProcessingOrder property", function() {
+			expect(scope.errorProcessingOrder).toBeDefined();
 		});
 
 		describe("on startup", function() {
@@ -294,6 +330,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.address.address).toEqual("");
 			});
 
+			it("should call the categorizePaymentMethods function", function() {
+				var called = false;
+				scope.categorizePaymentMethods = function() {
+					called = true;
+				};
+
+				scope.startup();
+				expect(called).toBe(true);
+			});
+
 			it("should call the changeDeliveryType function", function() {
 				var called = false;
 				scope.changeDeliveryType = function() {
@@ -320,6 +366,125 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.startup();
 				expect(scope.order.withdraw).toBe(false);
+			});
+		});
+
+		describe("when categorizing the payment method", function() {
+			beforeEach(function() {
+				scope.establishment = {
+					parameters: {}
+				};
+			});
+
+			it("should use the establishment parameters", function() {
+				scope.establishment.parameters.paymentMethods = [
+					{category: {name: "Teste"}}
+				];
+
+				scope.categorizePaymentMethods();
+
+				expect(scope.paymentCategories.length).toEqual(1);
+			});
+
+			it("should categorize by name", function() {
+				scope.establishment.parameters.paymentMethods = [
+					{category: {name: "Cartão"}},
+					{category: {name: "Dinheiro"}},
+					{category: {name: "Cartão"}}
+				];
+
+				scope.categorizePaymentMethods();
+
+				expect(scope.paymentCategories.length).toEqual(2);
+				expect(scope.paymentCategories[0].paymentMethods.length).toEqual(2);
+				expect(scope.paymentCategories[1].paymentMethods.length).toEqual(1);
+			});
+		});
+
+		describe("when showing the change field", function() {
+			it("should not show if it has no payment method selected", function() {
+				scope.order.paymentMethod = null;
+
+				var result = scope.showChangeField({hasChange: true});
+				expect(result).toBe(false);
+			});
+
+			it("should not show if the payment category doesnt has change", function() {
+				scope.order.paymentMethod = {};
+
+				var result = scope.showChangeField({hasChange: false});
+				expect(result).toBe(false);
+			});
+
+			it("should not show if the selected payment method doesnt exists in the payment category", function() {
+				var category = {
+					hasChange: true,
+					paymentMethods: [
+						{name: "Dinheiro"}
+					]
+				};
+
+				scope.order.paymentMethod = {name: "Mastercard"};
+
+				var result = scope.showChangeField(category);
+				expect(result).toBe(false);
+			});
+
+			it("should show if the selected payment method exists in the payment category", function() {
+				var category = {
+					hasChange: true,
+					paymentMethods: [
+						{name: "Mastercard"},
+						{name: "Visa"}
+					]
+				};
+
+				scope.order.paymentMethod = category.paymentMethods[0];
+
+				var result = scope.showChangeField(category);
+				expect(result).toBe(true);
+			});
+		});
+
+		describe("when checking if the change field is invalid", function() {
+			it("should get the field based on the category key", function() {
+				scope.paymentCategories = [
+					{key: "cartao", name: "Cartão"}
+				];
+
+				scope.order.change = 50;
+				scope.$digest();
+
+				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);
+				expect(result).toBe(false);
+			});
+
+			it("should be false if the input is not dirty", function() {
+				scope.paymentCategories = [
+					{key: "cartao", name: "Cartão"}
+				];
+
+				scope.$digest();
+
+				scope.paymentForm["change-cartao"].$dirty = false;
+				scope.paymentForm["change-cartao"].$invalid = true;
+
+				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);
+				expect(result).toBe(false);
+			});
+
+			it("should be true if the input is dirty and invalid", function() {
+				scope.paymentCategories = [
+					{key: "cartao", name: "Cartão"}
+				];
+
+				scope.$digest();
+
+				scope.paymentForm["change-cartao"].$dirty = true;
+				scope.paymentForm["change-cartao"].$invalid = true;
+
+				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);
+				expect(result).toBe(true);
 			});
 		});
 
@@ -730,6 +895,213 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should go to the establishment page", function() {
 				scope.$broadcast("$userLogout");
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+			});
+		});
+
+		describe("when checking if the order finish is valid", function() {
+			beforeEach(function() {
+				scope.order = {
+					withdraw: false,
+					address: {number: "363"},
+					phone: "30305488",
+					paymentMethod: {name: "Dinheiro"}
+				};
+			});
+
+			it("should return if the address, phone and payment method were informed", function() {
+				var result = scope.isFinishValid();
+				expect(result).toBe(true);
+			});
+
+			it("should return false if there is no order", function() {
+				scope.order = null;
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(false);
+			});
+
+			it("should return false if it's not going to be withdraw and the order doesnt have an address", function() {
+				scope.order.withdraw = false;
+				scope.order.address = null;
+
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(false);
+			});
+
+			it("should return false if it's not going to be withdraw and the order address doesnt have a number", function() {
+				scope.order.withdraw = false;
+				scope.order.address = {number: null};
+
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(false);
+			});
+
+			it("should return true if it's going to be withdraw", function() {
+				scope.order.withdraw = true;
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(true);
+			});
+
+			it("should return false the phone is not informed", function() {
+				scope.order.phone = null;
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(false);
+			});
+
+			it("should return false the payment method is not selected", function() {
+				scope.order.paymentMethod = null;
+				var result = scope.isFinishValid();
+
+				expect(result).toBe(false);
+			});
+		});
+
+		describe("when getting the error message", function() {
+			beforeEach(function() {
+				scope.order = {
+					withdraw: false,
+					address: {number: "464"},
+					phone: "94567855",
+					paymentMethod: {name: "Dinheiro"}
+				};
+
+				scope.addressStatus.zipCodeValid = true;
+				scope.addressStatus.addressValid = true;
+
+				scope.addressStatus.zipCodeChecked = true;
+				scope.addressStatus.addressChecked = true;
+
+				scope.addressStatus.addressAttended = true;
+			});
+
+			it("should be blank if the order is not going to be withdraw, the address is informed and attended, the phone is informed and the payment method is selected", function() {
+				var result = scope.getErrorMessage();
+				expect(result).toEqual("");
+			});
+
+			it("should be blank if the order is going to be withdraw, the phone is informed and the payment method is selected", function() {
+				scope.order.withdraw = true;
+				scope.address = null;
+
+				var result = scope.getErrorMessage();
+				expect(result).toEqual("");
+			});
+
+			it("should reclaim about the invalid or not filled address", function() {
+				scope.order.address = null;
+				scope.addressStatus.zipCodeValid = false;
+				scope.addressStatus.addressValid = false;
+
+				var result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+			});
+
+			it("should reclaim about the address not being attended by the establishment", function() {
+				scope.addressStatus.addressChecked = false;
+				scope.addressStatus.addressAttended = false;
+
+				var result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+
+				scope.addressStatus.zipCodeChecked = false;
+				scope.addressStatus.addressChecked = true;
+
+				result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+			});
+
+			it("should reclaim about the address number not informed", function() {
+				scope.order.address.number = null;
+
+				var result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+			});
+
+			it("should reclaim about the phone not informed", function() {
+				scope.order.phone = null;
+
+				var result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+			});
+
+			it("should reclaim about the payment method not selected", function() {
+				scope.order.paymentMethod = null;
+
+				var result = scope.getErrorMessage();
+				expect(result.length > 0).toBe(true);
+			});
+		});
+
+		describe("when finishing the order", function() {
+			var isFinishValidCalled;
+
+			beforeEach(function() {
+				isFinishValidCalled = false;
+
+				scope.isFinishValid = function() {
+					isFinishValidCalled = true;
+					return true;
+				};
+			});
+
+			it("should check if the order is valid", function() {
+				scope.finishOrder();
+				expect(isFinishValidCalled).toBe(true);
+			});
+
+			it("should set the processingOrder to true and the errorProcessingOrder to false", function() {
+				MockedOrderService.create = function() {
+					return {then: function() {}};
+				};
+
+				scope.errorProcessingOrder = true;
+				scope.processingOrder = false;
+
+				scope.finishOrder();
+				expect(scope.processingOrder).toBe(true);
+				expect(scope.errorProcessingOrder).toBe(false);
+			});
+
+			it("should create the order on the service", function() {
+				scope.finishOrder();
+				expect(MockedOrderService._createCalled).toBe(true);
+			});
+
+			it("should create pass the order as parameter to the service", function() {
+				scope.order = {items: [], withdraw: true};
+
+				scope.finishOrder();
+				expect(MockedOrderService._createOrder).toEqual(scope.order);
+			});
+
+			it("should set the processingOrder to false after created", function() {
+				scope.order = {items: [], withdraw: true};
+
+				scope.finishOrder();
+				expect(scope.processingOrder).toBe(false);
+
+				MockedOrderService._createSuccess = false;
+				scope.finishOrder();
+				expect(scope.processingOrder).toBe(false);
+			});
+
+			it("should show an error if not created", function() {
+				scope.order = {items: [], withdraw: true};
+				MockedOrderService._createSuccess = false;
+				scope.finishOrder();
+
+				expect(scope.errorProcessingOrder).toBe(true);
+			});
+
+			it("should send to the order tracking page", function() {
+				scope.order = {items: [], withdraw: true};
+				scope.finishOrder();
+
+				expect(Mocked$location._currentPath).toEqual("/user/orders/");
 			});
 		});
 	});

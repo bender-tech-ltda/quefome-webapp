@@ -947,6 +947,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.processingOrder = false;
+		$scope.errorProcessingOrder = false;
 
 		$scope.paymentCategories = [];
 
@@ -1187,10 +1188,20 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.finishOrder = function() {
+			if (!$scope.isFinishValid()) {
+				return;
+			}
+
 			$scope.processingOrder = true;
-			setTimeout(function() {
+			$scope.errorProcessingOrder = false;
+
+			OrderService.create($scope.order).then(function(order) {
+				$location.path("/user/orders/");
 				$scope.processingOrder = false;
-			}, 5000);
+			}, function() {
+				$scope.processingOrder = false;
+				$scope.errorProcessingOrder = true;
+			});
 		};
 
 		$scope.startup = function() {
