@@ -36,7 +36,11 @@
 		</fieldset>
 
 		<fieldset class="address-panel" ng-hide="order.withdraw">
-			<h4 class="title">Onde entregar seu pedido?</h4>
+			<h4 class="title">
+				<span>Onde entregar seu pedido?</span>
+
+				<span class="error-message" ng-show="!addressStatus.processing && !addressStatus.zipCodeValid && !addressStatus.addressValid">Você precisa informar o endereço de entrega do seu pedido.</span>
+			</h4>
 
 			<div class="address-input-method">
 				<div class="radio">
@@ -152,10 +156,12 @@
 				</div>
 			</form>
 
-			<form class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressAttended">
+			<form name="addressNumberForm" class="address-number-panel" ng-show="!addressStatus.processing && addressStatus.addressAttended">
 				<div class="number-group">
 					<label for="number">Número<span class="required">*</span></label>
 					<input type="tel" class="number-input form-control" name="number" placeholder="Número da casa, prédio, etc." ng-model="order.address.number" required qf-show-validation-state />
+
+					<span class="help-block error" ng-show="addressNumberForm.number.$invalid">Informe o número do local onde seu pedido deve ser entregue.</span>
 				</div>
 
 				<div class="complement-group">
@@ -166,7 +172,11 @@
 		</fieldset>
 
 		<fieldset class="phone-number-panel">
-			<h4 class="title">Qual seu telefone?</h4>
+			<h4 class="title">
+				<span>Qual seu telefone?</span>
+
+				<span class="error-message" ng-show="phoneForm.$invalid">Você precisa informar um telefone para contato</span>
+			</h4>
 
 			<form name="phoneForm">
 				<div class="phone-group">
@@ -181,7 +191,10 @@
 		</fieldset>
 
 		<fieldset class="payment-method-panel">
-			<h4 class="title">Como você quer pagar?</h4>
+			<h4 class="title">
+				<span>Como você quer pagar?</span>
+				<span class="error-message" ng-show="!order.paymentMethod">Você precisa selecionar uma forma de pagamento</span>
+			</h4>
 
 			<form name="paymentForm">
 				<fieldset class="payment-method-category" ng-repeat="category in paymentCategories | orderBy: ['sequence', 'name']">
@@ -212,5 +225,17 @@
 				</fieldset>
 			</form>
 		</fieldset>
+
+		<div class="action-buttons" ng-hide="processingOrder">
+			<span class="error-message" ng-hide="isFinishValid()">{{getErrorMessage()}}</span>
+			<span class="help-block" ng-show="isFinishValid()">Isso aí! Clica aí e vamos mandar essa fome pro além!</span>
+
+			<button type="button" class="btn btn-primary btn-finish-order" ng-click="" ng-disabled="!isFinishValid()">Finalizar pedido</button>
+		</div>
+
+		<div class="finish-order-processing-panel" ng-show="processingOrder">
+			<h4 class="message">Enviando pedido...</h4>
+			<span class="qf-icon icon-loading spin"></span>
+		</div>
 	</div>
 </div>

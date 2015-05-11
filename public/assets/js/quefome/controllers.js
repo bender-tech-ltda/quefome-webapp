@@ -946,6 +946,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			processing: false
 		};
 
+		$scope.processingOrder = false;
+
 		$scope.paymentCategories = [];
 
 		$scope.categorizePaymentMethods = function() {
@@ -1132,6 +1134,63 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.goToEstablishmentPage = function() {
 			$location.path("/establishments/" + $routeParams.establishmentUrl);
+		};
+
+		$scope.isFinishValid = function() {
+			if (!$scope.order) {
+				return false;
+			}
+
+			if (!$scope.order.withdraw && (!$scope.order.address || !$scope.order.address.number)) {
+				return false;
+			}
+
+			if (!$scope.order.phone) {
+				return false;
+			}
+
+			if (!$scope.order.paymentMethod) {
+				return false;
+			}
+
+			return true;
+		};
+
+		$scope.getErrorMessage = function() {
+			if (!$scope.order) {
+				return "";
+			}
+
+			if (!$scope.order.withdraw) {
+				if (!$scope.addressStatus.zipCodeValid && !$scope.addressStatus.addressValid) {
+					return "Você precisa informar o endereço de entrega do seu pedido";
+				}
+
+				if (($scope.addressStatus.zipCodeChecked || $scope.addressStatus.addressChecked) && !$scope.addressStatus.addressAttended) {
+					return "Você precisa informar um endereço que seja atendido pelo estabelecimento";
+				}
+
+				if ($scope.order.address && !$scope.order.address.number) {
+					return "Você precisa informar o número do local onde seu pedido deve ser entregue.";
+				}
+			}
+
+			if (!$scope.order.phone) {
+				return "Você precisa informar um telefone para contato";
+			}
+
+			if (!$scope.order.paymentMethod) {
+				return "Você precisa selecionar uma forma de pagamento";
+			}
+
+			return "";
+		};
+
+		$scope.finishOrder = function() {
+			$scope.processingOrder = true;
+			setTimeout(function() {
+				$scope.processingOrder = false;
+			}, 5000);
 		};
 
 		$scope.startup = function() {

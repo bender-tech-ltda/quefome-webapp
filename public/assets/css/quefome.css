@@ -1290,6 +1290,16 @@ a:hover, a:focus {
 	border-bottom: 1px solid #E5E5E5;
 }
 
+.order-finish-page .delivery-type-panel > .title .error-message,
+.order-finish-page .address-panel > .title .error-message,
+.order-finish-page .phone-number-panel > .title .error-message,
+.order-finish-page .payment-method-panel > .title .error-message {
+	display: block;
+	margin: 4px 0px 0px;
+	font-size: 12px;
+	text-align: left;
+}
+
 .order-finish-page .delivery-type-panel .radio {
 	float: left;
 	width: 50%;
@@ -1419,6 +1429,39 @@ a:hover, a:focus {
 .order-finish-page .payment-method-panel .payment-method-category .payment-method {
 	float: left;
 	width: 50%;
+}
+
+.order-finish-page .action-buttons {
+	padding: 15px 5%;
+	background-color: #F2F0F0;
+}
+
+.order-finish-page .action-buttons .help-block {
+	text-align: center;
+	display: block;
+	margin: 0px 0px 10px;
+}
+
+.order-finish-page .action-buttons .error-message {
+	display: block;
+	margin: 0px 0px 10px;
+	text-align: center;
+}
+
+.order-finish-page .action-buttons .btn-finish-order {
+	width: 100%;
+}
+
+.order-finish-page .finish-order-processing-panel {
+	padding: 15px 5%;
+	background-color: #F2F0F0;
+	color: #7A7A7A;
+	text-align: center;
+	font-size: 20px;
+}
+
+.order-finish-page .finish-order-processing-panel .qf-icon {
+	font-size: 25px;
 }
 
 .footer {
