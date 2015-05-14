@@ -8,7 +8,7 @@ define([], function() {
 			templateUrl: "/partials/home/index.html"
 		},
 		{
-			path: "/establishments/search/",
+			path: "/establishments/search",
 			controller: "SearchEstablishmentController",
 			templateUrl: "/partials/establishments/search.html",
 			reloadOnSearch: false
@@ -24,13 +24,9 @@ define([], function() {
 			templateUrl: "/partials/orders/finish.html",
 		},
 		{
-			path: "/order/finish/",
-			controller: "SelectPaymentMethodController",
-			templateUrl: "/partials/establishments/select-payment-method.html"
-		},
-		{
-			path: "/order/address/",
-			templateUrl: "/partials/establishments/inform-delivery-address.html"
+			path: "/user/orders",
+			//controller: "OrderFinishController",
+			template: "<h1>Em desenvolvimento...</h1>",
 		}
 	];
 });
