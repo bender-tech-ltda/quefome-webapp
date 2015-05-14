@@ -271,7 +271,7 @@ define(["angular"], function(angular) {
 		var that = this;
 
 		this.create = function(order) {
-			return $http.post("/api/orders/", order).then(function(response) {
+			return $http.post("/api/user/orders/", order).then(function(response) {
 				that.remove(order);
 
 				return response.data;

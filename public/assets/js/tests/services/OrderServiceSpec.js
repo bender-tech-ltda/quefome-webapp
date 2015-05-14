@@ -44,7 +44,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			it("should create an order", function() {
 				var order = {items: [{product: {name: "Xis Cebola"}}]};
 
-				$httpBackend.whenPOST("/api/orders/", order).respond(200, order);
+				$httpBackend.whenPOST("/api/user/orders/", order).respond(200, order);
 
 				var success = false;
 				var responseOrder = null;
@@ -61,7 +61,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 			it("should remove the order from storage", function() {
 				var order = {establishment: {id: -42}};
-				$httpBackend.whenPOST("/api/orders/", order).respond(200, order);
+				$httpBackend.whenPOST("/api/user/orders/", order).respond(200, order);
 
 				OrderService.create(order);
 				$httpBackend.flush();

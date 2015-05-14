@@ -1,4 +1,5 @@
 var User = app.models.User;
+var Order = app.models.Order;
 
 module.exports = function(router) {
 	router.post("/api/users/", function(req, res) {
@@ -35,7 +36,6 @@ module.exports = function(router) {
 			req.session.user = user;
 			res.json(user);
 		}, function(response) {
-			console.log(response);
 			res.status(response.statusCode).send(response.body);
 		});
 	});
@@ -51,6 +51,20 @@ module.exports = function(router) {
 	router.get("/api/users/auth/retrieve/", function(req, res) {
 		if (req.session && req.session.user) {
 			res.json(req.session.user);
+		} else {
+			res.status(900).send("Usuário não esta logado!");
+		}
+	});
+
+	router.post("/api/user/orders/", function(req, res) {
+		if (req.session && req.session.user) {
+			req.body.user = req.session.user;
+
+			Order.create(req.body).then(function(order) {
+				res.json(order);
+			}, function(response) {
+				res.status(response.statusCode).send(response.body);
+			});
 		} else {
 			res.status(900).send("Usuário não esta logado!");
 		}
