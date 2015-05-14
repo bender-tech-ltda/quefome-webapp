@@ -452,7 +452,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					{key: "cartao", name: "Cartão"}
 				];
 
-				scope.order.change = 50;
+				scope.order.changeFor = 50;
 				scope.$digest();
 
 				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);
@@ -466,7 +466,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.$digest();
 
-				scope.paymentForm["change-cartao"].$dirty = false;
+				scope.paymentForm["change-cartao"].$touched = false;
 				scope.paymentForm["change-cartao"].$invalid = true;
 
 				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);
@@ -480,7 +480,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.$digest();
 
-				scope.paymentForm["change-cartao"].$dirty = true;
+				scope.paymentForm["change-cartao"].$touched = true;
 				scope.paymentForm["change-cartao"].$invalid = true;
 
 				var result = scope.isFieldChangeInvalid(scope.paymentCategories[0]);

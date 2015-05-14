@@ -216,11 +216,12 @@
 
 						<div class="input-group">
 							<span class="input-group-addon">R$</span>
-							<input type="number" class="form-control" name="change-{{category.key}}" placeholder="Troco para 20? 50? 100?" ng-model="order.change" min="0.00" step="10" qf-show-validation-state qf-validate-always="true" />
+							<input type="number" class="form-control" name="change-{{category.key}}" placeholder="Troco para 20? 50? 100?" ng-model="order.changeFor" ng-min="getOrderTotalPrice()" step="10" qf-show-validation-state />
 						</div>
 
 						<span class="help-block" ng-hide="isFieldChangeInvalid(category)">Deixe em branco caso não precise de troco.</span>
-						<span class="help-block error" ng-show="isFieldChangeInvalid(category)">O valor que você informou não é um número.</span>
+						<span class="help-block error" ng-show="isFieldChangeInvalid(category) && paymentForm['change-' + category.key].$error.number">O valor que você informou não é um número.</span>
+						<span class="help-block error" ng-show="isFieldChangeInvalid(category) && paymentForm['change-' + category.key].$error.min">O valor deve ser maior que o total do pedido.</span>
 					</div>
 				</fieldset>
 			</form>

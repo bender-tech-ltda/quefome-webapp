@@ -997,7 +997,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				return false;
 			}
 
-			return field.$dirty && field.$invalid;
+			return field.$touched && field.$invalid;
 		};
 
 		$scope.lastDeliveryType = null;
