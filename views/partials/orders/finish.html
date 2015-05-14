@@ -199,11 +199,11 @@
 			<form name="paymentForm">
 				<fieldset class="payment-method-category" ng-repeat="category in paymentCategories | orderBy: ['sequence', 'name']">
 					<legend class="category-name">
+						<span class="qf-icon icon-{{category.key}}"></span>
 						<span>{{category.name}}</span>
-						<span class="qf-icon icon-{{category.key}}">
 					</legend>
 
-					<div class="payment-method" ng-repeat="method in category.paymentMethods">
+					<div class="payment-method" ng-repeat="method in category.paymentMethods | orderBy: 'name'">
 						<div class="radio">
 							<label title="{{method.name}}">
 								<input type="radio" name="paymentMethod" ng-model="order.paymentMethod" ng-value="method" /> {{method.name}}
