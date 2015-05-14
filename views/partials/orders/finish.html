@@ -230,7 +230,7 @@
 			<span class="error-message" ng-hide="isFinishValid()">{{getErrorMessage()}}</span>
 			<span class="help-block" ng-show="isFinishValid()">Isso aí! Clica aí e vamos mandar essa fome pro além!</span>
 
-			<button type="button" class="btn btn-primary btn-finish-order" ng-click="" ng-disabled="!isFinishValid()">Finalizar pedido</button>
+			<button type="button" class="btn btn-primary btn-finish-order" ng-click="finishOrder()" ng-disabled="!isFinishValid()">Finalizar pedido</button>
 		</div>
 
 		<div class="finish-order-processing-panel" ng-show="processingOrder">
