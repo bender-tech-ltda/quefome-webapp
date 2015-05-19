@@ -446,7 +446,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.getOrderItemPrice = function(orderItem) {
-			return  OrderService.getOrderItemPrice(orderItem);;
+			return OrderService.getOrderItemPrice(orderItem);
 		};
 
 		$scope.finishOrder = function() {

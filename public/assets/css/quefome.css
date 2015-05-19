@@ -1488,7 +1488,7 @@ a:hover, a:focus {
 }
 
 .order-track-page .order + .order {
-	border-top: 1px solid #F5F5F5;
+	border-top: 1px solid #E3E3E3;
 }
 
 .order-track-page .order .order-number {
@@ -1496,6 +1496,7 @@ a:hover, a:focus {
 	color: rgb(234, 56, 37);	
 	text-align: center;
 	font-size: 20px;
+	font-weight: bold;
 }
 
 .order-track-page .order .order-establishment {
@@ -1573,7 +1574,6 @@ a:hover, a:focus {
 	height: 11px;
 	margin: 0px 0px 10px;
 	border-radius: 0px;
-	box-shadow: none;
 }
 
 .order-track-page .order .status-panel .status-bar .progress .progress-bar {
@@ -1595,13 +1595,19 @@ a:hover, a:focus {
 
 .order-track-page .order .order-info {
 	color: #808080;
-	font-size: 12px;
 	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
 }
 
-.order-track-page .order .order-info .order-price, 
+.order-track-page .order .order-info .order-price {
+	float: left;
+	width: 33.33%;
+	color: #008000;
+}
 .order-track-page .order .order-info .delivery-time {
-	margin: 0px;
+	float: right;
+	width: 33.33%;
 }
 
 .footer {
@@ -2213,6 +2219,57 @@ input.invalid:focus, select.invalid:focus {
 	.order-finish-page .panel-wrapper > .description {
 		border-bottom: 1px solid rgb(204, 204, 204);
 		padding-bottom: 7px;
+	}
+
+	.order-track-page .header {
+    	margin: 0px 16%;
+    }
+
+	.order-track-page .order {
+		width: 70%;
+		margin-left: 15%;
+	}
+
+	.order-track-page .order .status-panel .status li {
+		font-size: 18px;
+	}
+
+	.order-track-page .order .status-panel .status-bar .progress {
+		height: 20px;
+	}
+
+	.order-track-page .order .status-panel .status-bar .triangle {
+		border-left: 15px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 27px solid #CCC;
+	}
+
+	.order-track-page .order .status-panel .status-bar .triangle.left {
+		left: -14px;
+	}
+
+	.order-track-page .order .status-panel .status-bar .triangle.center {
+		margin: 48%;
+		margin: 0px -moz-calc(50% - 14px);
+		margin: 0px -webkit-calc(50% - 14px);
+		margin: 0px calc(50% - 14px);
+	}
+
+	.order-track-page .order .status-panel .status-bar .triangle.right {
+		right: -14px;
+	}
+
+	.order-track-page .order .status-panel.status-open .status-bar .triangle.left,
+	.order-track-page .order .status-panel.status-production .status-bar .triangle.left,
+	.order-track-page .order .status-panel.status-delivered .status-bar .triangle.left,
+	.order-track-page .order .status-panel.status-production .status-bar .triangle.center,
+	.order-track-page .order .status-panel.status-delivered .status-bar .triangle.center,
+	.order-track-page .order .status-panel.status-delivered .status-bar .triangle.right {
+		border-bottom: 27px solid #EF6815;
+	}
+
+	.order-track-page .order .order-info {
+		font-size: 14px;
 	}
 
 	.footer {

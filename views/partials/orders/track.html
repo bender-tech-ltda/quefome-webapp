@@ -4,7 +4,7 @@
 		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
 	</div>
 
-	<div class="order">
+	<div class="order" ng-repeat="order in [0, 1]">
 		<h3 class="order-number">Pedido nº 1234</h3>
 		<h4 class="order-establishment">Fornello Pizzas</h4>
 
@@ -28,9 +28,9 @@
 		</div>
 
 		<div class="order-info">
-			<span class="order-price">Total: R$ 20,00</span>
-			<span> - </span>
-			<span class="delivery-time">Estimativa de entrega: 18:30</span>
+			<p class="order-price">Total: R$ 20,00</p>
+			<p class="delivery-time">Estimativa de entrega: 18:30</p>
 		</div>
+		<div class="clearfix"></div>
 	</div>
 </div>
