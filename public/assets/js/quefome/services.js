@@ -114,10 +114,71 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.service("$notification", ["$q", function($q) {
-		var Notification = window.Notification;
+		var Notification = null;
+
+		if (window.Notification) {
+			Notification = window.Notification;
+		} else {
+			Notification = function() {};
+			Notification.prototype.close = function() {};
+		}
 
 		this.__setNotification = function(_Notification) {
 			Notification = _Notification;
+		};
+
+		var Notify = function(title, message, show) {
+			this.options = {};
+
+			if (typeof(title) === "object") {
+				this.options = title;
+			} else if (typeof(message) === "object") {
+				this.options = message;
+			}
+
+			if (typeof(show) === "undefined") {
+				show = true;
+			}
+
+			if (typeof(this.options.title) !== "undefined") {
+				this.title = this.options.title;
+				delete(this.options.title);
+			} else if (typeof(title) === "string") {
+				this.title = title;
+			}
+
+			if (typeof(this.options.message) !== "undefined") {
+				this.options.body = this.options.message;
+				delete(this.options.message);
+			} else if (typeof(message) === "string") {
+				this.options.body = message;
+			}
+
+			if (typeof(this.options.show) !== "undefined") {
+				show = this.options.show;
+				delete(this.options.show);
+			}
+
+			if (show) {
+				this.show();
+			}
+		};
+
+		Notify.prototype.title = "";
+		Notify.prototype.options = null;
+
+		Notify.prototype._currentNotification = null;
+		Notify.prototype.show = function() {
+			this.hide();
+
+			this._currentNotification = new Notification(this.title, this.options);
+			return this._currentNotification;
+		};
+
+		Notify.prototype.hide = function() {
+			if (this._currentNotification) {
+				this._currentNotification.close();
+			}
 		};
 
 		this.requestPermission = function() {
@@ -142,6 +203,10 @@ define(["angular"], function(angular) {
 
 		this.hasPermission = function() {
 			return Notification.permission == "granted";
+		};
+
+		this.notify = function(title, message, show) {
+			return new Notify(title, message, show);
 		};
 	}]);
 

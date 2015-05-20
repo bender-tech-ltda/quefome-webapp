@@ -1264,7 +1264,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		});
 	}]);
 
-	module.controller("OrderTrackController", ["$scope", "$timeout", "$flashStorage", "Dialog", "AuthService", "OrderService", function($scope, $timeout, $flashStorage, Dialog, AuthService, OrderService) {
+	module.controller("OrderTrackController", ["$scope", "$timeout", "$flashStorage", "$notification", "Dialog", "AuthService", "OrderService", function($scope, $timeout, $flashStorage, $notification, Dialog, AuthService, OrderService) {
 		$scope.secondsToRefreshTheOrders = 30;
 
 		$scope.orders = [];
@@ -1281,13 +1281,13 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				return;
 			}
 
+			$notification.requestPermission();
+
 			$scope.searchingOrders = true;
 
 			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
 			OrderService.list().then(function(orders) {
-				Notification.requestPermission(function() {
-					var notification = new Notification("Novos Pedidos chegando!");
-				});
+				$notification.notify("Novos pedidos!");
 
 				$scope.orders = orders;
 
