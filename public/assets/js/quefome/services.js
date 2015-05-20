@@ -113,6 +113,38 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.service("$notification", ["$q", function($q) {
+		var Notification = window.Notification;
+
+		this.__setNotification = function(_Notification) {
+			Notification = _Notification;
+		};
+
+		this.requestPermission = function() {
+			if (this.hasPermission()) {
+				return $q(function(resolve) {
+					resolve();
+				});
+			}
+
+			var deferred = $q.defer();
+
+			Notification.requestPermission(function(permission) {
+				if (this.hasPermission()) {
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			});
+
+			return deferred.promise;
+		};
+
+		this.hasPermission = function() {
+			return Notification.permission == "granted";
+		};
+	}]);
+
 	module.service("AuthService", ["$http", "$q", function($http, $q) {
 		var loggedUser = null;
 

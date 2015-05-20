@@ -1285,6 +1285,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
 			OrderService.list().then(function(orders) {
+				Notification.requestPermission(function() {
+					var notification = new Notification("Novos Pedidos chegando!");
+				});
+
 				$scope.orders = orders;
 
 				$scope.ordersSearched = true;
