@@ -78,8 +78,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.orders).toBeDefined();
 		});
 
-		it("should have a secondsToRefreshTheOrders property", function() {
-			expect(scope.secondsToRefreshTheOrders).toBeDefined();
+		it("should have a orders property", function() {
+			expect(scope.orders).toBeDefined();
+		});
+
+		it("should have a ordersSearched property", function() {
+			expect(scope.ordersSearched).toBeDefined();
+		});
+
+		it("should have a searchingOrders property", function() {
+			expect(scope.searchingOrders).toBeDefined();
 		});
 
 		describe("on startup", function() {
@@ -143,6 +151,37 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.refreshOrders();
 
 				expect(MockedOrderService._listCalled).toBe(false);
+			});
+
+			it("should set searchingOrders to true", function() {
+				scope.searchingOrders = false;
+				MockedOrderService.list = function() {
+					return {then: function() {}};
+				};
+
+				scope.refreshOrders();
+				expect(scope.searchingOrders).toBe(true);
+			});
+
+			it("should set searchingOrders to false if finished", function() {
+				scope.searchingOrders = true;
+				scope.refreshOrders();
+				expect(scope.searchingOrders).toBe(false);
+
+				MockedOrderService.list = function() {
+					return {then: function(sucess, fail) {
+						fail();
+					}};
+				};
+
+				scope.refreshOrders();
+				expect(scope.searchingOrders).toBe(false);
+			});
+
+			it("should set ordersSearched to true if finished with success", function() {
+				scope.ordersSearched = false;
+				scope.refreshOrders();
+				expect(scope.ordersSearched).toBe(true);
 			});
 
 			it("should search for the user orders", function() {

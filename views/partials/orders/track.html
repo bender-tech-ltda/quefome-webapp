@@ -9,7 +9,7 @@
 		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
 	</div>
 
-	<div class="order" ng-repeat="order in orders">
+	<div class="order" ng-repeat="order in orders" ng-show="ordersSearched">
 		<h3 class="order-number">Pedido nº {{order.id}}</h3>
 		<h4 class="order-establishment">{{order.establishment.name}}</h4>
 
@@ -37,5 +37,10 @@
 			<p class="delivery-time">Entrega estimada: {{order.deliveryTime | prettyTime}}</p>
 		</div>
 		<div class="clearfix"></div>
+	</div>
+
+	<div class="searching-orders-panel" ng-hide="ordersSearched">
+		<h4>Estamos buscando seus pedidos...</h4>
+		<span class="qf-icon icon-loading spin"></span>
 	</div>
 </div>

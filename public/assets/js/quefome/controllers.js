@@ -1267,6 +1267,9 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.orders = [];
 
+		$scope.ordersSearched = false;
+		$scope.searchingOrders = false;
+
 		var timeoutPromise = null;		
 		$scope.refreshOrders = function() {
 			if (!$scope.isUserLogged()) {
@@ -1274,12 +1277,18 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				return;
 			}
 
-			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
+			$scope.searchingOrders = true;
 
+			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
 			OrderService.list().then(function(orders) {
 				$scope.orders = orders;
+
+				$scope.ordersSearched = true;
+				$scope.searchingOrders = false;
+
 				timeoutPromise = $timeout($scope.startup, refreshTime);
 			}, function() {
+				$scope.searchingOrders = false;
 				timeoutPromise = $timeout($scope.startup, refreshTime);
 			});
 		};

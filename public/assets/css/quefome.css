@@ -1610,6 +1610,17 @@ a:hover, a:focus {
 	width: 33.33%;
 }
 
+.order-track-page .searching-orders-panel {
+	padding: 15px 5%;
+	color: #7A7A7A;
+	text-align: center;
+	font-size: 20px;
+}
+
+.order-track-page .searching-orders-panel .qf-icon {
+	font-size: 25px;
+}
+
 .footer {
 	width: 100%;
 	height: 164px;
