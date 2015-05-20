@@ -44,6 +44,48 @@ define(["angular"], function(angular) {
 		return simplifiedAddress;
 	};
 
+	module.service("$flashStorage", [function() {
+		var sessionStorage = {
+			_items: {},
+
+			setItem: function(key, value) {
+				this._items[key] = value;
+			},
+
+			getItem: function(key) {
+				return this._items[key];
+			},
+
+			removeItem: function(key) {
+				if (this._items[key]) {
+					delete(this._items[key]);
+				}
+			}
+		};
+
+		this.__setSessionStorage = function(_sessionStorage) {
+			sessionStorage = _sessionStorage;
+		}
+
+		this.set = function(key, value) {
+			sessionStorage.setItem(key, value);
+		};
+
+		this.get = function(key, dontDeleteYet) {
+			var value = sessionStorage.getItem(key);
+
+			if (typeof(value) != "undefined" && !dontDeleteYet) {
+				this.remove(key);
+			}
+
+			return value;
+		};
+
+		this.remove = function(key) {
+			sessionStorage.removeItem(key);
+		};
+	}]);
+
 	module.service("$localStorage", [function() {
 		var localStorage = window.localStorage;
 

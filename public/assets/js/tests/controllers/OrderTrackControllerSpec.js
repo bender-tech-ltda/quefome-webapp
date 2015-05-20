@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("OrderTrackController", function() {
 		var scope, controller;
-		var Mocked$timeout;
+		var Mocked$timeout, Mocked$flashStorage;
 		var MockedDialog;
 		var MockedAuthService, MockedOrderService;
 
@@ -18,6 +18,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			Mocked$timeout._lastCallback = null;
 			Mocked$timeout._lastTime = null;
+
+			Mocked$flashStorage = {
+				_getKey: null,
+				_getValue: null,
+				get: function(key) {
+					this._getKey = key;
+					return this._getValue;
+				}
+			};
 
 			MockedDialog = {
 				_called: false,
@@ -64,6 +73,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		beforeEach(function() {
 			var params = {
 				$timeout: Mocked$timeout,
+				$flashStorage: Mocked$flashStorage,
 				Dialog: MockedDialog,
 				AuthService: MockedAuthService,
 				OrderService: MockedOrderService
@@ -90,7 +100,21 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.searchingOrders).toBeDefined();
 		});
 
+		it("should have a recentlyCreatedOrder property", function() {
+			expect(scope.recentlyCreatedOrder).toBeDefined();
+		});
+
 		describe("on startup", function() {
+			it("should get the recently added order", function() {
+				Mocked$flashStorage._getKey = "";
+				scope.startup();
+				expect(Mocked$flashStorage._getKey).toEqual("recentlyCreatedOrder")
+
+				Mocked$flashStorage._getValue = {id: -4};
+				scope.startup();
+				expect(scope.recentlyCreatedOrder).toEqual(Mocked$flashStorage._getValue);
+			});
+
 			it("shuould search for the user orders", function() {
 				var called = false;
 

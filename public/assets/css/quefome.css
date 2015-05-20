@@ -1482,6 +1482,12 @@ a:hover, a:focus {
 	text-align: center;
 }
 
+.order-track-page .alert-recent-order {
+	border-radius: 0px;
+	margin-top: 10px;
+	text-align: center;
+}
+
 .order-track-page .order {
 	width: 100%;
 	padding: 15px 10px;
@@ -2248,8 +2254,12 @@ input.invalid:focus, select.invalid:focus {
 	}
 
 	.order-track-page .header {
-    	margin: 0px 16%;
-    }
+		margin: 0px 16%;
+	}
+
+	.order-track-page .alert-recent-order {
+		margin: 10px 16%;
+	}
 
 	.order-track-page .order {
 		width: 70%;

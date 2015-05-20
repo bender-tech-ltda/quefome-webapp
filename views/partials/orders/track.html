@@ -9,7 +9,11 @@
 		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
 	</div>
 
-	<div class="order" ng-repeat="order in orders" ng-show="ordersSearched">
+	<div class="alert alert-success alert-recent-order" ng-show="recentlyCreatedOrder">
+		<p>Seu pedido foi realizado! O número do pedido é {{recentlyCreatedOrder.id}}.</p>
+	</div>
+
+	<div class="order" ng-repeat="order in orders | orderBy: '-date'" ng-show="ordersSearched">
 		<h3 class="order-number">Pedido nº {{order.id}}</h3>
 		<h4 class="order-establishment">{{order.establishment.name}}</h4>
 

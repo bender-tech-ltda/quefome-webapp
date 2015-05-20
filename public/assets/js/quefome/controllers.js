@@ -924,7 +924,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 	}]);
 
-	module.controller("OrderFinishController", ["$scope", "$routeParams", "$location", "AuthService", "EstablishmentService", "OrderService", "AddressService", function($scope, $routeParams, $location, AuthService, EstablishmentService, OrderService, AddressService) {
+	module.controller("OrderFinishController", ["$scope", "$routeParams", "$location", "$flashStorage", "AuthService", "EstablishmentService", "OrderService", "AddressService", function($scope, $routeParams, $location, $flashStorage, AuthService, EstablishmentService, OrderService, AddressService) {
 		$scope.establishment = null;
 		$scope.establishmentNotFound = false;
 
@@ -1196,7 +1196,9 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.errorProcessingOrder = false;
 
 			OrderService.create($scope.order).then(function(order) {
+				$flashStorage.set("recentlyCreatedOrder", order);
 				$location.path("/user/orders/");
+
 				$scope.processingOrder = false;
 			}, function() {
 				$scope.processingOrder = false;
@@ -1262,13 +1264,15 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		});
 	}]);
 
-	module.controller("OrderTrackController", ["$scope", "$timeout", "Dialog", "AuthService", "OrderService", function($scope, $timeout, Dialog, AuthService, OrderService) {
+	module.controller("OrderTrackController", ["$scope", "$timeout", "$flashStorage", "Dialog", "AuthService", "OrderService", function($scope, $timeout, $flashStorage, Dialog, AuthService, OrderService) {
 		$scope.secondsToRefreshTheOrders = 30;
 
 		$scope.orders = [];
 
 		$scope.ordersSearched = false;
 		$scope.searchingOrders = false;
+
+		$scope.recentlyCreatedOrder = null;
 
 		var timeoutPromise = null;		
 		$scope.refreshOrders = function() {
@@ -1309,6 +1313,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.startup = function() {
+			$scope.recentlyCreatedOrder = $flashStorage.get("recentlyCreatedOrder") || null;
+
 			$scope.refreshOrders();
 		};
 

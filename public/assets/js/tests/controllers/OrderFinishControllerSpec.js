@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("OrderFinishController", function() {
 		var scope, controller;
-		var Mocked$location, Mocked$routeParams;
+		var Mocked$location, Mocked$routeParams, Mocked$flashStorage;
 		var MockedAuthService, MockedEstablishmentService, MockedOrderService, MockedAddressService;
 
 		beforeEach(module("qfControllers"));
@@ -19,6 +19,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				path: function(location) {
 					this._currentPath = location;
 					return this;
+				}
+			};
+
+			Mocked$flashStorage = {
+				_setKey: null,
+				_setValue: null,
+				set: function(key, value) {
+					this._setKey = key;
+					this._setValue = value;
 				}
 			};
 
@@ -112,7 +121,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return {
 						then: function(success, fail) {
 							if (createSuccess) {
-								success();
+								success(order);
 							} else {
 								fail();
 							}
@@ -180,6 +189,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			var params = {
 				$routeParams: Mocked$routeParams,
 				$location: Mocked$location,
+				$flashStorage: Mocked$flashStorage,
 				AuthService: MockedAuthService,
 				EstablishmentService: MockedEstablishmentService,
 				OrderService: MockedOrderService,
@@ -1095,6 +1105,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.finishOrder();
 
 				expect(scope.errorProcessingOrder).toBe(true);
+			});
+
+			it("should set the order in the $flashStorage", function() {
+				scope.order = {items: [], withdraw: true};
+				scope.finishOrder();
+
+				expect(Mocked$flashStorage._setKey).toEqual("recentlyCreatedOrder");
+				expect(Mocked$flashStorage._setValue).toEqual(MockedOrderService._createOrder);
 			});
 
 			it("should send to the order tracking page", function() {
