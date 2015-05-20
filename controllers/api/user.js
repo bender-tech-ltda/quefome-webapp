@@ -56,6 +56,29 @@ module.exports = function(router) {
 		}
 	});
 
+	router.get("/api/user/orders/", function(req, res) {
+		if (req.session && req.session.user) {
+			var filter = req.query || {};
+			filter.user = req.session.user;
+
+			if (typeof(filter.lastHours) === "undefined") {
+				filter.lastHours = 24;
+			}
+
+			if (typeof(filter.status) === "undefined") {
+				filter.status = null; //trazer pedidos com qualquer status
+			}
+
+			Order.list(filter).then(function(orders) {
+				res.json(orders);
+			}, function(response) {
+				res.status(response.statusCode).send(response.body);
+			});
+		} else {
+			res.status(900).send("Usuário não esta logado!");
+		}
+	});
+
 	router.post("/api/user/orders/", function(req, res) {
 		if (req.session && req.session.user) {
 			req.body.user = req.session.user;

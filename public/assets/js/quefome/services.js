@@ -278,6 +278,12 @@ define(["angular"], function(angular) {
 			},treatPromiseErrors($q));
 		};
 
+		this.list = function() {
+			return $http.get("/api/user/orders/").then(function(response) {
+				return response.data;
+			}, treatPromiseErrors($q));
+		};
+
 		this.store = function(order) {
 			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
 			$localStorage.set("OrderService_store_" + establishment, order);

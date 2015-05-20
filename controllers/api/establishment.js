@@ -7,9 +7,11 @@ module.exports = function(router) {
 			return;
 		}
 
-		console.log(req.session.establishmentUser);
+		var filter = {
+			establishment: req.session.establishmentUser.establishment
+		};
 
-		Order.list(req.session.establishmentUser.establishment).then(function(orders) {
+		Order.list(filter).then(function(orders) {
 			res.json(orders);
 		}, function(response) {
 			res.status(response.statusCode).send(response.body);

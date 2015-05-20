@@ -1262,6 +1262,56 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		});
 	}]);
 
+	module.controller("OrderTrackController", ["$scope", "$timeout", "Dialog", "AuthService", "OrderService", function($scope, $timeout, Dialog, AuthService, OrderService) {
+		$scope.secondsToRefreshTheOrders = 30;
+
+		$scope.orders = [];
+
+		var timeoutPromise = null;		
+		$scope.refreshOrders = function() {
+			if (!$scope.isUserLogged()) {
+				timeoutPromise = $timeout($scope.startup, 500);
+				return;
+			}
+
+			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
+
+			OrderService.list().then(function(orders) {
+				$scope.orders = orders;
+				timeoutPromise = $timeout($scope.startup, refreshTime);
+			}, function() {
+				timeoutPromise = $timeout($scope.startup, refreshTime);
+			});
+		};
+
+		$scope.isLoginChecked = function() {
+			return AuthService.hasCheckedForLoggedUser();
+		};
+
+		$scope.isUserLogged = function() {
+			return AuthService.isLogged();
+		};
+
+		$scope.login = function() {
+			Dialog.create({
+				templateUrl: "/partials/login/login.html",
+				show: true
+			});
+		};
+
+		$scope.startup = function() {
+			$scope.refreshOrders();
+		};
+
+		$scope.$on("$destroy", function() {
+			if (timeoutPromise) {
+				$timeout.cancel(timeoutPromise);
+			}
+		});
+
+		$scope.startup();
+	}]);
+
 	module.controller("TesteController", ["$scope", function($scope) {
 		$scope.teste = "Olá, seja bem vindo ao Quefo.me!";
 	}]);

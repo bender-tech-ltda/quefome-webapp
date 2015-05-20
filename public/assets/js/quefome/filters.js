@@ -3,6 +3,27 @@ define(["angular"], function(angular) {
 
 	var module = angular.module("qfFilters", []);
 
+	module.filter("prettyTime", ["$filter", function($filter) {
+		return function(value, today) {
+			if (!value) {
+				return "";
+			}
+
+			if (!today) {
+				today = new Date();
+			}
+
+			var date = (value instanceof Date) ? value : new Date(value);
+			var result = $filter("date")(date, "HH:mm");
+
+			if (date.getDate() != today.getDate()) {
+				result += " do dia " + $filter("date")(date, "dd/MM");
+			}
+
+			return result;
+		};
+	}]);
+
 	module.filter("money", ["$filter", function($filter) {
 		return function(value) {
 			if (typeof(value) === "undefined") {

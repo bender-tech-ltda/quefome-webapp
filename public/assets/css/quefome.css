@@ -1639,6 +1639,21 @@ a:hover, a:focus {
 	margin-bottom: 10%;
 }
 
+.login-message {
+	margin: 10% 5%;
+	text-align: center;	
+}
+
+.login-message .message {
+	color: #F26C23;
+	margin-bottom: 0px;
+}
+
+.login-message .btn-link, .login-message .a {
+	color: #ED3825;
+	font-size: 19px;
+}
+
 label.label {
 	color: #333;
 	font-weight: bold;

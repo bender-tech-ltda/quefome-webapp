@@ -1,14 +1,19 @@
-<div class="order-track-page">
+<div class="login-message" ng-show="isLoginChecked() && !isUserLogged()">
+	<h3 class="message">Você precisa estar logado para acompanhar seus pedidos!</h3>
+	<button type="button" class="btn btn-link" ng-click="login()">Clique aqui para fazer seu login</button>
+</div>
+
+<div class="order-track-page" ng-show="isUserLogged()">
 	<div class="header">
-		<h2 class="title">Acompanhe seus pedidos</h2>
+		<h2 class="title">{{orders.length > 1 ? 'Acompanhe seus pedidos' : 'Acompanhe seu pedido'}}</h2>
 		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
 	</div>
 
-	<div class="order" ng-repeat="order in [0, 1]">
-		<h3 class="order-number">Pedido nº 1234</h3>
-		<h4 class="order-establishment">Fornello Pizzas</h4>
+	<div class="order" ng-repeat="order in orders">
+		<h3 class="order-number">Pedido nº {{order.id}}</h3>
+		<h4 class="order-establishment">{{order.establishment.name}}</h4>
 
-		<div class="status-panel status-open" title="O estabelecimento já recebeu seu pedido">
+		<div class="status-panel status-open" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}" title="O estabelecimento já recebeu seu pedido">
 			<ul class="status">
 				<li class="open">Recebido</li>
 				<li class="production">No forno</li>
@@ -28,8 +33,8 @@
 		</div>
 
 		<div class="order-info">
-			<p class="order-price">Total: R$ 20,00</p>
-			<p class="delivery-time">Estimativa de entrega: 18:30</p>
+			<p class="order-price">Total: R$ {{order.price | money}}</p>
+			<p class="delivery-time">Entrega estimada: {{order.deliveryTime | prettyTime}}</p>
 		</div>
 		<div class="clearfix"></div>
 	</div>

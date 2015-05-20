@@ -25,7 +25,7 @@ define([], function() {
 		},
 		{
 			path: "/user/orders",
-			//controller: "OrderTrackController",
+			controller: "OrderTrackController",
 			templateUrl: "/partials/orders/track.html",
 		}
 	];

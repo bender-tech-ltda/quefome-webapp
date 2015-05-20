@@ -70,6 +70,25 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 		});
 
+		describe("when listing the orders", function() {
+			it("should GET the list", function() {
+				var orders = [];
+				$httpBackend.whenGET("/api/user/orders/").respond(200, orders);
+
+				var success = false;
+				var responseOrders = null;
+				OrderService.list().then(function(orders) {
+					success = true;
+					responseOrders = orders;
+				});
+
+				$httpBackend.flush();
+
+				expect(success).toBe(true);
+				expect(responseOrders).toEqual(orders);
+			});
+		});
+
 		describe("when storing an order", function() {
 			it("should store using the establishment as key", function() {
 				OrderService.store({establishment: {id: -2}, product: {id: -10}});

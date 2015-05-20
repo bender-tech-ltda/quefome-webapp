@@ -8,8 +8,20 @@ var Order = function() {
 		});
 	};
 
-	this.list = function(establishment) {
-		return webservice.get("/orders/", {establishment: establishment.id}).then(function(response) {
+	this.list = function(filter) {
+		if (!filter) {
+			filter = {};
+		}
+
+		if (typeof(filter.establishment) === "object") {
+			filter.establishment = filter.establishment.id;
+		}
+
+		if (typeof(filter.user) === "object") {
+			filter.user = filter.user.id;
+		}
+
+		return webservice.get("/orders/", filter).then(function(response) {
 			return response.body;
 		});
 	};
