@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("OrderTrackController", function() {
 		var scope, controller;
-		var Mocked$timeout, Mocked$flashStorage;
+		var Mocked$timeout, Mocked$flashStorage, Mocked$notification;
 		var MockedDialog;
 		var MockedAuthService, MockedOrderService;
 
@@ -25,6 +25,31 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				get: function(key) {
 					this._getKey = key;
 					return this._getValue;
+				}
+			};
+
+			Mocked$notification = {
+				_requestPermissionCalled: false,
+				requestPermission: function() {
+					this._requestPermissionCalled = true;
+				},
+
+				_notifyCalled: false,
+				_notifyTitle: null,
+				_notifyMessage: null,
+				_notifyHideCalled: false,
+				notify: function(title, message) {
+					this._notifyCalled = true;
+					this._notifyTitle = title;
+					this._notifyMessage = message;
+
+					var that = this;
+
+					return {
+						hide: function() {
+							that._notifyHideCalled = true;
+						}
+					};
 				}
 			};
 
@@ -74,6 +99,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			var params = {
 				$timeout: Mocked$timeout,
 				$flashStorage: Mocked$flashStorage,
+				$notification: Mocked$notification,
 				Dialog: MockedDialog,
 				AuthService: MockedAuthService,
 				OrderService: MockedOrderService
@@ -177,6 +203,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(MockedOrderService._listCalled).toBe(false);
 			});
 
+			it("should check if the user can be notified", function() {
+				Mocked$notification._requestPermissionCalled = false;
+				scope.refreshOrders();
+
+				expect(Mocked$notification._requestPermissionCalled).toBe(true);
+			});
+
 			it("should set searchingOrders to true", function() {
 				scope.searchingOrders = false;
 				MockedOrderService.list = function() {
@@ -208,6 +241,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.ordersSearched).toBe(true);
 			});
 
+			it("should notify if any order status changed", function() {
+				var called = false;
+
+				scope.notifyStatusChanged = function() {
+					called = true;
+				};
+
+				scope.refreshOrders();
+				expect(called).toBe(true);
+			});
+
 			it("should search for the user orders", function() {
 				MockedOrderService._listCalled = false;
 				MockedOrderService._listOrders = [{id: -4}];
@@ -223,6 +267,34 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				expect(Mocked$timeout._lastTime).toBeGreaterThan(0);
 				expect(typeof(Mocked$timeout._lastCallback)).toEqual("function");
+			});
+		});
+
+		describe("when notifing if any order status changed", function() {
+			it("should not notify about new orders", function() {
+				scope.orders = [
+					{id: -2, status: "OPEN"}, {id: -3, status: "PRODUCTION"}
+				];
+
+				scope.notifyStatusChanged();
+
+				expect(Mocked$notification._notifyCalled).toBe(false);
+			});
+
+			it("should notify about status changed to production", function() {
+				scope.orders = [
+					{id: -2, status: "OPEN"}, {id: -3, status: "OPEN"}
+				];
+				scope.notifyStatusChanged();
+
+				scope.orders[0].status = "PRODUCTION";
+				scope.notifyStatusChanged();
+
+				expect(Mocked$notification._notifyCalled).toBe(true);
+
+				Mocked$notification._notifyCalled = false;
+				scope.notifyStatusChanged();
+				expect(Mocked$notification._notifyCalled).toBe(false);
 			});
 		});
 	});

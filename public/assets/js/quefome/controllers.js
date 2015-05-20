@@ -1274,6 +1274,36 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.recentlyCreatedOrder = null;
 
+		var orderStatus = {};
+		var lastNotification = {hide: function() {}};
+		$scope.notifyStatusChanged = function() {
+			var orderStatusQuantity = {};
+
+			for (var i in $scope.orders) {
+				var order = $scope.orders[i];
+
+				var oldStatus = orderStatus[order.id];
+
+				if (oldStatus && oldStatus != order.status) {
+					if (!orderStatusQuantity[order.status]) {
+						orderStatusQuantity[order.status] = 0;
+					}
+
+					orderStatusQuantity[order.status]++;
+				}
+
+				orderStatus[order.id] = order.status;
+			}
+
+			if (orderStatusQuantity.PRODUCTION == 1) {
+				lastNotification.hide();
+				lastNotification = $notification.notify("Ta no forno!", "Seu pedido acabou de ir para o forno");
+			} else if (orderStatusQuantity.PRODUCTION > 1) {
+				lastNotification.hide();
+				lastNotification = $notification.notify("Tão no forno!", "Seus pedidos acabaram de ir para o forno");
+			}
+		};
+
 		var timeoutPromise = null;		
 		$scope.refreshOrders = function() {
 			if (!$scope.isUserLogged()) {
@@ -1287,12 +1317,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			var refreshTime = 1000 * $scope.secondsToRefreshTheOrders;
 			OrderService.list().then(function(orders) {
-				$notification.notify("Novos pedidos!");
-
 				$scope.orders = orders;
 
 				$scope.ordersSearched = true;
 				$scope.searchingOrders = false;
+
+				$scope.notifyStatusChanged();
 
 				timeoutPromise = $timeout($scope.startup, refreshTime);
 			}, function() {
