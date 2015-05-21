@@ -1,11 +1,17 @@
 <div class="login-message" ng-show="isLoginChecked() && !isUserLogged()">
-	<h3 class="message">Você precisa estar logado para acompanhar seus pedidos!</h3>
+	<h3 class="message">
+		<span class="qf-icon icon-lock"></span>
+		<span>Você precisa estar logado para acompanhar seus pedidos!</span>
+	</h3>
 	<button type="button" class="btn btn-link" ng-click="login()">Clique aqui para fazer seu login</button>
 </div>
 
 <div class="order-track-page" ng-show="isUserLogged()">
 	<div class="header">
-		<h2 class="title">{{orders.length > 1 ? 'Acompanhe seus pedidos' : 'Acompanhe seu pedido'}}</h2>
+		<h2 class="title">
+			<span>{{orders.length > 1 ? 'Acompanhe seus pedidos' : 'Acompanhe seu pedido'}}</span>
+			<span class="qf-icon icon-pacman"></span>
+		</h2>
 		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
 	</div>
 
