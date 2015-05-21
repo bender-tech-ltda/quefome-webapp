@@ -690,6 +690,10 @@ a:hover, a:focus {
 	padding: 4px 12px;
 }
 
+.establishment-page .establishment-products .products .product .btn-add-product .qf-icon {
+	font-size: 14px;
+}
+
 .establishment-page .order-panel {
 	width: 100%;
 	height: 57px;
@@ -790,6 +794,10 @@ a:hover, a:focus {
 	margin-top: 10px;
 }
 
+.establishment-page .order-panel.opened .header .btn-finish-order .qf-icon {
+	font-size: 16px;
+}
+
 .establishment-page .order-panel .order-items {
 	width: 100%;
 	margin-bottom: 0px;
@@ -845,14 +853,14 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .order-items .items .order-item .quantity {
 	float: left;
-	width: 50%;
+	width: 40%;
 	font-size: 12px;
 	color: #7A7A7A;
 }
 
 .establishment-page .order-panel .order-items .items .order-item .actions {
 	float: right;
-	width: 50%;
+	width: 60%;
 	text-align: right;
 }
 
@@ -862,6 +870,10 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .order-items .items .order-item .actions .btn-remove-order-item {
 	color: #E73724;
+}
+
+.establishment-page .order-panel .order-items .items .order-item .actions .btn .qf-icon {
+	font-size: 16px;
 }
 
 .customize-product-dialog .product .info {
@@ -1263,6 +1275,10 @@ a:hover, a:focus {
     text-align: left;
 }
 
+.order-finish-page .resume-panel .btn-back .qf-icon {
+	font-size: 16px;
+}
+
 .order-finish-page .resume-panel .order-price {
 	float: right;
 	width: 50%;
@@ -1451,6 +1467,10 @@ a:hover, a:focus {
 	width: 100%;
 }
 
+.order-finish-page .action-buttons .btn-finish-order .qf-icon {
+	font-size: 16px;
+}
+
 .order-finish-page .finish-order-processing-panel {
 	padding: 15px 5%;
 	background-color: #F2F0F0;
@@ -1523,6 +1543,15 @@ a:hover, a:focus {
 	width: 33.33%;
 	color: #ccc;
 	text-align: center;
+}
+
+.order-track-page .order .status-panel .status li .qf-icon {
+	display: block;
+	font-size: 26px;
+}
+
+.order-track-page .order .status-panel .status li.open .qf-icon {
+	left: -2%;
 }
 
 .order-track-page .order .status-panel.status-open .status li.open,
@@ -2268,6 +2297,10 @@ input.invalid:focus, select.invalid:focus {
 
 	.order-track-page .order .status-panel .status li {
 		font-size: 18px;
+	}
+
+	.order-track-page .order .status-panel .status li .qf-icon {
+		font-size: 35px;
 	}
 
 	.order-track-page .order .status-panel .status-bar .progress {

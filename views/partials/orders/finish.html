@@ -8,7 +8,10 @@
 	<div class="resume-panel" qf-sticky-scroll="top">
 		<h4 class="establishment-name">{{establishment.name}}</h4>
 
-		<button type="button" class="btn btn-link btn-back" ng-click="goToEstablishmentPage()">Editar pedido</button>
+		<button type="button" class="btn btn-link btn-back" ng-click="goToEstablishmentPage()">
+			<span class="qf-icon icon-back"></span>
+			<span>Editar pedido</span>
+		</button>
 		<p class="order-price">Total: R$ {{getOrderTotalPrice() | money}}</p>
 	</div>
 
@@ -17,7 +20,7 @@
 		<h3 class="description">Só precisamos de mais algumas coisinhas...</h3>
 
 		<fieldset class="delivery-type-panel" ng-show="establishment.parameters.canWithdraw">
-			<h4 class="title">Como você quer receber seu pedido?</h4>
+			<h4 class="title"><span class="qf-icon icon-bike"></span> Como você quer receber seu pedido?</h4>
 
 			<div class="radio">
 				<label>
@@ -37,7 +40,7 @@
 
 		<fieldset class="address-panel" ng-hide="order.withdraw">
 			<h4 class="title">
-				<span>Onde entregar seu pedido?</span>
+				<span><span class="qf-icon icon-location"></span> Onde entregar seu pedido?</span>
 
 				<span class="error-message" ng-show="!addressStatus.processing && !addressStatus.zipCodeValid && !addressStatus.addressValid">Você precisa informar o endereço de entrega do seu pedido.</span>
 			</h4>
@@ -173,6 +176,7 @@
 
 		<fieldset class="phone-number-panel">
 			<h4 class="title">
+				<span class="qf-icon icon-phone"></span>
 				<span>Qual seu telefone?</span>
 
 				<span class="error-message" ng-show="phoneForm.$invalid">Você precisa informar um telefone para contato</span>
@@ -231,7 +235,10 @@
 			<span class="error-message" ng-hide="isFinishValid()">{{getErrorMessage()}}</span>
 			<span class="help-block" ng-show="isFinishValid()">Isso aí! Clica aí e vamos mandar essa fome pro além!</span>
 
-			<button type="button" class="btn btn-primary btn-finish-order" ng-click="finishOrder()" ng-disabled="!isFinishValid()">Finalizar pedido</button>
+			<button type="button" class="btn btn-primary btn-finish-order" ng-click="finishOrder()" ng-disabled="!isFinishValid()">
+				<span>Finalizar pedido</span>
+				<span class="qf-icon icon-cart"></span>
+			</button>
 		</div>
 
 		<div class="finish-order-processing-panel" ng-show="processingOrder">

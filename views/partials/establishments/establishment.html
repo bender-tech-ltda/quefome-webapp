@@ -14,7 +14,7 @@
 				<p class="description">{{establishment.description}}</p>
 			</div>
 
-			<p class="address">{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</p>
+			<p class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</p>
 		</div>
 
 		<div class="additional-info">
@@ -66,7 +66,10 @@
 				</div>
 
 				<span class="price">R$ {{product.price | money}}</span>
-				<button type="button" class="btn btn-primary btn-add-product" ng-click="customizeProduct(product)">Adicionar</button>
+				<button type="button" class="btn btn-primary btn-add-product" ng-click="customizeProduct(product)">
+					<span class="qf-icon icon-plus"></span>
+					<span>Adicionar</span>
+				</button>
 			</li>
 		</ul>
 
@@ -111,7 +114,10 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0" ng-click="finishOrder()">Finalizar Pedido</button>
+				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0" ng-click="finishOrder()">
+					<span>Finalizar Pedido</span>
+					<span class="qf-icon icon-forward"></span>
+				</button>
 			</div>
 
 			<div class="order-items panel panel-default" ng-show="orderDetailPanelOpen">
@@ -127,8 +133,14 @@
 						
 							<div class="quantity" ng-click="editOrderItem(item)">Quantidade: {{item.quantity}}</div>
 							<div class="actions">
-								<button type="button" class="btn btn-link btn-edit-order-item" ng-click="editOrderItem(item)">editar</button>
-								<button type="button" class="btn btn-link btn-remove-order-item" ng-click="removeOrderItem(item)">remover</button>
+								<button type="button" class="btn btn-link btn-edit-order-item" ng-click="editOrderItem(item)">
+									<span class="qf-icon icon-edit"></span>
+									<span>editar</span>
+								</button>
+								<button type="button" class="btn btn-link btn-remove-order-item" ng-click="removeOrderItem(item)">
+									<span class="qf-icon icon-trash"></span>
+									<span>remover</span>
+								</button>
 							</div>
 
 							<div class="clearfix"></div>

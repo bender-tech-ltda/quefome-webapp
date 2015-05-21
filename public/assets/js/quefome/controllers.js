@@ -1297,10 +1297,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			if (orderStatusQuantity.PRODUCTION == 1) {
 				lastNotification.hide();
-				lastNotification = $notification.notify("Ta no forno!", "Seu pedido acabou de ir para o forno");
+				lastNotification = $notification.notify("Quefo.me: Ta no forno!", "Seu pedido acabou de ir para o forno");
 			} else if (orderStatusQuantity.PRODUCTION > 1) {
 				lastNotification.hide();
-				lastNotification = $notification.notify("Tão no forno!", "Seus pedidos acabaram de ir para o forno");
+				lastNotification = $notification.notify("Quefo.me: Tão no forno!", "Seus pedidos acabaram de ir para o forno");
 			}
 		};
 
