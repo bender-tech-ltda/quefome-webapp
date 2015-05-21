@@ -13,7 +13,31 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		}));
 
 		describe("when using the browser notification", function() {
-			it("should not throw an error", function() {
+			it("should not throw an error on requestPermission", function() {
+				expect(function() {
+					$notification.requestPermission();
+				}).not.toThrow();
+			});
+
+			it("should not throw an error on notify", function() {
+				expect(function() {
+					$notification.notify("Teste Notificação", "Mensagem da notificação", true);
+				}).not.toThrow();
+			});
+		});
+
+		describe("when the browser doenst support notifications", function() {
+			beforeEach(function() {
+				$notification.__setNotification(null);
+			});
+
+			it("should not throw an error on requestPermission", function() {
+				expect(function() {
+					$notification.requestPermission();
+				}).not.toThrow();
+			});
+
+			it("should not throw an error on notify", function() {
 				expect(function() {
 					$notification.notify("Teste Notificação", "Mensagem da notificação", true);
 				}).not.toThrow();

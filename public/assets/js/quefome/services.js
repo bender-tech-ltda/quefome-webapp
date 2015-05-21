@@ -114,14 +114,7 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.service("$notification", ["$q", function($q) {
-		var Notification = null;
-
-		if (window.Notification) {
-			Notification = window.Notification;
-		} else {
-			Notification = function() {};
-			Notification.prototype.close = function() {};
-		}
+		var Notification = window.Notification;
 
 		this.__setNotification = function(_Notification) {
 			Notification = _Notification;
@@ -177,6 +170,10 @@ define(["angular"], function(angular) {
 
 		Notify.prototype._currentNotification = null;
 		Notify.prototype.show = function() {
+			if (!Notification) {
+				return;
+			}
+
 			this.hide();
 
 			this._currentNotification = new Notification(this.title, this.options);
@@ -190,9 +187,13 @@ define(["angular"], function(angular) {
 		};
 
 		this.requestPermission = function() {
-			if (this.hasPermission()) {
-				return $q(function(resolve) {
-					resolve();
+			if (!Notification || this.hasPermission()) {
+				return $q(function(resolve, reject) {
+					if (!Notification) {
+						reject();
+					} else {
+						resolve();
+					}
 				});
 			}
 
@@ -210,7 +211,7 @@ define(["angular"], function(angular) {
 		};
 
 		this.hasPermission = function() {
-			return Notification.permission == "granted";
+			return Notification && Notification.permission == "granted" ? true : false;
 		};
 
 		this.notify = function(title, message, show) {
