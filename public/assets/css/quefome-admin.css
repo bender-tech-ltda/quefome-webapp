@@ -194,6 +194,19 @@ body {
 	width: 100%;
 }
 
+.content .order-fullfillment-page .orders-table .qf-icon {
+	font-size: 17px;
+}
+
+.content .order-fullfillment-page .orders-table p {
+	margin: 0px;
+}
+
+.content .order-fullfillment-page .orders-table .order-deliver-widraw-message {
+	color: #EB3825;
+	font-size: 12px;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;

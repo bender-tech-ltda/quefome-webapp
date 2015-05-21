@@ -31,7 +31,7 @@
 		A lista de pedidos está atualizada!
 	</div>
 
-	<table class="table">
+	<table class="table orders-table open-orders-table">
 		<thead>
 			<tr>
 				<td colspan="4">
@@ -53,9 +53,22 @@
 			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: 'date')">
 				<td>{{order.id}}</td>
 				<td>
-					<b>Nome:</b> {{order.user.name}}<br/>
-					<b>Email:</b> {{order.user.email}}<br/>
-					<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
+					<p title="Nome do cliente">
+						<b class="qf-icon icon-user"></b>
+						<span>{{order.user.name}}</span>
+					</p>
+					<p title="Telefone de contato">
+						<b class="qf-icon icon-phone"></b>
+						<span>{{order.phone}}</span>
+					</p>
+					<p title="Endereço de entrega" ng-hide="order.withdraw">
+						<b class="qf-icon icon-bike"></b> 
+						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
+					</p>
+
+					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
+						<span>Esse pedido será retirado no balcão.</span>
+					</p>
 				</td>
 				<td>
 					<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
@@ -75,7 +88,7 @@
 		</tbody>
 	</table>
 
-	<table class="table">
+	<table class="table orders-table production-orders-table">
 		<thead>
 			<tr>
 				<td colspan="4">
@@ -97,9 +110,23 @@
 			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: 'date')">
 				<td>{{order.id}}</td>
 				<td>
-					<b>Nome:</b> {{order.user.name}}<br/>
-					<b>Email:</b> {{order.user.email}}<br/>
-					<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
+					<p title="Nome do cliente">
+						<b class="qf-icon icon-user"></b>
+						<span>{{order.user.name}}</span>
+					</p>
+					<p title="Telefone de contato">
+						<b class="qf-icon icon-phone"></b>
+						<span>{{order.phone}}</span>
+					</p>
+					<p title="Endereço de entrega" ng-hide="order.withdraw">
+						<b class="qf-icon icon-location"></b> 
+						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
+					</p>
+
+					<p class="order-deliver-widraw-message" ng-show="order.establishment.parameters.canWithdraw">
+						<span ng-show="order.withdraw">Esse pedido será retirado no balcão.</span>
+						<span ng-show="!order.withdraw">Esse pedido precisa ser enviado via tele-entrega.</span>
+					</p>
 				</td>
 				<td>
 					<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
