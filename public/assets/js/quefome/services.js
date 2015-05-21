@@ -159,6 +159,14 @@ define(["angular"], function(angular) {
 				delete(this.options.show);
 			}
 
+			if (!this.options.lang) {
+				this.options.lang = "pt-BR";
+			}
+
+			if (!this.options.icon) {
+				this.options.icon = "/assets/img/quefome_icon_70x75.png";
+			}
+
 			if (show) {
 				this.show();
 			}
