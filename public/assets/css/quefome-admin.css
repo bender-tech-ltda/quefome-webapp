@@ -190,6 +190,10 @@ body {
 	margin-top: 0px;
 }
 
+.content .order-fullfillment-page {
+	width: 100%;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;

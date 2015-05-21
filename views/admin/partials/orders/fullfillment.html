@@ -1,115 +1,121 @@
-<div class="partial-header">
-	<div class="partial-icon">
-		<span class="qf-icon icon-order"></span>
+<div class="order-fullfillment-page">
+	<div class="partial-header">
+		<div class="partial-icon">
+			<span class="qf-icon icon-order"></span>
+		</div>
+
+		<div class="partial-title">
+			<h1 class="title">Atendimento de Pedidos</h1>
+		</div>
 	</div>
 
-	<div class="partial-title">
-		<h1 class="title">Atendimento de Pedidos</h1>
+	<div class="alert alert-success text-center" ng-show="numberOfIncomingOrders > 0">
+		<span ng-show="numberOfIncomingOrders == 1">Existe um novo pedido que ainda não entrou na lista de pedidos.</span>
+		<span ng-show="numberOfIncomingOrders > 1">Existem {{numberOfIncomingOrders}} novos pedidos que ainda não entraram na lista de pedidos.</span>
+
+		<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
+			<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
+		</button>
 	</div>
+
+	<div class="alert alert-warning text-center" ng-show="numberOfIncomingOrders <= 0 && numberOfModifiedOrders > 0">
+		<span ng-show="numberOfModifiedOrders == 1">Existe um pedido que foi modificado e se encontra desatualizado na lista de pedidos.</span>
+		<span ng-show="numberOfModifiedOrders > 1">Existem {{numberOfModifiedOrders}} que foram modificados e se encontram desatualizados na lista de pedidos.</span>
+
+		<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
+			<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
+		</button>
+	</div>
+
+	<div class="alert text-center" ng-show="numberOfIncomingOrders == 0 && numberOfModifiedOrders == 0">
+		A lista de pedidos está atualizada!
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<h3>Pedidos Abertos <span class="badge">{{openOrders && openOrders.length ? openOrders.length : '0'}}</span></h3>
+				</td>
+			</tr>
+			<tr>
+				<th class="col-md-1">Nº</th>
+				<th class="col-md-3">Cliente</th>
+				<th class="col-md-3">Produtos</th>
+				<th class="col-md-2">Data e Hora</th>
+				<th class="col-md-3"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="no-hover" ng-hide="openOrders && openOrders.length > 0">
+				<td class="text-center" colspan="4">Não existem pedidos abertos</td>
+			</tr>
+			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: 'date')">
+				<td>{{order.id}}</td>
+				<td>
+					<b>Nome:</b> {{order.user.name}}<br/>
+					<b>Email:</b> {{order.user.email}}<br/>
+					<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
+				</td>
+				<td>
+					<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
+				</td>
+				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td>
+					<button class="btn btn-success btn-block" title="Mandar para produção" ng-click="sendOrderToProduction(order)" ng-hide="order.changingStatus">
+						<span class="hidden-xs">Mandar para produção</span>
+						<span class="qf-icon icon-forward"></span>
+					</button>
+
+					<button class="btn btn-success btn-block disabled" title="Enviando para produção..." ng-show="order.changingStatus">
+						<span class="qf-icon icon-loading spin"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<h3>Pedidos em Produção <span class="badge">{{productionOrders && productionOrders.length ? productionOrders.length : '0'}}</span></h3>
+				</td>
+			</tr>
+			<tr>
+				<th class="col-md-1">Nº</th>
+				<th class="col-md-3">Cliente</th>
+				<th class="col-md-3">Produtos</th>
+				<th class="col-md-2">Data e Hora</th>
+				<th class="col-md-3"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
+				<td class="text-center" colspan="4">Não existem pedidos em produção</td>
+			</tr>
+			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: 'date')">
+				<td>{{order.id}}</td>
+				<td>
+					<b>Nome:</b> {{order.user.name}}<br/>
+					<b>Email:</b> {{order.user.email}}<br/>
+					<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
+				</td>
+				<td>
+					<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
+				</td>
+				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td>
+					<button class="btn btn-warning btn-block" title="Marcar como Entregue" ng-click="markAsDelivered(order)" ng-hide="order.changingStatus">
+						<span class="hidden-xs">Marcar como Entregue</span>
+						<span class="qf-icon icon-forward"></span>
+					</button>
+
+					<button class="btn btn-warning btn-block disabled" title="Marcando como entregue..." ng-show="order.changingStatus">
+						<span class="qf-icon icon-loading spin"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-
-<div class="alert alert-success text-center" ng-show="numberOfIncomingOrders > 0">
-	<span ng-show="numberOfIncomingOrders == 1">Existe um novo pedido que ainda não entrou na lista de pedidos.</span>
-	<span ng-show="numberOfIncomingOrders > 1">Existem {{numberOfIncomingOrders}} novos pedidos que ainda não entraram na lista de pedidos.</span>
-
-	<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
-		<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
-	</button>
-</div>
-
-<div class="alert alert-warning text-center" ng-show="numberOfIncomingOrders <= 0 && numberOfModifiedOrders > 0">
-	<span ng-show="numberOfModifiedOrders == 1">Existe um pedido que foi modificado e se encontra desatualizado na lista de pedidos.</span>
-	<span ng-show="numberOfModifiedOrders > 1">Existem {{numberOfModifiedOrders}} que foram modificados e se encontram desatualizados na lista de pedidos.</span>
-
-	<button class="btn btn-link" ng-click="updateOrdersWithCachedOrders()">
-		<span class="glyphicon glyphicon-refresh"></span> Clique aqui para atualizar a lista
-	</button>
-</div>
-
-<div class="alert text-center" ng-show="numberOfIncomingOrders == 0 && numberOfModifiedOrders == 0">
-	A lista de pedidos está atualizada!
-</div>
-
-<table class="table">
-	<thead>
-		<tr>
-			<td colspan="4">
-				<h3>Pedidos Abertos <span class="badge">{{openOrders && openOrders.length ? openOrders.length : '0'}}</span></h3>
-			</td>
-		</tr>
-		<tr>
-			<th class="col-md-4">Cliente</th>
-			<th class="col-md-3">Produtos</th>
-			<th class="col-md-2">Data e Hora</th>
-			<th class="col-md-3"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="no-hover" ng-hide="openOrders && openOrders.length > 0">
-			<td class="text-center" colspan="4">Não existem pedidos abertos</td>
-		</tr>
-		<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: 'date')">
-			<td>
-				<b>Nome:</b> {{order.user.name}}<br/>
-				<b>Email:</b> {{order.user.email}}<br/>
-				<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
-			</td>
-			<td>
-				<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
-			</td>
-			<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-			<td>
-				<button class="btn btn-success btn-block" title="Mandar para produção" ng-click="sendOrderToProduction(order)" ng-hide="order.changingStatus">
-					<span class="hidden-xs">Mandar para produção</span>
-					<span class="qf-icon icon-forward"></span>
-				</button>
-
-				<button class="btn btn-success btn-block disabled" title="Enviando para produção..." ng-show="order.changingStatus">
-					<span class="qf-icon icon-loading spin"></span>
-				</button>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<table class="table">
-	<thead>
-		<tr>
-			<td colspan="4">
-				<h3>Pedidos em Produção <span class="badge">{{productionOrders && productionOrders.length ? productionOrders.length : '0'}}</span></h3>
-			</td>
-		</tr>
-		<tr>
-			<th class="col-md-4">Cliente</th>
-			<th class="col-md-3">Produtos</th>
-			<th class="col-md-2">Data e Hora</th>
-			<th class="col-md-3"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
-			<td class="text-center" colspan="4">Não existem pedidos em produção</td>
-		</tr>
-		<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: 'date')">
-			<td>
-				<b>Nome:</b> {{order.user.name}}<br/>
-				<b>Email:</b> {{order.user.email}}<br/>
-				<b>Endereço:</b> {{order.address.address}}, Nº {{order.address.number}}<br/>
-			</td>
-			<td>
-				<span ng-repeat="item in order.items">{{item.product.name}}{{$last ? '' : ', '}}</span>
-			</td>
-			<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-			<td>
-				<button class="btn btn-warning btn-block" title="Marcar como Entregue" ng-click="markAsDelivered(order)" ng-hide="order.changingStatus">
-					<span class="hidden-xs">Marcar como Entregue</span>
-					<span class="qf-icon icon-forward"></span>
-				</button>
-
-				<button class="btn btn-warning btn-block disabled" title="Marcando como entregue..." ng-show="order.changingStatus">
-					<span class="qf-icon icon-loading spin"></span>
-				</button>
-			</td>
-		</tr>
-	</tbody>
-</table>
