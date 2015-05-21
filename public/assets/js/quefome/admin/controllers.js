@@ -150,6 +150,8 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 
 		var timeoutPromise = false;
 		$scope.checkIncomingOrders = function() {
+			var secontsToCheck = ($scope.secondsToCheckForIncomingOrders * 1000)
+
 			OrderService.list().then(function(orders) {
 				$scope.cachedOrders = orders;
 
@@ -157,11 +159,9 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives"], functi
 				$scope.numberOfIncomingOrders = totalOrders.numberOfIncomingOrders;
 				$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
 
-				$scope.$digest(function() {
-					timeoutPromise = $timeout(function() {
-						$scope.checkIncomingOrders();
-					}, (1000 * $scope.secondsToCheckForIncomingOrders));
-				});
+				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
+			}, function() {
+				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 			});
 		};
 

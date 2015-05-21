@@ -179,12 +179,41 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			});
 
 			it("should check for incoming orders from time to time", function() {
-				Mocked$timeout.whenCalling = function(func, time) {
-					expect(time).toBeDefined();
-					expect(time).toBeGreaterThan(0);
+				var called = false;
+				var time = null;
+				
+				Mocked$timeout.whenCalling = function(func, _time) {
+					called = true;
+					time = _time;
 				};
 
 				scope.checkIncomingOrders();
+
+				expect(called).toBe(true);
+				expect(time).toBeGreaterThan(0);
+			});
+
+			it("should check for incoming orders from time to time event if it failed", function() {
+				MockedOrderService.list = function() {
+					return {
+						then: function(success, fail) {
+							fail();
+						}
+					};
+				};
+
+				var called = false;
+				var time = null;
+
+				Mocked$timeout.whenCalling = function(func, _time) {
+					called = true;
+					time = _time;
+				};
+
+				scope.checkIncomingOrders();
+
+				expect(called).toBe(true);
+				expect(time).toBeGreaterThan(0);
 			});
 		});
 
