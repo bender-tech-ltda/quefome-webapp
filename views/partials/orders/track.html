@@ -23,7 +23,7 @@
 		<h3 class="order-number">Pedido nº {{order.id}}</h3>
 		<h4 class="order-establishment">{{order.establishment.name}}</h4>
 
-		<div class="status-panel" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}" title="O estabelecimento já recebeu seu pedido">
+		<div class="status-panel" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}" title="{{order | orderStatusDescription}}">
 			<ul class="status">
 				<li class="open">
 					<span class="qf-icon icon-place-check"></span>

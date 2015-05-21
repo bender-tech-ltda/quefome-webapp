@@ -125,4 +125,20 @@ define(["angular"], function(angular) {
 			}
 		};
 	}]);
+
+	module.filter("orderStatusDescription", [function() {
+		return function(status) {
+			if (typeof(status) === "object") {
+				status = status.status;
+			}
+
+			if (status == "OPEN") {
+				return "O estabelecimento já recebeu seu pedido!";
+			} else if (status == "PRODUCTION") {
+				return "O seu pedido está sendo preparado!";
+			} else {
+				return "O seu pedido já foi entregue!";
+			}
+		};
+	}]);
 });
