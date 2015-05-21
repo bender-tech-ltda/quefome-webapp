@@ -3,11 +3,11 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 	
 	var module = angular.module("qfAdminDirectives", ["qfDirectives"]);
 
-	module.directive("qfToggleClass", [function() {
+	module.directive("qfOnClickToggleClass", [function() {
 		return {
 			restrict: "A",
 			link: function(scope, element, attrs) {
-				if (!attrs.qfToggleClass) {
+				if (!attrs.qfOnClickToggleClass) {
 					return;
 				}
 
@@ -19,7 +19,7 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 				}
 
 				element.on("click.qfToggleClass", function() {
-					targetElement.toggleClass(attrs.qfToggleClass);
+					targetElement.toggleClass(attrs.qfOnClickToggleClass);
 				});
 			}
 		};

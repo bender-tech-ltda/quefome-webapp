@@ -141,4 +141,26 @@ define(["angular"], function(angular) {
 			}
 		};
 	}]);
+
+	module.filter("phone", [function() {
+		return function(phone) {
+			if (!phone) {
+				return "";
+			}
+
+			var onlyDigitsPhone = phone.trim().replace(new RegExp("[^0-9]", "g"), "");
+
+			if (onlyDigitsPhone.length < 8) {
+				return phone;
+			} else if (onlyDigitsPhone.length <= 9) {
+				return onlyDigitsPhone.substr(0, 4) + "-" + onlyDigitsPhone.substr(4);
+			} else if (onlyDigitsPhone.length <= 11) {
+				return "(" + onlyDigitsPhone.substr(0, 2) + ") " + onlyDigitsPhone.substr(2, 4) + "-" + onlyDigitsPhone.substr(6);
+			} else if (onlyDigitsPhone.length <= 13 && onlyDigitsPhone.substr(0, 2) == "55") {
+				return "(" + onlyDigitsPhone.substr(2, 2) + ") " + onlyDigitsPhone.substr(4, 4) + "-" + onlyDigitsPhone.substr(8);
+			} else {
+				return phone;
+			}
+		};
+	}]);
 });

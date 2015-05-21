@@ -1,7 +1,7 @@
-define(["angular", "quefome/admin/services", "quefome/admin/directives"], function(angular) {
+define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefome/admin/filters"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfAdminControllers", ["qfAdminServices", "qfAdminDirectives"]);
+	var module = angular.module("qfAdminControllers", ["qfAdminServices", "qfAdminDirectives", "qfAdminFilters"]);
 
 	module.controller("LoginController", ["$scope", "$location", "AuthService", function($scope, $location, AuthService) {
 		$scope.email = "";

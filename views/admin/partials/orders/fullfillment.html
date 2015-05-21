@@ -59,7 +59,7 @@
 					</p>
 					<p title="Telefone de contato">
 						<b class="qf-icon icon-phone"></b>
-						<span>{{order.phone}}</span>
+						<span>{{order.phone | phone}}</span>
 					</p>
 					<p title="Endereço de entrega" ng-hide="order.withdraw">
 						<b class="qf-icon icon-bike"></b> 
@@ -116,7 +116,7 @@
 					</p>
 					<p title="Telefone de contato">
 						<b class="qf-icon icon-phone"></b>
-						<span>{{order.phone}}</span>
+						<span>{{order.phone | phone}}</span>
 					</p>
 					<p title="Endereço de entrega" ng-hide="order.withdraw">
 						<b class="qf-icon icon-location"></b> 
