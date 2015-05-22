@@ -179,22 +179,22 @@ define(["angular"], function(angular) {
 					product = item.product;
 				}
 
-				var groupProduct = null;
+				var groupObject = null;
 
 				if (!productsByIdObject[product.id]) {
-					groupProduct = angular.copy(product);
-					groupProduct.quantity = 0;
+					groupObject = angular.copy(product);
+					groupObject.quantity = 0;
 
-					productsByIdObject[product.id] = groupProduct;
-					productResultList.push(groupProduct);
+					productsByIdObject[product.id] = groupObject;
+					productResultList.push(groupObject);
 				} else {
-					groupProduct = productsByIdObject[product.id];
+					groupObject = productsByIdObject[product.id];
 				}
 
 				if (item && item.quantity && item.quantity > 0) {
-					groupProduct.quantity += item.quantity;
+					groupObject.quantity += item.quantity;
 				} else {
-					groupProduct.quantity++;
+					groupObject.quantity++;
 				}
 			}
 
@@ -205,16 +205,19 @@ define(["angular"], function(angular) {
 			return $filter("orderBy")(products, "id");
 		};
 
-		var transformGrouppedProductsListToString = function(products, limit) {
-			var resultString = "";
+		var transformGrouppedProductsListToObject = function(products, limit) {
+			var resultObject = {
+				productsString: "",
+				size: products.length
+			};
 
-			if (!limit || limit < 1) {
+			if (!limit || limit > products.length) {
 				limit = products.length;
 			}
 
 			for (var i in products) {
 				var product = products[i];
-				resultString += (product.name + " (" + product.quantity + ")");
+				resultObject.productsString += (product.name + " (" + product.quantity + ")");
 
 				//nao entendi pq tive que usar parseInt
 				//se nao fizesse, o 'i' era concatenado com '1'
@@ -223,11 +226,11 @@ define(["angular"], function(angular) {
 				if (position >= limit) {
 					break;
 				} else if (position < limit) {
-					resultString += ", ";
+					resultObject.productsString += ", ";
 				}
 			}
 
-			return resultString;
+			return resultObject;
 		};
 
 		return function(products, limit) {
@@ -238,7 +241,7 @@ define(["angular"], function(angular) {
 			var productsGrouppedById = groupProductsById(products);
 			productsGrouppedById = orderProducts(productsGrouppedById)
 
-			return transformGrouppedProductsListToString(productsGrouppedById, limit);
+			return transformGrouppedProductsListToObject(productsGrouppedById, limit);
 		};
 	}]);
 });

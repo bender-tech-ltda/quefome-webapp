@@ -70,7 +70,11 @@
 						<span>Esse pedido será retirado no balcão.</span>
 					</p>
 				</td>
-				<td>{{order | groupProductList}}</td>
+				<td>
+					<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+					<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+				</td>
 				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
 				<td>
 					<button class="btn btn-success btn-block" title="Mandar para produção" ng-click="sendOrderToProduction(order)" ng-hide="order.changingStatus">
@@ -126,7 +130,11 @@
 						<span ng-show="!order.withdraw">Esse pedido precisa ser enviado via tele-entrega.</span>
 					</p>
 				</td>
-				<td>{{order | groupProductList}}</td>
+				<td>
+					<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+					<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+				</td>
 				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
 				<td>
 					<button class="btn btn-warning btn-block" title="Marcar como Entregue" ng-click="markAsDelivered(order)" ng-hide="order.changingStatus">

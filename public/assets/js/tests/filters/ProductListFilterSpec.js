@@ -17,8 +17,9 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				{id: -2, name: "Pizza Pequena"}
 			];
 
-			var result = groupProductListFilter(products)
-			expect(result).toEqual("Pizza Grande (2), Pizza Pequena (1)");
+			var result = groupProductListFilter(products);
+			expect(result.size).toEqual(2);
+			expect(result.productsString).toEqual("Pizza Grande (2), Pizza Pequena (1)");
 		});
 
 		it("should accept an order object", function() {
@@ -30,8 +31,9 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				]
 			};
 
-			var result = groupProductListFilter(order)
-			expect(result).toEqual("Pizza Grande (1), Pizza Pequena (2)");
+			var result = groupProductListFilter(order);
+			expect(result.size).toEqual(2);
+			expect(result.productsString).toEqual("Pizza Grande (1), Pizza Pequena (2)");
 		});
 
 		it("should accept a list of items", function() {
@@ -41,8 +43,9 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				{product: {id: -2, name: "Pizza Pequena"}}
 			];
 
-			var result = groupProductListFilter(items)
-			expect(result).toEqual("Pizza Grande (1), Pizza Pequena (2)");
+			var result = groupProductListFilter(items);
+			expect(result.size).toEqual(2);
+			expect(result.productsString).toEqual("Pizza Grande (1), Pizza Pequena (2)");
 		});
 
 		it("should sum the items quantity", function() {
@@ -52,8 +55,9 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				{product: {id: -2, name: "Pizza Pequena"}, quantity: 10}
 			];
 
-			var result = groupProductListFilter(items)
-			expect(result).toEqual("Pizza Grande (2), Pizza Pequena (13)");
+			var result = groupProductListFilter(items);
+			expect(result.size).toEqual(2);
+			expect(result.productsString).toEqual("Pizza Grande (2), Pizza Pequena (13)");
 		});
 
 		it("should order by id", function() {
@@ -63,8 +67,9 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				{product: {id: -2, name: "Pizza Pequena"}}
 			];
 
-			var result = groupProductListFilter(items)
-			expect(result).toEqual("Pizza Grande (1), Pizza Média (1), Pizza Pequena (1)");
+			var result = groupProductListFilter(items);
+			expect(result.size).toEqual(3);
+			expect(result.productsString).toEqual("Pizza Grande (1), Pizza Média (1), Pizza Pequena (1)");
 		});
 
 		it("should accept a limit filter", function() {
@@ -74,8 +79,13 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 				{product: {id: -2, name: "Pizza Pequena"}}
 			];
 
-			var result = groupProductListFilter(items, 2)
-			expect(result).toEqual("Pizza Grande (1), Pizza Média (1)");
+			var result = groupProductListFilter(items, 2);
+			expect(result.size).toEqual(3);
+			expect(result.productsString).toEqual("Pizza Grande (1), Pizza Média (1)");
+
+			var result = groupProductListFilter(items, 4);
+			expect(result.size).toEqual(3);
+			expect(result.productsString).toEqual("Pizza Grande (1), Pizza Média (1), Pizza Pequena (1)");
 		});
 	});
 });
