@@ -125,9 +125,8 @@
 						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
 					</p>
 
-					<p class="order-deliver-widraw-message" ng-show="order.establishment.parameters.canWithdraw">
-						<span ng-show="order.withdraw">Esse pedido será retirado no balcão.</span>
-						<span ng-show="!order.withdraw">Esse pedido precisa ser enviado via tele-entrega.</span>
+					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
+						<span>Esse pedido será retirado no balcão.</span>
 					</p>
 				</td>
 				<td>
