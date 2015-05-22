@@ -163,4 +163,82 @@ define(["angular"], function(angular) {
 			}
 		};
 	}]);
+
+	module.filter("groupProductList", ["$filter", function($filter) {
+		var groupProductsById = function(products) {
+			var productsByIdObject = {};
+			var productResultList = [];
+
+			for (var i in products) {
+				var product = products[i];
+
+				var item = null;
+
+				if (product.product) {
+					item = product;
+					product = item.product;
+				}
+
+				var groupProduct = null;
+
+				if (!productsByIdObject[product.id]) {
+					groupProduct = angular.copy(product);
+					groupProduct.quantity = 0;
+
+					productsByIdObject[product.id] = groupProduct;
+					productResultList.push(groupProduct);
+				} else {
+					groupProduct = productsByIdObject[product.id];
+				}
+
+				if (item && item.quantity && item.quantity > 0) {
+					groupProduct.quantity += item.quantity;
+				} else {
+					groupProduct.quantity++;
+				}
+			}
+
+			return productResultList;
+		};
+
+		var orderProducts = function(products) {
+			return $filter("orderBy")(products, "id");
+		};
+
+		var transformGrouppedProductsListToString = function(products, limit) {
+			var resultString = "";
+
+			if (!limit || limit < 1) {
+				limit = products.length;
+			}
+
+			for (var i in products) {
+				var product = products[i];
+				resultString += (product.name + " (" + product.quantity + ")");
+
+				//nao entendi pq tive que usar parseInt
+				//se nao fizesse, o 'i' era concatenado com '1'
+				var position = (parseInt(i) + 1);
+
+				if (position >= limit) {
+					break;
+				} else if (position < limit) {
+					resultString += ", ";
+				}
+			}
+
+			return resultString;
+		};
+
+		return function(products, limit) {
+			if (!(products instanceof Array) && typeof(products) === "object") {
+				products = products.items;
+			}
+
+			var productsGrouppedById = groupProductsById(products);
+			productsGrouppedById = orderProducts(productsGrouppedById)
+
+			return transformGrouppedProductsListToString(productsGrouppedById, limit);
+		};
+	}]);
 });
