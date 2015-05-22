@@ -194,17 +194,50 @@ body {
 	width: 100%;
 }
 
-.content .order-fullfillment-page .orders-table .qf-icon {
-	font-size: 17px;
+.content .order-fullfillment-page .orders-table {
+	font-size: 11px;
+}
+
+.content .order-fullfillment-page .orders-table th {
+	font-size: 10px;
 }
 
 .content .order-fullfillment-page .orders-table p {
 	margin: 0px;
 }
 
-.content .order-fullfillment-page .orders-table .order-deliver-widraw-message {
+.content .order-fullfillment-page .orders-table .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-fullfillment-page .orders-table .customer-column {
+	display: none;
+}
+
+.content .order-fullfillment-page .orders-table .customer-column .order-deliver-widraw-message {
 	color: #EB3825;
-	font-size: 12px;
+	font-size: 11px;
+}
+
+.content .order-fullfillment-page .orders-table .price-column {
+	display: none;
+}
+
+.content .order-fullfillment-page .orders-table .products-column .price-label {
+	color: green;
+	font-weight: bold;
+}
+
+.content .order-fullfillment-page .orders-table th.order-details-column {
+	text-align: center;
+}
+
+.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details {
+	width: 100%;
+}
+
+.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details .text {
+	display: none;
 }
 
 .footer {
@@ -286,6 +319,21 @@ body {
 	vertical-align: middle;
 }
 
+@media(min-width: 427px) {
+	.content .order-fullfillment-page .orders-table th,
+	.content .order-fullfillment-page .orders-table {
+		font-size: 12px;
+	}
+
+	.content .order-fullfillment-page .orders-table .customer-column,
+	.content .order-fullfillment-page .orders-table .price-column {
+		display: table-cell;
+	}
+
+	.content .order-fullfillment-page .orders-table .products-column .price-label {
+		display: none;
+	}
+}
 
 @media (min-width: 768px) {
 	.login-page .login-panel {
@@ -374,10 +422,21 @@ body {
 	.content .partial-header .partial-title .title {
 		font-size: 32px;
 	}
+
+	.content .order-fullfillment-page .orders-table {
+		font-size: 14px;
+	}
+
+	.content .order-fullfillment-page .orders-table .customer-column .order-deliver-widraw-message {
+		font-size: 12px;
+	}
+
 }
 
 @media (min-width: 992px) {
-
+	.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details .text {
+		display: inline-block;
+	}
 }
 
 @media (min-width: 1200px) {

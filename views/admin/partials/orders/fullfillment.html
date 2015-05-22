@@ -39,11 +39,12 @@
 				</td>
 			</tr>
 			<tr>
-				<th class="col-md-1">Nº</th>
-				<th class="col-md-3">Cliente</th>
-				<th class="col-md-2">Produtos</th>
-				<th class="col-md-2">Data e Hora</th>
-				<th class="col-md-1">Valor total</th>
+				<th class="col-md-1 order-numbe-column">Nº</th>
+				<th class="col-md-3 customer-column">Cliente</th>
+				<th class="col-md-3 products-column">Produtos</th>
+				<th class="col-md-1 price-column">Valor total</th>
+				<th class="col-md-2 order-date-column">Data e Hora</th>
+				<th class="col-md-2 order-details-column">Detalhes</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,58 +52,8 @@
 				<td class="text-center" colspan="4">Não existem pedidos abertos</td>
 			</tr>
 			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: '-date')">
-				<td>{{order.id}}</td>
-				<td>
-					<p title="Nome do cliente">
-						<b class="qf-icon icon-user"></b>
-						<span>{{order.user.name}}</span>
-					</p>
-					<p title="Telefone de contato">
-						<b class="qf-icon icon-phone"></b>
-						<span>{{order.phone | phone}}</span>
-					</p>
-					<p title="Endereço de entrega" ng-hide="order.withdraw">
-						<b class="qf-icon icon-bike"></b> 
-						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
-					</p>
-
-					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
-						<span>Esse pedido será retirado no balcão.</span>
-					</p>
-				</td>
-				<td>
-					<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
-					<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
-					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
-				</td>
-				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-				<td>R$ {{order.price | money}}</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<table class="table orders-table production-orders-table">
-		<thead>
-			<tr>
-				<td colspan="4">
-					<h3>Pedidos em Produção <span class="badge">{{productionOrders && productionOrders.length ? productionOrders.length : '0'}}</span></h3>
-				</td>
-			</tr>
-			<tr>
-				<th class="col-md-1">Nº</th>
-				<th class="col-md-3">Cliente</th>
-				<th class="col-md-3">Produtos</th>
-				<th class="col-md-2">Data e Hora</th>
-				<th class="col-md-1">Valor total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
-				<td class="text-center" colspan="4">Não existem pedidos em produção</td>
-			</tr>
-			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: '-date')">
-				<td>{{order.id}}</td>
-				<td>
+				<td class="order-numbe-column">{{order.id}}</td>
+				<td class="customer-column">
 					<p title="Nome do cliente">
 						<b class="qf-icon icon-user"></b>
 						<span>{{order.user.name}}</span>
@@ -120,13 +71,82 @@
 						<span>Esse pedido será retirado no balcão.</span>
 					</p>
 				</td>
-				<td>
-					<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
-					<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
-					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+				<td class="products-column">
+					<p>
+						<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+						<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+						<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+					</p>
+					<p class="price-label">Total: R$ {{order.price | money}}</p>
 				</td>
-				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-				<td>R$ {{order.price | money}}</td>
+				<td class="price-column">R$ {{order.price | money}}</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td class="order-details-column">
+					<button class="btn btn-primary btn-show-order-details" title="Visualizar pedido">
+						<span class="text">Visualizar pedido</span>
+						<span class="qf-icon icon-order"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="table orders-table production-orders-table">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<h3>Pedidos em Produção <span class="badge">{{productionOrders && productionOrders.length ? productionOrders.length : '0'}}</span></h3>
+				</td>
+			</tr>
+			<tr>
+				<th class="col-md-1 order-numbe-column">Nº</th>
+				<th class="col-md-3 customer-column">Cliente</th>
+				<th class="col-md-3 products-column">Produtos</th>
+				<th class="col-md-1 price-column">Valor total</th>
+				<th class="col-md-2 order-date-column">Data e Hora</th>
+				<th class="col-md-2 order-details-column">Detalhes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
+				<td class="text-center" colspan="4">Não existem pedidos em produção</td>
+			</tr>
+			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: '-date')">
+				<td class="order-numbe-column">{{order.id}}</td>
+				<td class="customer-column">
+					<p title="Nome do cliente">
+						<b class="qf-icon icon-user"></b>
+						<span>{{order.user.name}}</span>
+					</p>
+					<p title="Telefone de contato">
+						<b class="qf-icon icon-phone"></b>
+						<span>{{order.phone | phone}}</span>
+					</p>
+					<p title="Endereço de entrega" ng-hide="order.withdraw">
+						<b class="qf-icon icon-location"></b> 
+						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
+					</p>
+
+					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
+						<span>Esse pedido será retirado no balcão.</span>
+					</p>
+				</td>
+				<td class="products-column">
+					<p>
+						<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+						<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+						<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+					</p>
+					<p class="price-label">Total: R$ {{order.price | money}}</p>
+				</td>
+				<td class="price-column">R$ {{order.price | money}}</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td class="order-details-column">
+					<button class="btn btn-primary btn-show-order-details" title="Visualizar pedido">
+						<span class="text">Visualizar pedido</span>
+						<span class="qf-icon icon-order"></span>
+					</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
