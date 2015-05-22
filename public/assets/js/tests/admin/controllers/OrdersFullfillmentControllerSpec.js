@@ -3,7 +3,10 @@
 define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"], function(angular) {
 
 	describe("OrdersFullfillmentController", function() {
-		var scope, Mocked$timeout, MockedOrderService;
+		var scope;
+		var Mocked$timeout;
+		var MockedDialog;
+		var MockedOrderService;
 
 		beforeEach(module("qfAdminControllers"));
 
@@ -12,6 +15,15 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				Mocked$timeout.whenCalling(callback, time);
 			};
 			Mocked$timeout.whenCalling = function() {};
+
+			MockedDialog = {
+				_createCalled: false,
+				_createOptions: null,
+				create: function(options) {
+					this._createCalled = true;
+					this._createOptions = options;
+				}
+			};
 
 			MockedOrderService = {
 				listCalled: false,
@@ -50,6 +62,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		beforeEach(function() {
 			var params = {
 				$timeout: Mocked$timeout,
+				Dialog: MockedDialog,
 				OrderService: MockedOrderService
 			};
 
@@ -89,6 +102,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(scope.orders).toEqual(MockedOrderService._orders);
 		});
 
+		/** TODO: MOVER ESSES METODOS PARA O CONTROLLER DE DETALHE DO PEDIDO
 		describe("when sending an order to production", function() {
 			it("should set the order.status to PRODUCTION", function() {
 				var myOrder = {id: -5};
@@ -126,6 +140,22 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.markAsDelivered(myOrder);
 
 				expect(myOrder.changingStatus).toBe(false);
+			});
+		});
+		**/
+
+		describe("when showing order details", function() {
+			it("should show a dialog", function() {
+				MockedDialog._createCalled = false;
+				scope.showOrderDetails({});
+				expect(MockedDialog._createCalled).toBe(true);
+			});
+
+			it("should pass a order as parameter to the dialog", function() {
+				var order = {id: -1};
+				scope.showOrderDetails(order);
+
+				expect(MockedDialog._createOptions.params.order).toEqual(order);
 			});
 		});
 

@@ -198,9 +198,10 @@ define(["angular"], function(angular) {
 			}
 
 			var deferred = $q.defer();
+			var that = this;
 
 			Notification.requestPermission(function(permission) {
-				if (this.hasPermission()) {
+				if (that.hasPermission()) {
 					deferred.resolve();
 				} else {
 					deferred.reject();

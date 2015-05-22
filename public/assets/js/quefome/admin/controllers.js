@@ -62,7 +62,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 	module.controller("HomeController", ["$scope", function($scope) {
 	}]);
 
-	module.controller("OrdersFullfillmentController", ["$scope", "$timeout", "OrderService", function($scope, $timeout, OrderService) {
+	module.controller("OrdersFullfillmentController", ["$scope", "$timeout", "Dialog", "OrderService", function($scope, $timeout, Dialog, OrderService) {
 		$scope.orders = [];
 		$scope.secondsToCheckForIncomingOrders = 30;
 		$scope.cachedOrders = []
@@ -73,6 +73,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
 		};
 
+		/** TODO: MOVER ESSES METODOS PARA O CONTROLLER DE DETALHE DO PEDIDO
 		var changeOrderStatus = function(order, newStatus) {
 			order.changingStatus = true;
 			$scope.$digest();
@@ -102,6 +103,16 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 
 		$scope.markAsDelivered = function(order) {
 			changeOrderStatus(order, OrderStatus.DELIVERED);
+		};
+
+		**/
+
+		$scope.showOrderDetails = function(order) {
+			Dialog.create({
+				templateUrl: "/admin/partials/orders/detail.html",
+				params: {order: order},
+				show: true
+			});
 		};
 
 		var countIncomingAndModifiedOrders = function(orders) {
