@@ -41,16 +41,16 @@
 			<tr>
 				<th class="col-md-1">Nº</th>
 				<th class="col-md-3">Cliente</th>
-				<th class="col-md-3">Produtos</th>
+				<th class="col-md-2">Produtos</th>
 				<th class="col-md-2">Data e Hora</th>
-				<th class="col-md-3"></th>
+				<th class="col-md-1">Valor total</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="no-hover" ng-hide="openOrders && openOrders.length > 0">
 				<td class="text-center" colspan="4">Não existem pedidos abertos</td>
 			</tr>
-			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: 'date')">
+			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: '-date')">
 				<td>{{order.id}}</td>
 				<td>
 					<p title="Nome do cliente">
@@ -76,16 +76,7 @@
 					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
 				</td>
 				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-				<td>
-					<button class="btn btn-success btn-block" title="Mandar para produção" ng-click="sendOrderToProduction(order)" ng-hide="order.changingStatus">
-						<span class="hidden-xs">Mandar para produção</span>
-						<span class="qf-icon icon-forward"></span>
-					</button>
-
-					<button class="btn btn-success btn-block disabled" title="Enviando para produção..." ng-show="order.changingStatus">
-						<span class="qf-icon icon-loading spin"></span>
-					</button>
-				</td>
+				<td>R$ {{order.price | money}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -102,14 +93,14 @@
 				<th class="col-md-3">Cliente</th>
 				<th class="col-md-3">Produtos</th>
 				<th class="col-md-2">Data e Hora</th>
-				<th class="col-md-3"></th>
+				<th class="col-md-1">Valor total</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
 				<td class="text-center" colspan="4">Não existem pedidos em produção</td>
 			</tr>
-			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: 'date')">
+			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: '-date')">
 				<td>{{order.id}}</td>
 				<td>
 					<p title="Nome do cliente">
@@ -135,16 +126,7 @@
 					<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
 				</td>
 				<td>{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
-				<td>
-					<button class="btn btn-warning btn-block" title="Marcar como Entregue" ng-click="markAsDelivered(order)" ng-hide="order.changingStatus">
-						<span class="hidden-xs">Marcar como Entregue</span>
-						<span class="qf-icon icon-forward"></span>
-					</button>
-
-					<button class="btn btn-warning btn-block disabled" title="Marcando como entregue..." ng-show="order.changingStatus">
-						<span class="qf-icon icon-loading spin"></span>
-					</button>
-				</td>
+				<td>R$ {{order.price | money}}</td>
 			</tr>
 		</tbody>
 	</table>
