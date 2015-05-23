@@ -27,6 +27,11 @@
 				<p class="title">Status</p>
 				<p class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</p>
 			</div>
+
+			<div class="order-observation" title="Informações adicionais fornecidas pelo cliente" ng-show="order.observation">
+				<p class="title">Informações adicionais</p>
+				<p>{{order.observation}}</p>
+			</div>
 		</fieldset>
 		<div class="clearfix"></div>
 
@@ -100,5 +105,38 @@
 				<p>R$ {{(order.changeFor - order.price) | money}}</p>
 			</div>
 		</fieldset>
+
+		<div class="clearfix"></div>
+
+		<fieldset class="order-items-panel">
+			<legend>Produtos</legend>
+
+			<ul class="items-list">
+				<li class="item" ng-repeat="item in order.items | orderBy: 'id'">
+					<p>
+						<span class="product-name">{{item.product.name}}</span>
+						<span>-</span>
+						<span class="quantity">quantidade: {{item.quantity}}</span>
+					</p>
+
+					<p class="flavors" ng-show="item.flavors">
+						<b>Sabores:</b>
+						<span class="flavor" ng-repeat="flavor in item.flavors">{{flavor.name}}{{$last ? '' : ', '}}</span>
+					</p>
+
+					<div class="clearfix"></div>
+
+					<ul class="component-list" ng-show="item.components">
+						<li class="component" ng-repeat="component in item.components | orderBy: ['-component.categorySequence', '-component.sequence', 'name']">
+							<b>{{component.component.name}}:</b>
+							<span ng-show="component.selectedOption">{{component.selectedOption.name}}</span>
+							<span ng-hide="component.selectedOption">{{component.value ? 'Sim' : 'Não'}}</span>
+						</li>
+					</ul>
+
+					<div class="clearfix"></div>
+				</li>
+			</ul>
+		</fielset>
 	</div>
 </div>

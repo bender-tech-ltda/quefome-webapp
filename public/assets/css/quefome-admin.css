@@ -224,7 +224,7 @@ body {
 }
 
 .content .order-fullfillment-page .orders-table .products-column .price-label {
-	color: green;
+	color: #008000;
 	font-weight: bold;
 }
 
@@ -296,6 +296,43 @@ body {
 .order-detail-dialog .payment-panel .payment-method .qf-icon {
 	font-size: 17px;
 	top: 2px;
+}
+
+.order-detail-dialog .order-items-panel .items-list {
+	padding-left: 14px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item p {
+	margin-bottom: 0px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .product-name {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item {
+	margin-bottom: 15px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .quantity,
+.order-detail-dialog .order-items-panel .items-list .item .flavors {
+	color: #545454;
+	margin-bottom: 5px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .flavor {
+	color: #F46C21;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .component-list {
+	list-style: none;
+	padding: 0px;
+	color: #545454;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .component-list .component {
+	margin-bottom: 5px;
 }
 
 .footer {
@@ -403,6 +440,11 @@ body {
 	.order-detail-dialog .order-data-panel .order-date,
 	.order-detail-dialog .payment-panel .payment-method,
 	.order-detail-dialog .payment-panel .order-price {
+		float: left;
+		width: 50%;
+	}
+
+	.order-detail-dialog .order-items-panel .items-list .item .component-list .component {
 		float: left;
 		width: 50%;
 	}

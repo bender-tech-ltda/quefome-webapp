@@ -99,4 +99,5 @@ define(["angular", "quefome/filters"], function(angular) {
 			return transformGrouppedProductsListToObject(productsGrouppedById, limit);
 		};
 	}]);
+
 });

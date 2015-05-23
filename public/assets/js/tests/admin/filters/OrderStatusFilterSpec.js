@@ -1,7 +1,7 @@
 "use strict";
 
 define(["angular", "angular/mock", "quefome/filters"], function(angular) {
-	describe("order status description filter", function() {
+	describe("order status filter", function() {
 		var orderStatusFilter;
 
 		beforeEach(module("qfAdminFilters"));
