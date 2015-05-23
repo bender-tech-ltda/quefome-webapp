@@ -144,4 +144,32 @@
 			</ul>
 		</fielset>
 	</div>
+	<div class="modal-footer">
+		<div class="actions" ng-hide="changingOrderStatus">
+			<button type="button" class="btn btn-warning btn-open-to-production" ng-show="order.status == 'OPEN'">
+				<span>Mandar para produção</span>
+				<span class="qf-icon icon-forward"></span>
+			</button>
+
+			<button type="button" class="btn btn-default btn-production-to-open" ng-show="order.status == 'PRODUCTION'">
+				<span class="qf-icon icon-forward flip"></span>
+				<span>Marcar como aberto novamente</span>
+			</button>
+
+			<button type="button" class="btn btn-danger btn-production-to-delivered" ng-show="order.status == 'PRODUCTION'">
+				<span>Marcar como entregue</span>
+				<span class="qf-icon icon-forward"></span>
+			</button>
+
+			<button type="button" class="btn btn-default btn-delivered-to-production" ng-show="order.status == 'DELIVERED'">
+				<span class="qf-icon icon-forward flip"></span>
+				<span>Mandar de volta para produção</span>
+			</button>
+		</div>
+
+		<div class="processing-action" ng-show="changingOrderStatus">
+			<h4 class="message">Aguarde, estamos alterando o status do pedido...</h4>
+			<span class="qf-icon icon-loading spin"></span>
+		</div>
+	</div>
 </div>

@@ -339,6 +339,48 @@ body {
 	color: #EB3825;
 }
 
+.order-detail-dialog .actions {
+	width: 100%;
+}
+
+.order-detail-dialog .actions .qf-icon {
+	font-size: 16px;
+}
+
+.order-detail-dialog .actions .btn-open-to-production {
+	width: 100%;
+}
+
+.order-detail-dialog .actions .btn-production-to-open,
+.order-detail-dialog .actions .btn-production-to-delivered {
+	float: left;
+	width: 48%;
+	font-size: 12px;
+	white-space: normal;
+}
+
+.order-detail-dialog .actions .btn-production-to-open .qf-icon,
+.order-detail-dialog .actions .btn-production-to-delivered .qf-icon {
+	font-size: 12px;
+}
+
+.order-detail-dialog .actions .btn-delivered-to-production {
+	width: 100%;
+}
+
+.order-detail-dialog .processing-action {
+	text-align: center;
+	color: #545454;
+}
+
+.order-detail-dialog .processing-action .message {
+	font-size: 12px; 
+}
+
+.order-detail-dialog .processing-action .qf-icon {
+	font-size: 25px;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;
@@ -362,7 +404,6 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 }
-
 
 /** --- Override bootstrap style --- **/
 .table thead tr th {
@@ -406,8 +447,14 @@ body {
 }
 
 .btn.btn-primary {
-	background-color: #eb3825;
-	border-color: #eb3825;
+	color: #FFF;
+	background-color: #F46C21;
+	border-color: #F46C21;
+}
+
+.btn.btn-primary:hover {
+	border-color: #FBCA0E;
+	background-color: #FBCA0E;
 }
 
 .alert {
@@ -416,6 +463,10 @@ body {
 
 .badge {
 	vertical-align: middle;
+}
+
+.modal .modal-content {
+	border-radius: 2px;
 }
 
 @media(min-width: 427px) {
@@ -451,6 +502,15 @@ body {
 	.order-detail-dialog .order-items-panel .items-list .item .component-list .component {
 		float: left;
 		width: 50%;
+	}
+
+	.order-detail-dialog .actions .btn-production-to-open,
+	.order-detail-dialog .actions .btn-production-to-delivered {
+		font-size: 14px;
+	}
+
+	.order-detail-dialog .processing-action .message {
+		font-size: 16px; 
 	}
 }
 

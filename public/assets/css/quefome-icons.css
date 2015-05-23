@@ -33,6 +33,13 @@
 	animation: 1.3s linear 0s normal none infinite spin;
 }
 
+.qf-icon.flip {
+	transform: scaleX(-1);
+	-moz-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	-ms-transform: scaleX(-1);
+}
+
 .icon-order:before {
 	content: "\e609";
 }
