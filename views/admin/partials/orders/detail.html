@@ -6,7 +6,7 @@
 		<button type="button" class="close" data-dismiss="modal">
 			<span aria-hidden="true">&times;</span>
 		</button>
-		
+
 		<div class="clearfix"></div>
 	</div>
 	<div class="modal-body">
@@ -53,12 +53,12 @@
 		<fieldset class="delivery-panel">
 			<legend>Entrega</legend>
 
-			<div class="delivery-method" title="{{order.withdraw ? 'O pedido será retirado no balcão pelo cliente' : 'O pedido precisa ser enviado por tele-entrega para o cliente'}}">
+			<div class="delivery-method" title="{{order.withdraw ? 'O pedido será retirado no balcão pelo cliente' : 'O pedido precisa ser enviado por tele-entrega para o cliente'}}" ng-show="order.establishment.parameters.canWithdraw">
 				<p class="title">Recebimento</p>
 				<p>{{order.withdraw ? 'Retirada no balcão' : 'Via tele-entrega'}}</p>
 			</div>
 
-			<div class="address" ng-hide="order.withdraw">
+			<div class="address" ng-hide="order.establishment.parameters.canWithdraw && order.withdraw">
 				<p class="title">Endereço</p>
 				<p>{{order.address.address}}, nº {{order.address.number}} - Bairro {{order.address.neighborhood.name}}</p>
 			</div>
