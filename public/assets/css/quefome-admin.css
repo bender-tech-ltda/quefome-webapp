@@ -246,22 +246,29 @@ body {
 	font-size: 21px;
 }
 
-.order-detail-dialog .header .order-status {
-	float: right;
-	margin-top: 9px;
-	font-size: 12px;
+.order-detail-dialog .header .label-order-status {
+	display: none;
 }
 
-.order-detail-dialog .order-status.status-open {
+.order-detail-dialog .label-order-status.status-open {
 	background-color: #5cb85c;
 }
 
-.order-detail-dialog .order-status.status-production {
+.order-detail-dialog .label-order-status.status-production {
 	background-color: #f0ad4e;
 }
 
-.order-detail-dialog .order-status.status-delivered {
+.order-detail-dialog .label-order-status.status-delivered {
 	background-color: #d9534f;
+}
+
+.order-detail-dialog fieldset {
+	margin-bottom: 20px;
+}
+
+.order-detail-dialog legend {
+	margin-bottom: 5px;
+	font-size: 18px;
 }
 
 .footer {
@@ -356,6 +363,19 @@ body {
 
 	.content .order-fullfillment-page .orders-table .products-column .price-label {
 		display: none;
+	}
+
+	.order-detail-dialog .header .label-order-status {
+		display: block;
+		float: right;
+		margin-top: 8px;
+		font-size: 13px;
+	}
+
+	.order-detail-dialog .order-data-panel .order-number,
+	.order-detail-dialog .order-data-panel .order-date {
+		float: left;
+		width: 50%;
 	}
 }
 

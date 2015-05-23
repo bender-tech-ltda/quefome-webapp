@@ -1,10 +1,58 @@
 <div class="order-detail-dialog" ng-controller="OrderDetailController">
 	<div class="modal-header header">
 		<h3 class="title">Pedido nº {{order.id}}</h3>
-		<span class="label order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+		<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
 
 		<div class="clearfix"></div>
 	</div>
 	<div class="modal-body">
+		<fieldset class="order-data-panel">
+			<legend>Dados do Pedido</legend>
+
+			<div class="order-number">
+				<b>Número:</b>
+				<span>{{order.id}}</span>
+			</div>
+
+			<div class="order-date">
+				<b>Date e Hora:</b>
+				<span>{{order.date | date:'dd/MM HH:mm'}}</span>
+			</div>
+
+			<div class="order-status">
+				<b>Status:</b>
+				<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+			</div>
+		</fieldset>
+		<div class="clearfix"></div>
+
+		<fieldset class="order-customer-panel">
+			<legend>Dados do Cliente</legend>
+
+			<div class="customer-name">
+				<b>Nome:</b>
+				<span>{{order.user.name}}</span>
+			</div>
+
+			<div class="customer-email">
+				<b>Email:</b>
+				<span>{{order.user.email}}</span>
+			</div>
+
+			<div class="customer-phone">
+				<b>Telefone:</b>
+				<span>{{order.phone | phone}}</span>
+			</div>
+		</fieldset>
+		<div class="clearfix"></div>
+
+		<fieldset class="delivery-panel">
+			<legend>Entrega</legend>
+
+			<div class="delivery-method">
+				<b>Recebimento:</b>
+				<span>{{order.withdraw ? 'Retirada no balcão' : 'Via tele-entrega'}}</span>
+			</div>
+		</fieldset>
 	</div>
 </div>

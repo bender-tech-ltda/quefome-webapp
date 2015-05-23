@@ -80,7 +80,7 @@
 					<p class="price-label">Total: R$ {{order.price | money}}</p>
 				</td>
 				<td class="price-column">R$ {{order.price | money}}</td>
-				<td class="order-date-column">{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM HH:mm'}}</td>
 				<td class="order-details-column">
 					<button type="button" class="btn btn-primary btn-show-order-details" title="Visualizar pedido" ng-click="showOrderDetails(order)">
 						<span class="text">Visualizar pedido</span>
@@ -140,7 +140,7 @@
 					<p class="price-label">Total: R$ {{order.price | money}}</p>
 				</td>
 				<td class="price-column">R$ {{order.price | money}}</td>
-				<td class="order-date-column">{{order.date | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM HH:mm'}}</td>
 				<td class="order-details-column">
 					<button type="button" class="btn btn-primary btn-show-order-details" title="Visualizar pedido" ng-click="showOrderDetails(order)">
 						<span class="text">Visualizar pedido</span>
