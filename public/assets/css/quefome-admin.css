@@ -240,6 +240,30 @@ body {
 	display: none;
 }
 
+.order-detail-dialog .title {
+	float: left;
+	margin: 5px 0px 0px;
+	font-size: 21px;
+}
+
+.order-detail-dialog .header .order-status {
+	float: right;
+	margin-top: 9px;
+	font-size: 12px;
+}
+
+.order-detail-dialog .order-status.status-open {
+	background-color: #5cb85c;
+}
+
+.order-detail-dialog .order-status.status-production {
+	background-color: #f0ad4e;
+}
+
+.order-detail-dialog .order-status.status-delivered {
+	background-color: #d9534f;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;

@@ -1,1 +1,10 @@
-<h1 class="text-center">Em desenvolvimento...</h1>
+<div class="order-detail-dialog" ng-controller="OrderDetailController">
+	<div class="modal-header header">
+		<h3 class="title">Pedido nº {{order.id}}</h3>
+		<span class="label order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+
+		<div class="clearfix"></div>
+	</div>
+	<div class="modal-body">
+	</div>
+</div>
