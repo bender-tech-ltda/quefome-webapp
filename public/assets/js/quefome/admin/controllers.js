@@ -198,6 +198,16 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
+	module.controller("OrderDetailController", ["$scope", function($scope) {
+		$scope.order = null;
+
+		$scope.$on("$dialogParameters", function(event, params) {
+			if (params.order) {
+				$scope.order = params.order;
+			}
+		});
+	}]);
+
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
