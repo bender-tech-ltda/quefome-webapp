@@ -1,8 +1,12 @@
 <div class="order-detail-dialog" ng-controller="OrderDetailController">
 	<div class="modal-header header">
-		<h3 class="title">Pedido nº {{order.id}}</h3>
 		<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+		<h3 class="title">Pedido nº {{order.id}}</h3>
 
+		<button type="button" class="close" data-dismiss="modal">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		
 		<div class="clearfix"></div>
 	</div>
 	<div class="modal-body">
@@ -10,18 +14,18 @@
 			<legend>Dados do Pedido</legend>
 
 			<div class="order-number">
-				<b>Número:</b>
-				<span>{{order.id}}</span>
+				<p class="title">Número</p>
+				<p>{{order.id}}</p>
 			</div>
 
 			<div class="order-date">
-				<b>Date e Hora:</b>
-				<span>{{order.date | date:'dd/MM HH:mm'}}</span>
+				<p class="title">Data e hora</p>
+				<p>{{order.date | date:'dd/MM HH:mm'}}</p>
 			</div>
 
-			<div class="order-status">
-				<b>Status:</b>
-				<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+			<div class="order-status" title="Esse pedido está {{(order.status | orderStatus).toLowerCase()}}">
+				<p class="title">Status</p>
+				<p class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</p>
 			</div>
 		</fieldset>
 		<div class="clearfix"></div>
@@ -30,18 +34,18 @@
 			<legend>Dados do Cliente</legend>
 
 			<div class="customer-name">
-				<b>Nome:</b>
-				<span>{{order.user.name}}</span>
+				<p class="title">Nome</p>
+				<p>{{order.user.name}}</p>
 			</div>
 
 			<div class="customer-email">
-				<b>Email:</b>
-				<span>{{order.user.email}}</span>
+				<p class="title">Email</p>
+				<p>{{order.user.email}}</p>
 			</div>
 
 			<div class="customer-phone">
-				<b>Telefone:</b>
-				<span>{{order.phone | phone}}</span>
+				<p class="title">Telefone</p>
+				<p>{{order.phone | phone}}</p>
 			</div>
 		</fieldset>
 		<div class="clearfix"></div>
@@ -49,9 +53,51 @@
 		<fieldset class="delivery-panel">
 			<legend>Entrega</legend>
 
-			<div class="delivery-method">
-				<b>Recebimento:</b>
-				<span>{{order.withdraw ? 'Retirada no balcão' : 'Via tele-entrega'}}</span>
+			<div class="delivery-method" title="{{order.withdraw ? 'O pedido será retirado no balcão pelo cliente' : 'O pedido precisa ser enviado por tele-entrega para o cliente'}}">
+				<p class="title">Recebimento</p>
+				<p>{{order.withdraw ? 'Retirada no balcão' : 'Via tele-entrega'}}</p>
+			</div>
+
+			<div class="address" ng-hide="order.withdraw">
+				<p class="title">Endereço</p>
+				<p>{{order.address.address}}, nº {{order.address.number}} - Bairro {{order.address.neighborhood.name}}</p>
+			</div>
+
+			<div class="city" ng-hide="order.withdraw">
+				<p class="title">Cidade</p>
+				<p>Porto Alegre - RS</p>
+			</div>
+		</fieldset>
+		<div class="clearfix"></div>
+
+		<fieldset class="payment-panel">
+			<legend>Pagamento</legend>
+
+			<div class="payment-method" title="O pedido será pago com {{order.paymentMethod.name}}">
+				<p class="title">Forma de Pagamento</p>
+				<p>
+					<span class="qf-icon icon-{{order.paymentMethod.category.key}}"></span>
+					<span>{{order.paymentMethod.name}}</span>
+					<span ng-hide="order.paymentMethod.category.hasChange">({{order.paymentMethod.category.name}})</span>
+				</p>
+			</div>
+
+			<div class="order-price">
+				<p class="title">Valor total</p>
+				<p>R$ {{order.price | money}}</p>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<div class="change-for" ng-show="order.paymentMethod.category.hasChange" title="{{!order.changeFor ? 'O cliente não informou o valor a ser pago' : ''}}">
+				<p class="title">Valor a ser pago</p>
+				<p ng-show="order.changeFor">R$ {{order.changeFor | money}}</p>
+				<p ng-hide="order.changeFor">Não informado</p>
+			</div>
+
+			<div class="change" ng-show="order.paymentMethod.category.hasChange && order.changeFor">
+				<p class="title">Troco</p>
+				<p>R$ {{(order.changeFor - order.price) | money}}</p>
 			</div>
 		</fieldset>
 	</div>

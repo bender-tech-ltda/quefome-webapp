@@ -240,14 +240,17 @@ body {
 	display: none;
 }
 
-.order-detail-dialog .title {
+.order-detail-dialog .header .label-order-status {
+	float: left;
+	margin-top: 7px;
+	margin-right: 10px;
+	font-size: 13px;
+}
+
+.order-detail-dialog .header .title {
 	float: left;
 	margin: 5px 0px 0px;
 	font-size: 21px;
-}
-
-.order-detail-dialog .header .label-order-status {
-	display: none;
 }
 
 .order-detail-dialog .label-order-status.status-open {
@@ -269,6 +272,30 @@ body {
 .order-detail-dialog legend {
 	margin-bottom: 5px;
 	font-size: 18px;
+}
+
+.order-detail-dialog p.title {
+	margin: 0px;
+	font-weight: bold;
+}
+
+.order-detail-dialog .order-data-panel .order-number,
+.order-detail-dialog .order-data-panel .order-date,
+.order-detail-dialog .order-customer-panel .customer-name,
+.order-detail-dialog .order-customer-panel .customer-email,
+.order-detail-dialog .payment-panel .change-for,
+.order-detail-dialog .payment-panel .change {
+	float: left;
+	width: 50%;
+}
+
+.order-detail-dialog .order-customer-panel .customer-email {
+	word-wrap: break-word
+}
+
+.order-detail-dialog .payment-panel .payment-method .qf-icon {
+	font-size: 17px;
+	top: 2px;
 }
 
 .footer {
@@ -365,15 +392,17 @@ body {
 		display: none;
 	}
 
-	.order-detail-dialog .header .label-order-status {
-		display: block;
-		float: right;
-		margin-top: 8px;
-		font-size: 13px;
+	.order-detail-dialog .order-data-panel .order-number,
+	.order-detail-dialog .order-data-panel .order-date,
+	.order-detail-dialog .order-data-panel .order-status {
+		float: left;
+		width: 33.33% !important;
 	}
 
 	.order-detail-dialog .order-data-panel .order-number,
-	.order-detail-dialog .order-data-panel .order-date {
+	.order-detail-dialog .order-data-panel .order-date,
+	.order-detail-dialog .payment-panel .payment-method,
+	.order-detail-dialog .payment-panel .order-price {
 		float: left;
 		width: 50%;
 	}
