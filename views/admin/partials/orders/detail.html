@@ -11,7 +11,7 @@
 	</div>
 	<div class="modal-body">
 		<fieldset class="order-data-panel">
-			<legend>Dados do Pedido</legend>
+			<legend><span class="qf-icon icon-order"></span> Dados do Pedido</legend>
 
 			<div class="order-number">
 				<p class="title">Número</p>
@@ -31,7 +31,7 @@
 		<div class="clearfix"></div>
 
 		<fieldset class="order-customer-panel">
-			<legend>Dados do Cliente</legend>
+			<legend><span class="qf-icon icon-user"></span> Dados do Cliente</legend>
 
 			<div class="customer-name">
 				<p class="title">Nome</p>
@@ -51,7 +51,7 @@
 		<div class="clearfix"></div>
 
 		<fieldset class="delivery-panel">
-			<legend>Entrega</legend>
+			<legend><span class="qf-icon icon-bike"></span> Entrega</legend>
 
 			<div class="delivery-method" title="{{order.withdraw ? 'O pedido será retirado no balcão pelo cliente' : 'O pedido precisa ser enviado por tele-entrega para o cliente'}}" ng-show="order.establishment.parameters.canWithdraw">
 				<p class="title">Recebimento</p>
@@ -71,7 +71,7 @@
 		<div class="clearfix"></div>
 
 		<fieldset class="payment-panel">
-			<legend>Pagamento</legend>
+			<legend><b>$</b> Pagamento</legend>
 
 			<div class="payment-method" title="O pedido será pago com {{order.paymentMethod.name}}">
 				<p class="title">Forma de Pagamento</p>
