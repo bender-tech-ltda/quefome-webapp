@@ -335,6 +335,10 @@ body {
 	margin-bottom: 5px;
 }
 
+.order-detail-dialog .order-items-panel .items-list .item .item-instructions {
+	color: #EB3825;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;
