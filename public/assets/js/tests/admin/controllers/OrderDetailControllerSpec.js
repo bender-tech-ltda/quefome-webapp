@@ -10,9 +10,11 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 		beforeEach(function() {
 			MockedOrderService = {
-				_updateOrder: false,
-				update: function(order) {
-					this._updateOrder = order;
+				_changeStatusOrder: null,
+				_changeStatusStatus: null,
+				changeStatus: function(order, status) {
+					this._changeStatusOrder = order;
+					this._changeStatusStatus = status;
 
 					return {
 						then: function(success) {
@@ -59,19 +61,19 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.order = {id: -5};
 				scope.changeOrderStatus('PRODUCTION');
 
-				expect(MockedOrderService._updateOrder.id).toEqual(scope.order.id);
-				expect(MockedOrderService._updateOrder.status).toEqual('PRODUCTION');
+				expect(MockedOrderService._changeStatusOrder).toEqual(scope.order);
+				expect(MockedOrderService._changeStatusStatus).toEqual('PRODUCTION');
 			});
 
 			it("should set the changingOrderStatus to true and errorChangingStatus to false", function() {
 				scope.errorChangingStatus = true;
 
-				MockedOrderService.update = function() {
+				MockedOrderService.changeStatus = function() {
 					return {then: function() {}};
 				};
 
 				scope.order = {id: -5};
-				scope.changeOrderStatus();
+				scope.changeOrderStatus('DELIVERED');
 
 				expect(scope.changingOrderStatus).toBe(true);
 				expect(scope.errorChangingStatus).toBe(false);
@@ -80,10 +82,10 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			it("should set the changingOrderStatus to false after finish", function() {
 				scope.order = {id: -5};
 
-				scope.changeOrderStatus();
+				scope.changeOrderStatus('OPEN');
 				expect(scope.changingOrderStatus).toBe(false);
 
-				MockedOrderService.update = function() {
+				MockedOrderService.changeStatus = function() {
 					return {then: function(success, error) {
 						error();
 					}};
@@ -94,7 +96,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			});
 
 			it("should set the errorChangingStatus to true if it fails", function() {
-				MockedOrderService.update = function() {
+				MockedOrderService.changeStatus = function() {
 					return {then: function(success, error) {
 						error();
 					}};

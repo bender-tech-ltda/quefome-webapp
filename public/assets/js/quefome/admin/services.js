@@ -86,8 +86,11 @@ define(["angular"], function(angular) {
 			}, treatPromiseErrors($q));
 		};
 
-		this.update = function(order) {
-			return $http.put("/api/orders/" + order.id, order).then(function(response) {
+		this.changeStatus = function(order, status) {
+			order = angular.copy(order);
+			order.status = status;
+
+			return $http.put("/api/orders/" + order.id + "/status/", order).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};

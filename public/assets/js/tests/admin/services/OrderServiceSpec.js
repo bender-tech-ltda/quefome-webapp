@@ -28,15 +28,23 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.flush();
 		});
 
-		it("should update an order", function() {
-			var updatedOrder = {id: -42, status: 'PRODUCTION', date: new Date()};
-			$httpBackend.whenPUT("/api/orders/" + updatedOrder.id, updatedOrder).respond(200, updatedOrder);
+		it("should change the order status", function() {
+			var order = {id: -42, status: 'OPEN', date: new Date()};
 
-			OrderService.update(updatedOrder).then(function(order) {
-				expect(order).toEqual(updatedOrder);
+			var statusChangedOrder = angular.copy(order);
+			statusChangedOrder.status = 'PRODUCTION';
+
+			$httpBackend.whenPUT("/api/orders/" + order.id + "/status/").respond(200, statusChangedOrder);
+
+			var updatedOrder = null;
+			OrderService.changeStatus(order).then(function(_updatedOrder) {
+				updatedOrder = _updatedOrder;
 			});
 
 			$httpBackend.flush();
+
+			expect(updatedOrder.id).toEqual(order.id);
+			expect(updatedOrder.status).toEqual("PRODUCTION");
 		});
 	});
 });

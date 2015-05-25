@@ -177,13 +177,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		};
 
 		$scope.changeOrderStatus = function(newStatus) {
-			var copiedOrder = angular.copy($scope.order);
-			copiedOrder.status = newStatus;
-
 			$scope.changingOrderStatus = true;
 			$scope.errorChangingStatus = false;
 
-			return OrderService.update(copiedOrder).then(function(updatedOrder) {
+			return OrderService.changeStatus($scope.order, newStatus).then(function(updatedOrder) {
 				$scope.order.status = updatedOrder.status;
 				$scope.order.version = updatedOrder.version;
 
