@@ -69,6 +69,8 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		$scope.numberOfIncomingOrders = 0;
 		$scope.numberOfModifiedOrders = 0;
 
+		$scope.loadedOrders = false;
+
 		//TODO transformar em algum tipo de enum/factory/service/constante
 		var OrderStatus = {
 			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
@@ -131,11 +133,17 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			var secontsToCheck = ($scope.secondsToCheckForIncomingOrders * 1000)
 
 			OrderService.list().then(function(orders) {
-				$scope.cachedOrders = orders;
+				if (!$scope.loadedOrders) {
+					$scope.orders = orders;
+				} else {
+					$scope.cachedOrders = orders;
 
-				var totalOrders = countIncomingAndModifiedOrders(orders);
-				$scope.numberOfIncomingOrders = totalOrders.numberOfIncomingOrders;
-				$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
+					var totalOrders = countIncomingAndModifiedOrders(orders);
+					$scope.numberOfIncomingOrders = totalOrders.numberOfIncomingOrders;
+					$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
+				}
+
+				$scope.loadedOrders = true;
 
 				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 				$scope.$digest();
@@ -152,14 +160,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			$scope.$digest();
 		};
 
-		OrderService.list().then(function(orders) {
-			$scope.orders = orders;
-			$scope.checkIncomingOrders();
-
-			$scope.$digest();
-		}, function() {
-			$scope.checkIncomingOrders();			
-		});
+		$scope.checkIncomingOrders();
 
 		$scope.$on("$destroy", function() {
 			if (timeoutPromise) {

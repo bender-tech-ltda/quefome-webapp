@@ -84,6 +84,10 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(scope.numberOfModifiedOrders).toBeDefined();
 		});
 
+		it("should have a loadedOrders property", function() {
+			expect(scope.loadedOrders).toBeDefined();
+		});
+
 		it("should get a list of orders on startup", function() {
 			expect(MockedOrderService.listCalled).toBe(true);
 			expect(scope.orders).toEqual(MockedOrderService._orders);
@@ -105,9 +109,33 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		});
 
 		describe("when checking incoming orders", function() {
+			beforeEach(function() {
+				scope.loadedOrders = true;
+			});
+
 			it("should put the incoming orders in a cache", function() {
 				scope.checkIncomingOrders();
 				expect(scope.cachedOrders).toEqual(MockedOrderService._orders);
+			});
+
+			it("should check if the orders are already loaded and set the orders", function() {
+				scope.orders = null;
+				scope.loadedOrders = false;
+
+				scope.checkIncomingOrders();				
+				expect(scope.orders).toEqual(MockedOrderService._orders);
+
+				scope.loadedOrders = true;
+				
+				scope.checkIncomingOrders();
+				expect(scope.cachedOrders).toEqual(MockedOrderService._orders);
+			});
+
+			it("should set the loadedOrders to true", function() {
+				scope.loadedOrders = false;
+				scope.checkIncomingOrders();
+
+				expect(scope.loadedOrders).toBe(true);
 			});
 
 			it("should count how many incoming open orders exists", function() {

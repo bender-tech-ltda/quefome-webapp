@@ -48,10 +48,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="no-hover" ng-hide="openOrders && openOrders.length > 0">
-				<td class="text-center" colspan="4">Não existem pedidos abertos</td>
+			<tr class="loading-orders no-hover" ng-hide="loadedOrders">
+				<td colspan="6">Buscando pedidos abertos... <span class="qf-icon icon-loading spin"></span></td>
 			</tr>
-			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: '-date')">
+
+			<tr class="empty-orders no-hover" ng-show="loadedOrders && (!productionOrders || productionOrders.length <= 0)">
+				<td colspan="6">Não existem pedidos abertos</td>
+			</tr>
+
+			<tr ng-repeat="order in openOrders = (orders | filter:{status: 'OPEN'} | orderBy: '-date')" ng-show="loadedOrders">
 				<td class="order-numbe-column">{{order.id}}</td>
 				<td class="customer-column">
 					<p title="Nome do cliente">
@@ -108,10 +113,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="no-hover" ng-hide="productionOrders && productionOrders.length > 0">
-				<td class="text-center" colspan="4">Não existem pedidos em produção</td>
+			<tr class="loading-orders no-hover" ng-hide="loadedOrders">
+				<td colspan="6">Buscando pedidos em produção... <span class="qf-icon icon-loading spin"></span></td>
 			</tr>
-			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: '-date')">
+
+			<tr class="empty-orders no-hover" ng-show="loadedOrders && (!productionOrders || productionOrders.length <= 0)">
+				<td colspan="6">Não existem pedidos em produção</td>
+			</tr>
+
+			<tr ng-repeat="order in productionOrders = (orders | filter:{status: 'PRODUCTION'} | orderBy: '-date')" ng-show="loadedOrders">
 				<td class="order-numbe-column">{{order.id}}</td>
 				<td class="customer-column">
 					<p title="Nome do cliente">
