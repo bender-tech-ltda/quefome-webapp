@@ -145,23 +145,27 @@
 		</fielset>
 	</div>
 	<div class="modal-footer">
+		<div class="action-error-message" ng-show="errorChangingStatus">
+			<span class="message">Desculpe, mas ocorreu algum erro alterando o status desse pedido.<span>
+		</div>
+
 		<div class="actions" ng-hide="changingOrderStatus">
-			<button type="button" class="btn btn-warning btn-open-to-production" ng-show="order.status == 'OPEN'">
+			<button type="button" class="btn btn-warning btn-open-to-production" ng-show="order.status == 'OPEN'" ng-click="sendOrderToProduction()">
 				<span>Mandar para produção</span>
 				<span class="qf-icon icon-forward"></span>
 			</button>
 
-			<button type="button" class="btn btn-default btn-production-to-open" ng-show="order.status == 'PRODUCTION'">
+			<button type="button" class="btn btn-default btn-production-to-open" ng-show="order.status == 'PRODUCTION'" ng-click="markAsOpen()">
 				<span class="qf-icon icon-forward flip"></span>
 				<span>Marcar como aberto novamente</span>
 			</button>
 
-			<button type="button" class="btn btn-danger btn-production-to-delivered" ng-show="order.status == 'PRODUCTION'">
+			<button type="button" class="btn btn-danger btn-production-to-delivered" ng-show="order.status == 'PRODUCTION'" ng-click="markAsDelivered()">
 				<span>Marcar como entregue</span>
 				<span class="qf-icon icon-forward"></span>
 			</button>
 
-			<button type="button" class="btn btn-default btn-delivered-to-production" ng-show="order.status == 'DELIVERED'">
+			<button type="button" class="btn btn-default btn-delivered-to-production" ng-show="order.status == 'DELIVERED'" ng-click="sendOrderToProduction()">
 				<span class="qf-icon icon-forward flip"></span>
 				<span>Mandar de volta para produção</span>
 			</button>

@@ -69,43 +69,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		$scope.numberOfIncomingOrders = 0;
 		$scope.numberOfModifiedOrders = 0;
 
+		//TODO transformar em algum tipo de enum/factory/service/constante
 		var OrderStatus = {
 			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
 		};
-
-		/** TODO: MOVER ESSES METODOS PARA O CONTROLLER DE DETALHE DO PEDIDO
-		var changeOrderStatus = function(order, newStatus) {
-			order.changingStatus = true;
-			$scope.$digest();
-
-			var copiedOrder = angular.copy(order);
-			copiedOrder.status = newStatus;
-
-			return OrderService.update(copiedOrder).then(function(updatedOrder) {
-				order.status = updatedOrder.status;
-				order.version = updatedOrder.version;
-
-				order.changingStatus = false;
-				$scope.$digest();
-
-				return true;
-			}, function(errorMessage) {
-				order.changingStatus = false;
-				$scope.$digest();
-
-				return false;
-			});
-		}
-
-		$scope.sendOrderToProduction = function(order) {
-			changeOrderStatus(order, OrderStatus.PRODUCTION);
-		};
-
-		$scope.markAsDelivered = function(order) {
-			changeOrderStatus(order, OrderStatus.DELIVERED);
-		};
-
-		**/
 
 		$scope.showOrderDetails = function(order) {
 			Dialog.create({
@@ -198,8 +165,50 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
-	module.controller("OrderDetailController", ["$scope", function($scope) {
+	module.controller("OrderDetailController", ["$scope", "OrderService", function($scope, OrderService) {
 		$scope.order = null;
+
+		$scope.changingOrderStatus = false;
+		$scope.errorChangingStatus = false;
+
+		//TODO transformar em algum tipo de enum/factory/service/constante
+		var OrderStatus = {
+			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
+		};
+
+		$scope.changeOrderStatus = function(newStatus) {
+			var copiedOrder = angular.copy($scope.order);
+			copiedOrder.status = newStatus;
+
+			$scope.changingOrderStatus = true;
+			$scope.errorChangingStatus = false;
+
+			return OrderService.update(copiedOrder).then(function(updatedOrder) {
+				$scope.order.status = updatedOrder.status;
+				$scope.order.version = updatedOrder.version;
+
+				$scope.changingOrderStatus = false;
+
+				$scope.$digest();
+			}, function(errorMessage) {
+				$scope.changingOrderStatus = false;
+				$scope.errorChangingStatus = true;
+
+				$scope.$digest();
+			});
+		}
+
+		$scope.markAsOpen = function() {
+			$scope.changeOrderStatus(OrderStatus.OPEN);
+		};
+
+		$scope.sendOrderToProduction = function() {
+			$scope.changeOrderStatus(OrderStatus.PRODUCTION);
+		};
+
+		$scope.markAsDelivered = function() {
+			$scope.changeOrderStatus(OrderStatus.DELIVERED);
+		};
 
 		$scope.$on("$dialogParameters", function(event, params) {
 			if (params.order) {

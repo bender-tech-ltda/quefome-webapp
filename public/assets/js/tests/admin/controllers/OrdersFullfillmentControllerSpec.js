@@ -42,19 +42,6 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 							callback(that._orders);
 						}
 					};
-				},
-
-				lastUpdatedOrder: false,
-				updateCheckedFunction: function() {},
-				update: function(order) {
-					this.lastUpdatedOrder = order;
-					this.updateCheckedFunction(order);
-
-					return {
-						then: function(callback) {
-							callback(order);
-						}
-					};
 				}
 			};
 		});
@@ -101,48 +88,6 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(MockedOrderService.listCalled).toBe(true);
 			expect(scope.orders).toEqual(MockedOrderService._orders);
 		});
-
-		/** TODO: MOVER ESSES METODOS PARA O CONTROLLER DE DETALHE DO PEDIDO
-		describe("when sending an order to production", function() {
-			it("should set the order.status to PRODUCTION", function() {
-				var myOrder = {id: -5};
-				scope.sendOrderToProduction(myOrder);
-
-				expect(MockedOrderService.lastUpdatedOrder.status).toEqual('PRODUCTION');
-			});
-
-			it("should set the order.changingStatus to true", function() {
-				var myOrder = {id: -5};
-				MockedOrderService.updateCheckedFunction = function() {
-					expect(myOrder.changingStatus).toBe(true);
-				};
-
-				scope.sendOrderToProduction(myOrder);
-
-				expect(myOrder.changingStatus).toBe(false);
-			});
-		});
-
-		describe("when marking an order as delivered", function() {
-			it("should set the order.status to DELIVERED", function() {
-				var myOrder = {id: -5};
-				scope.markAsDelivered(myOrder);
-
-				expect(MockedOrderService.lastUpdatedOrder.status).toEqual('DELIVERED');
-			});
-
-			it("should set the order.changingStatus to true", function() {
-				var myOrder = {id: -5};
-				MockedOrderService.updateCheckedFunction = function() {
-					expect(myOrder.changingStatus).toBe(true);
-				};
-
-				scope.markAsDelivered(myOrder);
-
-				expect(myOrder.changingStatus).toBe(false);
-			});
-		});
-		**/
 
 		describe("when showing order details", function() {
 			it("should show a dialog", function() {

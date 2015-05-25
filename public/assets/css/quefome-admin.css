@@ -339,6 +339,12 @@ body {
 	color: #EB3825;
 }
 
+.order-detail-dialog .action-error-message {
+	margin: 0px 0px 15px;
+	color: red;
+	text-align: center;
+}
+
 .order-detail-dialog .actions {
 	width: 100%;
 }
