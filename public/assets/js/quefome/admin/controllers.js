@@ -138,6 +138,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 				$scope.numberOfModifiedOrders = totalOrders.numberOfModifiedOrders;
 
 				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
+				$scope.$digest();
 			}, function() {
 				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 			});
@@ -153,9 +154,11 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 
 		OrderService.list().then(function(orders) {
 			$scope.orders = orders;
-			$scope.$digest(function() {
-				$scope.checkIncomingOrders();
-			});
+			$scope.checkIncomingOrders();
+
+			$scope.$digest();
+		}, function() {
+			$scope.checkIncomingOrders();			
 		});
 
 		$scope.$on("$destroy", function() {
