@@ -515,6 +515,8 @@ body {
 
 	.order-detail-dialog .order-data-panel .order-number,
 	.order-detail-dialog .order-data-panel .order-date,
+	.order-detail-dialog .delivery-panel .address-zip-code,
+	.order-detail-dialog .delivery-panel .address,
 	.order-detail-dialog .payment-panel .payment-method,
 	.order-detail-dialog .payment-panel .order-price {
 		float: left;
