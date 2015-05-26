@@ -1508,6 +1508,13 @@ a:hover, a:focus {
 	text-align: center;
 }
 
+.order-track-page .no-orders-message {
+	text-align: center;
+	margin: 27px 10px;
+	font-weight: bold;
+	color: #808080;
+}
+
 .order-track-page .order {
 	width: 100%;
 	padding: 15px 10px;

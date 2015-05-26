@@ -1307,7 +1307,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		var timeoutPromise = null;		
 		$scope.refreshOrders = function() {
 			if (!$scope.isUserLogged()) {
-				timeoutPromise = $timeout($scope.startup, 500);
+				timeoutPromise = $timeout($scope.refreshOrders, 500);
 				return;
 			}
 
@@ -1324,10 +1324,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 				$scope.notifyStatusChanged();
 
-				timeoutPromise = $timeout($scope.startup, refreshTime);
+				timeoutPromise = $timeout($scope.refreshOrders, refreshTime);
 			}, function() {
 				$scope.searchingOrders = false;
-				timeoutPromise = $timeout($scope.startup, refreshTime);
+				timeoutPromise = $timeout($scope.refreshOrders, refreshTime);
 			});
 		};
 

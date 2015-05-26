@@ -16,10 +16,14 @@
 	</div>
 
 	<div class="alert alert-success alert-recent-order" ng-show="recentlyCreatedOrder">
-		<p>Seu pedido foi realizado! O número do pedido é {{recentlyCreatedOrder.id}}.</p>
+		<p>Pedido realizado! O seu pedido é o pedido de nº {{recentlyCreatedOrder.id}}</p>
 	</div>
 
-	<div class="order" ng-repeat="order in orders | orderBy: '-date'" ng-show="ordersSearched">
+	<div class="no-orders-message" ng-show="ordersSearched && (!orders || orders.length <= 0)">
+		<p>Você não fez nenhum pedido recentemente.</p>
+	</div>
+
+	<div class="order" ng-repeat="order in orders | orderBy: '-date'" ng-show="ordersSearched && orders && orders.length > 0">
 		<h3 class="order-number">Pedido nº {{order.id}}</h3>
 		<h4 class="order-establishment">{{order.establishment.name}}</h4>
 
