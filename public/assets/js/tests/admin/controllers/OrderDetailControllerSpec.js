@@ -144,5 +144,21 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				expect(status).toEqual('DELIVERED');
 			});
 		});
+
+		describe("when closing the dialog", function() {
+			beforeEach(function() {
+				scope.$dialog = {
+					_hideCalled: false,
+					hide: function() {
+						scope.$dialog._hideCalled = true;
+					}
+				};
+			});
+
+			it("should close the dialog", function() {
+				scope.closeDialog();
+				expect(scope.$dialog._hideCalled).toBe(true);
+			});
+		});
 	});
 });

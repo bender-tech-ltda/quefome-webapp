@@ -211,6 +211,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			$scope.changeOrderStatus(OrderStatus.DELIVERED);
 		};
 
+		$scope.closeDialog = function() {
+			if ($scope.$dialog) {
+				$scope.$dialog.hide()
+			}
+		};
+
 		$scope.$on("$dialogParameters", function(event, params) {
 			if (params.order) {
 				$scope.order = params.order;

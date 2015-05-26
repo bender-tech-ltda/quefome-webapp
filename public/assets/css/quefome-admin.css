@@ -385,6 +385,11 @@ body {
 	width: 100%;
 }
 
+.order-detail-dialog .actions .btn-close-dialog {
+	width: 100%;
+	margin-top: 20px;
+}
+
 .order-detail-dialog .processing-action {
 	text-align: center;
 	color: #545454;
