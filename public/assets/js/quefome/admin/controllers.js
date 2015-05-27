@@ -175,6 +175,8 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		$scope.changingOrderStatus = false;
 		$scope.errorChangingStatus = false;
 
+		$scope.hideActions = false;
+
 		//TODO transformar em algum tipo de enum/factory/service/constante
 		var OrderStatus = {
 			OPEN: 'OPEN', PRODUCTION: 'PRODUCTION', DELIVERED: 'DELIVERED'
@@ -221,6 +223,8 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			if (params.order) {
 				$scope.order = params.order;
 			}
+
+			$scope.hideActions = (params.hideActions ? true : false);
 		});
 	}]);
 
