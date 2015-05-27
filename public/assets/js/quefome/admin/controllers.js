@@ -224,7 +224,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
-	module.controller("OrderSearchController", ["$scope", "OrderService", function($scope, OrderService) {
+	module.controller("OrderSearchController", ["$scope", "Dialog", "OrderService", function($scope, Dialog, OrderService) {
 		$scope.orders = [];
 
 		$scope.searchingOrders = false;
@@ -240,6 +240,14 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			}, function() {
 				$scope.searchingOrders = false;
 				$scope.searchError = true;
+			});
+		};
+
+		$scope.showOrderDetails = function(order) {
+			Dialog.create({
+				templateUrl: "/admin/partials/orders/detail.html",
+				params: {order: order, hideActions: true},
+				show: true
 			});
 		};
 

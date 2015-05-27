@@ -4,11 +4,21 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 	describe("OrderSearchController", function() {
 		var scope;
+		var MockedDialog;
 		var MockedOrderService;
 
 		beforeEach(module("qfAdminControllers"));
 
 		beforeEach(function() {
+			MockedDialog = {
+				_createCalled: false,
+				_createParams: null,
+				create: function(params) {
+					this._createCalled = true;
+					this._createParams = params;
+				}
+			};
+
 			MockedOrderService = {
 				_listCalled: false,
 				_listOrders: [],
@@ -31,6 +41,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 		beforeEach(function() {
 			var params = {
+				Dialog: MockedDialog,
 				OrderService: MockedOrderService
 			};
 
@@ -96,6 +107,27 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				MockedOrderService._listOrders = false;
 				scope.searchOrders();
 				expect(scope.searchError).toBe(true);
+			});
+		});
+
+		describe("when showing order details", function() {
+			it("should show a dialog", function() {
+				MockedDialog._createCalled = false;
+				scope.showOrderDetails({});
+				expect(MockedDialog._createCalled).toBe(true);
+			});
+
+			it("should pass a order as parameter to the dialog", function() {
+				var order = {id: -1};
+				scope.showOrderDetails(order);
+
+				expect(MockedDialog._createParams.params.order).toEqual(order);
+			});
+
+			it("should ask to the dialog hide the action buttons", function() {
+				scope.showOrderDetails({id: -1});
+
+				expect(MockedDialog._createParams.params.hideActions).toBe(true);
 			});
 		});
 	});
