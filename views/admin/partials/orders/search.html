@@ -1,0 +1,77 @@
+<div class="order-search-page">
+	<div class="partial-header">
+		<div class="partial-icon">
+			<span class="qf-icon icon-search"></span>
+		</div>
+
+		<div class="partial-title">
+			<h1 class="title">Pesquisa de Pedidos</h1>
+		</div>
+	</div>
+
+	<table class="table orders-table">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<h3 ng-show="orders && orders.length > 0">{{orders.length}} pedidos encontrados</h3>
+					<h3 ng-show="!orders || orders.length <= 0">Nenhum pedido encontrado</h3>
+				</td>
+			</tr>
+			<tr>
+				<th class="col-md-1 order-numbe-column">Nº</th>
+				<th class="col-md-3 customer-column">Cliente</th>
+				<th class="col-md-3 products-column">Produtos</th>
+				<th class="col-md-1 price-column">Valor total</th>
+				<th class="col-md-2 order-date-column">Data e Hora</th>
+				<th class="col-md-2 order-details-column">Detalhes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="loading-orders no-hover" ng-hide="loadedOrders">
+				<td colspan="6">Buscando pedidos abertos... <span class="qf-icon icon-loading spin"></span></td>
+			</tr>
+
+			<tr class="empty-orders no-hover" ng-show="loadedOrders && (!orders || orders.length <= 0)">
+				<td colspan="6">Nenhum pedido encontrado.</td>
+			</tr>
+
+			<tr ng-repeat="order in orders | orderBy: '-date'" ng-show="loadedOrders">
+				<td class="order-numbe-column">{{order.id}}</td>
+				<td class="customer-column">
+					<p title="Nome do cliente">
+						<b class="qf-icon icon-user"></b>
+						<span>{{order.user.name}}</span>
+					</p>
+					<p title="Telefone de contato">
+						<b class="qf-icon icon-phone"></b>
+						<span>{{order.phone | phone}}</span>
+					</p>
+					<p title="Endereço de entrega" ng-hide="order.withdraw">
+						<b class="qf-icon icon-bike"></b> 
+						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
+					</p>
+
+					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
+						<span>Esse pedido será retirado no balcão.</span>
+					</p>
+				</td>
+				<td class="products-column">
+					<p>
+						<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+						<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+						<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+					</p>
+					<p class="price-label">Total: R$ {{order.price | money}}</p>
+				</td>
+				<td class="price-column">R$ {{order.price | money}}</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM HH:mm'}}</td>
+				<td class="order-details-column">
+					<button type="button" class="btn btn-primary btn-show-order-details" title="Visualizar pedido" ng-click="showOrderDetails(order)">
+						<span class="text">Visualizar pedido</span>
+						<span class="qf-icon icon-order"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

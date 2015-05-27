@@ -224,6 +224,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
+	module.controller("OrderSearchController", ["$scope", function($scope) {
+		$scope.orders = [];
+	}]);
+
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
