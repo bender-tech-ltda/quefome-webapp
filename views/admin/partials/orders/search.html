@@ -31,11 +31,15 @@
 				<td colspan="6">Buscando pedidos abertos... <span class="qf-icon icon-loading spin"></span></td>
 			</tr>
 
-			<tr class="empty-orders no-hover" ng-show="!searchingOrders && (!orders || orders.length <= 0)">
+			<tr class="empty-orders no-hover" ng-show="!searchingOrders && !searchError && (!orders || orders.length <= 0)">
 				<td colspan="6">Nenhum pedido encontrado.</td>
 			</tr>
 
-			<tr ng-repeat="order in orders | orderBy: '-date'" ng-hide="searchingOrders">
+			<tr class="error-loading-orders no-hover" ng-show="!searchingOrders && searchError">
+				<td colspan="6">Desculpe, tivemos um problema para buscar pedidos. Tente de novo em alguns instantes.</td>
+			</tr>
+
+			<tr ng-repeat="order in orders | orderBy: '-date'" ng-hide="searchingOrders || searchError">
 				<td class="order-numbe-column">{{order.id}}</td>
 				<td class="customer-column">
 					<p title="Nome do cliente">
