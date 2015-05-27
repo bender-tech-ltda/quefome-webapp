@@ -27,15 +27,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="loading-orders no-hover" ng-hide="loadedOrders">
+			<tr class="loading-orders no-hover" ng-show="searchingOrders">
 				<td colspan="6">Buscando pedidos abertos... <span class="qf-icon icon-loading spin"></span></td>
 			</tr>
 
-			<tr class="empty-orders no-hover" ng-show="loadedOrders && (!orders || orders.length <= 0)">
+			<tr class="empty-orders no-hover" ng-show="!searchingOrders && (!orders || orders.length <= 0)">
 				<td colspan="6">Nenhum pedido encontrado.</td>
 			</tr>
 
-			<tr ng-repeat="order in orders | orderBy: '-date'" ng-show="loadedOrders">
+			<tr ng-repeat="order in orders | orderBy: '-date'" ng-hide="searchingOrders">
 				<td class="order-numbe-column">{{order.id}}</td>
 				<td class="customer-column">
 					<p title="Nome do cliente">
@@ -51,8 +51,9 @@
 						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
 					</p>
 
-					<p class="order-deliver-widraw-message" ng-show="order.withdraw">
-						<span>Esse pedido será retirado no balcão.</span>
+					<p title="Retirado no balcão" ng-show="order.withdraw">
+						<b class="qf-icon icon-location"></b> 
+						<span>Retirado no balcão</span>
 					</p>
 				</td>
 				<td class="products-column">

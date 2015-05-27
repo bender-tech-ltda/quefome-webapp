@@ -224,8 +224,30 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
-	module.controller("OrderSearchController", ["$scope", function($scope) {
+	module.controller("OrderSearchController", ["$scope", "OrderService", function($scope, OrderService) {
 		$scope.orders = [];
+
+		$scope.searchingOrders = false;
+		$scope.searchError = false;
+
+		$scope.searchOrders = function() {
+			$scope.searchingOrders = true;
+			$scope.searchError = false;
+
+			OrderService.list().then(function(orders) {
+				$scope.orders = orders;
+				$scope.searchingOrders = false;
+			}, function() {
+				$scope.searchingOrders = false;
+				$scope.searchError = true;
+			});
+		};
+
+		$scope.startup = function() {
+			$scope.searchOrders();
+		};
+
+		$scope.startup();
 	}]);
 
 	module.controller("NotFoundController", ["$scope", function($scope) {
