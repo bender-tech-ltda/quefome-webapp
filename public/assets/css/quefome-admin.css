@@ -70,9 +70,9 @@ body {
 }
 
 .navbar-quefome-admin .navbar-quefome-brand {
-	background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
-	background-size: 170px;
-	width: 170px;
+	background: transparent url("/assets/img/quefome_logo_250x93.png") no-repeat;
+	background-size: 165px;	
+	width: 168px;
 	height: 65px;
 	float: left;
 	margin: 15px 10px 0px;
@@ -193,6 +193,19 @@ body {
 .content .order-fullfillment-page {
 	width: 100%;
 }
+
+.content .order-fullfillment-page .alert-incoming-orders,
+.content .order-fullfillment-page .alert-modified-orders,
+.content .order-fullfillment-page .alert-updated-orders {
+	text-align: center;
+}
+
+.content .order-fullfillment-page .alert-incoming-orders .btn-link,
+.content .order-fullfillment-page .alert-modified-orders .btn-link,
+.content .order-fullfillment-page .alert-updated-orders .btn-link {
+	word-wrap: break-word;
+	white-space: normal;
+} 
 
 .content .order-fullfillment-page .orders-table {
 	font-size: 11px;
