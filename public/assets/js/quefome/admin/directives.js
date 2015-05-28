@@ -1,4 +1,4 @@
-define(["angular", "bootstrap", "bootstrap/datepicker/br", "quefome/directives"], function(angular) {
+define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 	"use strict";
 	
 	var module = angular.module("qfAdminDirectives", ["qfDirectives"]);
@@ -47,8 +47,22 @@ define(["angular", "bootstrap", "bootstrap/datepicker/br", "quefome/directives"]
 				};
 
 				if (!browserSupportsDateInput() || !browserDisplaysDatePicker()) {
-					element.datepicker({
-						language: "pt-BR"
+					var cssDatePicker = document.getElementById("cssDatePicker.qfInputDate");
+
+					if (!cssDatePicker) {
+						cssDatePicker = document.createElement("link");
+						cssDatePicker.type = "text/css";
+						cssDatePicker.rel = "stylesheet";
+						cssDatePicker.href = "/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
+
+						document.getElementsByTagName("head")[0].appendChild(cssDatePicker);
+					}
+
+					require(["bootstrap/datepicker/br"], function() {
+						element.datepicker({
+							format: "dd/mm/yyyy",
+							language: "pt-BR"
+						});
 					});
 				}
 			}
