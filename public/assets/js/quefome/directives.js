@@ -269,29 +269,30 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 	}]);
 
 	module.directive("qfStickyScroll", ["$interval", function($interval) {
-		var $document = angular.element(document);
 		var $window = angular.element(window);
 
 		var events = {
-			heightChangeCallbacks: [],
-			onDocumentHeightChange: function(callback) {
-				this.heightChangeCallbacks.push(callback);
+			resizeChangeCallbacks: [],
+			onResizeChange: function(callback) {
+				this.resizeChangeCallbacks.push(callback);
 
 				var that = this;
 				return function() {
-					var callbackIndex = that.heightChangeCallbacks.indexOf(callback);
-					console.log("cancelado height " + callbackIndex);
+					var callbackIndex = that.resizeChangeCallbacks.indexOf(callback);
+					console.log("cancelado resize " + callbackIndex);
 
 					if (callbackIndex >= 0) {
-						that.heightChangeCallbacks.splice(callbackIndex, 1);
+						that.resizeChangeCallbacks.splice(callbackIndex, 1);
 					}
 				};
 			},
 
-			triggerDocumentHeightChange: function(newHeight, oldHeight) {
-				for (var i in this.heightChangeCallbacks) {
-					var callback = this.heightChangeCallbacks[i];
-					callback.call($document, oldHeight, newHeight, $document);
+			tiggerResizeChange: function(event) {
+				console.log("resize");
+				
+				for (var i in this.resizeChangeCallbacks) {
+					var callback = this.resizeChangeCallbacks[i];
+					callback.call($window, event);
 				}
 			},
 
@@ -321,15 +322,9 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			events.triggerScrollChange(event);
 		});
 
-		var lastDocumentHeight = $document.height();
-		$interval(function() {
-			var documentHeight = $document.height();
-
-			if (lastDocumentHeight != documentHeight) {
-				lastDocumentHeight = documentHeight;
-				events.triggerDocumentHeightChange(documentHeight, lastDocumentHeight);
-			}
-		}, 500);
+		$window.on("resize.qfStickyScroll", function(event) {
+			events.tiggerResizeChange(event);
+		});
 
 		return {
 			restrict: "A",
@@ -375,11 +370,11 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				};
 
 				var cancelScrollChange = events.onScrollChange(applyStickyScroll);
-				var cancelHeightChange = events.onDocumentHeightChange(applyStickyScroll);
+				var cancelResizeChange = events.onResizeChange(applyStickyScroll);
 
 				scope.$on('$destroy', function() {
-					cancelHeightChange();
 					cancelScrollChange();
+					cancelResizeChange();
 				});
 			}
 		};
