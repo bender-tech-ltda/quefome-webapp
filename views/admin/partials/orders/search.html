@@ -9,6 +9,30 @@
 		</div>
 	</div>
 
+	<form class="filter-form" name="filterForm">
+		<fieldset class="filter-panel">
+			<legend>Filtro de Pesquisa</legend>
+
+			<div class="order-status-filter">
+				<label for="orderStatus" class="control-label">Status do Pedido</label>
+				<select class="form-control" ng-model="filter.status" name="orderStatus">
+					<option value="">Todos</option>
+					<option value="OPEN">Aberto</option>
+					<option value="PRODUCTION">Em Produção</option>
+					<option value="DELIVERED">Entregue</option>
+				</select>
+			</div>
+
+			<div class="order-date-filter">
+				<label for="fromDate" class="control-label">Data de realização dos pedidos</label>
+
+				<input type="date" class="form-control" name="fromDate" ng-model="filter.fromDate" qf-input-date required />
+				<span>até</span>
+				<input type="date" class="form-control" name="toDate" ng-model="filter.toDate" qf-input-date required />
+			</div>
+		</fieldset>
+	</form>
+
 	<table class="table orders-table">
 		<thead>
 			<tr>

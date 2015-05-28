@@ -24,4 +24,34 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 			}
 		};
 	}]);
+
+	module.directive("qfInputDate", [function() {
+		return {
+			restrict: "A",
+			link: function(scope, element, attrs) {
+				var browserSupportsDateInput = function() {
+					var inputDate = document.createElement("input");
+					inputDate.setAttribute("type", "date");
+
+					return inputDate.type == "date";
+				};
+
+				var browserDisplaysDatePicker = function() {
+					var nonDateString = "um-valor-que-nao-e-uma-data";
+
+					var inputDate = document.createElement("input");
+					inputDate.setAttribute("type", "date");
+					inputDate.setAttribute('value', nonDateString);
+
+					return inputDate.value != nonDateString;
+				};
+
+				if (!browserSupportsDateInput() || !browserDisplaysDatePicker()) {
+					alert("não suporta date input ou date picker");
+				} else {
+					alert("suporta as porra tudo");
+				}
+			}
+		};
+	}]);
 });

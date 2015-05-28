@@ -438,6 +438,36 @@ body {
 	font-size: 25px;
 }
 
+.content .order-search-page .filter-form {
+	padding: 15px 5%;
+	background-color: #F2F0F0;
+}
+
+.content .order-search-page .filter-form .filter-panel {
+	width: 100%;
+}
+
+.content .order-search-page .filter-form .filter-panel .control-label {
+	display: block;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-status-filter,
+.content .order-search-page .filter-form .filter-panel .order-date-filter {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter input {
+	display: inline-block;
+	width: 40%;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter span {
+	display: inline-block;
+	width: 17%;
+	text-align: center;
+}
+
 .content .order-search-page .orders-table {
 	font-size: 11px;
 }
