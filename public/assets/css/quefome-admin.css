@@ -460,12 +460,23 @@ body {
 .content .order-search-page .filter-form .filter-panel .order-date-filter input {
 	display: inline-block;
 	width: 40%;
+	width: -webkit-calc(48% - 15px);
+	width: -moz-calc(48% - 15px);
+	width: calc(48% - 15px);
 }
 
-.content .order-search-page .filter-form .filter-panel .order-date-filter span {
+.content .order-search-page .filter-form .filter-panel .order-date-filter .between-label {
 	display: inline-block;
-	width: 17%;
+	width: 30px;
 	text-align: center;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+	width: 100%;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders .qf-icon {
+	font-size: 16px;
 }
 
 .content .order-search-page .orders-table {
@@ -776,6 +787,24 @@ body {
 		font-size: 12px;
 	}
 
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		margin-right: 50px;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		float: left;
+		width: 30%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		float: left;
+		width: 40%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+		width: 25%;
+	}
+
 	.content .order-search-page .orders-table {
 		font-size: 14px;
 	}
@@ -788,6 +817,14 @@ body {
 
 	.content .order-search-page .orders-table .order-details-column .btn-show-order-details .text {
 		display: inline-block;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		width: 20%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		width: 30%;
 	}
 }
 

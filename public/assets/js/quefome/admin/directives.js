@@ -1,4 +1,4 @@
-define(["angular", "bootstrap", "quefome/directives"], function(angular) {
+define(["angular", "bootstrap", "bootstrap/datepicker/br", "quefome/directives"], function(angular) {
 	"use strict";
 	
 	var module = angular.module("qfAdminDirectives", ["qfDirectives"]);
@@ -47,9 +47,9 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 				};
 
 				if (!browserSupportsDateInput() || !browserDisplaysDatePicker()) {
-					alert("não suporta date input ou date picker");
-				} else {
-					alert("suporta as porra tudo");
+					element.datepicker({
+						language: "pt-BR"
+					});
 				}
 			}
 		};

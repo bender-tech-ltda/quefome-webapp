@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<form class="filter-form" name="filterForm">
+	<form class="filter-form" name="filterForm" ng-submit="searchOrders()">
 		<fieldset class="filter-panel">
 			<legend>Filtro de Pesquisa</legend>
 
@@ -26,10 +26,17 @@
 			<div class="order-date-filter">
 				<label for="fromDate" class="control-label">Data de realização dos pedidos</label>
 
-				<input type="date" class="form-control" name="fromDate" ng-model="filter.fromDate" qf-input-date required />
-				<span>até</span>
-				<input type="date" class="form-control" name="toDate" ng-model="filter.toDate" qf-input-date required />
+				<input type="date" class="form-control" name="fromDate" placeholder="Data inicial" ng-model="filter.fromDate" qf-input-date required />
+				<span class="between-label">até</span>
+				<input type="date" class="form-control" name="toDate" placeholder="Data final" ng-model="filter.toDate" qf-input-date required />
 			</div>
+
+			<div class="clearfix"></div>
+
+			<button type="submit" class="btn btn-primary btn-search-orders">
+				<span class="qf-icon icon-search"></span>
+				<span>Pesquisar</span>
+			</button>
 		</fieldset>
 	</form>
 
