@@ -82,6 +82,8 @@ define(["angular"], function(angular) {
 	module.service("OrderService", ["$http", "$q", function($http, $q) {
 		this.list = function(filter) {
 			if (filter) {
+				filter = angular.copy(filter);
+				
 				if (filter.fromDate instanceof Date) {
 					filter.fromDate = filter.fromDate.getTime();
 				}

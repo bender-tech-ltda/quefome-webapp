@@ -307,11 +307,13 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 				}
 			}
 
-			$scope.filter.fromDate.setHours(0, 0, 0, 0);
-			$scope.filter.toDate.setHours(23, 59, 59, 999);
+			if ($scope.filter.fromDate instanceof Date && $scope.filter.toDate instanceof Date) {
+				$scope.filter.fromDate.setHours(0, 0, 0, 0);
+				$scope.filter.toDate.setHours(23, 59, 59, 999);
 
-			if ($scope.filter.fromDate.getTime() > $scope.filter.toDate.getTime()) {
-				return "A data inicial da realização dos pedidos não pode ser maior que a data final";
+				if ($scope.filter.fromDate.getTime() > $scope.filter.toDate.getTime()) {
+					return "A data inicial da realização dos pedidos não pode ser maior que a data final";
+				}
 			}
 
 			return "";
