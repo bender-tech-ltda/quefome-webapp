@@ -518,11 +518,8 @@ body {
 	font-size: 16px;
 }
 
-.content .order-search-page .orders-table .customer-column {
-	display: none;
-}
-
-.content .order-search-page .orders-table .price-column {
+.content .order-search-page .orders-table .customer-column,
+.content .order-search-page .orders-table .products-column {
 	display: none;
 }
 
@@ -530,6 +527,19 @@ body {
 	color: #008000;
 	font-weight: bold;
 }
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-open {
+	background-color: #5cb85c;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-production {
+	background-color: #f0ad4e;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-delivered {
+	background-color: #d9534f;
+}
+
 
 .content .order-search-page .orders-table th.order-details-column {
 	text-align: center;
@@ -693,12 +703,8 @@ label .required {
 	}
 
 	.content .order-search-page .orders-table .customer-column,
-	.content .order-search-page .orders-table .price-column {
+	.content .order-search-page .orders-table .products-column {
 		display: table-cell;
-	}
-
-	.content .order-search-page .orders-table .products-column .price-label {
-		display: none;
 	}
 }
 

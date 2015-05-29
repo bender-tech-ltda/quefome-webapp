@@ -50,11 +50,11 @@
 				</td>
 			</tr>
 			<tr>
-				<th class="col-md-1 order-numbe-column">Nº</th>
+				<th class="col-md-1 order-number-column">Nº</th>
 				<th class="col-md-3 customer-column">Cliente</th>
 				<th class="col-md-3 products-column">Produtos</th>
-				<th class="col-md-1 price-column">Valor total</th>
 				<th class="col-md-2 order-date-column">Data e Hora</th>
+				<th class="col-md-1 order-status-column">Status</th>
 				<th class="col-md-2 order-details-column">Detalhes</th>
 			</tr>
 		</thead>
@@ -100,8 +100,10 @@
 					</p>
 					<p class="price-label">Total: R$ {{order.price | money}}</p>
 				</td>
-				<td class="price-column">R$ {{order.price | money}}</td>
 				<td class="order-date-column">{{order.date | date:'dd/MM HH:mm'}}</td>
+				<td class="order-status-column">
+					<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+				</td>
 				<td class="order-details-column">
 					<button type="button" class="btn btn-primary btn-show-order-details" title="Visualizar pedido" ng-click="showOrderDetails(order)">
 						<span class="text">Visualizar pedido</span>
