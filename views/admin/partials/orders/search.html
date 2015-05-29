@@ -11,15 +11,15 @@
 
 	<form class="filter-form" name="filterForm" ng-submit="searchOrders()">
 		<fieldset class="filter-panel">
-			<legend>Filtro de Pesquisa</legend>
+			<legend>
+				<span>Filtro de Pesquisa</span>
+				<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
+			</legend>
 
 			<div class="order-status-filter">
 				<label for="orderStatus" class="control-label">Status do Pedido</label>
-				<select class="form-control" ng-model="filter.status" name="orderStatus">
+				<select class="form-control" name="orderStatus" ng-model="filter.status" ng-options="status.key as status.name for status in orderStatuses">
 					<option value="">Todos</option>
-					<option value="OPEN">Aberto</option>
-					<option value="PRODUCTION">Em Produção</option>
-					<option value="DELIVERED">Entregue</option>
 				</select>
 			</div>
 
@@ -29,12 +29,11 @@
 				<input type="date" class="form-control" name="fromDate" placeholder="Data inicial" ng-model="filter.fromDate" required />
 				<span class="between-label">até</span>
 				<input type="date" class="form-control" name="toDate" placeholder="Data final" ng-model="filter.toDate" required />
-
-				<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
 			</div>
 
 			<div class="clearfix"></div>
 
+			<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
 			<button type="submit" class="btn btn-primary btn-search-orders" ng-disabled="isFilterInvalid()">
 				<span class="qf-icon icon-search"></span>
 				<span>Pesquisar</span>

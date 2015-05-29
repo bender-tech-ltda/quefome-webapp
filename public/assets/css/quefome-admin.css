@@ -443,10 +443,8 @@ body {
 	background-color: #F2F0F0;
 }
 
-
-.content .order-search-page .error-text {
-	display: inline-block;
-	margin-top: 5px;
+.content .order-search-page .filter-form .error-text {
+	display: block;
 	color: #EB3825;
 	font-size: 12px;
 }
@@ -481,6 +479,7 @@ body {
 
 .content .order-search-page .filter-form .filter-panel .btn-search-orders {
 	width: 100%;
+	margin-top: 5px;
 }
 
 .content .order-search-page .filter-form .filter-panel .btn-search-orders .qf-icon {

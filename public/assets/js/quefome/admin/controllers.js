@@ -231,6 +231,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 	module.controller("OrderSearchController", ["$scope", "$filter", "Dialog", "OrderService", function($scope, $filter, Dialog, OrderService) {
 		$scope.orders = [];
 
+		$scope.orderStatuses = [
+			{key: 'OPEN', name: 'Aberto'},
+			{key: 'PRODUCTION', name: 'Em Produção'},
+			{key: 'DELIVERED', name: 'Entregue'},
+		];
+
 		$scope.filter = {
 			status: null,
 			fromDate: null,
