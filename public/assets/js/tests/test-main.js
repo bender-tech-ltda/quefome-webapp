@@ -15,6 +15,8 @@ require.config({
 		"jquery": "../../components/jquery/dist/jquery",
 		"jquery/autocomplete": "../../components/autocomplete/dist/autocomplete",
 		"bootstrap": "../../components/bootstrap/dist/js/bootstrap",
+		"bootstrap/datepicker": "../../components/bootstrap-datepicker/dist/js/bootstrap-datepicker",
+		"bootstrap/datepicker/br": "../../components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min",
 		"angular": "../../components/angular/angular",
 		"angular/route": "../../components/angular-route/angular-route",
 		"angular/mock": "../../components/angular-mocks/angular-mocks",
@@ -23,6 +25,8 @@ require.config({
 	shim: {
 		"jquery": {"exports" : "jquery"},
 		"bootstrap": ["jquery"],
+		"bootstrap/datepicker": ["jquery", "bootstrap"],
+		"bootstrap/datepicker/br": ["jquery", "bootstrap/datepicker"],
 		"angular" : {
 			deps: ["jquery"],
 			exports : "angular"

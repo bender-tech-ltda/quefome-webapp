@@ -1,0 +1,114 @@
+<div class="order-search-page">
+	<div class="partial-header">
+		<div class="partial-icon">
+			<span class="qf-icon icon-search"></span>
+		</div>
+
+		<div class="partial-title">
+			<h1 class="title">Pesquisa de Pedidos</h1>
+		</div>
+	</div>
+
+	<form class="filter-form" name="filterForm" ng-submit="searchOrders()">
+		<fieldset class="filter-panel">
+			<legend>
+				<span>Filtro de Pesquisa</span>
+				<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
+			</legend>
+
+			<div class="order-status-filter">
+				<label for="orderStatus" class="control-label">Status do Pedido</label>
+				<select class="form-control" name="orderStatus" ng-model="filter.status" ng-options="status.key as status.name for status in orderStatuses"></select>
+			</div>
+
+			<div class="order-date-filter">
+				<label for="fromDate" class="control-label">Data de realização dos pedidos<span class="required">*</span></label>
+
+				<input type="date" class="form-control" name="fromDate" placeholder="Data inicial" ng-model="filter.fromDate" required />
+				<span class="between-label">até</span>
+				<input type="date" class="form-control" name="toDate" placeholder="Data final" ng-model="filter.toDate" required />
+			</div>
+
+			<div class="clearfix"></div>
+
+			<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
+			<button type="submit" class="btn btn-primary btn-search-orders" ng-disabled="isFilterInvalid()">
+				<span class="qf-icon icon-search"></span>
+				<span>Pesquisar</span>
+			</button>
+		</fieldset>
+	</form>
+
+	<table class="table orders-table">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<h3 ng-show="orders && orders.length > 0">{{orders.length}} pedidos encontrados</h3>
+					<h3 ng-show="!orders || orders.length <= 0">Nenhum pedido encontrado</h3>
+				</td>
+			</tr>
+			<tr>
+				<th class="col-md-1 order-number-column">Nº</th>
+				<th class="col-md-3 customer-column">Cliente</th>
+				<th class="col-md-3 products-column">Produtos</th>
+				<th class="col-md-2 order-date-column">Data e Hora</th>
+				<th class="col-md-1 order-status-column">Status</th>
+				<th class="col-md-2 order-details-column">Detalhes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="loading-orders no-hover" ng-show="searchingOrders">
+				<td colspan="6">Buscando pedidos abertos... <span class="qf-icon icon-loading spin"></span></td>
+			</tr>
+
+			<tr class="empty-orders no-hover" ng-show="!searchingOrders && !searchError && (!orders || orders.length <= 0)">
+				<td colspan="6">Nenhum pedido encontrado.</td>
+			</tr>
+
+			<tr class="error-loading-orders no-hover" ng-show="!searchingOrders && searchError">
+				<td colspan="6">Desculpe, tivemos um problema para buscar pedidos. Tente de novo em alguns instantes.</td>
+			</tr>
+
+			<tr ng-repeat="order in orders | orderBy: '-date'" ng-hide="searchingOrders || searchError">
+				<td class="order-numbe-column">{{order.id}}</td>
+				<td class="customer-column">
+					<p title="Nome do cliente">
+						<b class="qf-icon icon-user"></b>
+						<span>{{order.user.name}}</span>
+					</p>
+					<p title="Telefone de contato">
+						<b class="qf-icon icon-phone"></b>
+						<span>{{order.phone | phone}}</span>
+					</p>
+					<p title="Endereço de entrega" ng-hide="order.withdraw">
+						<b class="qf-icon icon-bike"></b> 
+						<span>{{order.address.address}}, Nº {{order.address.number}}</span>
+					</p>
+
+					<p title="Retirado no balcão" ng-show="order.withdraw">
+						<b class="qf-icon icon-location"></b> 
+						<span>Retirado no balcão</span>
+					</p>
+				</td>
+				<td class="products-column">
+					<p>
+						<span>{{(order.productsString = (order | groupProductList : 3)).productsString}}</span>
+						<span ng-show="order.productsString.size == 4">e mais outro produto.</span>
+						<span ng-show="order.productsString.size > 4">e mais outros {{order.productsString.size}} produtos.</span>
+					</p>
+					<p class="price-label">Total: R$ {{order.price | money}}</p>
+				</td>
+				<td class="order-date-column">{{order.date | date:'dd/MM HH:mm'}}</td>
+				<td class="order-status-column">
+					<span class="label label-order-status" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}">{{order.status | orderStatus}}</span>
+				</td>
+				<td class="order-details-column">
+					<button type="button" class="btn btn-primary btn-show-order-details" title="Visualizar pedido" ng-click="showOrderDetails(order)">
+						<span class="text">Visualizar pedido</span>
+						<span class="qf-icon icon-order"></span>
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

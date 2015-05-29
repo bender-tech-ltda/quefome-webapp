@@ -14,9 +14,9 @@ var Address = function() {
 		if (address) {
 			simplifiedAddress.zipCode = address.zipCode;
 			simplifiedAddress.address = address.address;
-			simplifiedAddress.neighborhood = typeof(address.neighborhood) === "object" ? address.neighborhood.name : address.neighborhood;
-			simplifiedAddress.city = typeof(address.city) === "object" ? address.city.name : address.neighborhood;
-			simplifiedAddress.state = typeof(address.city) === "object" ? (typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state;
+			simplifiedAddress.neighborhood = (address.neighborhood && typeof(address.neighborhood) === "object" ? address.neighborhood.name : address.neighborhood);
+			simplifiedAddress.city = (address.city && typeof(address.city) === "object" ? address.city.name : address.city);
+			simplifiedAddress.state = (address.city && typeof(address.city) === "object" ? (address.city.state && typeof(address.city.state) === "object" ? address.city.state.acronym : address.city.state) : address.state);
 		}
 
 		return simplifiedAddress;

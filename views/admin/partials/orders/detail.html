@@ -155,22 +155,22 @@
 		</div>
 
 		<div class="actions" ng-hide="changingOrderStatus">
-			<button type="button" class="btn btn-warning btn-open-to-production" ng-show="order.status == 'OPEN'" ng-click="sendOrderToProduction()">
+			<button type="button" class="btn btn-warning btn-open-to-production" ng-show="!hideActions && order.status == 'OPEN'" ng-click="sendOrderToProduction()">
 				<span>Mandar para produção</span>
 				<span class="qf-icon icon-forward"></span>
 			</button>
 
-			<button type="button" class="btn btn-default btn-production-to-open" ng-show="order.status == 'PRODUCTION'" ng-click="markAsOpen()">
+			<button type="button" class="btn btn-default btn-production-to-open" ng-show="!hideActions && order.status == 'PRODUCTION'" ng-click="markAsOpen()">
 				<span class="qf-icon icon-forward flip"></span>
 				<span>Marcar como aberto novamente</span>
 			</button>
 
-			<button type="button" class="btn btn-danger btn-production-to-delivered" ng-show="order.status == 'PRODUCTION'" ng-click="markAsDelivered()">
+			<button type="button" class="btn btn-danger btn-production-to-delivered" ng-show="!hideActions && order.status == 'PRODUCTION'" ng-click="markAsDelivered()">
 				<span>Marcar como entregue</span>
 				<span class="qf-icon icon-forward"></span>
 			</button>
 
-			<button type="button" class="btn btn-default btn-delivered-to-production" ng-show="order.status == 'DELIVERED'" ng-click="sendOrderToProduction()">
+			<button type="button" class="btn btn-default btn-delivered-to-production" ng-show="!hideActions && order.status == 'DELIVERED'" ng-click="sendOrderToProduction()">
 				<span class="qf-icon icon-forward flip"></span>
 				<span>Mandar de volta para produção</span>
 			</button>

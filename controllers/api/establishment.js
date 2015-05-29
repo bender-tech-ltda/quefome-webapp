@@ -7,9 +7,9 @@ module.exports = function(router) {
 			return;
 		}
 
-		var filter = {
-			establishment: req.session.establishmentUser.establishment
-		};
+		var filter = req.query || {};
+		filter.establishment = req.session.establishmentUser.establishment
+		filter.user = null;
 
 		Order.list(filter).then(function(orders) {
 			res.json(orders);

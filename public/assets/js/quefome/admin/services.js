@@ -80,8 +80,20 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.service("OrderService", ["$http", "$q", function($http, $q) {
-		this.list = function() {
-			return $http.get("/api/establishment/orders/").then(function(response) {
+		this.list = function(filter) {
+			if (filter) {
+				filter = angular.copy(filter);
+				
+				if (filter.fromDate instanceof Date) {
+					filter.fromDate = filter.fromDate.getTime();
+				}
+
+				if (filter.toDate instanceof Date) {
+					filter.toDate = filter.toDate.getTime();
+				}
+			}
+
+			return $http.get("/api/establishment/orders/", {params: filter}).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
 		};

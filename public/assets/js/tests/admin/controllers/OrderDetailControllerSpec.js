@@ -47,6 +47,10 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(scope.errorChangingStatus).toBeDefined();
 		});
 
+		it("should have a hideActions property", function() {
+			expect(scope.hideActions).toBeDefined();
+		});
+
 		describe("on startup", function() {
 			it("should listen an order from $dialogParameters", function() {
 				var order = {id: -1};
@@ -54,6 +58,13 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 				expect(scope.order).toEqual(order);
 			});
+
+			it("should expect an hideActions from $dialogParameters", function() {
+				scope.hideActions = false;
+				scope.$broadcast("$dialogParameters", {order: {}, hideActions: true});				
+
+				expect(scope.hideActions).toBe(true);
+			})
 		});
 
 		describe("when changing the order status", function() {

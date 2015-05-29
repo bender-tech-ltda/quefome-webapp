@@ -13,11 +13,11 @@ var Order = function() {
 			filter = {};
 		}
 
-		if (typeof(filter.establishment) === "object") {
+		if (filter.establishment && typeof(filter.establishment) === "object") {
 			filter.establishment = filter.establishment.id;
 		}
 
-		if (typeof(filter.user) === "object") {
+		if (filter.user && typeof(filter.user) === "object") {
 			filter.user = filter.user.id;
 		}
 

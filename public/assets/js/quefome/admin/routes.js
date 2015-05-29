@@ -12,12 +12,19 @@ define([], function() {
 		},
 		{
 			path: "/",
-			redirectTo: "/orders/fulfillment/"
+			redirectTo: "/orders/fulfillment/",
+			login: true
 		},
 		{
 			path: "/orders/fulfillment/",
 			controller: "OrdersFullfillmentController",
 			templateUrl: "/admin/partials/orders/fullfillment.html",
+			login: true
+		},
+		{
+			path: "/orders/",
+			controller: "OrderSearchController",
+			templateUrl: "/admin/partials/orders/search.html",
 			login: true
 		}
 	];

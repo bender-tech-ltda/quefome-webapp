@@ -438,6 +438,121 @@ body {
 	font-size: 25px;
 }
 
+.content .order-search-page .filter-form {
+	padding: 15px 5%;
+	background-color: #F2F0F0;
+}
+
+.content .order-search-page .filter-form .error-text {
+	display: block;
+	color: #EB3825;
+	font-size: 12px;
+}
+
+.content .order-search-page .filter-form .filter-panel {
+	width: 100%;
+}
+
+.content .order-search-page .filter-form .filter-panel .control-label {
+	display: block;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-status-filter,
+.content .order-search-page .filter-form .filter-panel .order-date-filter {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter input {
+	display: inline-block;
+	width: 40%;
+	width: -webkit-calc(48% - 15px);
+	width: -moz-calc(48% - 15px);
+	width: calc(48% - 15px);
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter .between-label {
+	display: inline-block;
+	width: 30px;
+	text-align: center;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-search-page .orders-table {
+	font-size: 11px;
+}
+
+.content .order-search-page .orders-table th {
+	font-size: 10px;
+}
+
+.content .order-search-page .orders-table p {
+	margin: 0px;
+}
+
+.content .order-search-page .orders-table .loading-orders,
+.content .order-search-page .orders-table .empty-orders {
+	font-size: 16px;
+	color: #545454;
+	text-align: center;
+}
+
+.content .order-search-page .orders-table .loading-orders .qf-icon {
+	font-size: 20px;
+}
+
+.content .order-search-page .orders-table .error-loading-orders {
+	text-align: center;
+	color: #EB3825;
+}
+
+.content .order-search-page .orders-table .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-search-page .orders-table .customer-column,
+.content .order-search-page .orders-table .products-column {
+	display: none;
+}
+
+.content .order-search-page .orders-table .products-column .price-label {
+	color: #008000;
+	font-weight: bold;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-open {
+	background-color: #5cb85c;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-production {
+	background-color: #f0ad4e;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-delivered {
+	background-color: #d9534f;
+}
+
+
+.content .order-search-page .orders-table th.order-details-column {
+	text-align: center;
+}
+
+.content .order-search-page .orders-table .order-details-column .btn-show-order-details {
+	width: 100%;
+}
+
+.content .order-search-page .orders-table .order-details-column .btn-show-order-details .text {
+	display: none;
+}
+
 .footer {
 	width: 100%;
 	display: table-row;
@@ -487,6 +602,10 @@ body {
 
 .table tbody tr.no-hover:hover {
 	background-color: #fff;	
+}
+
+label .required {
+	color: #F00;
 }
 
 .form-control {
@@ -577,6 +696,15 @@ body {
 
 	.order-detail-dialog .processing-action .message {
 		font-size: 16px; 
+	}
+
+	.content .order-search-page .orders-table {
+		font-size: 12px;
+	}
+
+	.content .order-search-page .orders-table .customer-column,
+	.content .order-search-page .orders-table .products-column {
+		display: table-cell;
 	}
 }
 
@@ -676,11 +804,44 @@ body {
 		font-size: 12px;
 	}
 
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		margin-right: 50px;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		float: left;
+		width: 30%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		float: left;
+		width: 40%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+		width: 25%;
+	}
+
+	.content .order-search-page .orders-table {
+		font-size: 14px;
+	}
 }
 
 @media (min-width: 992px) {
 	.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details .text {
 		display: inline-block;
+	}
+
+	.content .order-search-page .orders-table .order-details-column .btn-show-order-details .text {
+		display: inline-block;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		width: 20%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		width: 30%;
 	}
 }
 
