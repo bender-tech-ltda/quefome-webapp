@@ -232,13 +232,14 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		$scope.orders = [];
 
 		$scope.orderStatuses = [
-			{key: 'OPEN', name: 'Aberto'},
-			{key: 'PRODUCTION', name: 'Em Produção'},
-			{key: 'DELIVERED', name: 'Entregue'},
+			{key: "", name: "Todos"},
+			{key: "OPEN", name: "Aberto"},
+			{key: "PRODUCTION", name: "Em Produção"},
+			{key: "DELIVERED", name: "Entregue"},
 		];
 
 		$scope.filter = {
-			status: null,
+			status: "",
 			fromDate: null,
 			toDate: null
 		};
@@ -328,7 +329,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		};
 
 		$scope.startup = function() {
-			$scope.filter.status = null;
+			$scope.filter.status = "";
 			$scope.filter.fromDate = new Date();
 			$scope.filter.toDate = new Date();
 

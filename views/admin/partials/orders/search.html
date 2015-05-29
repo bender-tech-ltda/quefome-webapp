@@ -18,9 +18,7 @@
 
 			<div class="order-status-filter">
 				<label for="orderStatus" class="control-label">Status do Pedido</label>
-				<select class="form-control" name="orderStatus" ng-model="filter.status" ng-options="status.key as status.name for status in orderStatuses">
-					<option value="">Todos</option>
-				</select>
+				<select class="form-control" name="orderStatus" ng-model="filter.status" ng-options="status.key as status.name for status in orderStatuses"></select>
 			</div>
 
 			<div class="order-date-filter">

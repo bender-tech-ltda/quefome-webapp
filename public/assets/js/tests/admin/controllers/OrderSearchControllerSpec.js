@@ -76,7 +76,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 				scope.startup();
 
-				expect(scope.filter.status).toBeNull();
+				expect(scope.filter.status).toEqual("");
 				expect(scope.filter.fromDate instanceof Date).toBe(true);
 				expect(scope.filter.toDate instanceof Date).toBe(true);
 			});
@@ -172,7 +172,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		describe("when validating the filter", function() {
 			beforeEach(function() {
 				scope.filter = {
-					status: null,
+					status: "",
 					fromDate: new Date(),
 					toDate: new Date()
 				};
@@ -242,7 +242,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		describe("when getting the invalid filter message", function() {
 			beforeEach(function() {
 				scope.filter = {
-					status: null,
+					status: "",
 					fromDate: new Date(),
 					toDate: new Date()
 				};
