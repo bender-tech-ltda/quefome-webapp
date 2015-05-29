@@ -28,6 +28,16 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.flush();
 		});
 
+		it("should accept a filter param in the list function", function() {
+			var today = new Date();
+			var query = "fromDate=" + today.getTime() + "&status=OPEN&toDate=" + today.getTime();
+
+			$httpBackend.whenGET("/api/establishment/orders/?" + query).respond(200, []);
+			OrderService.list({status: "OPEN", fromDate: today, toDate: today});
+
+			$httpBackend.flush();
+		});
+
 		it("should change the order status", function() {
 			var order = {id: -42, status: 'OPEN', date: new Date()};
 
