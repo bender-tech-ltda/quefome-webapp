@@ -21,9 +21,11 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 			MockedOrderService = {
 				_listCalled: false,
+				_listFilter: null,
 				_listOrders: [],
-				list: function() {
+				list: function(filter) {
 					this._listCalled = true;
+					this._listFilter = filter;
 
 					var orders = this._listOrders;
 					return {
@@ -62,7 +64,23 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(scope.searchError).toBeDefined();
 		});
 
+		it("should have a filter property", function() {
+			expect(scope.filter).toBeDefined();
+		});
+
 		describe("on startup", function() {
+			it("should set the default filters", function() {
+				scope.filter.status = false;
+				scope.filter.fromDate = null;
+				scope.filter.toDate = null;
+
+				scope.startup();
+
+				expect(scope.filter.status).toBeNull();
+				expect(scope.filter.fromDate instanceof Date).toBe(true);
+				expect(scope.filter.toDate instanceof Date).toBe(true);
+			});
+
 			it("should search orders", function() {
 				MockedOrderService._listCalled = false;
 				scope.startup();
@@ -108,6 +126,25 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.searchOrders();
 				expect(scope.searchError).toBe(true);
 			});
+
+			it("should pass the filter as parameter to the service", function() {
+				MockedOrderService._listFilter = null;
+				scope.searchOrders();
+
+				expect(MockedOrderService._listFilter).toEqual(scope.filter);
+			});
+
+			it("should validate the filter", function() {
+				var called = false;
+
+				scope.isFilterInvalid = function() {
+					called = true;
+					return true;
+				};
+
+				scope.searchOrders();
+				expect(called).toBe(true);
+			});
 		});
 
 		describe("when showing order details", function() {
@@ -115,6 +152,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				MockedDialog._createCalled = false;
 				scope.showOrderDetails({});
 				expect(MockedDialog._createCalled).toBe(true);
+				expect(MockedDialog._createParams.show).toBe(true);
 			});
 
 			it("should pass a order as parameter to the dialog", function() {
@@ -128,6 +166,159 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.showOrderDetails({id: -1});
 
 				expect(MockedDialog._createParams.params.hideActions).toBe(true);
+			});
+		});
+
+		describe("when validating the filter", function() {
+			beforeEach(function() {
+				scope.filter = {
+					status: null,
+					fromDate: new Date(),
+					toDate: new Date()
+				};
+			});
+
+			it("should validate if the filter.fromDate is a date", function() {
+				scope.filter.fromDate = null;
+				var result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.fromDate = "2015-10-27";
+				result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.fromDate = {};
+				result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.fromDate = new Date();
+				result = scope.isFilterInvalid();
+				expect(result).toBe(false);
+			});
+
+			it("should validate if the filter.toDate is a date", function() {
+				scope.filter.toDate = null;
+				var result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.toDate = "2015-10-27";
+				result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.toDate = {};
+				result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+
+				scope.filter.toDate = new Date();
+				result = scope.isFilterInvalid();
+				expect(result).toBe(false);
+			});
+
+			it("should validate if the filter.fromDate is higher than the filter.toDate", function() {
+				scope.filter.fromDate = new Date();
+				scope.filter.fromDate.setDate(20);
+
+				scope.filter.toDate = new Date();
+				scope.filter.toDate.setDate(19);
+
+				var result = scope.isFilterInvalid();
+				expect(result).toBe(true);
+			});
+
+			it("should ignore the hours when validate if the filter.fromDate is higher than the filter.toDate", function() {
+				scope.filter.fromDate = new Date();
+				scope.filter.fromDate.setDate(20);
+				scope.filter.fromDate.setHours(20, 17);
+
+				scope.filter.toDate = new Date();
+				scope.filter.toDate.setDate(20);
+				scope.filter.toDate.setHours(15, 38);
+
+				var result = scope.isFilterInvalid();
+				expect(result).toBe(false);
+			});
+		});
+
+		describe("when getting the invalid filter message", function() {
+			beforeEach(function() {
+				scope.filter = {
+					status: null,
+					fromDate: new Date(),
+					toDate: new Date()
+				};
+
+				scope.$digest();
+			});
+
+			it("should return a message if the filterForm.fromDate is blank", function() {
+				scope.filterForm.fromDate.$error.required = true;
+				var result = scope.getInvalidFilterMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.filterForm.fromDate.$error.required = false;
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
+			});
+
+			it("should return a message if the filterForm.fromDate is a date", function() {
+				scope.filterForm.fromDate.$error.date = true;
+				var result = scope.getInvalidFilterMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.filterForm.fromDate.$error.date = false;
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
+			});
+
+			it("should return a message if the filterForm.toDate is blank", function() {
+				scope.filterForm.toDate.$error.required = true;
+				var result = scope.getInvalidFilterMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.filterForm.toDate.$error.required = false;
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
+			});
+
+			it("should return a message if the filterForm.toDate is a date", function() {
+				scope.filterForm.toDate.$error.date = true;
+				var result = scope.getInvalidFilterMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.filterForm.toDate.$error.date = false;
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
+			});
+
+			it("should return a message if the filter.fromDate is higher than the filter.toDate", function() {
+				scope.filter.fromDate = new Date();
+				scope.filter.fromDate.setDate(20);
+
+				scope.filter.toDate = new Date();
+				scope.filter.toDate.setDate(19);
+
+				var result = scope.isFilterInvalid();
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.filter.toDate.setDate(21);
+
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
+			});
+
+			it("should ignore the hours when checking if the filter.fromDate is higher than the filter.toDate", function() {
+				scope.filter.fromDate = new Date();
+				scope.filter.fromDate.setDate(20);
+				scope.filter.fromDate.setHours(20, 17);
+
+				scope.filter.toDate = new Date();
+				scope.filter.toDate.setDate(20);
+				scope.filter.toDate.setHours(15, 38);
+
+				var result = scope.isFilterInvalid();
+				result = scope.getInvalidFilterMessage();
+				expect(result.length).toEqual(0);
 			});
 		});
 	});

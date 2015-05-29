@@ -25,10 +25,15 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 		};
 	}]);
 
-	module.directive("qfInputDate", [function() {
+	module.directive("input", ["$filter", function($filter) {
 		return {
-			restrict: "A",
-			link: function(scope, element, attrs) {
+			require: "ngModel",
+			restrict: "E",
+			link: function(scope, element, attrs, ngModelController) {
+				if (element.attr("type") != "date") {
+					return;
+				}
+
 				var browserSupportsDateInput = function() {
 					var inputDate = document.createElement("input");
 					inputDate.setAttribute("type", "date");
@@ -46,11 +51,59 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 					return inputDate.value != nonDateString;
 				};
 
-				if (!browserSupportsDateInput() || !browserDisplaysDatePicker()) {
+				var applyDatepickerSorcery = function() {
+					/**
+					var convertToDate = function(date) {
+						try {
+							if (!(date instanceof Date)) {
+								date = new Date(date);
+							}
+
+							if (isNaN(date)) {
+								return null;
+							}
+
+							return date;
+						} catch (e) {
+							return null;
+						}
+					}
+
+					var stringToDate = function(stringDate) {
+						if (!stringDate) {
+							return null;
+						}
+
+						var date = convertToDate(stringDate);
+						if (date) {
+							return date;
+						}
+
+						stringDate = stringDate.replace(new RegExp("[^0-9]", "g"), "");
+
+						if (stringDate.length < 8) {
+							return null;
+						}
+
+						var day = stringDate.substr(0, 2);
+						var month = stringDate.substr(2, 2);
+						var year = stringDate.substr(4, 4);
+
+						return convertToDate(year + "-" + month + "-" + day);
+					};
+
+					ngModelController.$parsers.push(function(value) {
+						ngModelController.$setValidity("date", true);
+						return new Date();
+					});
+					**/
+
+
 					var cssDatePicker = document.getElementById("cssDatePicker.qfInputDate");
 
 					if (!cssDatePicker) {
 						cssDatePicker = document.createElement("link");
+						cssDatePicker.id = "cssDatePicker.qfInputDate";
 						cssDatePicker.type = "text/css";
 						cssDatePicker.rel = "stylesheet";
 						cssDatePicker.href = "/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
@@ -59,11 +112,17 @@ define(["angular", "bootstrap", "quefome/directives"], function(angular) {
 					}
 
 					require(["bootstrap/datepicker/br"], function() {
+						element.attr("type", "text");
+
 						element.datepicker({
-							format: "dd/mm/yyyy",
+							format: "yyyy-mm-dd",
 							language: "pt-BR"
 						});
 					});
+				};
+
+				if (!browserSupportsDateInput() || !browserDisplaysDatePicker()) {
+					applyDatepickerSorcery();
 				}
 			}
 		};

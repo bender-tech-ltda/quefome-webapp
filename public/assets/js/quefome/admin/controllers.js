@@ -228,23 +228,87 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		});
 	}]);
 
-	module.controller("OrderSearchController", ["$scope", "Dialog", "OrderService", function($scope, Dialog, OrderService) {
+	module.controller("OrderSearchController", ["$scope", "$filter", "Dialog", "OrderService", function($scope, $filter, Dialog, OrderService) {
 		$scope.orders = [];
+
+		$scope.filter = {
+			status: null,
+			fromDate: null,
+			toDate: null
+		};
 
 		$scope.searchingOrders = false;
 		$scope.searchError = false;
 
 		$scope.searchOrders = function() {
+			if ($scope.isFilterInvalid()) {
+				return;
+			}
+
 			$scope.searchingOrders = true;
 			$scope.searchError = false;
 
-			OrderService.list().then(function(orders) {
+			OrderService.list($scope.filter).then(function(orders) {
 				$scope.orders = orders;
 				$scope.searchingOrders = false;
 			}, function() {
 				$scope.searchingOrders = false;
 				$scope.searchError = true;
 			});
+		};
+
+		$scope.isFilterInvalid = function() {
+			if (!$scope.filter.fromDate || !($scope.filter.fromDate instanceof Date)) {
+				return true;
+			}
+
+			if (!$scope.filter.toDate || !($scope.filter.toDate instanceof Date)) {
+				return true;
+			}
+
+			$scope.filter.fromDate.setHours(0, 0, 0, 0);
+			$scope.filter.toDate.setHours(23, 59, 59, 999);
+
+			if ($scope.filter.fromDate.getTime() > $scope.filter.toDate.getTime()) {
+				return true;
+			}
+
+			return false;
+		};
+
+		$scope.getInvalidFilterMessage = function() {
+			if (!$scope.filterForm) {
+				return "";
+			}
+
+			if ($scope.filterForm.fromDate && $scope.filterForm.fromDate.$error) {
+				if ($scope.filterForm.fromDate.$error.required) {
+					return "Informe a data inicial da realização dos pedidos";
+				}
+
+				if ($scope.filterForm.fromDate.$error.date) {
+					return "Informe a data inicial no formato dia/mês/ano (por exemplo: " + $filter("date")(new Date(), "yyyy-MM-dd") + ")";
+				}
+			}
+
+			if ($scope.filterForm.toDate && $scope.filterForm.toDate.$error) {
+				if ($scope.filterForm.toDate.$error.required) {
+					return "Informe a data final da realização dos pedidos";
+				}
+
+				if ($scope.filterForm.toDate.$error.date) {
+					return "Informe a data final no formato dia/mês/ano (por exemplo: " + $filter("date")(new Date(), "yyyy-MM-dd") + ")";
+				}
+			}
+
+			$scope.filter.fromDate.setHours(0, 0, 0, 0);
+			$scope.filter.toDate.setHours(23, 59, 59, 999);
+
+			if ($scope.filter.fromDate.getTime() > $scope.filter.toDate.getTime()) {
+				return "A data inicial da realização dos pedidos não pode ser maior que a data final";
+			}
+
+			return "";
 		};
 
 		$scope.showOrderDetails = function(order) {
@@ -256,6 +320,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		};
 
 		$scope.startup = function() {
+			$scope.filter.status = null;
+			$scope.filter.fromDate = new Date();
+			$scope.filter.toDate = new Date();
+
 			$scope.searchOrders();
 		};
 

@@ -24,16 +24,18 @@
 			</div>
 
 			<div class="order-date-filter">
-				<label for="fromDate" class="control-label">Data de realização dos pedidos</label>
+				<label for="fromDate" class="control-label">Data de realização dos pedidos<span class="required">*</span></label>
 
-				<input type="date" class="form-control" name="fromDate" placeholder="Data inicial" ng-model="filter.fromDate" qf-input-date required />
+				<input type="date" class="form-control" name="fromDate" placeholder="Data inicial" ng-model="filter.fromDate" required />
 				<span class="between-label">até</span>
-				<input type="date" class="form-control" name="toDate" placeholder="Data final" ng-model="filter.toDate" qf-input-date required />
+				<input type="date" class="form-control" name="toDate" placeholder="Data final" ng-model="filter.toDate" required />
+
+				<span class="error-text" ng-show="isFilterInvalid()">{{getInvalidFilterMessage()}}</span>
 			</div>
 
 			<div class="clearfix"></div>
 
-			<button type="submit" class="btn btn-primary btn-search-orders">
+			<button type="submit" class="btn btn-primary btn-search-orders" ng-disabled="isFilterInvalid()">
 				<span class="qf-icon icon-search"></span>
 				<span>Pesquisar</span>
 			</button>

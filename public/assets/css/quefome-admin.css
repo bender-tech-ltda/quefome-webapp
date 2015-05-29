@@ -443,6 +443,14 @@ body {
 	background-color: #F2F0F0;
 }
 
+
+.content .order-search-page .error-text {
+	display: inline-block;
+	margin-top: 5px;
+	color: #EB3825;
+	font-size: 12px;
+}
+
 .content .order-search-page .filter-form .filter-panel {
 	width: 100%;
 }
@@ -585,6 +593,10 @@ body {
 
 .table tbody tr.no-hover:hover {
 	background-color: #fff;	
+}
+
+label .required {
+	color: #F00;
 }
 
 .form-control {
