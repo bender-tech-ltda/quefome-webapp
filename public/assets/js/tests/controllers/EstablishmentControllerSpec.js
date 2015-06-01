@@ -360,6 +360,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedDialog._params.onResponse({skipped: false});
 				expect(scope.order.withdraw).toBe(false);
 			});
+
+			it("should call a callback when the dialog respond", function() {
+				var called = false;
+
+				scope.checkUserAddress(function() {
+					called = true;
+				});
+
+				MockedDialog._params.onResponse({});
+				expect(called).toBe(true);
+			});
 		});
 
 		describe("when grouping products", function() {
@@ -463,6 +474,24 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedDialog._params.onResponse({product: product});
 
 				expect(checkCalled).toEqual(true);
+			});
+
+			it("should be called again if the user informed it's address and then change it", function() {
+				scope.isUserAddressAttended = false;
+				scope.order.address = {address: "Blablabla"};
+
+				var called = false;
+				scope.checkUserAddress = function(callback) {
+					scope.customizeProduct = function() {
+						called = true;
+					};
+
+					scope.order.withdraw = true;
+					callback({});
+				};
+
+				scope.customizeProduct();
+				expect(called).toBe(true);
 			});
 		});
 

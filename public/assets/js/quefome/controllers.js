@@ -342,16 +342,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.$digest();
 		};
 
-		$scope.checkUserAddress = function(event) {
+		$scope.checkUserAddress = function(onResponseCallback) {
 			if ($scope.order.withdraw) {
 				return;
 			}
 
 			if (!$scope.order.address || !$scope.isUserAddressAttended) {
-				if (event) {
-					event.preventDefault();
-				}
-
 				Dialog.create({
 					templateUrl: "/partials/establishments/check-address.html",
 					show: true,
@@ -364,7 +360,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 						if (response) {
 							if (response.skipped) {
 								$scope.order.address = null;
-								$scope.order.withdraw = $scope.establishment.parameters.canWithdraw ? true : false;
+								$scope.order.withdraw = $scope.establishment.parameters && $scope.establishment.parameters.canWithdraw ? true : false;
 
 								$scope.isUserAddressAttended = false;
 							} else {
@@ -376,6 +372,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 							$scope.$digest();
 						}
+
+						if (typeof(onResponseCallback) === "function") {
+							onResponseCallback(response);
+						}
 					}
 				});
 			}
@@ -383,7 +383,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.customizeProduct = function(product) {
 			if ($scope.order.address && !$scope.order.withdraw && !$scope.isUserAddressAttended) {
-				$scope.checkUserAddress();
+				$scope.checkUserAddress(function() {
+					if ($scope.order.withdraw || $scope.isUserAddressAttended) {
+						$scope.customizeProduct(product);
+					}
+				});
+
 				return;
 			}
 
