@@ -94,18 +94,53 @@ define(["angular"], function(angular) {
 		}
 
 		this.set = function(key, value) {
-			var serializedValue = JSON.stringify(value);
-			localStorage.setItem(key, serializedValue);
+			var storedValue = this.get("key");
+			if (!storedValue || !storedValue.__localStorageObject) {
+				storedValue = {
+					__localStorageObject: true,
+					created: new Date(),
+					updated: new Date()
+				};
+			} else {
+				storedValue.updated = new Date();
+			}
+
+			storedValue.value = value;
+
+			var serializedStoredValue = JSON.stringify(storedValue);
+			localStorage.setItem(key, serializedStoredValue);
 		};
 
 		this.get = function(key) {
 			var value = localStorage.getItem(key);
 
-			if (value) {
-				return JSON.parse(value);
+			if (!value) {
+				return false;
 			}
 
-			return false;
+			try {
+				var storedValue = JSON.parse(value);
+			} catch(e) {
+				return false;
+			}
+
+			if (!storedValue.__localStorageObject) {
+				return storedValue;
+			}
+
+			if (storedValue.created) {
+				try {
+					storedValue.created = new Date(storedValue.created);
+				} catch(e) {}
+			}
+
+			if (storedValue.updated) {
+				try {
+					storedValue.updated = new Date(storedValue.updated);
+				} catch(e) {}
+			}
+
+			return storedValue;
 		};
 
 		this.remove = function(key) {

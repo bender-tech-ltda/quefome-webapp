@@ -46,22 +46,21 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			it("should store the passed value serialized", function() {
 				var serializedValue;
 
-				$localStorage.set("key", "value");
-				serializedValue = JSON.stringify("value");
-				expect(MockedLocalStorage._lastSettedValue).toEqual(serializedValue);
-
 				var object = {name: "Teste", number: 1, bla: true};
 				$localStorage.set("key", object);
-				serializedValue = JSON.stringify(object);
-				expect(MockedLocalStorage._lastSettedValue).toEqual(serializedValue);
+				expect(typeof(MockedLocalStorage._lastSettedValue)).toEqual("string");
+			});
 
-				$localStorage.set("key", 10);
-				serializedValue = JSON.stringify(10);
-				expect(MockedLocalStorage._lastSettedValue).toEqual(serializedValue);
+			it("should wrap value in an object with a date property", function() {
+				var serializedValue;
 
-				$localStorage.set("key", true);
-				serializedValue = JSON.stringify(true);
-				expect(MockedLocalStorage._lastSettedValue).toEqual(serializedValue);
+				$localStorage.set("key", "teste");
+				var result = JSON.parse(MockedLocalStorage._lastSettedValue);
+
+				expect(result.__localStorageObject).toBe(true);
+				expect(result.created).toBeDefined();
+				expect(result.updated).toBeDefined();
+				expect(result.value).toEqual("teste");
 			});
 		});
 
@@ -72,22 +71,19 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 
 			it("should get the deserialized value", function() {
-				MockedLocalStorage._returnGettedItem = JSON.stringify("value");
-				var value = $localStorage.get("key");
-				expect(value).toEqual("value");
-
-				var object = {name: "Teste", number: 1, bla: true};
+				var object = {value: {name: "Teste", number: 1, bla: true}};
 				MockedLocalStorage._returnGettedItem = JSON.stringify(object);
 				var value = $localStorage.get("key");
 				expect(value).toEqual(object);
+			});
 
-				MockedLocalStorage._returnGettedItem = JSON.stringify(10);
+			it("should parse the localStorageObject", function() {
+				var object = {__localStorageObject: true, created: new Date(), updated: new Date(), value: "teste"};
+				MockedLocalStorage._returnGettedItem = JSON.stringify(object);
 				var value = $localStorage.get("key");
-				expect(value).toEqual(10);
 
-				MockedLocalStorage._returnGettedItem = JSON.stringify(false);
-				var value = $localStorage.get("key");
-				expect(value).toEqual(false);
+				expect(value.created instanceof Date).toBe(true);
+				expect(value.updated instanceof Date).toBe(true);
 			});
 		});
 
