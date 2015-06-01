@@ -444,7 +444,7 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
-	module.service("AddressService", ["$http", "$q", function($http, $q) {
+	module.service("AddressService", ["$http", "$q", "$localStorage", function($http, $q, $localStorage) {
 		this.searchZipCode = function(zipCode) {
 			zipCode = zipCode ? zipCode.trim().replace(/[^0-9]/g, "") : "";
 
@@ -468,11 +468,26 @@ define(["angular"], function(angular) {
 		var currentAddress = null;
 
 		this.getCurrentAddress = function() {
-			return currentAddress;
+			var storedObject = $localStorage.get("AddressService_currentAddress");
+
+			if (!storedObject || !storedObject.__localStorageObject || !(storedObject.updated instanceof Date)) {
+				return false;
+			}
+			
+			var oneHourAgoDate = new Date();
+			
+			var oneHoursInMilliseconds = (1 * 1000 * 60 * 60);
+			oneHourAgoDate.setTime(oneHourAgoDate.getTime() - oneHoursInMilliseconds);
+			
+			if (oneHourAgoDate.getTime() >  storedObject.updated.getTime()) {
+				return false;
+			}
+
+			return storedObject.value;
 		};
 
 		this.setCurrentAddress = function(address) {
-			currentAddress = address;
+			$localStorage.set("AddressService_currentAddress", address);
 		};
 	}]);
 

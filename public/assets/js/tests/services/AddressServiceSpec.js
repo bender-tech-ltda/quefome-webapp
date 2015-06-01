@@ -3,6 +3,7 @@
 define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 	describe("AddressService", function() {
+		var Mocked$localStorage;
 		var $httpBackend, AddressService;
 
 		var validAddress = {
@@ -28,6 +29,28 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		};
 
 		beforeEach(module("qfServices"));
+
+		beforeEach(function() {
+			Mocked$localStorage = {
+				_setKey: null,
+				_setValue: null,
+				set: function(key, value) {
+					this._setKey = key;
+					this._setValue = value;
+				},
+
+				_getKey: null,
+				_getValue: null,
+				get: function(key) {
+					this._getKey = key;
+					return this._getValue;
+				}
+			};
+
+			module(function($provide) {
+				$provide.value("$localStorage", Mocked$localStorage);
+			});
+		});
 
 		beforeEach(inject(function(_AddressService_, _$httpBackend_) {
 			$httpBackend = _$httpBackend_;
@@ -81,15 +104,45 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		describe("the getCurrentAddress and setCurrentAddress function", function() {
-			it("should return null if has no address", function() {
-				expect(AddressService.getCurrentAddress()).toBeNull();
+			it("should be stored into the localStorage", function() {
+				var address = {address: "Rua teste tal"};
+				AddressService.setCurrentAddress(address);
+
+				expect(Mocked$localStorage._setKey).toEqual("AddressService_currentAddress");
+				expect(Mocked$localStorage._setValue).toEqual(address);
 			});
 
-			it("should return the address if it is setted", function() {
-				var address = {address: "Rua dos Alfeneiros"};
+			it("should return false if has no address", function() {
+				Mocked$localStorage._getValue = null;
+				expect(AddressService.getCurrentAddress()).toBe(false);
+			});
 
-				AddressService.setCurrentAddress(address);
-				expect(AddressService.getCurrentAddress()).toEqual(address);
+			it("should return the address if it was one hour ago", function() {
+				Mocked$localStorage._getValue = {
+					__localStorageObject: true,
+					updated: new Date(),
+					value: {address: "Rua dos Alfeneiros"}
+				};
+
+				//AddressService.setCurrentAddress(address);
+				expect().toEqual(address);
+				var address = AddressService.getCurrentAddress();
+				expect(address).toEqual(Mocked$localStorage._getValue.value);
+			});
+
+			it("should return false the address if it was more than one hour ago", function() {
+				Mocked$localStorage._getValue = {
+					__localStorageObject: true,
+					updated: new Date(),
+					value: {address: "Rua dos Alfeneiros"}
+				};
+
+				var today = new Date();
+				var hours = (2 * 1000 * 60 * 60); //2 horas
+				Mocked$localStorage._getValue.updated.setTime(today.getTime() - hours);
+
+				var address = AddressService.getCurrentAddress();
+				expect(address).toBe(false);
 			});
 		});
 	});
