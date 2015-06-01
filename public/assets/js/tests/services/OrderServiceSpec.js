@@ -109,11 +109,30 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				expect(Mocked$localStorage._lastGettedKey).toEqual("OrderService_store_-21");
 			});
 
-			it("should retrieve the stored order", function() {
-				Mocked$localStorage._returnSettedValue = {establishment: {id: -3}, product: {id: -4}};
+			it("should retrieve the stored if updated one hour ago", function() {
+				Mocked$localStorage._returnSettedValue = {
+					__localStorageObject: true,
+					updated: new Date(),
+					value: {establishment: {id: -3}, product: {id: -4}}
+				};
 
 				var order = OrderService.retrieve({id: -10});
-				expect(order).toEqual(Mocked$localStorage._returnSettedValue);
+				expect(order).toEqual(Mocked$localStorage._returnSettedValue.value);
+			});
+
+			it("should not retrieve the stored if updated more than hour ago", function() {
+				Mocked$localStorage._returnSettedValue = {
+					__localStorageObject: true,
+					updated: new Date(),
+					value: {establishment: {id: -3}, product: {id: -4}}
+				};
+
+				var today = new Date();
+				var hours = (2 * 1000 * 60 * 60); //2 horas
+				Mocked$localStorage._returnSettedValue.updated.setTime(today.getTime() - hours)
+
+				var order = OrderService.retrieve({id: -10});
+				expect(order).toBe(false);
 			});
 		});
 

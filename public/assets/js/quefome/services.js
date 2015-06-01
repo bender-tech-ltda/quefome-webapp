@@ -87,6 +87,31 @@ define(["angular"], function(angular) {
 	}]);
 
 	module.service("$localStorage", [function() {
+		var toBase64 = window.btoa;
+		var fromBase64 = window.atob;
+
+		var encodeURIComponent = window.encodeURIComponent;
+		var decodeURIComponent = window.decodeURIComponent;
+
+		var jsonStringify = JSON.stringify;
+		var jsonParse = JSON.parse;
+
+		var stringify = function(value) {
+			if (typeof(toBase64) === "function") {
+				return toBase64(encodeURIComponent(JSON.stringify(value)));
+			}
+
+			return encodeURIComponent(jsonStringify(value));
+		};
+
+		var parse = function(value) {
+			if (typeof(fromBase64) === "function") {
+				return jsonParse(decodeURIComponent(fromBase64(value)));
+			}
+
+			return jsonParse(decodeURIComponent(value));
+		};
+
 		var localStorage = window.localStorage;
 
 		this.__setLocalStorage = function(_localStorage) {
@@ -94,7 +119,8 @@ define(["angular"], function(angular) {
 		}
 
 		this.set = function(key, value) {
-			var storedValue = this.get("key");
+			var storedValue = this.get(key);
+
 			if (!storedValue || !storedValue.__localStorageObject) {
 				storedValue = {
 					__localStorageObject: true,
@@ -107,19 +133,18 @@ define(["angular"], function(angular) {
 
 			storedValue.value = value;
 
-			var serializedStoredValue = JSON.stringify(storedValue);
-			localStorage.setItem(key, serializedStoredValue);
+			localStorage.setItem(stringify(key), stringify(storedValue));
 		};
 
 		this.get = function(key) {
-			var value = localStorage.getItem(key);
+			var value = localStorage.getItem(stringify(key));
 
 			if (!value) {
 				return false;
 			}
 
 			try {
-				var storedValue = JSON.parse(value);
+				var storedValue = parse(value);
 			} catch(e) {
 				return false;
 			}
@@ -469,17 +494,33 @@ define(["angular"], function(angular) {
 		};
 
 		this.store = function(order) {
-			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
+			var establishment = order.establishment && typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
 			$localStorage.set("OrderService_store_" + establishment, order);
 		};
 
 		this.retrieve = function(establishment) {
-			establishment = typeof(establishment) === "object" ? establishment.id : establishment;
-			return $localStorage.get("OrderService_store_" + establishment);
+			establishment = establishment && typeof(establishment) === "object" ? establishment.id : establishment;
+			var storedObject = $localStorage.get("OrderService_store_" + establishment);
+
+			if (!storedObject || !storedObject.__localStorageObject || !(storedObject.updated instanceof Date)) {
+				return false;
+			}
+			
+			var oneHourAgoDate = new Date();
+			
+			var oneHoursInMilliseconds = (1 * 1000 * 60 * 60);
+			oneHourAgoDate.setTime(oneHourAgoDate.getTime() - oneHoursInMilliseconds);
+			
+			if (oneHourAgoDate.getTime() >  storedObject.updated.getTime()) {
+				$localStorage.remove("OrderService_store_" + establishment);
+				return false;
+			}
+
+			return storedObject.value;
 		};
 
 		this.remove = function(order) {
-			var establishment = typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
+			var establishment = order.establishment && typeof(order.establishment) === "object" ? order.establishment.id : order.establishment;
 			$localStorage.remove("OrderService_store_" + establishment);
 		};
 

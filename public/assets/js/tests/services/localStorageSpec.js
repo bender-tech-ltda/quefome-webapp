@@ -6,6 +6,8 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		var $localStorage;
 		var MockedLocalStorage;
 
+		var expectedDecryptoFunction, expectedEncryptoFunction;
+
 		beforeEach(module("qfServices"));
 
 		beforeEach(inject(function(_$localStorage_) {
@@ -13,6 +15,22 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		}));
 
 		beforeEach(function() {
+			expectedEncryptoFunction = function(value) {
+				if (typeof(window.btoa) === "function") {
+					return window.btoa(encodeURIComponent(JSON.stringify(value)));
+				}
+
+				return encodeURIComponent(JSON.stringify(value));
+			};
+
+			expectedDecryptoFunction = function(value) {
+				if (typeof(window.atob) === "function") {
+					return JSON.parse(decodeURIComponent(window.atob(value)));
+				}
+
+				return JSON.parse(decodeURIComponent(value));
+			};
+
 			MockedLocalStorage = {
 				_lastSettedKey: null,
 				_lastSettedValue: null,
@@ -38,24 +56,28 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		describe("when storing items", function() {
-			it("should store using the passed key", function() {
+			it("should store using the passed key encrypted", function() {
 				$localStorage.set("key", "value");
-				expect(MockedLocalStorage._lastSettedKey).toEqual("key");
+
+				var key = expectedDecryptoFunction(MockedLocalStorage._lastSettedKey);
+				expect(key).toEqual("key");
 			});
 
-			it("should store the passed value serialized", function() {
+			it("should store the passed value serialized and encrypted", function() {
 				var serializedValue;
 
 				var object = {name: "Teste", number: 1, bla: true};
 				$localStorage.set("key", object);
-				expect(typeof(MockedLocalStorage._lastSettedValue)).toEqual("string");
+
+				var result = expectedDecryptoFunction(MockedLocalStorage._lastSettedValue);
+				expect(typeof(result)).toEqual("object");
 			});
 
 			it("should wrap value in an object with a date property", function() {
 				var serializedValue;
 
 				$localStorage.set("key", "teste");
-				var result = JSON.parse(MockedLocalStorage._lastSettedValue);
+				var result = expectedDecryptoFunction(MockedLocalStorage._lastSettedValue);
 
 				expect(result.__localStorageObject).toBe(true);
 				expect(result.created).toBeDefined();
@@ -67,19 +89,22 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		describe("when getting items", function() {
 			it("should get the property using the key", function() {
 				$localStorage.get("key");
-				expect(MockedLocalStorage._lastGettedKey).toEqual("key");
+
+				var key = expectedDecryptoFunction(MockedLocalStorage._lastGettedKey);
+				expect(key).toEqual("key");
 			});
 
-			it("should get the deserialized value", function() {
+			it("should get the descrypt and deserialized value", function() {
 				var object = {value: {name: "Teste", number: 1, bla: true}};
-				MockedLocalStorage._returnGettedItem = JSON.stringify(object);
+				MockedLocalStorage._returnGettedItem = expectedEncryptoFunction(object);
+
 				var value = $localStorage.get("key");
 				expect(value).toEqual(object);
 			});
 
 			it("should parse the localStorageObject", function() {
 				var object = {__localStorageObject: true, created: new Date(), updated: new Date(), value: "teste"};
-				MockedLocalStorage._returnGettedItem = JSON.stringify(object);
+				MockedLocalStorage._returnGettedItem = expectedEncryptoFunction(object);
 				var value = $localStorage.get("key");
 
 				expect(value.created instanceof Date).toBe(true);
