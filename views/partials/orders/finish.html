@@ -82,7 +82,7 @@
 
 					<div class="error-message" ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid && !addressStatus.addressAttended">
 						<h4 class="title">Esse estabelecimento não entrega no seu endereço</h4>
-						<a qf-href="/establishments/search/">Clique aqui para procurar outro estabelecimento</a>
+						<button type="button" class="btn btn-link" ng-click="goToEstablishmentSearch()">Clique aqui para procurar outro estabelecimento</button>
 					</div>
 
 					<div ng-show="addressStatus.zipCodeChecked && addressStatus.zipCodeValid">

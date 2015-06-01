@@ -102,6 +102,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return this._retrieveOrder;
 				},
 
+				_removeCalled: false,
+				_removeOrder: null,
+				remove: function(order) {
+					this._removeCalled = true;
+					this._removeOrder = order;
+				},
+
 				_getOrderPriceCalled: false,
 				_getOrderPriceOrder: null,
 				getOrderPrice: function(order) {
@@ -898,6 +905,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should use the $routeParams", function() {
 				scope.goToEstablishmentPage();
 				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+			});
+		});
+
+		describe("going to establishment search", function() {
+			it("should remove any stored order of the current establishment", function() {
+				scope.goToEstablishmentSearch();
+
+				expect(MockedOrderService._removeCalled).toBe(true);
+				expect(MockedOrderService._removeOrder).toBe(scope.order);
+			});
+
+			it("should send to the establishment search page", function() {
+				scope.goToEstablishmentSearch();
+				expect(Mocked$location._currentPath).toEqual("/establishments/search/");
 			});
 		});
 

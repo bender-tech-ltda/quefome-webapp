@@ -768,7 +768,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		});
 	}]);
 
-	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", function($scope, $location, AddressService, EstablishmentService) {
+	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", "OrderService", function($scope, $location, AddressService, EstablishmentService, OrderService) {
 		var alreadyInformedAddress = AddressService.getCurrentAddress();
 
 		$scope.address = alreadyInformedAddress ? alreadyInformedAddress : {};
@@ -902,6 +902,10 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.goToEstablishmentSearch = function() {
 			if ($scope.$dialog) {
+				OrderService.remove({
+					establishment: $scope.establishment
+				});
+
 				$scope.$dialog.beforeHide(function() {
 					$location.path("/establishments/search/");
 					$scope.$apply();
@@ -1135,6 +1139,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.goToEstablishmentPage = function() {
 			$location.path("/establishments/" + $routeParams.establishmentUrl);
+		};
+
+		$scope.goToEstablishmentSearch = function() {
+			OrderService.remove($scope.order);
+			$location.path("/establishments/search/");
 		};
 
 		$scope.isFinishValid = function() {

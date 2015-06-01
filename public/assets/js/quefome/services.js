@@ -169,7 +169,7 @@ define(["angular"], function(angular) {
 		};
 
 		this.remove = function(key) {
-			localStorage.removeItem(key);
+			localStorage.removeItem(stringify(key));
 		};
 	}]);
 

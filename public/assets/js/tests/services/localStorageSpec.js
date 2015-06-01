@@ -113,9 +113,11 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		describe("when removing items", function() {
-			it("should remove based on the key", function() {
+			it("should remove based on the encrupted key", function() {
 				$localStorage.remove("key");
-				expect(MockedLocalStorage._lastRemovedKey).toEqual("key");
+
+				var key = expectedDecryptoFunction(MockedLocalStorage._lastRemovedKey);
+				expect(key).toEqual("key");
 			});
 		});
 	});

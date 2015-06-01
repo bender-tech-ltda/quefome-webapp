@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("CheckAddressController", function() {
 		var scope, controller;
-		var MockedAddressService, MockedEstablishmentService;
+		var MockedAddressService, MockedEstablishmentService, MockedOrderService;
 		var Mocked$location;
 
 		beforeEach(module("qfControllers"));
@@ -66,6 +66,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				}
 			};
 
+			MockedOrderService = {
+				_removeCalled: false,
+				_removeOrder: null,
+				remove: function(order) {
+					this._removeCalled = true;
+					this._removeOrder = order;
+				}
+			};
+
 			Mocked$location = {
 				_path: "",
 				path: function(path) {
@@ -82,6 +91,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			var params = {
 				AddressService: MockedAddressService,
 				EstablishmentService: MockedEstablishmentService,
+				OrderService: MockedOrderService,
 				$location: Mocked$location
 			};
 
@@ -412,6 +422,13 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("going to establishment search", function() {
+			it("should remove any stored order of the current establishment", function() {
+				scope.goToEstablishmentSearch();
+
+				expect(MockedOrderService._removeCalled).toBe(true);
+				expect(MockedOrderService._removeOrder.establishment).toBe(scope.establishment);
+			});
+
 			it("should close the dialog", function() {
 				scope.goToEstablishmentSearch();
 				expect(scope.$dialog._calledHide).toBe(true);
