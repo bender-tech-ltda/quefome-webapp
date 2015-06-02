@@ -243,24 +243,36 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.order.address).toBeNull();
 			});
 
-			it("should set the order.withdraw based on the user address and the establishment parameters", function() {
-				MockedAddressService._currentAddress = {skipped: true};
+			it("should set the order.withdraw based on the stored order and the establishment parameters", function() {
+				MockedAddressService._currentAddress = {blabla: "asdasdasd"};
+				
+				MockedOrderService._retrieveOrder = {withdraw: true};
 				scope.refreshOrder({parameters: {canWithdraw: true}});
 				expect(scope.order.withdraw).toBe(true);
 
-				MockedAddressService._currentAddress = {skipped: true};
+				MockedOrderService._retrieveOrder = {withdraw: true};
 				scope.refreshOrder({parameters: {canWithdraw: false}});
 				expect(scope.order.withdraw).toBe(false);
 
-				MockedAddressService._currentAddress = {skipped: false};
+				MockedOrderService._retrieveOrder = {withdraw: false};
 				scope.refreshOrder({parameters: {canWithdraw: true}});
 				expect(scope.order.withdraw).toBe(false);
 			});
 
-			it("should set the order.address based on the user address", function() {
+			it("should set the order.address based on the stored order and the user address", function() {
+				scope.order.address = {address: "asdasd"};
+
+				MockedOrderService._retrieveOrder = {withdraw: false};
+				scope.refreshOrder();
+				expect(scope.order.address).toBeNull();
+
+				scope.order.address = {address: "asdasd"};
+
 				MockedAddressService._currentAddress = {skipped: true};
 				scope.refreshOrder();
 				expect(scope.order.address).toBeNull();
+
+				scope.order.address = {address: "asdasd"};
 
 				MockedAddressService._currentAddress = {address: "teste"};
 				scope.refreshOrder();
@@ -359,6 +371,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.establishment.parameters.canWithdraw = true;
 				MockedDialog._params.onResponse({skipped: false});
 				expect(scope.order.withdraw).toBe(false);
+			});
+
+			it("should store the current order with the response from the dialog", function() {
+				MockedOrderService._storedOrder = null;
+				scope.order = {blabla: "adsasd"};
+
+				scope.checkUserAddress();
+				MockedDialog._params.onResponse({skipped: true});
+				
+				expect(MockedOrderService._storedOrder).toEqual(scope.order);
 			});
 
 			it("should call a callback when the dialog respond", function() {

@@ -273,14 +273,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			var currentAddress = AddressService.getCurrentAddress();
 
-			if (currentAddress) {
-				if (currentAddress.skipped) {
-					$scope.order.withdraw = (establishment.parameters && establishment.parameters.canWithdraw ? true : false);
-					$scope.order.address = null;
-				} else {
-					$scope.order.withdraw = false;
-					$scope.order.address = currentAddress;
-				}
+			if ($scope.order.withdraw && establishment.parameters && establishment.parameters.canWithdraw) {
+				$scope.order.withdraw = true;
+				$scope.order.address = null;
+			} else if (currentAddress && !currentAddress.skipped) {
+				$scope.order.withdraw = false;
+				$scope.order.address = currentAddress;
 			} else {
 				$scope.order.withdraw = false;
 				$scope.order.address = null;
@@ -369,6 +367,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 								$scope.isUserAddressAttended = response.isAttended ? true : false;
 							}
+
+							OrderService.store($scope.order);
 
 							$scope.$digest();
 						}
