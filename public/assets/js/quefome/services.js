@@ -558,27 +558,58 @@ define(["angular"], function(angular) {
 			return total;
 		};
 
-		this.getOrderItemPrice = function(orderItem) {
-			var total = (orderItem.product ? orderItem.product.price : 0.0);
-
-			if (orderItem.flavors && orderItem.flavors.length > 0) {
-				for (var flavorIndex in orderItem.flavors) {
-					var flavor = orderItem.flavors[flavorIndex];
-					total += (flavor.price ? flavor.price : 0.0);
-				}
+		var getFlavorsPrice = function(orderItem) {
+			if (!orderItem.flavors || orderItem.flavors.length == 0) {
+				return 0;
 			}
 
-			if (orderItem.components && orderItem.components.length > 0) {
-				for (var componentIndex in orderItem.components) {
-					var itemComponent = orderItem.components[componentIndex];
+			var price = 0;
+			var billingType = orderItem.product && orderItem.product.billingType ? orderItem.product.billingType : "SUM";
 
-					if (itemComponent.component && itemComponent.value) {
-						total += (itemComponent.component.price ? itemComponent.component.price : 0.0);
-					} else if (itemComponent.selectedOption) {
-						total += (itemComponent.selectedOption.price ? itemComponent.selectedOption.price : 0.0);
+			for (var flavorIndex in orderItem.flavors) {
+				var flavor = orderItem.flavors[flavorIndex];
+
+				if (billingType == "HIGHEST_PRICE") {
+					if (flavor.price && flavor.price > price) {
+						price = flavor.price;
 					}
+				} else {
+					price += (flavor.price ? flavor.price : 0.0);
 				}
 			}
+
+			if (billingType == "AVERAGE_PRICE") {
+				price = (price / orderItem.flavors.length);
+			}
+
+			return price;
+		};
+
+		var getComponentsPrice = function(orderItem) {
+			if (!orderItem.components || orderItem.components.length == 0) {
+				return 0;
+			}
+
+			var price = 0;
+
+			for (var componentIndex in orderItem.components) {
+				var itemComponent = orderItem.components[componentIndex];
+
+				if (itemComponent.component && itemComponent.value) {
+					price += (itemComponent.component.price ? itemComponent.component.price : 0.0);
+				} else if (itemComponent.selectedOption) {
+					price += (itemComponent.selectedOption.price ? itemComponent.selectedOption.price : 0.0);
+				}
+			}
+
+			return price;
+		};
+
+		this.getOrderItemPrice = function(orderItem) {
+			var total = (orderItem.product && orderItem.product.price ? orderItem.product.price : 0.0);
+
+			total += getFlavorsPrice(orderItem);
+			total += getComponentsPrice(orderItem);
 
 			if (typeof(orderItem.quantity) === "undefined") {
 				orderItem.quantity = 1;

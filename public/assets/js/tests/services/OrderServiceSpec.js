@@ -165,16 +165,22 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				expect(result).toEqual(order.items[0].product.price + order.items[1].product.price);
 			});
 
-			it("should use the product selected flavors price from each item", function() {
+			it("should use the product selected flavors price based on the product flavor billing type", function() {
 				order.items.push({
-					flavors: [{price: 2.72}]
+					product: {billingType: "SUM"},
+					flavors: [{price: 2.72}, {price: 1.50}] //4.22
 				}, {
-					flavors: [{price: 9.95}]
+					product: {billingType: "HIGHEST_PRICE"},
+					flavors: [{price: 9.95}, {price: 5.50}] //9.95
+				}, {
+					product: {billingType: "AVERAGE_PRICE"},
+					flavors: [{price: 5.95}, {price: 3.50}] //4.72
 				});
 
 				var result = OrderService.getOrderPrice(order);
-				expect(result).toEqual(order.items[0].flavors[0].price + order.items[1].flavors[0].price);
+				expect(result).toEqual(18.895);
 			});
+
 
 			it("should use the product selected components from each item", function() {
 				order.items.push({
@@ -252,11 +258,24 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				expect(result).toEqual(orderItem.product.price);
 			});
 
-			it("should use the product selected flavors price", function() {
+			it("should use the product selected flavors price based on the product flavor billing type", function() {
 				orderItem.flavors = [{price: 2.72}, {price: 3.70}, {}];
 
+				orderItem.product = {billingType: "SUM"};
 				var result = OrderService.getOrderItemPrice(orderItem);
-				expect(result).toEqual(orderItem.flavors[0].price + orderItem.flavors[1].price);
+				expect(result).toEqual(6.42);
+
+				orderItem.product = {billingType: "HIGHEST_PRICE"};
+				result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(3.70);
+
+				orderItem.product = {billingType: "AVERAGE_PRICE"};
+				result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(2.14);
+
+				orderItem.product = {};
+				var result = OrderService.getOrderItemPrice(orderItem);
+				expect(result).toEqual(6.42);
 			});
 
 			it("should use the product selected components from each item", function() {
