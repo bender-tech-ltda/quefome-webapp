@@ -213,7 +213,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(result).toEqual(scope.product.components[0].option.price + scope.product.components[1].option.price);
 			});
 
-			it("should use the selected flavors price", function() {
+			it("should use the selected flavors price base", function() {
 				scope.selectedFlavors = [
 					{price: 2.10},
 					{price: 3.55}
@@ -221,6 +221,26 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				var result = scope.calculateTotalPrice();
 				expect(result).toEqual(scope.selectedFlavors[0].price + scope.selectedFlavors[1].price);
+			});
+
+			it("should use the selected flavors price based on the product flavor billing type", function() {
+				scope.selectedFlavors = [{price: 2.10}, {price: 3.57}, {}];
+
+				scope.product.billingType = "SUM"
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(5.67);
+
+				scope.product.billingType = "HIGHEST_PRICE"
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(3.57);
+
+				scope.product.billingType = "AVERAGE_PRICE"
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(1.89);
+
+				delete(scope.product.billingType)
+				var result = scope.calculateTotalPrice();
+				expect(result).toEqual(5.67);
 			});
 
 			it("should be multiplied by the quantity", function() {

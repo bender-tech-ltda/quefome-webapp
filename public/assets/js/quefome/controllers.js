@@ -571,36 +571,66 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			$scope.$digest();
 		};
 
-		$scope.calculateTotalPrice = function() {
-			if (!$scope.product) {
+		var getFlavorsPrice = function() {
+			if (!$scope.selectedFlavors || $scope.selectedFlavors.length == 0) {
 				return 0;
 			}
 
-			var total = $scope.product.price || 0.0;
+			var price = 0;
+			var billingType = $scope.product && $scope.product.billingType ? $scope.product.billingType : "SUM";
 
 			for (var i in $scope.selectedFlavors) {
 				var flavor = $scope.selectedFlavors[i];
-				total += (flavor.price || 0.0)
+
+				if (billingType == "HIGHEST_PRICE") {
+					if (flavor.price && flavor.price > price) {
+						price = flavor.price;
+					}
+				} else {
+					price += (flavor.price ? flavor.price : 0.0);
+				}
 			}
+
+			if (billingType == "AVERAGE_PRICE") {
+				price = (price / $scope.selectedFlavors.length);
+			}
+
+			return price;
+		};
+
+		var getComponentsPrice = function() {
+			var price = 0;
 
 			if ($scope.product.components) {
 				for (var i in $scope.product.components) {
 					var component = $scope.product.components[i];
 
 					if (typeof(component.value) !== "boolean" && component.defaultValue) {
-						total += (component.price || 0.0);
+						price += (component.price || 0.0);
 					} else if (component.value) {
-						total += (component.price || 0.0);
+						price += (component.price || 0.0);
 					} else if (component.option) {
-						total += (component.option.price || 0.0);
+						price += (component.option.price || 0.0);
 					} else if (component.defaultOption) {
-						total += (component.defaultOption.price || 0.0);
+						price += (component.defaultOption.price || 0.0);
 					}
 				}
 			}
 
-			var quantity = typeof($scope.quantity) === "number" && $scope.quantity > 0 ? $scope.quantity : 0; 
+			return price;
+		};
 
+		$scope.calculateTotalPrice = function() {
+			if (!$scope.product) {
+				return 0;
+			}
+
+			var total = $scope.product.price || 0.0;
+			
+			total += getFlavorsPrice();
+			total += getComponentsPrice();
+
+			var quantity = typeof($scope.quantity) === "number" && $scope.quantity > 0 ? $scope.quantity : 0; 
 			return total * quantity;
 		};
 
