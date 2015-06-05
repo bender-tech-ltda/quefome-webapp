@@ -48,11 +48,16 @@
 		<div class="content" ng-view></div>
 
 		<footer class="footer">
-			<div class="new-delivery">
-			</div>
-			<div class="indicate-delivery">
-			</div>
+			<a class="new-delivery" href="<%= landingPageUrl %>" target="_blank" title="Clique aqui para saber como ter seu restaurante no Quefo.me">
+				<span class="qf-icon icon-home"></span>
+			</a>
 			<div class="social-networks">
+				<a class="facebook-link" href="<%= social.facebookPageUrl %>" target="_blank" title="Siga nossa página no Facebook">
+					<span class="qf-icon icon-facebook-round"></span>
+				</a>
+				<a class="twitter-link" href="<%= social.twitterPageUrl %>" target="_blank" title="Siga nossa página no Twitter">
+					<span class="qf-icon icon-twitter"></span>
+				</a>
 			</div>
 		</footer>
 

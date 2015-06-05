@@ -140,6 +140,10 @@
 	content: "\e60f";
 }
 
+.icon-home:before {
+	content: "\f015";
+}
+
 .icon-plus:before {
 	content: "\f067";
 }
@@ -194,6 +198,14 @@
 
 .icon-eat:before {
 	content: "\e9a3";
+}
+
+.icon-facebook-round:before {
+	content: "\ea8e";
+}
+
+.icon-twitter:before {
+	content: "\ea91";
 }
 
 .icon-food:before {

@@ -1671,12 +1671,14 @@ a:hover, a:focus {
 }
 
 .footer .new-delivery, .footer .social-networks {
+	position: relative;
 	display: inline-block;
 	background: url("/assets/img/footer_436x212.png") no-repeat;
 	background-size: 300px;
 	width: 150px;
 	height: 146px;
 	margin-top: 10px;
+	color: #EB3825;
 }
 
 .footer .new-delivery {
@@ -1684,10 +1686,46 @@ a:hover, a:focus {
 	margin-left: 2%;
 }
 
+.footer .new-delivery:focus, .footer .new-delivery:hover {
+	color: #4D200F;
+}
+
+.footer .new-delivery .qf-icon {
+	top: 97px;
+	left: 56px;
+	font-size: 30px;
+}
+
 .footer .social-networks {
 	float: right;
 	background-position: -149px;
 	margin-right: 2%;
+}
+
+.footer .social-networks .qf-icon {
+	font-size: 27px;
+}
+
+.footer .social-networks .facebook-link {
+	position: absolute;
+	top: 97px;
+	left: 42px;
+}
+
+.footer .social-networks .facebook-link:focus,
+.footer .social-networks .facebook-link:hover {
+	color: #3A5795;
+}
+
+.footer .social-networks .twitter-link {
+	position: absolute;
+	top: 98px;
+	left: 82px;
+}
+
+.footer .social-networks .twitter-link:focus,
+.footer .social-networks .twitter-link:hover {
+	color: #2FC2EF;
 }
 
 .not-found {
