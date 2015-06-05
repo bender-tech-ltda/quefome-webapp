@@ -230,7 +230,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				searchObject["product-type"] = $scope.searchFilter.productType;
 			}
 
-			$location.search(searchObject);
+			$location.search(searchObject).replace();
 
 			EstablishmentService.list($scope.searchFilter).then(function(establishments) {
 				$scope.establishments = establishments;

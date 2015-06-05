@@ -77,12 +77,16 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 							if (typeof(value) !== "undefined") {
 								this._currentQuery[propertyOrObject] = value;
 							}
-
-							return this._currentQuery[propertyOrObject];
 						}
+
+						return this;
 					}
 
 					return this._currentQuery;
+				},
+
+				replace: function() {
+					return this;
 				}
 			};
 
@@ -162,8 +166,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					scope.selectProductType(productType);
 				}).not.toThrow();
 
-				expect(Mocked$location.search("product-type")).toEqual(productType.name);
-				expect(Mocked$location.search("q")).toBeUndefined();
+				expect(Mocked$location._currentQuery["product-type"]).toEqual(productType.name);
+				expect(Mocked$location._currentQuery["q"]).toBeUndefined();
 			});
 
 			it("should search for establishments", function() {
@@ -217,8 +221,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				scope.searchFilter.query = "Pizzaria";
 
 				scope.searchEstablishments();
-				expect(Mocked$location.search("q")).toEqual(scope.searchFilter.query);
-				expect(Mocked$location.search("productType")).toBeUndefined();
+				expect(Mocked$location._currentQuery["q"]).toEqual(scope.searchFilter.query);
+				expect(Mocked$location._currentQuery["productType"]).toBeUndefined();
 			});
 
 			it("should search for a list of establishments using a query object", function() {
