@@ -1670,16 +1670,24 @@ a:hover, a:focus {
 	display: table-row;
 }
 
-.footer .new-delivery, .footer .indicate-delivery {
-	display: none;
+.footer .new-delivery, .footer .social-networks {
+	display: inline-block;
+	background: url("/assets/img/footer_436x212.png") no-repeat;
+	background-size: 300px;
+	width: 150px;
+	height: 146px;
+	margin-top: 10px;
+}
+
+.footer .new-delivery {
+	float: left;
+	margin-left: 2%;
 }
 
 .footer .social-networks {
-	background: url("/assets/img/footer_sigam_me_os_bons_217x212.png") no-repeat;
-	background-position: top center;
-	background-size: 150px;
-	height: 147px;
-	margin-top: 10px;
+	float: right;
+	background-position: -149px;
+	margin-right: 2%;
 }
 
 .not-found {
@@ -1902,6 +1910,16 @@ input.invalid:focus, select.invalid:focus {
 	.order-finish-page .payment-method-panel .payment-method-category .payment-method {
 		float: none;
 		width: 100%;
+	}
+
+	.footer .new-delivery {
+		margin-left: 5%;
+	}
+
+	.footer .social-networks {
+		float: left;
+		margin-left: 10px;
+		margin-right: 0px;
 	}
 }
 
@@ -2359,36 +2377,8 @@ input.invalid:focus, select.invalid:focus {
 		height: 164px;
 	}
 
-	.footer .new-delivery, .footer .indicate-delivery {
-		background: url("/assets/img/footer_436x212.png") no-repeat;
-		background-size: 300px;
-		float: left;
-		display: inline-block;
-		margin-top: 10px;
-	}
-
 	.footer .new-delivery {
-		width: 150px;
-		height: 146px;
-		margin-left: 5%;
-		margin-right: 1%;
-	}
-
-	.footer .indicate-delivery {
-		width: 151px;
-		height: 146px;
-		margin-left: 1%;
-		background-position: -149px;
-	}
-
-	.footer .social-networks {
-		float: right;
-		width: 150px;
-		height: 147px;
-		margin-top: 8px;
-		margin-left: 1%;
-		margin-right: 5%;
-		background-size: 150px;
+		margin-left: 10%;
 	}
 
 	.login-message .message {
@@ -2425,14 +2415,6 @@ input.invalid:focus, select.invalid:focus {
 
 	.establishment-page .order-panel {
 		padding: 0px 30%;
-	}
-
-	.footer .new-delivery {
-		margin-left: 10%;
-	}
-
-	.footer .social-networks {
-		margin-right: 10%;
 	}
 }
 
