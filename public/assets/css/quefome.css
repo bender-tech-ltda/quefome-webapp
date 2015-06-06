@@ -209,6 +209,11 @@ a:hover, a:focus {
 	background-color: #FBCA0E;
 }
 
+.delivery-search-panel .query-search .query-button .qf-icon {
+	font-size: 16px;
+	top: 2px;
+}
+
 .delivery-search-page .order-steps {
 	display: none;
 	background: #f1c60d;
