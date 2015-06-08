@@ -528,6 +528,11 @@ a:hover, a:focus {
 	color: #008000;
 }
 
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .status.closed .qf-icon,
+.delivery-search-page .search-result .establishment-list .establishment .additional-info .status.closed .text {
+	color: #ED3825;
+}
+
 .delivery-search-page .search-result .establishment-list .establishment .additional-info .delivery-info {
 	float: left;
 	width: 165px;
@@ -615,6 +620,11 @@ a:hover, a:focus {
 
 .establishment-page .establishment .additional-info .status.open {
 	color: #008000;
+}
+
+.establishment-page .establishment .additional-info .status.closed .qf-icon,
+.establishment-page .establishment .additional-info .status.closed .text {
+	color: #ED3825;
 }
 
 .establishment-page .establishment-product-types-panel {
