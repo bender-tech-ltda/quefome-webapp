@@ -50,6 +50,15 @@
 		<div class="clearfix"></div>
 	</div>
 
+	<div class="alert alert-establishment-closed" ng-show="establishment.parameters.status != 'OPEN'">
+		<p>
+			<span>Esse estabelecimento está fechado no momento.</span>
+			<span>Você pode montar seu pedido, mas só poderá finalizar ele</span>
+			<span ng-hide="establishment.parameters.currentSchedule">mais tarde.</span>
+			<span ng-show="establishment.parameters.currentSchedule">{{establishment | establishmentSchedule}}</span>
+		</p>
+	</div>
+
 	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes">
 		<h5 class="title">
 			<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>

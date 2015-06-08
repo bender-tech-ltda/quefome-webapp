@@ -691,6 +691,13 @@ a:hover, a:focus {
 	width: 25%;
 }
 
+.establishment-page .alert-establishment-closed {
+	margin-top: 10px;
+	border-radius: 0px;
+	background-color: #FFACA3;
+	color: #CC0804;
+}
+
 .establishment-page .establishment-products {
 	margin: 10px 3%;
 }
@@ -769,6 +776,7 @@ a:hover, a:focus {
 .establishment-page .order-panel {
 	width: 100%;
 	height: 57px;
+	z-index: 10;
 
 	transition: height 0.2s;
 	-moz-transition: height 0.2s;
@@ -2342,6 +2350,10 @@ input.invalid:focus, select.invalid:focus {
 
 	.establishment-page .stick-top + .sticky-fake {
 		display: none;
+	}
+
+	.establishment-page .alert-establishment-closed {
+		margin: 10px 1% 10px 13%;
 	}
 
 	.establishment-page .establishment-products {
