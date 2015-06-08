@@ -1,32 +1,60 @@
-<div class="delivery-search-panel" qf-random-class="banner-burger, banner-pizza">
-	<div class="food-type-search">
-		<h3 class="title">Você tem fome de quê?</h3>
+<div class="home-page">
+	<div class="delivery-search-panel" qf-random-class="banner-burger, banner-pizza">
+		<div class="food-type-search">
+			<h3 class="title">Você tem fome de quê?</h3>
 
-		<ul class="food-type-list">
-			<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}">
-				<a qf-href="/establishments/search?productType={{productType.name}}">
-					<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
-					<br/>
-					<span>{{productType.name}}</span>
-				</a>
-			</li>
-		</ul>
+			<ul class="food-type-list">
+				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}">
+					<a qf-href="/establishments/search?productType={{productType.name}}">
+						<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
+						<br/>
+						<span>{{productType.name}}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()">
+			<h3 class="title">Procure pelo seu restaurante favorito</h3>
+
+			<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" />
+
+			<button type="submit" class="query-button">
+				<span>Pesquisar</span>
+				<span class="qf-icon icon-search"></span>
+			</button>
+		</form>
+
+		<div class="clearfix"></div>
 	</div>
 
-	<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()">
-		<h3 class="title">Procure pelo seu restaurante favorito</h3>
+	<div class="order-process-panel">
+		<h4 class="title">Como funciona?</h4>
+		<div class="divider"></div>
 
-		<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" />
+		<div class="step choose-establishment-step">
+			<span class="qf-icon icon-restaurant"></span>
+			<h6>Escolha um restaurante</h6>
+		</div>
 
-		<button type="submit" class="query-button">
-			<span>Pesquisar</span>
-			<span class="qf-icon icon-search"></span>
-		</button>
-	</form>
+		<div class="next-step-divider">
+			<span class="qf-icon icon-arrow-next"></span>
+		</div>
 
-	<div class="clearfix"></div>
-</div>
+		<div class="step customize-order-step">
+			<span class="qf-icon icon-order-check"></span>
+			<h6>Monte seu pedido</h6>
+		</div>
 
-<div>
-	<br/><br/><br/><br/><br/><br/><br/><br/>
+		<div class="next-step-divider">
+			<span class="qf-icon icon-arrow-next"></span>
+		</div>
+
+		<div class="step wait-order-step">
+			<span class="qf-icon icon-food"></span>
+			<h6>E espere ele ficar pronto</h6>
+		</div>
+
+		<div class="clearfix"></div>
+	</div>
 </div>

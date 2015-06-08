@@ -40,8 +40,24 @@
 	-ms-transform: scaleX(-1);
 }
 
+.icon-order-check:before {
+	content: "\e624";
+}
+
+.icon-food:before {
+	content: "\e620";
+}
+
+.icon-fire:before {
+	content: "\e621";
+}
+
 .icon-order:before {
 	content: "\e609";
+}
+
+.icon-card-ticket:before {
+	content: "\e625";
 }
 
 .icon-trash:before {
@@ -96,6 +112,10 @@
 	content: "\e61b";
 }
 
+.icon-rotate-screen:before {
+	content: "\e626";
+}
+
 .icon-edit:before {
 	content: "\e61c";
 }
@@ -106,6 +126,10 @@
 
 .icon-arrow-up:before {
 	content: "\e61e";
+}
+
+.icon-arrow-next:before {
+	content: "\e623";
 }
 
 .icon-place-check:before {
@@ -120,8 +144,8 @@
 	content: "\e60d";
 }
 
-.icon-card-ticket:before {
-	content: "\e60b";
+.icon-restaurant:before {
+	content: "\e627";
 }
 
 .icon-paper-ticket:before {
@@ -206,14 +230,6 @@
 
 .icon-twitter:before {
 	content: "\ea91";
-}
-
-.icon-food:before {
-	content: "\e620";
-}
-
-.icon-fire:before {
-	content: "\e621";
 }
 
 @-webkit-keyframes spin {

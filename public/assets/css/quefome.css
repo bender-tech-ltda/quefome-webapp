@@ -87,7 +87,11 @@ a:hover, a:focus {
 	height: 100%;
 }
 
-.delivery-search-panel {
+.home-page {
+	width: 100%;
+}
+
+.home-page .delivery-search-panel {
 	width: 100%;
 	min-height: 504px;
 	background-repeat: no-repeat;
@@ -97,15 +101,15 @@ a:hover, a:focus {
 	box-shadow: inset 0px 11px 8px -13px black, inset 0px -11px 8px -13px black;
 }
 
-.delivery-search-panel.banner-burger {
+.home-page .delivery-search-panel.banner-burger {
 	background-image: url("/assets/img/banner_burger_761x504.jpg");
 }
 
-.delivery-search-panel.banner-pizza {
+.home-page .delivery-search-panel.banner-pizza {
 	background-image: url("/assets/img/banner_pizza_761x504.jpg");	
 }
 
-.delivery-search-panel .food-type-search {
+.home-page .delivery-search-panel .food-type-search {
 	border-radius: 4px;
 	display: inline-block;
 	background-color: rgba(245, 245, 245, 0.9);
@@ -120,7 +124,7 @@ a:hover, a:focus {
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-.delivery-search-panel .food-type-search .food-type-list {
+.home-page .delivery-search-panel .food-type-search .food-type-list {
 	list-style: outside none none;
 	display: inline-block;
 	padding-left: 0px;
@@ -128,7 +132,7 @@ a:hover, a:focus {
 	width: 100%;
 }
 
-.delivery-search-panel .food-type-search .food-type-list li a {
+.home-page .delivery-search-panel .food-type-search .food-type-list li a {
 	float: left;
 	width: 31%;
 	height: 80px;
@@ -144,19 +148,19 @@ a:hover, a:focus {
 	border-radius: 3px;
 }
 
-.delivery-search-panel .food-type-search .food-type-list li a:hover {
+.home-page .delivery-search-panel .food-type-search .food-type-list li a:hover {
 	cursor: pointer;
 	color: #fff;
 	background-color: #f46c21;
 }
 
-.delivery-search-panel .food-type-search .food-type-list li a .qf-icon {
+.home-page .delivery-search-panel .food-type-search .food-type-list li a .qf-icon {
 	margin-top: 3px;
 	margin-bottom: 4px;
 	font-size: 35px;
 }
 
-.delivery-search-panel .query-search {
+.home-page .delivery-search-panel .query-search {
 	border-radius: 4px;
 	display: inline-block;
 	background-color: rgba(245, 245, 245, 0.9);
@@ -171,31 +175,31 @@ a:hover, a:focus {
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-.delivery-search-panel .query-search .title {
+.home-page .delivery-search-panel .query-search .title {
 	font-size: 22px;
 }
 
-.delivery-search-panel .query-search .autocomplete {
+.home-page .delivery-search-panel .query-search .autocomplete {
 	width: 95%;
 }
 
-.delivery-search-panel .query-search .autocomplete .result .list .item.empty {
+.home-page .delivery-search-panel .query-search .autocomplete .result .list .item.empty {
 	display: none;
 }
 
-.delivery-search-panel .query-search .query-field {
+.home-page .delivery-search-panel .query-search .query-field {
 	width: 100%;
 	padding: 8px 10px;
 	border: 1px solid #ccc;
 	border-radius: 2px;
 }
 
-.delivery-search-panel .query-search .query-field:focus {
+.home-page .delivery-search-panel .query-search .query-field:focus {
 	border-color: #F46C21;
 	box-shadow: 0px 0px 8px rgba(244, 108, 33, 0.6);
 }
 
-.delivery-search-panel .query-search .query-button {
+.home-page .delivery-search-panel .query-search .query-button {
 	width: 95%;
 	margin: 10px 0px 10px;
 	padding: 8px 18px;
@@ -205,13 +209,80 @@ a:hover, a:focus {
 	color: #fff;
 }
 
-.delivery-search-panel .query-search .query-button:hover {
+.home-page .delivery-search-panel .query-search .query-button:hover {
 	background-color: #FBCA0E;
 }
 
-.delivery-search-panel .query-search .query-button .qf-icon {
+.home-page .delivery-search-panel .query-search .query-button .qf-icon {
 	font-size: 16px;
 	top: 2px;
+}
+
+.home-page .order-process-panel {
+	width: 100%;
+	margin: 20px 0px;
+	font-size: 13px;
+	text-align: center;
+}
+
+.home-page .order-process-panel > .title {
+	font-size: 1.7em;
+	margin-bottom: 0px;
+}
+
+.home-page .order-process-panel .divider:after {
+	position: relative;
+	display: block;
+	width: 100px;
+	height: 4px;
+	margin: 4px auto 13px;
+	border-radius: 5em;
+	background-color: #F46C21;
+	content: "";
+	text-align: center;
+}
+
+.home-page .order-process-panel .step {
+	float: left;
+	width: 30%;
+	padding: 1%;
+	cursor: default;
+}
+
+.home-page .order-process-panel .next-step-divider {
+	float: left;
+	width: 4%;
+	margin-top: 33px;
+	color: #555;
+}
+
+.home-page .order-process-panel .next-step-divider .qf-icon {
+	top: 0px;
+	left: -6px;
+	font-size: 2em;
+}
+
+.home-page .order-process-panel .step h6 {
+	margin: 10px 0px 0px;
+	font-size: 1.17em;
+}
+
+.home-page .order-process-panel .step .qf-icon {
+	padding: 15px;
+	border: 3px solid #F46C21;
+	border-radius: 50%;
+	color: #F46C21;
+	webkit-transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out;
+	-ms-transition: all 0.25s ease-in-out;
+	-o-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
+	font-size: 3.5em;
+}
+
+.home-page .order-process-panel .step:hover .qf-icon {
+	background-color: #F46C21;
+	color: #fff;
 }
 
 .delivery-search-page .order-steps {
@@ -232,21 +303,6 @@ a:hover, a:focus {
 	float: left;
 	width: 32%;
 }
-
-/*
-.delivery-search-page .order-steps li p {
-	text-align: center;
-	width: 104px;
-}
-
-.delivery-search-page .order-steps li.order-ready p {
-	width: 85px;
-}
-
-.delivery-search-page .order-steps li.order-destination p {
-	width: 93px;
-}
-*/
 
 .delivery-search-page .order-steps li.active {
 	font-weight: bold;
@@ -1813,7 +1869,6 @@ input.invalid:focus, select.invalid:focus {
 	border-bottom-left-radius: 2px;
 }
 
-
 .form-control {
 	box-shadow: none;
 	border-radius: 2px;
@@ -1939,6 +1994,17 @@ input.invalid:focus, select.invalid:focus {
 }
 
 @media(min-width: 480px) {
+	.home-page .order-process-panel .next-step-divider {
+		margin-top: 20px;
+		color: #BBB;
+	}
+
+	.home-page .order-process-panel .next-step-divider .qf-icon {
+		top: 0px;
+		left: -21px;
+		font-size: 4em;
+	}
+
 	.establishment-page .establishment-products .products .product {
 		width: 31%;
 	}
@@ -2051,34 +2117,34 @@ input.invalid:focus, select.invalid:focus {
 		padding-top: 17%;
 	}
 
-	.delivery-search-panel {
+	.home-page .delivery-search-panel {
 		min-height: 300px;
 	}
 
-	.delivery-search-panel.banner-burger {
+	.home-page .delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_991x300.jpg");
 	}
 
-	.delivery-search-panel.banner-pizza {
+	.home-page .delivery-search-panel.banner-pizza {
 		background-image: url("/assets/img/banner_pizza_991x300.jpg");	
 	}
 
-	.delivery-search-panel .food-type-search {
+	.home-page .delivery-search-panel .food-type-search {
 		float: left;
 		width: 40%;
 		margin-top: 27px;
 		margin-left: 5%;
 	}
 
-	.delivery-search-panel .food-type-search .food-type-list li {
+	.home-page .delivery-search-panel .food-type-search .food-type-list li {
 		font-size: 12px;
 	}
 
-	.delivery-search-panel .food-type-search .food-type-list li a {
+	.home-page .delivery-search-panel .food-type-search .food-type-list li a {
 		width: 31%;
 	}
 
-	.delivery-search-panel .query-search {
+	.home-page .delivery-search-panel .query-search {
 		float: left;
 		width: 40%;
 		min-height: 246px;
@@ -2086,8 +2152,13 @@ input.invalid:focus, select.invalid:focus {
 		margin-left: 7%;
 	}
 
-	.delivery-search-panel .query-search .query-field {
+	.home-page .delivery-search-panel .query-search .query-field {
 		margin-top: 5%;
+	}
+
+	.home-page .order-process-panel {
+		padding: 0px 15%;
+		font-size: 16px;
 	}
 
 	.delivery-search-page .search-form .food-type-list li {
@@ -2430,22 +2501,26 @@ input.invalid:focus, select.invalid:focus {
 }
 
 @media (min-width: 992px) {
-	.delivery-search-panel.banner-burger {
+	.home-page .delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1199x300.jpg");
 	}
 
-	.delivery-search-panel.banner-pizza {
+	.home-page .delivery-search-panel.banner-pizza {
 		background-image: url("/assets/img/banner_pizza_1199x300.jpg");	
 	}
 
-	.delivery-search-panel .food-type-search {
+	.home-page .delivery-search-panel .food-type-search {
 		width: 34%;
 		margin-left: 10%;
 	}
 
-	.delivery-search-panel .query-search {
+	.home-page .delivery-search-panel .query-search {
 		width: 34%;
 		margin-left: 11%;
+	}
+
+	.home-page .order-process-panel {
+		padding: 0px 20%;
 	}
 
 	.delivery-search-page .search-result .establishment-list .establishment .information .title {
@@ -2462,11 +2537,11 @@ input.invalid:focus, select.invalid:focus {
 }
 
 @media (min-width: 1200px) {
-	.delivery-search-panel.banner-burger {
+	.home-page .delivery-search-panel.banner-burger {
 		background-image: url("/assets/img/banner_burger_1920x300.jpg");
 	}
 
-	.delivery-search-panel.banner-pizza {
+	.home-page .delivery-search-panel.banner-pizza {
 		background-image: url("/assets/img/banner_pizza_1920x300.jpg");	
 	}
 
