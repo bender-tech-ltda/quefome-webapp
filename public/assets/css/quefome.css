@@ -633,6 +633,7 @@ a:hover, a:focus {
 	padding: 8px 2%;
 	background-color: #FFE171;
 	margin-bottom: 10px;
+	z-index: 10;
 }
 
 .establishment-page .establishment-product-types-panel .title {
