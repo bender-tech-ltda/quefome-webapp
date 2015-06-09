@@ -296,9 +296,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		var refreshParametersPromise = null;
 		$scope.refreshParameters = function() {
 			refreshParametersPromise = $timeout(function() {
-				EstablishmentService.getParameters($scope.establishment).then(function(parameters) {
-					$scope.establishment.parameters = parameters;
-
+				EstablishmentService.findById($scope.establishment).then(function(establishment) {
+					$scope.establishment = establishment;
 					$scope.refreshParameters();					
 				}, function() {
 					$scope.refreshParameters();

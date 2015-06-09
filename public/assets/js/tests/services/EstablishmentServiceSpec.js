@@ -74,6 +74,37 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		});
 
 		describe("the findByUrl function", function() {
+			it("should find a establishment with the id", function() {
+				var url = "teste";
+				var response = {id: -42, name: "Teste"};
+
+				$httpBackend.expectGET("/api/establishments/-42").respond(200, response);
+
+				var respondedEstablishment = null;
+				EstablishmentService.findById({id: -42}).then(function(establishment) {
+					respondedEstablishment = establishment;
+				});
+
+				$httpBackend.flush();
+
+				expect(respondedEstablishment).toEqual(response);
+			});
+
+			it("should send a 404 if the url is not found", function() {
+				$httpBackend.expectGET("/api/establishments/-20").respond(404, {});
+
+				var notFoundError = false;
+				EstablishmentService.findById(-20).then(null, function(error) {
+					notFoundError = error.isNotFoundError;
+				});
+
+				$httpBackend.flush();
+
+				expect(notFoundError).toBe(true);
+			});
+		});
+
+		describe("the findByUrl function", function() {
 			it("should find a establishment with a url", function() {
 				var url = "teste";
 				var response = {id: -42, name: "Teste"};

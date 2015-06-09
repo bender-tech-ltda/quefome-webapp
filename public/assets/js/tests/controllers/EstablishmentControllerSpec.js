@@ -84,18 +84,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				},
 
-				_getParametersCalled: false,
-				_getParametersEstablishment: null,
-				_getParametersParameters: {},
-				getParameters: function(establishment) {
-					this._getParametersCalled = true;
-					this._getParametersEstablishment = establishment;
+				_findByIdCalled: false,
+				_findByIdId: null,
+				_findByIdEstablishment: {},
+				findById: function(id) {
+					this._findByIdCalled = true;
+					this._findByIdId = id;
 
-					var parameters = this._getParametersParameters;
+					var establishment = this._findByIdEstablishment;
 
 					return {then: function(success, fail) {
-						if (parameters) {
-							success(parameters);
+						if (establishment) {
+							success(establishment);
 						} else {
 							fail();
 						}
@@ -358,24 +358,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("should the use EstablishmentService to get the parameters", function() {
-				MockedEstablishmentService._getParametersCalled = false;
-				MockedEstablishmentService._getParametersParameters = {deliverTax: 10};
+				MockedEstablishmentService._findByIdCalled = false;
+				MockedEstablishmentService._findByIdEstablishment = {parameters: {deliverTax: 10}};
 
 				scope.establishment = {id: -44};
 
 				scope.refreshParameters();
 				Mocked$timeout._lastCallback();
 
-				expect(MockedEstablishmentService._getParametersCalled).toBe(true);
-				expect(MockedEstablishmentService._getParametersEstablishment).toBe(scope.establishment);
-				expect(scope.establishment.parameters).toEqual(MockedEstablishmentService._getParametersParameters);
+				expect(MockedEstablishmentService._findByIdCalled).toBe(true);
+				expect(scope.establishment).toEqual(MockedEstablishmentService._findByIdEstablishment);
 
-				MockedEstablishmentService._getParametersCalled = false;
-				MockedEstablishmentService._getParametersParameters = false;
+				MockedEstablishmentService._findByIdCalled = false;
+				MockedEstablishmentService._findByIdEstablishment = false;
 				scope.refreshParameters();
 				Mocked$timeout._lastCallback();
 
-				expect(MockedEstablishmentService._getParametersCalled).toBe(true);
+				expect(MockedEstablishmentService._findByIdCalled).toBe(true);
 			});
 		});
 
