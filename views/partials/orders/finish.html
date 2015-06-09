@@ -233,7 +233,8 @@
 
 		<div class="action-buttons" ng-hide="processingOrder">
 			<span class="error-message" ng-hide="isFinishValid()">{{getErrorMessage()}}</span>
-			<span class="help-block" ng-show="isFinishValid()">Isso aí! Clica aí e vamos mandar essa fome pro além!</span>
+			<span class="error-message" ng-show="isFinishValid() && finishOrderError">Não é possível realizar seu pedido.<br/>{{finishOrderError}}</span>
+			<span class="help-block" ng-show="isFinishValid() && !finishOrderError">Isso aí! Clica aí e vamos mandar essa fome pro além!</span>
 
 			<button type="button" class="btn btn-primary btn-finish-order" ng-click="finishOrder()" ng-disabled="!isFinishValid()">
 				<span>Finalizar pedido</span>

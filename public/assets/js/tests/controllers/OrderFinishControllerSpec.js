@@ -119,18 +119,20 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				_createCalled: false,
 				_createOrder: null,
 				_createSuccess: true,
+				_createStatus: {},
 				create: function(order) {
 					this._createCalled = true;
 					this._createOrder = order;
 
 					var createSuccess = this._createSuccess;
+					var status = this._createStatus;
 
 					return {
 						then: function(success, fail) {
 							if (createSuccess) {
 								success(order);
 							} else {
-								fail();
+								fail(status);
 							}
 						}
 					};
@@ -240,8 +242,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.paymentCategories).toBeDefined();
 		});
 
-		it("should have an errorProcessingOrder property", function() {
-			expect(scope.errorProcessingOrder).toBeDefined();
+		it("should have an finishOrderError property", function() {
+			expect(scope.finishOrderError).toBeDefined();
 		});
 
 		describe("on startup", function() {
@@ -1084,17 +1086,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(isFinishValidCalled).toBe(true);
 			});
 
-			it("should set the processingOrder to true and the errorProcessingOrder to false", function() {
+			it("should set the processingOrder to true and the finishOrderError to false", function() {
 				MockedOrderService.create = function() {
 					return {then: function() {}};
 				};
 
-				scope.errorProcessingOrder = true;
+				scope.finishOrderError = "asdasdasd";
 				scope.processingOrder = false;
 
 				scope.finishOrder();
 				expect(scope.processingOrder).toBe(true);
-				expect(scope.errorProcessingOrder).toBe(false);
+				expect(scope.finishOrderError).toBe(false);
 			});
 
 			it("should create the order on the service", function() {
@@ -1123,9 +1125,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			it("should show an error if not created", function() {
 				scope.order = {items: [], withdraw: true};
 				MockedOrderService._createSuccess = false;
+				MockedOrderService._createStatus = {isBusinessError: true, message: "blablabla"};
 				scope.finishOrder();
 
-				expect(scope.errorProcessingOrder).toBe(true);
+				expect(scope.finishOrderError).toBe(MockedOrderService._createStatus.message);
 			});
 
 			it("should set the order in the $flashStorage", function() {

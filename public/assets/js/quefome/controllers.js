@@ -1047,7 +1047,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.processingOrder = false;
-		$scope.errorProcessingOrder = false;
+		$scope.finishOrderError = false;
 
 		$scope.paymentCategories = [];
 
@@ -1298,16 +1298,19 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			}
 
 			$scope.processingOrder = true;
-			$scope.errorProcessingOrder = false;
+			$scope.finishOrderError = false;
 
 			OrderService.create($scope.order).then(function(order) {
 				$flashStorage.set("recentlyCreatedOrder", order);
 				$location.path("/user/orders/");
 
 				$scope.processingOrder = false;
-			}, function() {
+			}, function(status) {
 				$scope.processingOrder = false;
-				$scope.errorProcessingOrder = true;
+
+				if (status.isBusinessError) {
+					$scope.finishOrderError = status.message;
+				}
 			});
 		};
 
