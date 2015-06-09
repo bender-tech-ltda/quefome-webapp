@@ -84,24 +84,6 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				},
 
-				_findByIdCalled: false,
-				_findByIdId: null,
-				_findByIdEstablishment: {},
-				findById: function(id) {
-					this._findByIdCalled = true;
-					this._findByIdId = id;
-
-					var establishment = this._findByIdEstablishment;
-
-					return {then: function(success, fail) {
-						if (establishment) {
-							success(establishment);
-						} else {
-							fail();
-						}
-					}};
-				},
-
 				productsCalled: false,
 				lastEstablishment: null,
 				_products: [{id: -42, name: "Pastel", type: {id: -1, name: "Pastel"}}],
@@ -358,23 +340,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("should the use EstablishmentService to get the parameters", function() {
-				MockedEstablishmentService._findByIdCalled = false;
-				MockedEstablishmentService._findByIdEstablishment = {parameters: {deliverTax: 10}};
+				MockedEstablishmentService.findCalled = false;
+				MockedEstablishmentService._findByUrlEstablishment = {parameters: {deliverTax: 10}};
 
-				scope.establishment = {id: -44};
+				scope.establishment = {id: -44, url: "blabla"};
 
 				scope.refreshParameters();
 				Mocked$timeout._lastCallback();
 
-				expect(MockedEstablishmentService._findByIdCalled).toBe(true);
-				expect(scope.establishment).toEqual(MockedEstablishmentService._findByIdEstablishment);
-
-				MockedEstablishmentService._findByIdCalled = false;
-				MockedEstablishmentService._findByIdEstablishment = false;
-				scope.refreshParameters();
-				Mocked$timeout._lastCallback();
-
-				expect(MockedEstablishmentService._findByIdCalled).toBe(true);
+				expect(MockedEstablishmentService.findCalled).toBe(true);
+				expect(MockedEstablishmentService.lastFindUrl).toBe("blabla");
+				expect(scope.establishment).toEqual(MockedEstablishmentService.urlEstablishment);
 			});
 		});
 

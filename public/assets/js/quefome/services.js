@@ -401,14 +401,6 @@ define(["angular"], function(angular) {
 			}, treatPromiseErrors($q));
 		};
 
-		this.findById = function(establishment) {
-			establishment = (establishment && typeof(establishment) === "object") ? establishment.id : establishment;
-
-			return $http.get("/api/establishments/" + establishment).then(function(response) {
-				return response.data;
-			}, treatPromiseErrors($q));
-		};
-
 		this.findByUrl = function(url) {
 			return $http.get("/api/establishments/" + url).then(function(response) {
 				return response.data;
