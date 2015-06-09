@@ -57,6 +57,10 @@
 			<span ng-hide="establishment.parameters.currentSchedule">abrirá mais tarde.</span>
 			<span ng-show="establishment.parameters.currentSchedule">{{(establishment | establishmentSchedule).toLowerCase()}}</span>
 		</p>
+		<a qf-href="/establishments/search">
+			<span class="qf-icon icon-back"></span>
+			<span>Voltar para a pesquisa de estabelecimentos</span>
+		</a>
 	</div>
 
 	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes">

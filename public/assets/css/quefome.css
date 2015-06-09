@@ -698,6 +698,15 @@ a:hover, a:focus {
 	color: #CC0804;
 }
 
+.establishment-page .alert-establishment-closed a {
+	display: block;
+	margin-top: 10px;
+}
+
+.establishment-page .alert-establishment-closed .qf-icon {
+	font-size: 16px;
+}
+
 .establishment-page .establishment-products {
 	margin: 10px 3%;
 }
@@ -2369,6 +2378,10 @@ input.invalid:focus, select.invalid:focus {
 
 	.establishment-page .alert-establishment-closed {
 		margin: 10px 1% 10px 13%;
+	}
+
+	.establishment-page .alert-establishment-closed a {
+		margin-top: 0px;
 	}
 
 	.establishment-page .establishment-products {
