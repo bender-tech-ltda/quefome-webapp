@@ -242,6 +242,23 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				var result = OrderService.getOrderPrice(order);
 				expect(result).toEqual(order.establishment.parameters.deliverTax + order.items[0].product.price);
 			});
+
+			it("should accept a second parameter to add or not the deliverTax", function() {
+				order.establishment = {
+					parameters: {deliverTax: 2.0}
+				};
+
+				order.items = [{product: {price: 4.50}}];
+
+				var result = OrderService.getOrderPrice(order, false);
+				expect(result).toEqual(order.items[0].product.price);
+
+				result = OrderService.getOrderPrice(order, true);
+				expect(result).toEqual(order.items[0].product.price + order.establishment.parameters.deliverTax);
+
+				result = OrderService.getOrderPrice(order);
+				expect(result).toEqual(order.items[0].product.price + order.establishment.parameters.deliverTax);
+			});
 		});
 
 		describe("when calculating the order item price", function() {

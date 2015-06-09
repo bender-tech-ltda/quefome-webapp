@@ -246,7 +246,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "$filter", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, $filter, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.establishmentNotFound = false;
 
@@ -452,6 +452,47 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 		$scope.getOrderItemPrice = function(orderItem) {
 			return OrderService.getOrderItemPrice(orderItem);
+		};
+
+		$scope.isOrderInvalid = function() {
+			if ($scope.establishment && $scope.establishment.parameters && $scope.establishment.parameters.status != "OPEN") {
+				return true;
+			}
+
+			if (!$scope.order || !$scope.order.items || $scope.order.items.length == 0) {
+				return true;
+			}
+
+			if ($scope.establishment && $scope.establishment.parameters && $scope.establishment.parameters.minimumOrderValue) {
+				var totalPrice = OrderService.getOrderPrice($scope.order, false);
+
+				if (totalPrice < $scope.establishment.parameters.minimumOrderValue) {
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		$scope.getInvalidOrderMessage = function() {
+			if ($scope.establishment && $scope.establishment.parameters && $scope.establishment.parameters.status != "OPEN") {
+				return "O estabelecimento está fechado no momento.";
+			}
+
+			if ($scope.establishment && $scope.establishment.parameters && $scope.establishment.parameters.minimumOrderValue) {
+				var minimumValue = $scope.establishment.parameters.minimumOrderValue;
+				var totalPrice = OrderService.getOrderPrice($scope.order, false);
+
+				if (totalPrice < minimumValue) {
+					return "Esse estabelecimento só aceita pedidos acima de R$ " + $filter("money")(minimumValue) + ", sem o custo da tele-entrega.";
+				}
+			}
+
+			if (!$scope.order || !$scope.order.items || $scope.order.items.length == 0) {
+				return "Você precisa adicionar pelo menos um produto para fazer seu pedido.";
+			}
+
+			return "";
 		};
 
 		$scope.finishOrder = function() {

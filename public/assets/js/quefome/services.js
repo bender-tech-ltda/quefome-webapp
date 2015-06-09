@@ -539,7 +539,7 @@ define(["angular"], function(angular) {
 			$localStorage.remove("OrderService_store_" + establishment);
 		};
 
-		this.getOrderPrice = function(order) {
+		this.getOrderPrice = function(order, withDeliverTax) {
 			if (!order || !order.items) {
 				return false;
 			}
@@ -551,7 +551,11 @@ define(["angular"], function(angular) {
 				total += this.getOrderItemPrice(item);
 			}
 
-			if (!order.withdraw && order.establishment && order.establishment.parameters) {
+			if (typeof(withDeliverTax) === "undefined") {
+				withDeliverTax = true;
+			}
+
+			if (withDeliverTax && !order.withdraw && order.establishment && order.establishment.parameters) {
 				total += (order.establishment.parameters.deliverTax ? order.establishment.parameters.deliverTax : 0.0);
 			}
 

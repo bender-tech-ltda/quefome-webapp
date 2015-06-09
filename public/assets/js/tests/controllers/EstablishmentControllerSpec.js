@@ -134,9 +134,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				_getOrderPriceCalled: false,
 				_getOrderPriceOrder: null,
-				getOrderPrice: function(order) {
+				_getOrderPriceWithDeliverTax: null,
+				_getOrderPricePrice: 10.0,
+				getOrderPrice: function(order, withDeliverTax) {
 					this._getOrderPriceCalled = true;
 					this._getOrderPriceOrder = order;
+					this._getOrderPriceWithDeliverTax = withDeliverTax;
+
+					return this._getOrderPricePrice;
 				},
 
 				_getOrderItemPriceCalled: false,
@@ -637,6 +642,108 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.removeOrderItem(orderItem);
 				expect(MockedOrderService._storedOrder).toEqual(scope.order);
+			});
+		});
+
+		describe("when checking if order is invalid", function() {
+			beforeEach(function() {
+				scope.establishment = {
+					parameters: {
+						status: "OPEN",
+						minimumOrderValue: 10.0,
+						deliverTax: 5.0
+					}
+				};
+
+				scope.order = {
+					items: [{}]
+				};
+			});
+
+			it("should return true if the establishment is closed", function() {
+				scope.establishment.parameters.status = "CLOSED";
+				var result = scope.isOrderInvalid();
+				expect(result).toBe(true);
+
+				scope.establishment.parameters.status = "OPEN";
+				result = scope.isOrderInvalid();
+				expect(result).toBe(false);
+			});
+
+			it("should return true if the current order price (withow the delivery price) is lower then the establishment minimum value", function() {
+				scope.establishment.parameters.minimumOrderValue = 10;
+
+				MockedOrderService._getOrderPricePrice = 5.0
+				var result = scope.isOrderInvalid();
+				expect(result).toBe(true);
+
+				MockedOrderService._getOrderPricePrice = 10.0
+				result = scope.isOrderInvalid();
+				expect(result).toBe(false);
+
+				expect(MockedOrderService._getOrderPriceWithDeliverTax).toBe(false);
+			});
+
+			it("should return true if the current order has no items", function() {
+				scope.establishment.parameters.minimumOrderValue = 0;
+				scope.order.items = [];
+
+				var result = scope.isOrderInvalid();
+				expect(result).toBe(true);
+
+				scope.order.items = [{}];
+				result = scope.isOrderInvalid();
+				expect(result).toBe(false);
+			});
+		});
+
+		describe("when getting the invalid order message", function() {
+			beforeEach(function() {
+				scope.establishment = {
+					parameters: {
+						status: "OPEN",
+						minimumOrderValue: 10.0,
+						deliverTax: 5.0
+					}
+				};
+
+				scope.order = {
+					items: [{}]
+				};
+			});
+
+			it("should return a message if the establishment is closed", function() {
+				scope.establishment.parameters.status = "CLOSED";
+				var result = scope.getInvalidOrderMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.establishment.parameters.status = "OPEN";
+				result = scope.getInvalidOrderMessage();
+				expect(result).toEqual("");
+			});
+
+			it("should return a message if the current order price (withow the delivery price) is lower then the establishment minimum value", function() {
+				scope.establishment.parameters.minimumOrderValue = 10;
+
+				MockedOrderService._getOrderPricePrice = 5.0
+				var result = scope.getInvalidOrderMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				MockedOrderService._getOrderPricePrice = 10.0
+				result = scope.getInvalidOrderMessage();
+				expect(result).toEqual("");
+			});
+
+			it("should return a message if the current order has no items", function() {
+				scope.establishment.parameters.minimumOrderValue = 0;
+				scope.order.items = [];
+
+				var result = scope.getInvalidOrderMessage();
+				expect(result.length).toBeGreaterThan(0);
+
+				scope.order.items = [{}];
+				result = scope.getInvalidOrderMessage();
+				expect(result).toEqual("");
 			});
 		});
 

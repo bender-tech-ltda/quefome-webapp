@@ -858,15 +858,24 @@ a:hover, a:focus {
 	text-align: right;
 }
 
-.establishment-page .order-panel .delivery-type {
+.establishment-page .order-panel .header .delivery-type {
 	width: 100%;
 	text-align: center;
 }
 
-.establishment-page .order-panel .delivery-type .radio {
+.establishment-page .order-panel .header .delivery-type .radio {
 	float: left;
 	width: 50%;
 	margin-top: 10px;
+}
+
+.establishment-page .order-panel.opened .header .alert-invalid-order {
+	margin: 10px 0px 0px;
+	padding: 5px;
+	border-radius: 2px;
+	background-color: rgb(255, 172, 163);
+	color: #CC0804;
+	text-align: center;
 }
 
 .establishment-page .order-panel.opened .header .btn-finish-order {
@@ -888,6 +897,11 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .order-items .panel-body {
 	padding: 0px;
+}
+
+.establishment-page .order-panel .order-items .no-product-message {
+	margin-top: 15px;
+	text-align: center;	
 }
 
 .establishment-page .order-panel .order-items .title {

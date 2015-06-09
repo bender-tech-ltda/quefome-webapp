@@ -123,7 +123,11 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="!order.items || order.items.length == 0" ng-click="finishOrder()">
+				<div class="alert alert-invalid-order" ng-show="orderDetailPanelOpen && isOrderInvalid()">
+					<span>{{getInvalidOrderMessage()}}</span>
+				</div>
+
+				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="isOrderInvalid()" ng-click="finishOrder()">
 					<span>Finalizar Pedido</span>
 					<span class="qf-icon icon-forward"></span>
 				</button>
@@ -135,6 +139,10 @@
 				</div>
 
 				<div class="panel-body">
+					<div class="no-product-message" ng-hide="order.items && order.items.length > 0">
+						<p>Você não adicionou nenhum produto.</p>
+					</div>
+
 					<ul class="items">
 						<li class="order-item" ng-repeat="item in order.items track by $index">
 							<div class="product-name" ng-click="editOrderItem(item)">{{item.product.name}}</div>
