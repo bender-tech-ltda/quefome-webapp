@@ -53,9 +53,9 @@
 	<div class="alert alert-establishment-closed" ng-show="establishment.parameters.status != 'OPEN'">
 		<p>
 			<span>Esse estabelecimento está fechado no momento.</span>
-			<span>Você pode montar seu pedido, mas só poderá finalizar ele</span>
-			<span ng-hide="establishment.parameters.currentSchedule">mais tarde.</span>
-			<span ng-show="establishment.parameters.currentSchedule">{{establishment | establishmentSchedule}}</span>
+			<span>Mas ele</span>
+			<span ng-hide="establishment.parameters.currentSchedule">abrirá mais tarde.</span>
+			<span ng-show="establishment.parameters.currentSchedule">{{(establishment | establishmentSchedule).toLowerCase()}}</span>
 		</p>
 	</div>
 
@@ -66,7 +66,7 @@
 		</h5>
 
 		<ul class="products">
-			<li class="product" ng-repeat="product in productType.products">
+			<li class="product" ng-repeat="product in productType.products" title="{{establishment.parameters.status != 'OPEN' ? 'Você não pode montar seu pedido, esse estabelecimento esta fechado no momento.' : ''}}">
 				<img class="image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" />
 
 				<div class="title">
@@ -75,7 +75,7 @@
 				</div>
 
 				<span class="price">R$ {{product.price | money}}</span>
-				<button type="button" class="btn btn-primary btn-add-product" ng-click="customizeProduct(product)">
+				<button type="button" class="btn btn-primary btn-add-product" ng-disabled="establishment.parameters.status != 'OPEN'" ng-click="customizeProduct(product)">
 					<span class="qf-icon icon-plus"></span>
 					<span>Adicionar</span>
 				</button>
@@ -124,7 +124,8 @@
 				</div>
 
 				<div class="alert alert-invalid-order" ng-show="orderDetailPanelOpen && isOrderInvalid()">
-					<span>{{getInvalidOrderMessage()}}</span>
+					<p>Você não pode fazer seu pedido.</p>
+					<p>{{getInvalidOrderMessage()}}</p>
 				</div>
 
 				<button type="button" class="btn btn-primary btn-finish-order" ng-show="orderDetailPanelOpen" ng-disabled="isOrderInvalid()" ng-click="finishOrder()">

@@ -872,6 +872,7 @@ a:hover, a:focus {
 .establishment-page .order-panel.opened .header .alert-invalid-order {
 	margin: 10px 0px 0px;
 	padding: 5px;
+	border: 1px solid #CC0804;
 	border-radius: 2px;
 	background-color: rgb(255, 172, 163);
 	color: #CC0804;

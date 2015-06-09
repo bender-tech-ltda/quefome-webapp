@@ -484,7 +484,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				var totalPrice = OrderService.getOrderPrice($scope.order, false);
 
 				if (totalPrice < minimumValue) {
-					return "Esse estabelecimento só aceita pedidos acima de R$ " + $filter("money")(minimumValue) + ", sem o custo da tele-entrega.";
+					return "Esse estabelecimento só aceita pedidos acima de R$ " + $filter("money")(minimumValue) + " (sem o custo da tele-entrega).";
 				}
 			}
 
