@@ -246,7 +246,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.searchEstablishments();
 	}]);
 
-	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "$filter", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, $filter, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
+	module.controller("EstablishmentController", ["$scope", "$routeParams", "$window", "$location", "$filter", "$timeout", "Dialog", "AuthService", "EstablishmentService", "AddressService", "OrderService", function($scope, $routeParams, $window, $location, $filter, $timeout, Dialog, AuthService, EstablishmentService, AddressService, OrderService) {
 		$scope.establishment = false;
 		$scope.establishmentNotFound = false;
 
@@ -289,6 +289,21 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 					$scope.isUserAddressAttended = (isAttending ? true : false);
 				});
 			}
+
+			$scope.refreshParameters();
+		};
+
+		var refreshParametersPromise = null;
+		$scope.refreshParameters = function() {
+			refreshParametersPromise = $timeout(function() {
+				EstablishmentService.getParameters($scope.establishment).then(function(parameters) {
+					$scope.establishment.parameters = parameters;
+
+					$scope.refreshParameters();					
+				}, function() {
+					$scope.refreshParameters();
+				});
+			}, 5000);
 		};
 
 		$scope.toggleProductType = function(productType) {
@@ -524,6 +539,12 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			if ($scope.orderDetailPanelOpen) {
 				event.preventDefault();
 				$scope.toggleOrderDetailPanel();
+			}
+		});
+
+		$scope.$on("$destroy", function() {
+			if (refreshParametersPromise) {
+				$timeout.cancel(refreshParametersPromise);
 			}
 		});
 

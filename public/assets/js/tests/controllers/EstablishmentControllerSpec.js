@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("EstablishmentController", function() {
 		var scope, controller;
-		var Mocked$routeParams, Mocked$window, Mocked$location;
+		var Mocked$routeParams, Mocked$window, Mocked$location, Mocked$timeout;
 		var MockedDialog;
 		var MockedAuthService, MockedEstablishmentService, MockedAddressService, MockedOrderService;
 
@@ -41,6 +41,16 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				}
 			};
 
+			Mocked$timeout = function(callback, time) {
+				Mocked$timeout._called = true;
+				Mocked$timeout._lastCallback = callback;
+				Mocked$timeout._lastTime = time;
+			};
+
+			Mocked$timeout._called = false;
+			Mocked$timeout._lastCallback = null;
+			Mocked$timeout._lastTime = null;
+
 			MockedDialog = {
 				_called: false,
 				_params: null,
@@ -72,6 +82,24 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 							callback(establishment);
 						}
 					};
+				},
+
+				_getParametersCalled: false,
+				_getParametersEstablishment: null,
+				_getParametersParameters: {},
+				getParameters: function(establishment) {
+					this._getParametersCalled = true;
+					this._getParametersEstablishment = establishment;
+
+					var parameters = this._getParametersParameters;
+
+					return {then: function(success, fail) {
+						if (parameters) {
+							success(parameters);
+						} else {
+							fail();
+						}
+					}};
 				},
 
 				productsCalled: false,
@@ -158,6 +186,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				$routeParams: Mocked$routeParams,
 				$window: Mocked$window,
 				$location: Mocked$location,
+				$timeout: Mocked$timeout,
 				Dialog: MockedDialog,
 				AuthService: MockedAuthService,
 				EstablishmentService: MockedEstablishmentService,
@@ -306,6 +335,47 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedAddressService._currentAddress = {skipped: true};
 				scope.refreshOrder(establishment);
 				expect(MockedEstablishmentService._isAttendingAddressCalled).toBe(false);
+			});
+
+			it("should call the refresh parameters function", function() {
+				var called = false;
+
+				scope.refreshParameters = function() {
+					called = true;
+				};
+
+				scope.refreshOrder({id: -2})
+				expect(called).toBe(true);
+			});
+		});
+
+		describe("when refreshing the parameters", function() {
+			it("should call the $timeout service", function() {
+				Mocked$timeout._called = false;
+				scope.refreshParameters();
+
+				expect(Mocked$timeout._called).toBe(true);
+			});
+
+			it("should the use EstablishmentService to get the parameters", function() {
+				MockedEstablishmentService._getParametersCalled = false;
+				MockedEstablishmentService._getParametersParameters = {deliverTax: 10};
+
+				scope.establishment = {id: -44};
+
+				scope.refreshParameters();
+				Mocked$timeout._lastCallback();
+
+				expect(MockedEstablishmentService._getParametersCalled).toBe(true);
+				expect(MockedEstablishmentService._getParametersEstablishment).toBe(scope.establishment);
+				expect(scope.establishment.parameters).toEqual(MockedEstablishmentService._getParametersParameters);
+
+				MockedEstablishmentService._getParametersCalled = false;
+				MockedEstablishmentService._getParametersParameters = false;
+				scope.refreshParameters();
+				Mocked$timeout._lastCallback();
+
+				expect(MockedEstablishmentService._getParametersCalled).toBe(true);
 			});
 		});
 
