@@ -48,7 +48,7 @@
 				<ul class="establishment-list" ng-show="establishments && establishments.length > 0">
 					<li class="establishment" ng-repeat="establishment in establishments | orderBy: ['-totalOrders', 'status']">
 						<a qf-href="/establishments/{{establishment.url}}" ng-click="checkUserAddress($event, establishment)">
-							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" />
+							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
 
 							<div class="information">
 								<div class="title">
