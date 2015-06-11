@@ -753,10 +753,6 @@ a:hover, a:focus {
 	cursor: default;
 }
 
-.establishment-page .establishment-products .products .product:hover .no-image-icon {
-	
-}
-
 .establishment-page .establishment-products .products .product .image {
 	margin: 5px;
 	height: 130px;
