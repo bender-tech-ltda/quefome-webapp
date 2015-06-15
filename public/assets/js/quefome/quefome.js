@@ -8,7 +8,7 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 			for (var i in routes) {
 				var route = routes[i];
 
-				if (route.path) {
+				if (route && route.path) {
 					$routeProvider.when(route.path, route);
 				}
 			}
