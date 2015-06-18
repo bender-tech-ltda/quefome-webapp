@@ -2023,6 +2023,7 @@ input.invalid:focus, select.invalid:focus {
 	border-top: none;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
+	z-index: 100;
 }
 
 .autocomplete .result .list .item {
