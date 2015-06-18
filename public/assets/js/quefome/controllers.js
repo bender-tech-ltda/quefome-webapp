@@ -302,7 +302,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				}, function() {
 					$scope.refreshParameters();
 				});
-			}, 5000);
+			}, 1000 * 60 * 5);
 		};
 
 		$scope.toggleProductType = function(productType) {
