@@ -85,8 +85,9 @@ body {
 
 .navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
 	background-color: rgba(255, 255, 255, 0.2);
-	padding: 3px;
+	padding: 4px;
 	width: 70px;
+	height: 70px;
 }
 
 .navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo:hover {
@@ -734,6 +735,7 @@ label .required {
 
 	.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
 		width: 90px;
+		height: 90px;
 	}
 
 	.navbar-quefome-admin .establishment-info .establishment-menu {
