@@ -24,9 +24,12 @@
 
 			<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="querySearchForm.$submit()"/>
 
-			<button type="submit" class="query-button">
-				<span>Pesquisar</span>
-				<span class="qf-icon icon-search"></span>
+			<button type="submit" class="btn btn-primary query-button" ng-disabled="searchingEstablishments">
+				<span ng-hide="searchingEstablishments">Pesquisar</span>
+				<span class="qf-icon icon-search" ng-hide="searchingEstablishments"></span>
+
+				<span ng-show="searchingEstablishments">Pesquisando...</span>
+				<span class="qf-icon icon-loading spin" ng-show="searchingEstablishments"></span>
 			</button>
 		</form>
 

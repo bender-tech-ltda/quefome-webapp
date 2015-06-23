@@ -95,6 +95,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.loadingProductTypes).toBeDefined();
 		});
 
+		it("should have a searchingEstablishments property", function() {
+			expect(scope.searchingEstablishments).toBeDefined();
+		});
+
 		describe("when getting establishments names", function() {
 			it("should search for a string", function() {
 				scope.searchEstablishmentsNames("pudim", function() {});
@@ -113,6 +117,21 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("when searching for establishments", function() {
+			beforeEach(function() {
+				scope.$digest = function(callback) {
+					callback();
+				};
+			});
+
+			it("should the the searchingEstablishments to true", function() {
+				scope.searchingEstablishments = false;
+				scope.$digest = function() {};
+
+				scope.searchEstablishments();
+				expect(scope.searchingEstablishments).toBe(true);
+			});
+
+
 			it("should send the user to the search establishments page", function() {
 				scope.searchEstablishments();
 				expect(Mocked$location.path()).toEqual("/establishments/search");

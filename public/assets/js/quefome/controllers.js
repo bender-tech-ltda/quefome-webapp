@@ -166,6 +166,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		$scope.query = "";
 
 		$scope.loadingProductTypes = false;
+		$scope.searchingEstablishments = false;
 
 		$scope.searchEstablishmentsNames = function(query, callback) {
 			EstablishmentService.names(query).then(function(names) {
@@ -176,7 +177,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.searchEstablishments = function() {
-			$location.path("/establishments/search").search({q: $scope.query});
+			$scope.searchingEstablishments = true;
+
+			$scope.$digest(function() {
+				$location.path("/establishments/search").search({q: $scope.query});
+			});
 		};
 
 		$scope.loadingProductTypes = true;
