@@ -3,7 +3,12 @@
 		<div class="food-type-search">
 			<h3 class="title">Você tem fome de quê?</h3>
 
-			<ul class="food-type-list">
+			<div class="loading" ng-show="loadingProductTypes">
+				<span class="qf-icon icon-loading spin"></span>
+				<p class="message">Segura aí que estamos buscando nossos melhores rangos...</p>
+			</div>
+
+			<ul class="food-type-list" ng-hide="loadingProductTypes">
 				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}">
 					<a qf-href="/establishments/search?productType={{productType.name}}">
 						<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>

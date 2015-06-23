@@ -91,6 +91,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.query).toBeDefined();
 		});
 
+		it("should have a loadingProductTypes property", function() {
+			expect(scope.loadingProductTypes).toBeDefined();
+		});
+
 		describe("when getting establishments names", function() {
 			it("should search for a string", function() {
 				scope.searchEstablishmentsNames("pudim", function() {});
