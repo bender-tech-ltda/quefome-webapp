@@ -9,7 +9,11 @@
 		<div class="food-type-choice">
 			<h5 class="title">Escolha o tipo de comida</h5>
 
-			<ul class="food-type-list">
+			<div class="loading-product-types" ng-show="loadingProductTypes">
+				<span class="qf-icon icon-loading spin"></span>
+			</div>
+
+			<ul class="food-type-list" ng-hide="loadingProductTypes">
 				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}" ng-class="{active: isProductTypeSelected(productType)}" ng-click="selectProductType(productType)" title="{{productType.name}}">
 					<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 				</li>

@@ -206,6 +206,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.searchingEstablishments = false;
+		$scope.loadingProductTypes = false;
 
 		$scope.selectProductType = function(productType) {
 			$scope.searchFilter.productType = productType ? productType.name : false;
@@ -255,8 +256,11 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			});
 		};
 
+		$scope.loadingProductTypes = true;
 		ProductTypeService.list().then(function(productTypes) {
 			$scope.productTypes = productTypes;
+			$scope.loadingProductTypes = false;
+			
 			$scope.$digest();
 		});
 

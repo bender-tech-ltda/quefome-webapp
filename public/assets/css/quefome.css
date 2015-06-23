@@ -331,6 +331,16 @@ a:hover, a:focus {
 	font-size: 16px;
 }
 
+.delivery-search-page .search-form .loading-product-types {
+	text-align: center;
+	color: rgb(122, 122, 122);
+	font-size: 16px;
+}
+
+.delivery-search-page .search-form .loading-product-types .qf-icon {
+	font-size: 1.7em;
+}
+
 .delivery-search-page .search-form .food-type-list {
 	list-style: outside none none;
 	display: inline-block;

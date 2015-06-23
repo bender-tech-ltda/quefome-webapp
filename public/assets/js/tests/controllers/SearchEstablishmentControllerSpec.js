@@ -124,6 +124,14 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			expect(scope.searchFilter).toBeDefined();
 		});
 
+		it("should have a loadingProductTypes property", function() {
+			expect(scope.loadingProductTypes).toBeDefined();
+		});
+
+		it("should have a searchingEstablishments property", function() {
+			expect(scope.searchingEstablishments).toBeDefined();
+		});
+
 		it("should get the list of productTypes from service on startup", function() {
 			expect(MockedProductTypeService.called).toBe(true);
 			expect(scope.productTypes).toEqual(MockedProductTypeService._list);
