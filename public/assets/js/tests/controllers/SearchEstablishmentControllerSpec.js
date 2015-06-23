@@ -201,6 +201,16 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		});
 
 		describe("when searching for establishments", function() {
+			it("should set the searchingEstablishments to true", function() {
+				scope.searchingEstablishments = false;
+				MockedEstablishmentService.list = function() {
+					return {then: function() {}};
+				};
+
+				scope.searchEstablishments();
+				expect(scope.searchingEstablishments).toBe(true);
+			});
+
 			it("should get list of establishments", function() {
 				expect(function() {
 					scope.searchEstablishments();
@@ -237,6 +247,13 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				scope.searchEstablishments();
 
 				expect(MockedEstablishmentService.query.query).toEqual(query);
+			});
+
+			it("should set the searchingEstablishments to false after retriving the list", function() {
+				scope.searchingEstablishments = true;
+				scope.searchEstablishments();
+
+				expect(scope.searchingEstablishments).toBe(false);
 			});
 		});
 	});

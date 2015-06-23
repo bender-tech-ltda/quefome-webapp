@@ -40,12 +40,13 @@
 	<div class="search-result">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<span ng-show="establishments.length == 0">Nenhum estabelecimento encontrado</span>
-				<span ng-show="establishments.length == 1">1 estabelecimento encontrado</span>
-				<span ng-show="establishments.length > 1">{{establishments.length}} estabelecimentos encontrados</span>
+				<span ng-show="!searchingEstablishments && establishments.length == 0">Nenhum estabelecimento encontrado</span>
+				<span ng-show="!searchingEstablishments && establishments.length == 1">1 estabelecimento encontrado</span>
+				<span ng-show="!searchingEstablishments && establishments.length > 1">{{establishments.length}} estabelecimentos encontrados</span>
+				<span ng-show="searchingEstablishments">Procurando estabelecimentos...</span>
 			</div>
 			<div class="panel-body">
-				<ul class="establishment-list" ng-show="establishments && establishments.length > 0">
+				<ul class="establishment-list" ng-show="!searchingEstablishments && establishments && establishments.length > 0">
 					<li class="establishment" ng-repeat="establishment in establishments | orderBy: ['-totalOrders', 'status']">
 						<a qf-href="/establishments/{{establishment.url}}" ng-click="checkUserAddress($event, establishment)">
 							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
@@ -74,8 +75,13 @@
 					</li>
 				</ul>
 
-				<div class="no-establishment-found" ng-hide="establishments && establishments.length > 0">
+				<div class="no-establishment-found" ng-hide="searchingEstablishments || (establishments && establishments.length > 0)">
 					<h5>Nenhum estabelecimento encontrado</h5>
+				</div>
+
+				<div class="searching-establishments" ng-show="searchingEstablishments">
+					<p>Procurando estabelecimentos...</p>
+					<span class="qf-icon icon-loading spin"></span>
 				</div>
 			</div>
 		</div>

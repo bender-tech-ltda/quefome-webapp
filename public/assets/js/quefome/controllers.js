@@ -205,6 +205,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 			productType: searchObject["product-type"] || searchObject.productType || ""
 		};
 
+		$scope.searchingEstablishments = false;
+
 		$scope.selectProductType = function(productType) {
 			$scope.searchFilter.productType = productType ? productType.name : false;
 			$scope.searchFilter.query = "";
@@ -227,6 +229,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 		};
 
 		$scope.searchEstablishments = function() {
+			$scope.searchingEstablishments = true;
+
 			if ($scope.searchFilter.query && $scope.searchFilter.productType) {
 				$scope.searchFilter.productType = "";
 				$scope.$digest();
@@ -245,6 +249,8 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 
 			EstablishmentService.list($scope.searchFilter).then(function(establishments) {
 				$scope.establishments = establishments;
+				$scope.searchingEstablishments = false;
+
 				$scope.$digest();
 			});
 		};

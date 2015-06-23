@@ -455,6 +455,21 @@ a:hover, a:focus {
 	padding: 0px;
 }
 
+.delivery-search-page .search-result .searching-establishments {
+	text-align: center;
+	margin: 5% 0%;
+	color: #7A7A7A;
+	font-size: 16px;
+}
+
+.delivery-search-page .search-result .searching-establishments > * {
+	margin: 0px;
+}
+
+.delivery-search-page .search-result .searching-establishments .qf-icon {
+	font-size: 1.6em;
+}
+
 .delivery-search-page .search-result .establishment-list {
 	width: 100%;
 	list-style: outside none none;
