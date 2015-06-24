@@ -196,6 +196,20 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		});
 	}]);
 
+	module.directive("qfLoadingAnimation", [function() {
+		var template = "<div class='qf-loading-animation'>";
+		template += "<div class='pacman-top'></div>";
+		template += "<div class='pacman-bottom'></div>";
+		template += "<div class='ball'></div>";
+		template += "<div class='ball'></div>";
+		template += "<div class='ball'></div>";
+		template += "</div>";
+
+		return {
+			template: template
+		};
+	}]);
+
 	module.directive("qfHref", ["$location", function($location) {
 		return {
 			restrict: "A",

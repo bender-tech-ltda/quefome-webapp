@@ -31,6 +31,17 @@
 				margin-bottom: 70px;
 			}
 
+			body > .page-loading-panel .qf-loading-animation > .pacman-top,
+			body > .page-loading-panel .qf-loading-animation > .pacman-bottom {
+				border-top: 25px solid #fff;
+				border-left: 25px solid #fff;
+				border-bottom: 25px solid #fff;
+			}
+
+			body > .page-loading-panel .qf-loading-animation > .ball {
+				background-color: #fff;
+			}
+
 			body > .page-loading-panel .loading-message {
 				font-size: 1.5em;
 			}
@@ -134,59 +145,56 @@
 				margin: auto 50%;
 			}
   
-			.qf-loading-animation > div:nth-child(2) {
+			.qf-loading-animation > .ball:nth-child(3) {
 				-webkit-animation: pac-ball 1s -0.99s infinite linear;
 				animation: pac-ball 1s -0.99s infinite linear;
 			}
 
-			.qf-loading-animation > div:nth-child(3) {
+			.qf-loading-animation > .ball:nth-child(4) {
 				-webkit-animation: pac-ball 1s -0.66s infinite linear;
 				animation: pac-ball 1s -0.66s infinite linear;
 			}
 
-			.qf-loading-animation > div:nth-child(4) {
+			.qf-loading-animation > .ball:nth-child(5) {
 				-webkit-animation: pac-ball 1s -0.33s infinite linear;
 				animation: pac-ball 1s -0.33s infinite linear;
 			}
 
-			.qf-loading-animation > div:nth-child(5) {
+			.qf-loading-animation > .ball:nth-child(6) {
 				-webkit-animation: pac-ball 1s 0s infinite linear;
 				animation: pac-ball 1s 0s infinite linear;
 			}
 
-			.qf-loading-animation > div:first-of-type {
+			.qf-loading-animation > .pacman-top {
 				position: relative;
 				width: 0px;
 				height: 0px;
 				left: -30px;
 				border-right: 25px solid transparent;
-				border-top: 25px solid #fff;
-				border-left: 25px solid #fff;
-				border-bottom: 25px solid #fff;
+				border-top: 25px solid #EF6815;
+				border-left: 25px solid #EF6815;
+				border-bottom: 25px solid #EF6815;
 				border-radius: 25px;
 				-webkit-animation: rotate-pacman-up 0.5s 0s infinite;
 				animation: rotate-pacman-up 0.5s 0s infinite;
 			}
 
-			.qf-loading-animation > div:nth-child(2) {
+			.qf-loading-animation > .pacman-bottom {
 				position: relative;
 				width: 0px;
 				height: 0px;
 				left: -30px;
 				margin-top: -50px;
 				border-right: 25px solid transparent;
-				border-top: 25px solid #fff;
-				border-left: 25px solid #fff;
-				border-bottom: 25px solid #fff;
+				border-top: 25px solid #EF6815;
+				border-left: 25px solid #EF6815;
+				border-bottom: 25px solid #EF6815;
 				border-radius: 25px;
 				-webkit-animation: rotate-pacman-down 0.5s 0s infinite;
 				animation: rotate-pacman-down 0.5s 0s infinite;
 			}
 
-			.qf-loading-animation > div:nth-child(3),
-			.qf-loading-animation > div:nth-child(4),
-			.qf-loading-animation > div:nth-child(5),
-			.qf-loading-animation > div:nth-child(6) {
+			.qf-loading-animation > .ball {
 				position: absolute;
 				width: 10px;
 				height: 10px;
@@ -194,7 +202,7 @@
 				left: 70px;
 				margin: 2px;
 				border-radius: 100%;
-				background-color: #fff;
+				background-color: #EF6815;
 				-webkit-transform: translate(0, -6.25px);
 				-ms-transform: translate(0, -6.25px);
 				transform: translate(0, -6.25px);
@@ -213,7 +221,9 @@
 			<div class="quefome-logo"></div>
 
 			<div class="qf-loading-animation">
-				<div></div><div></div><div></div><div></div><div></div>
+				<div class="pacman-top"></div>
+				<div class="pacman-bottom"></div>
+				<div class="ball"></div><div class="ball"></div><div class="ball"></div>
 			</div>
 
 			<p class="loading-message">Carregando...</p>
@@ -245,7 +255,7 @@
 			</nav>
 
 			<div class="loading-route-panel" ng-show="$app.route.loading">
-				<span class="qf-icon icon-loading spin"></span>
+				<div qf-loading-animation></div>
 				<p ng-show="$app.route.loadingMessage">{{$app.route.loadingMessage}}</p>
 			</div>
 
