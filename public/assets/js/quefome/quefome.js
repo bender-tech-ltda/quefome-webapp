@@ -23,7 +23,39 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 
 	}]);
 
-	quefome.run(["$rootScope", function($rootScope) {
+	quefome.run(["$rootScope", "$route", "$location", "$timeout", function($rootScope, $route, $location, $timeout) {
+		if (!$rootScope.$app) {
+			$rootScope.$app = {
+				route: {loading: false, loadingMessage: false}
+			};
+		}
+
+		$rootScope.$on('$routeChangeStart', function () {
+			var nextRoute = $route.routes[$location.path()];
+
+			if (nextRoute && nextRoute.loadingMessage) {
+				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;
+			} else {
+				$rootScope.$app.route.loadingMessage = false;
+			}
+
+			$rootScope.$app.route.loading = true;
+			console.log('$routeChangeStart');
+		});
+
+		$rootScope.$on('$routeChangeSuccess', function () {
+			console.log('$routeChangeSuccess');
+
+			$timeout(function(){
+				$rootScope.$app.route.loading = false;
+			}, 200);
+		});
+
+		$rootScope.$on('$routeChangeError', function () {
+			alert('wtff');
+			$rootScope.$app.route.loading = false;
+		});
+
 		if ($rootScope.checkForLoggedUser) {
 			$rootScope.checkForLoggedUser();
 		}

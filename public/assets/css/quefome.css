@@ -82,6 +82,16 @@ a:hover, a:focus {
 	padding: 10px 16px;
 }
 
+.loading-route-panel {
+	text-align: center;
+	margin: 8% 3%;
+	font-size: 21px;
+}
+
+.loading-route-panel .qf-icon {
+	font-size: 1.6em;
+}
+
 .content {
 	display: table-row;
 	height: 100%;
