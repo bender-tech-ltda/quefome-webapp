@@ -1,10 +1,6 @@
 /** --- Override general element style --- **/
 html, body {
 	height: 100%;
-}
-
-body {
-	display: table;
 	width: 100%;
 }
 
@@ -28,6 +24,27 @@ a:hover, a:focus {
 
 
 /** --- Application specific style --- **/
+.page-body {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+.page-body > .loading-route-panel {
+	text-align: center;
+	margin: 8% 3%;
+	font-size: 21px;
+}
+
+.page-body > .loading-route-panel .qf-icon {
+	font-size: 1.6em;
+}
+
+.page-body > .content {
+	display: table-row;
+	height: 100%;
+}
+
 .navbar-quefome {
 	background-color: #FDE09C;
 	border-color: #FDE09C;
@@ -39,6 +56,7 @@ a:hover, a:focus {
 	margin-bottom: 7px;
 	margin-left: 5%;
 	background: url("/assets/img/quefome_logo_120x45.png") no-repeat;
+	background-size: 120px 45px;
 	width: 120px;
 	height: 45px;
 }
@@ -80,21 +98,6 @@ a:hover, a:focus {
 	font-size: 16px;
 	line-height: 1.33;
 	padding: 10px 16px;
-}
-
-.loading-route-panel {
-	text-align: center;
-	margin: 8% 3%;
-	font-size: 21px;
-}
-
-.loading-route-panel .qf-icon {
-	font-size: 1.6em;
-}
-
-.content {
-	display: table-row;
-	height: 100%;
 }
 
 .home-page {
@@ -2146,8 +2149,8 @@ input.invalid:focus, select.invalid:focus {
 		margin-top: 15px;
 		margin-bottom: 0px;
 		margin-left: 0px;
-
 		background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
+		background-size: 250px 93px;
 		width: 250px;
 		height: 93px;
 	}
@@ -2161,6 +2164,7 @@ input.invalid:focus, select.invalid:focus {
 		padding-left: 80px;
 		padding-top: 12px;
 		background: url("/assets/img/quefome_icon_70x75.png") no-repeat;
+		background-size: 70px 75px;
 		height: 97px;
 	}
 
