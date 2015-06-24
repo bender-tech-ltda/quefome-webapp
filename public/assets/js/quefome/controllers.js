@@ -1,7 +1,7 @@
-define(["angular", "quefome/services", "quefome/directives", "quefome/filters"], function(angular) {
+define(["angular", "angular/route", "quefome/services", "quefome/directives", "quefome/filters"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfControllers", ["qfServices", "qfDirectives", "qfFilters"]);
+	var module = angular.module("qfControllers", ["ngRoute", "qfServices", "qfDirectives", "qfFilters"]);
 
 	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.loginView = "/partials/login/login";
@@ -1504,7 +1504,7 @@ define(["angular", "quefome/services", "quefome/directives", "quefome/filters"],
 				loadingMessage: false
 			}
 		};
-		
+
 		$rootScope.$on('$routeChangeStart', function () {
 			var nextRoute = $route.routes[$location.path()];
 
