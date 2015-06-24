@@ -395,13 +395,6 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 				$rootScope.$apply();
 			});
 		};
-
-		$rootScope.$app = {
-			route: {
-				loading: false,
-				loadingMessage: false
-			}
-		};
 	}]);
 
 	return module;
