@@ -246,6 +246,10 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.finishOrderError).toBeDefined();
 		});
 
+		it("should have an loadingEstablishment property", function() {
+			expect(scope.loadingEstablishment).toBeDefined();
+		});
+
 		describe("on startup", function() {
 			it("should not be called if the user login was not checked yet", function() {
 				var called = false;
@@ -385,6 +389,23 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.startup();
 				expect(scope.order.withdraw).toBe(false);
+			});
+
+			it("should set the loadingEstablishment to true", function() {
+				scope.loadingEstablishment = false;
+				MockedEstablishmentService.findByUrl = function() {
+					return {then: function() {}};
+				};
+
+				scope.startup();
+				expect(scope.loadingEstablishment).toBe(true);
+			});
+
+			it("should set the loadingEstablishment to after loading", function() {
+				scope.loadingEstablishment = true;
+				scope.startup();
+
+				expect(scope.loadingEstablishment).toBe(false);
 			});
 		});
 

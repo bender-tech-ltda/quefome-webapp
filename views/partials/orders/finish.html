@@ -1,10 +1,14 @@
-<div ng-show="establishmentNotFound" class="not-found establishment-not-found">
+<div class="not-found establishment-not-found" ng-show="!loadingEstablishment && establishmentNotFound">
 	<h2>Estabelecimento não encontrado</h2>
 
 	<a qf-href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
 </div>
 
-<div ng-hide="establishmentNotFound" class="order-finish-page">
+<div class="loading-page loading-order-finish-page" ng-show="loadingEstablishment">
+	<span qf-loading-animation></span>
+</div>
+
+<div class="order-finish-page" ng-hide="loadingEstablishment || establishmentNotFound">
 	<div class="resume-panel" qf-sticky-scroll="top">
 		<h4 class="establishment-name">{{establishment.name}}</h4>
 

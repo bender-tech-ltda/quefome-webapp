@@ -1077,6 +1077,8 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			processing: false
 		};
 
+		$scope.loadingEstablishment = false;
+
 		$scope.processingOrder = false;
 		$scope.finishOrderError = false;
 
@@ -1355,6 +1357,8 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				return;
 			}
 
+			$scope.loadingEstablishment = true;
+
 			EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 				$scope.establishment = establishment;
 				$scope.order = OrderService.retrieve(establishment);
@@ -1385,8 +1389,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 				$scope.categorizePaymentMethods();
 				$scope.changeDeliveryType();
+
+				$scope.loadingEstablishment = false;
 			}, function(error) {
 				$scope.establishmentNotFound = error.isNotFoundError ? true : false;
+				$scope.loadingEstablishment = !$scope.establishmentNotFound;
 			});
 		};
 
