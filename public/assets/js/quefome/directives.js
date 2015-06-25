@@ -206,6 +206,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		template += "</div>";
 
 		return {
+			replace: true,
+			transclude: true,
 			template: template
 		};
 	}]);
