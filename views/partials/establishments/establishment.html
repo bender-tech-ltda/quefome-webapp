@@ -1,10 +1,15 @@
-<div ng-show="establishmentNotFound" class="not-found establishment-not-found">
+<div ng-show="!loadingEstablishment && establishmentNotFound" class="not-found establishment-not-found">
 	<h2>Estabelecimento não encontrado</h2>
 
 	<a qf-href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
 </div>
 
-<div ng-hide="establishmentNotFound" class="establishment-page">
+<div class="loading-page loading-establishment-page" ng-show="loadingEstablishment">
+	<span qf-loading-animation></span>
+	<p class="loading-message">Carregando um estabelecimento ultra-master delicioso...</p>
+</div>
+
+<div ng-hide="loadingEstablishment || establishmentNotFound" class="establishment-page">
 	<div class="establishment">
 		<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
 

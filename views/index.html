@@ -254,9 +254,9 @@
 				</div>
 			</nav>
 
-			<div class="loading-route-panel" ng-show="$app.route.loading">
+			<div class="loading-page loading-route-panel" ng-show="$app.route.loading">
 				<div qf-loading-animation></div>
-				<p ng-show="$app.route.loadingMessage">{{$app.route.loadingMessage}}</p>
+				<p class="loading-message" ng-show="$app.route.loadingMessage">{{$app.route.loadingMessage}}</p>
 			</div>
 
 			<div class="content" ng-hide="$app.route.loading" ng-view></div>

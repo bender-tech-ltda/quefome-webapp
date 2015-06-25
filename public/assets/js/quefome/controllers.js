@@ -278,6 +278,9 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 		$scope.isUserAddressAttended = false;
 
+		$scope.loadingEstablishment = false;
+		$scope.loadingProducts = false;
+
 		$scope.order = {
 			withdraw: false,
 			address: null,
@@ -568,17 +571,24 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			}
 		});
 
+		$scope.loadingEstablishment = true;
+
 		EstablishmentService.findByUrl($routeParams.establishmentUrl).then(function(establishment) {
 			$scope.establishment = establishment;
 			$scope.refreshOrder(establishment);
+
+			$scope.loadingEstablishment = false;
+			$scope.loadingProducts = true;
 
 			$scope.$digest();
 
 			EstablishmentService.products(establishment).then(function(products) {
 				$scope.groupProducts(products);
+				$scope.loadingProducts = false;
 			});
 		}, function(error) {
 			$scope.establishmentNotFound = error.isNotFoundError ? true : false;
+			$scope.loadingEstablishment = !$scope.establishmentNotFound;
 		});
 	}]);
 
@@ -1497,7 +1507,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	module.run(["$rootScope", "$route", "$location", "$timeout", "AuthService", function($rootScope, $route, $location, $timeout, AuthService) {
+	module.run(["$rootScope", "$timeout", "AuthService", function($rootScope, $timeout, AuthService) {
 		$rootScope.$app = {
 			route: {
 				loading: false,
@@ -1505,8 +1515,10 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			}
 		};
 
-		$rootScope.$on('$routeChangeStart', function () {
-			var nextRoute = $route.routes[$location.path()];
+		$rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+			if (nextRoute && nextRoute.$$route) {
+				nextRoute = nextRoute.$$route;
+			}
 
 			if (nextRoute && nextRoute.loadingMessage) {
 				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;

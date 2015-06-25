@@ -201,6 +201,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			expect(scope.orderDetailPanelOpen).toBeDefined();
 		});
 
+		it("should have a loadingEstablishment property", function() {
+			expect(scope.loadingEstablishment).toBeDefined();
+		});
+
+		it("should have a loadingProducts property", function() {
+			expect(scope.loadingProducts).toBeDefined();
+		});
+
 		describe("on startup", function() {
 			it("should search for a establishment", function() {
 				expect(MockedEstablishmentService.findCalled).toBe(true);

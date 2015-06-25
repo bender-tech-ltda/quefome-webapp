@@ -16,7 +16,8 @@ define([], function() {
 		{
 			path: "/establishments/:establishmentUrl",
 			controller: "EstablishmentController",
-			templateUrl: "/partials/establishments/establishment.html"
+			templateUrl: "/partials/establishments/establishment.html",
+			loadingMessage: "Carregando um estabelecimento ultra-master delicioso..."
 		},
 		{
 			path: "/establishments/:establishmentUrl/order/finish",
