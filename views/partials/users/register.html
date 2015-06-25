@@ -29,7 +29,10 @@
 
 				<br/>
 
-				<button class="btn btn-block btn-default" type="submit" ng-disabled="processing">Cadastrar</button>
+				<button class="btn btn-block btn-default" type="submit" ng-disabled="processing">
+					<span ng-hide="processing">Cadastrar</span>
+					<span class="qf-icon icon-loading spin" ng-show="processing"></span>
+				</button>
 			</fieldset>
 		</form>
 
@@ -38,14 +41,14 @@
 
 			<h4>
 				<span>Já possui cadastro?</span>
-				<a href="javascript:void(0)" ng-click="showLoginDialog()">Faça o login</a>
+				<a href="javascript:void(0)" ng-click="showLoginDialog()" ng-class="{disabled: processing}">Faça o login</a>
 			</h4>
 		</div>
 
 		<div class="login-panel hidden-xs">
 			<h4>Já possui cadastro?</h4>
 
-			<button type="button" class="btn btn-primary" ng-click="showLoginDialog()">Faça o login</button>
+			<button type="button" class="btn btn-primary" ng-click="showLoginDialog()" ng-disabled="processing">Faça o login</button>
 		</div>
 	</div>
 </div>

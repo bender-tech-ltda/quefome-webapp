@@ -171,15 +171,34 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
-		it("should save and login the user", function() {
-			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+		describe("when registering the user", function() {
+			it("should save and login the user", function() {
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
 
-			expect(scope.isUserLoggedIn()).toBe(true);
-		});
+				expect(scope.isUserLoggedIn()).toBe(true);
+			});
 
-		it("should close the current dialog", function() {
-			saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
-			expect(scope.$dialog._hideCalled).toBe(true);
+			it("should close the current dialog", function() {
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				expect(scope.$dialog._hideCalled).toBe(true);
+			});
+
+			it("should set processing to true", function() {
+				scope.processing = false;
+				MockedUserService.save = function() {
+					return {then: function() {}};
+				};
+
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				expect(scope.processing).toBe(true);
+			});
+
+			it("should set processing to false after finish", function() {
+				scope.processing = true;
+				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+
+				expect(scope.processing).toBe(false);
+			});
 		});
 
 		describe("when showing the login dialog", function() {

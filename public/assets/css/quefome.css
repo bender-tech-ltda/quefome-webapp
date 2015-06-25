@@ -75,7 +75,7 @@ a:hover, a:focus {
 	color: #ed3825;
 }
 
-.login-dialog a.disabled {
+.login-dialog a.disabled, .register-dialog a.disabled {
 	pointer-events: none;
 	cursor: default;
 	color: #F89F6E;
