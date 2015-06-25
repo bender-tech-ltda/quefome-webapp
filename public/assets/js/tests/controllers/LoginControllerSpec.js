@@ -176,8 +176,27 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			});
 
 			it("should close the current dialog", function() {
+				scope.$dialog._hideCalled = false;
+
 				defaultLogin();
-				expect(scope.$dialog._hideCalled).toBe(true);				
+				expect(scope.$dialog._hideCalled).toBe(true);
+			});
+
+			it("should set processing to true", function() {
+				scope.processing = false;
+				MockedAuthService.login = function() {
+					return {then: function() {}};
+				};
+
+				defaultLogin();
+				expect(scope.processing).toBe(true);
+			});
+
+			it("should set processing to false after finish", function() {
+				scope.processing = true;
+				defaultLogin();
+
+				expect(scope.processing).toBe(false);
 			});
 		});
 

@@ -75,19 +75,10 @@ a:hover, a:focus {
 	color: #ed3825;
 }
 
-.login-dialog .login-form .form-control, .register-dialog .register-form .form-control,
-.login-dialog .login-form .checkbox, .register-dialog .register-form .checkbox,
-.login-dialog .login-form .radio, .register-dialog .register-form .radio {
-	font-size: 16px;
-	height: 40px;
-	line-height: 1.33;
-	padding: 10px 16px;
-}
-
-.login-dialog .login-form .btn, .register-dialog .register-form .btn {
-	font-size: 16px;
-	line-height: 1.33;
-	padding: 10px 16px;
+.login-dialog a.disabled {
+	pointer-events: none;
+	cursor: default;
+	color: #F89F6E;
 }
 
 .home-page {
@@ -2019,7 +2010,7 @@ input.invalid:focus, select.invalid:focus {
 	border-color: #f46c21;
 }
 
-.btn.btn-primary:hover {
+.btn.btn-primary:hover, .btn.btn-primary:focus {
 	border-color: #fbca0e;
 	background-color: #fbca0e;
 }
@@ -2032,9 +2023,21 @@ input.invalid:focus, select.invalid:focus {
 }
 
 .btn.btn-default {
-	border-color: #cf4d0d;
-	background-color: #f15e18;
-	color: white;
+	border-color: #A6A6A6;
+	background-color: #A6A6A6;
+	color: #fff;
+}
+
+.btn.btn-default:hover, .btn.btn-default:focus {
+	border-color: #f46c21;
+	background-color: #f46c21;
+}
+
+.btn.btn-default.disabled, .btn.btn-default[disabled],
+.btn.btn-default.disabled:focus, .btn.btn-default[disabled]:focus,
+.btn.btn-default.disabled:hover, .btn.btn-default[disabled]:hover {
+	border-color: #BFBFBF;
+	background-color: #BFBFBF;
 }
 
 .btn.btn-danger {
@@ -2071,7 +2074,7 @@ input.invalid:focus, select.invalid:focus {
 }
 
 .modal .modal-dialog .modal-content, .modal .modal-dialog .modal-content .modal-header {
-	border-radius: 6px;
+	border-radius: 3px;
 }
 
 .modal .modal-dialog .modal-content .modal-header {
@@ -2223,21 +2226,6 @@ input.invalid:focus, select.invalid:focus {
 
 		text-align: center;
 		float: right;
-	}
-
-	.login-dialog .login-form .form-control, .register-dialog .register-form .form-control,
-	.login-dialog .login-form .checkbox, .register-dialog .register-form .checkbox,
-	.login-dialog .login-form .radio, .register-dialog .register-form .radio {
-		font-size: 14px;
-		height: 34px;
-		line-height: 1.42857;
-		padding: 6px 12px;
-	}
-
-	.login-dialog .login-form .btn, .register-dialog .register-form .btn {
-		font-size: 14px;
-		line-height: 1.42857;
-		padding: 6px 12px;
 	}
 
 	.register-dialog .register-form {
