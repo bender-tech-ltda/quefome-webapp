@@ -46,7 +46,11 @@
 	<div class="establishment-product-types-panel" qf-sticky-scroll qf-append-height-after=".establishment-page .establishment-products">
 		<h5 class="title">O que você quer pedir?</h5>
 
-		<ul class="establishment-product-types">
+		<div class="loading-establishment-product-types" ng-show="loadingProducts">
+			<span class="qf-icon icon-loading spin"></span>
+		</div>
+
+		<ul class="establishment-product-types" ng-hide="loadingProducts">
 			<li class="product-type" ng-repeat="productType in productTypes" title="{{productType.name}}" ng-click="toggleProductType(productType)" ng-class="{active: isProductTypeSelected(productType)}">
 				<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 			</li>
@@ -68,7 +72,11 @@
 		</a>
 	</div>
 
-	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes">
+	<div class="loading-establishment-products" ng-show="loadingProducts">
+		<span class="qf-icon icon-loading spin"></span>
+	</div>
+
+	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes" ng-hide="loadingProducts">
 		<h5 class="title">
 			<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 			<span>{{productType.name}}</span>
