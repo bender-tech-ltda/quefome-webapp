@@ -99,57 +99,81 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			expect(scope.errorMessage).toBeDefined();
 		});
 
-		it("should show a error message when the email is not filled", function() {
-			login("", "teste");
-
-			expect(scope.isLogged()).toBe(false);
-
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
+		it("should have a processing property", function() {
+			expect(scope.processing).toBeDefined();
 		});
 
-		it("should show a error message when the password is not filled", function() {
-			login("teste@teste.com");
+		describe("when loging in", function() {
+			it("should show a error message when the email is not filled", function() {
+				login("", "teste");
 
-			expect(scope.isLogged()).toBe(false);
+				expect(scope.isLogged()).toBe(false);
 
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
+
+			it("should show a error message when the password is not filled", function() {
+				login("teste@teste.com");
+
+				expect(scope.isLogged()).toBe(false);
+
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
+
+			it("should show a error message when the email is invalid", function() {
+				login("teste", "teste");
+
+				expect(scope.isLogged()).toBe(false);
+
+				expect(typeof(scope.errorMessage)).toEqual("string");
+				expect(scope.errorMessage.length).toBeGreaterThan(0);
+			});
+
+			it("should login the user", function() {
+				defaultLogin();
+
+				expect(scope.isLogged()).toBe(true);
+				expect(scope.getUser()).toBeDefined();
+			});
+
+			it("should clear the password property after login for security", function() {
+				defaultLogin();
+
+				expect(scope.password.trim()).toBe("");
+			});
+
+			it("should redirect the user to / after login", function() {
+				defaultLogin();
+				expect(Mocked$location._calledPath).toEqual("/");
+			});
+
+			it("should keep the user logged in", function() {
+				scope.keepLoggedIn = true;
+				defaultLogin();
+
+				expect(scope.isLogged()).toBe(true);
+				expect(scope.getUser().keepLoggedIn).toBe(true);
+			});
+
+			it("should set the processing to true", function() {
+				scope.processing = false;
+				MockedAuthService.login = function() {
+					return {then: function() {}};
+				};
+
+				defaultLogin();
+				expect(scope.processing).toBe(true);
+			});
+
+			it("should set the processing to false after finish", function() {
+				scope.processing = true;
+				defaultLogin();
+
+				expect(scope.processing).toBe(false);
+			});
 		});
 
-		it("should show a error message when the email is invalid", function() {
-			login("teste", "teste");
-
-			expect(scope.isLogged()).toBe(false);
-
-			expect(typeof(scope.errorMessage)).toEqual("string");
-			expect(scope.errorMessage.length).toBeGreaterThan(0);
-		});
-
-		it("should login the user", function() {
-			defaultLogin();
-
-			expect(scope.isLogged()).toBe(true);
-			expect(scope.getUser()).toBeDefined();
-		});
-
-		it("should clear the password property after login for security", function() {
-			defaultLogin();
-
-			expect(scope.password.trim()).toBe("");
-		});
-
-		it("should redirect the user to / after login", function() {
-			defaultLogin();
-			expect(Mocked$location._calledPath).toEqual("/");
-		});
-
-		it("should keep the user logged in", function() {
-			scope.keepLoggedIn = true;
-			defaultLogin();
-
-			expect(scope.isLogged()).toBe(true);
-			expect(scope.getUser().keepLoggedIn).toBe(true);
-		});
 	});
 });
