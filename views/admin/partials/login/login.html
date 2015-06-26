@@ -12,31 +12,34 @@
 
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon">
+						<span class="input-group-addon" ng-class="{disabled: processing}">
 							<span class="qf-icon icon-email"></span>
 						</span>
-						<input type="email" class="form-control" name="email" placeholder="Email" ng-model="email" required />
+						<input type="email" class="form-control" name="email" placeholder="Email" ng-model="email" ng-disabled="processing" required />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon">
+						<span class="input-group-addon" ng-class="{disabled: processing}">
 							<span class="qf-icon icon-lock"></span>
 						</span>
-						<input type="password" class="form-control" name="password" placeholder="Senha" ng-model="password" required />
+						<input type="password" class="form-control" name="password" placeholder="Senha" ng-model="password" ng-disabled="processing" required />
 					</div>
 				</div>
 
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="keepLoggedIn" ng-model="keepLoggedIn" /> Mantenha-me conectado
+						<input type="checkbox" name="keepLoggedIn" ng-model="keepLoggedIn" ng-disabled="processing" /> Mantenha-me conectado
 					</label>
 				</div>
 
 				<hr/>
 
-				<button type="submit" class="btn btn-primary btn-block">Login</button>
+				<button type="submit" class="btn btn-primary btn-block" ng-disabled="processing">
+					<span ng-hide="processing">Login</span>
+					<span class="qf-icon icon-loading spin" ng-show="processing"></span>
+				</button>
 			</fieldset>
 		</form>
 	</div>

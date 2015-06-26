@@ -45,6 +45,11 @@ body {
 	border-bottom-left-radius: 2px;
 }
 
+.login-page .login-panel .input-group-addon.disabled {
+	background-color: #F89F6E;
+	border-color: #F89F6E;
+}
+
 .login-page .login-panel .input-group-addon > * {
 	font-size: 18px;
 }
@@ -639,14 +644,38 @@ label .required {
 }
 
 .btn.btn-primary {
-	color: #FFF;
-	background-color: #F46C21;
-	border-color: #F46C21;
+	color: #fff;
+	background-color: #f46c21;
+	border-color: #f46c21;
 }
 
-.btn.btn-primary:hover {
-	border-color: #FBCA0E;
-	background-color: #FBCA0E;
+.btn.btn-primary:hover, .btn.btn-primary:focus {
+	border-color: #fbca0e;
+	background-color: #fbca0e;
+}
+
+.btn.btn-primary.disabled, .btn.btn-primary[disabled],
+.btn.btn-primary.disabled:focus, .btn.btn-primary[disabled]:focus,
+.btn.btn-primary.disabled:hover, .btn.btn-primary[disabled]:hover {
+	border-color: #F89F6E;
+	background-color: #F89F6E;
+}
+
+.btn.btn-default {
+	border-color: #A6A6A6;
+	background-color: #A6A6A6;
+	color: #fff;
+}
+
+.btn.btn-default:hover, .btn.btn-default:focus {
+	border-color: #f46c21;
+	background-color: #f46c21;
+}
+
+.btn.btn-default.disabled, .btn.btn-default[disabled],
+.btn.btn-default.disabled:focus, .btn.btn-default[disabled]:focus,
+.btn.btn-default.disabled:hover, .btn.btn-default[disabled]:hover {
+	border-color: #BFBFBF;
 }
 
 .alert {
