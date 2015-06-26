@@ -9,8 +9,205 @@
 		<link rel="shortcut icon" href="/assets/img/quefome_icon_70x75.png">
 
 		<style type="text/css">
-			.ng-cloak {
-				display: none
+			html, body {
+				height: 100%;
+				width: 100%;
+			}
+
+			body > .page-loading-panel {
+				width: 100%;
+				height: 100%;
+				padding: 50px 5% 0px;
+				background-color: #EB3825;
+				color: #fff;
+				text-align: center;
+				font-size: 20px;
+			}
+
+			body > .page-loading-panel .quefome-logo {
+				background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
+				background-size: 250px 93px;
+				background-position: center; 
+				width: 100%;
+				height: 93px;
+				margin-bottom: 70px;
+			}
+
+			body > .page-loading-panel .qf-loading-animation > .pacman-top,
+			body > .page-loading-panel .qf-loading-animation > .pacman-bottom {
+				border-top: 25px solid #fff;
+				border-left: 25px solid #fff;
+				border-bottom: 25px solid #fff;
+			}
+
+			body > .page-loading-panel .qf-loading-animation > .ball {
+				background-color: #fff;
+			}
+
+			body > .page-loading-panel .loading-message {
+				font-size: 1.5em;
+			}
+
+			[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+				display: none !important;
+			}
+
+			@-webkit-keyframes rotate-pacman-up {
+				0% {
+					-webkit-transform: rotate(270deg);
+					transform: rotate(270deg);
+				}
+				
+				50% {
+					-webkit-transform: rotate(360deg);
+					transform: rotate(360deg);
+				}
+
+				100% {
+					-webkit-transform: rotate(270deg);
+					transform: rotate(270deg);
+				}
+			}
+
+			@keyframes rotate-pacman-up {
+				0% {
+					-webkit-transform: rotate(270deg);
+					transform: rotate(270deg);
+				}
+
+				50% {
+					-webkit-transform: rotate(360deg);
+					transform: rotate(360deg);
+				}
+
+				100% {
+					-webkit-transform: rotate(270deg);
+					transform: rotate(270deg);
+				}
+			}
+
+			@-webkit-keyframes rotate-pacman-down {
+				0% {
+					-webkit-transform: rotate(90deg);
+					transform: rotate(90deg);
+				}
+
+				50% {
+					-webkit-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+
+				100% {
+					-webkit-transform: rotate(90deg);
+					transform: rotate(90deg);
+				}
+			}
+
+			@keyframes rotate-pacman-down {
+				0% {
+					-webkit-transform: rotate(90deg);
+					transform: rotate(90deg);
+				}
+
+				50% {
+					-webkit-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+
+				100% {
+					-webkit-transform: rotate(90deg);
+					transform: rotate(90deg);
+				}
+			}
+
+			@-webkit-keyframes pac-ball {
+				75% {
+					opacity: 0.7;
+				}
+
+				100% {
+					-webkit-transform: translate(-100px, -6.25px);
+					transform: translate(-100px, -6.25px);
+				}
+			}
+
+			@keyframes pac-ball {
+				75% {
+					opacity: 0.7;
+				}
+
+				100% {
+					-webkit-transform: translate(-100px, -6.25px);
+					transform: translate(-100px, -6.25px);
+				}
+			}
+
+			.qf-loading-animation {
+				position: relative;
+				margin: auto 50%;
+			}
+  
+			.qf-loading-animation > .ball:nth-child(3) {
+				-webkit-animation: pac-ball 1s -0.99s infinite linear;
+				animation: pac-ball 1s -0.99s infinite linear;
+			}
+
+			.qf-loading-animation > .ball:nth-child(4) {
+				-webkit-animation: pac-ball 1s -0.66s infinite linear;
+				animation: pac-ball 1s -0.66s infinite linear;
+			}
+
+			.qf-loading-animation > .ball:nth-child(5) {
+				-webkit-animation: pac-ball 1s -0.33s infinite linear;
+				animation: pac-ball 1s -0.33s infinite linear;
+			}
+
+			.qf-loading-animation > .ball:nth-child(6) {
+				-webkit-animation: pac-ball 1s 0s infinite linear;
+				animation: pac-ball 1s 0s infinite linear;
+			}
+
+			.qf-loading-animation > .pacman-top {
+				position: relative;
+				width: 0px;
+				height: 0px;
+				left: -30px;
+				border-right: 25px solid transparent;
+				border-top: 25px solid #EB3825;
+				border-left: 25px solid #EB3825;
+				border-bottom: 25px solid #EB3825;
+				border-radius: 25px;
+				-webkit-animation: rotate-pacman-up 0.5s 0s infinite;
+				animation: rotate-pacman-up 0.5s 0s infinite;
+			}
+
+			.qf-loading-animation > .pacman-bottom {
+				position: relative;
+				width: 0px;
+				height: 0px;
+				left: -30px;
+				margin-top: -50px;
+				border-right: 25px solid transparent;
+				border-top: 25px solid #EB3825;
+				border-left: 25px solid #EB3825;
+				border-bottom: 25px solid #EB3825;
+				border-radius: 25px;
+				-webkit-animation: rotate-pacman-down 0.5s 0s infinite;
+				animation: rotate-pacman-down 0.5s 0s infinite;
+			}
+
+			.qf-loading-animation > .ball {
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				top: 25px;
+				left: 70px;
+				margin: 2px;
+				border-radius: 100%;
+				background-color: #EB3825;
+				-webkit-transform: translate(0, -6.25px);
+				-ms-transform: translate(0, -6.25px);
+				transform: translate(0, -6.25px);
 			}
 		</style>
 
@@ -19,7 +216,19 @@
 		<link rel="stylesheet" href="/assets/css/quefome-icons.css" />
 	</head>
 
-	<body class="ng-cloak">
+	<body>
+		<div class="page-loading-panel" ng-show="false">
+			<div class="quefome-logo"></div>
+
+			<div class="qf-loading-animation">
+				<div class="pacman-top"></div>
+				<div class="pacman-bottom"></div>
+				<div class="ball"></div><div class="ball"></div><div class="ball"></div>
+			</div>
+
+			<p class="loading-message">Carregando...</p>
+		</div>
+
 		<% include partials/login/login.html %>
 
 		<div class="ng-cloak page-body" ng-show="hasCheckedForLoggedUser() && isUserLogged()">
