@@ -342,7 +342,34 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	module.run(["$rootScope", "AuthService", function($rootScope, AuthService) {
+	module.run(["$rootScope", "$timeout", "AuthService", function($rootScope, $timeout, AuthService) {
+		$rootScope.$app = {
+			route: {
+				loading: false,
+				loadingMessage: false
+			}
+		};
+
+		$rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+			if (nextRoute && nextRoute.$$route) {
+				nextRoute = nextRoute.$$route;
+			}
+
+			if (nextRoute && nextRoute.loadingMessage) {
+				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;
+			} else {
+				$rootScope.$app.route.loadingMessage = false;
+			}
+
+			$rootScope.$app.route.loading = true;
+		});
+
+		$rootScope.$on('$routeChangeSuccess', function () {
+			$timeout(function(){
+				$rootScope.$app.route.loading = false;
+			}, 200);
+		});
+
 		var doItSafe = function(what, callback) {
 			if (typeof(callback) !== "function") {
 				callback = function() {};

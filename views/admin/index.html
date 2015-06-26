@@ -267,7 +267,12 @@
 				<div class="clearfix"></div>
 			</nav>
 
-			<div class="content">
+			<div class="loading-page loading-route-panel" ng-show="$app.route.loading">
+				<div qf-loading-animation></div>
+				<p class="loading-message" ng-show="$app.route.loadingMessage">{{$app.route.loadingMessage}}</p>
+			</div>
+
+			<div class="content" ng-hide="$app.route.loading">
 				<div class="content-body" ng-view></div>
 			</div>
 
