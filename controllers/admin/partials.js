@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = function Partials(router) {
 	router.get("/admin/partials/*", function(req, res) {
-		if (!app.config.debug && !req.xhr) {
+		if (!req.authorized) {
 			res.send(404);
 			return;
 		}

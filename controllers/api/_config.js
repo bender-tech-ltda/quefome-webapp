@@ -4,7 +4,7 @@ var webservice = $require("webservice");
 module.exports = {
 	beforeLoad: function(router) {
 		router.use("/api/*", function(req, res, next) {
-			if (!config.debug && !req.xhr) {
+			if (!req.authorized) {
 				res.status(404);
 				return;
 			}

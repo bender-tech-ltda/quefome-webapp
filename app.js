@@ -25,8 +25,6 @@ var ControllerCollection = function(app) {
 			namespace = "";
 		}
 
-		console.log("Carregando controllers...");
-
 		var readableFiles = [];
 		var routeConfig = false;
 		fs.readdirSync(dir).forEach(function(file) {
@@ -69,7 +67,9 @@ var ControllerCollection = function(app) {
 			return;
 		}
 
+		console.log("Carregando controllers...");
 		loadRecursive.call(this);
+		
 		app.use(router);
 	};
 
