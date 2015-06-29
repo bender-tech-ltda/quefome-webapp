@@ -1,8 +1,16 @@
-module.exports = function(router) {
-	router.use(function(req, res, next) {
-		console.log("pudim");
+var config = $require("config");
 
-		req.authorized = app.config.debug || (req.xhr && req.headers["x-user-accept"]);	
-		next();
-	});
+module.exports = {
+	beforeLoad: function(router) {
+		router.use(function(req, res, next) {
+			req.authorized = app.config.debug || (req.xhr && req.headers["x-user-accept"]);	
+			next();
+		});
+	},
+
+	afterLoad: function(router) {
+		router.get("/*", function(req, res) {
+			res.render("index", config.view);
+		});
+	}
 };
