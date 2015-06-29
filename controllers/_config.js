@@ -9,7 +9,7 @@ module.exports = {
 	},
 
 	afterLoad: function(router) {
-		router.get("/*", function(req, res) {
+		router.get("/*", function(req, res, next) {
 			res.render("index", config.view);
 		});
 	}

@@ -22,7 +22,7 @@ var ControllerCollection = function(app) {
 	var loadRecursive = function(dir, namespace) {
 		if (!dir) {
 			dir = CONTROLLERS_DIR;
-			namespace = "";
+			namespace = "/";
 		}
 
 		var readableFiles = [];
@@ -36,6 +36,8 @@ var ControllerCollection = function(app) {
 				} else if (typeof(routeConfig) === "object" && typeof(routeConfig.beforeLoad) === "function") {
 					routeConfig.beforeLoad(router);
 				}
+
+				console.log(namespace);
 			} else {
 				readableFiles.push(file);
 			}
@@ -46,7 +48,7 @@ var ControllerCollection = function(app) {
 			var absoluteFile = path.join(dir, file);
 
 			if (fs.lstatSync(absoluteFile).isDirectory()) {
-				loadRecursive.call(self, absoluteFile, namespace + file + ".");
+				loadRecursive.call(self, absoluteFile, namespace + file + "/");
 			} else {
 				var controller = require(absoluteFile);
 				self.loadController(namespace + file, controller);
@@ -57,6 +59,7 @@ var ControllerCollection = function(app) {
 
 		if (typeof(routeConfig) === "object" && typeof(routeConfig.afterLoad) === "function") {
 			routeConfig.afterLoad(router);
+			console.log(namespace);
 		}
 
 		console.log("");
