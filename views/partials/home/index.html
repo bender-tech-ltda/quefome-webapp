@@ -10,7 +10,7 @@
 
 			<ul class="food-type-list" ng-hide="loadingProductTypes">
 				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}">
-					<a qf-href="/establishments/search?productType={{productType.name}}">
+					<a href="/establishments/search?productType={{productType.name}}">
 						<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 						<br/>
 						<span>{{productType.name}}</span>

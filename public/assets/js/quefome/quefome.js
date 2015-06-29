@@ -3,7 +3,12 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 	
 	var quefome = angular.module("quefome", ["ngRoute", "qfServices", "qfControllers"]);
 
-	quefome.config(["$routeProvider", function($routeProvider) {
+	quefome.config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		});
+
 		var configureRoutes = function() {
 			for (var i in routes) {
 				var route = routes[i];
@@ -20,7 +25,6 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 		};
 
 		configureRoutes();
-
 	}]);
 
 	quefome.run(["$rootScope", function($rootScope, $route, $location, $timeout) {
