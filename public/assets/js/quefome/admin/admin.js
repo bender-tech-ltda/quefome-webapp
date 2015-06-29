@@ -3,7 +3,9 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 	
 	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "qfAdminServices", "qfAdminControllers"]);
 
-	quefomeAdmin.config(["$routeProvider", function($routeProvider) {
+	quefomeAdmin.config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
+		$locationProvider.html5Mode(true);
+
 		var configureRoutes = function() {
 			for (var i in routes) {
 				var route = routes[i];
