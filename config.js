@@ -1,5 +1,15 @@
+var environment = process.env.NODE_ENV;
+
+if (!environment) {
+	environment = "development";
+}
+
+if (typeof(environment) === "string") {
+	environment = environment.trim().toLowerCase();
+}
+
 module.exports = {
-	debug: false,
+	debug: environment == "development",
 
 	webapp: {
 		port: (process.env.PORT || 3000),
