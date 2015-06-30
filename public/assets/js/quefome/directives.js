@@ -212,31 +212,6 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
-	module.directive("qfHref", ["$location", function($location) {
-		return {
-			restrict: "A",
-			scope: {
-				href: "@qfHref",
-				query: "=qfHrefQuery"
-			},
-			link: function(scope, element, attrs) {
-				if (element.is("a")) {
-					element.attr("href", "#" + scope.href);
-				} else {
-					element.click(function() {
-						scope.$apply(function() {
-							var location = $location.path(scope.href);
-							
-							if (scope.query) {
-								location.search(scope.query);
-							}
-						});
-					});
-				}
-			}
-		};
-	}]);
-
 	module.directive("qfRandomClass", [function() {
 		return {
 			restrict: "A",
