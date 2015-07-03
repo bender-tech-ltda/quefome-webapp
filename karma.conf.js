@@ -22,7 +22,8 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-        'public/assets/js/main.js'
+        'public/assets/js/main.js',
+        'public/components/**/*Spec.js'
     ],
 
 

@@ -19,6 +19,8 @@ require.config({
 		"bootstrap/datepicker/br": "../../components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min",
 		"angular": "../../components/angular/angular",
 		"angular/route": "../../components/angular-route/angular-route",
+		"angular/analytics": "../../components/angulartics/src/angulartics",
+		"angular/analytics/ga": "../../components/angulartics/src/angulartics-ga",
 		"angular/mock": "../../components/angular-mocks/angular-mocks",
 		"quefome/mock": "tests/mock"
 	},
@@ -32,6 +34,11 @@ require.config({
 			exports : "angular"
 		},
 		"angular/route": ["angular"],
+		"angular/analytics": {
+			deps: ["angular"],
+			exports : "angular/analytics"
+		},
+		"angular/analytics/ga": ["angular", "angular/analytics"],
 		"angular/mock": ["angular"]
 	},
 	deps: testFiles,

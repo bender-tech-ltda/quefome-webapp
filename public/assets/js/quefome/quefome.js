@@ -1,9 +1,9 @@
-define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route"], function(angular, routes) {
+define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route", "angular/analytics/ga"], function(angular, routes) {
 	"use strict";
 	
-	var quefome = angular.module("quefome", ["ngRoute", "qfServices", "qfControllers"]);
+	var quefome = angular.module("quefome", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfServices", "qfControllers"]);
 
-	quefome.config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
+	quefome.config(["$locationProvider", "$routeProvider", "$analyticsProvider", function($locationProvider, $routeProvider, $analyticsProvider) {
 		$locationProvider.html5Mode({
 			enabled: true,
 			requireBase: false
@@ -25,6 +25,12 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 		};
 
 		configureRoutes();
+
+		$analyticsProvider.firstPageview(false);
+
+		if (window.debug) {
+			$analyticsProvider.developerMode(true);
+		}
 	}]);
 
 	quefome.run(["$rootScope", function($rootScope, $route, $location, $timeout) {

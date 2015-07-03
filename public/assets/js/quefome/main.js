@@ -7,7 +7,9 @@ require.config({
 		"jquery/autocomplete": "/components/autocomplete/dist/autocomplete",
 		"bootstrap": "/components/bootstrap/dist/js/bootstrap",
 		"angular": "/components/angular/angular",
-		"angular/route": "/components/angular-route/angular-route"
+		"angular/route": "/components/angular-route/angular-route",
+		"angular/analytics": "/components/angulartics/src/angulartics",
+		"angular/analytics/ga": "/components/angulartics/src/angulartics-ga"
 	},
 	shim: {
 		"jquery": {"exports" : "jquery"},
@@ -16,7 +18,12 @@ require.config({
 			deps: ["jquery"],
 			exports : "angular"
 		},
-		"angular/route": ["angular"]
+		"angular/route": ["angular"],
+		"angular/analytics": {
+			deps: ["jquery"],
+			exports : "angular/analytics"
+		},
+		"angular/analytics/ga": ["angular", "angular/analytics"]
 	}
 });
 
