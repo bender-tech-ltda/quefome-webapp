@@ -35,11 +35,16 @@ module.exports = {
 		social: {
 			facebookPageUrl: ("https://facebook.com/quefome" || process.env.FACEBOOK_PAGE_URL),
 			twitterPageUrl: ("https://twitter.com/quefome" || process.env.TWITTER_PAGE_URL)
+		},
+
+		analytics: {
+			appKey: (process.env.APP_ANALYTICS_KEY || false),
+			adminKey: (process.env.ADMIN_ANALYTICS_KEY || false),
 		}
 	},
 
 	override: function(configFile) {
-		//TODO
+		this.view.debug = this.debug;
 	}
 	
 };
