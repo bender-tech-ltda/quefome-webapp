@@ -1,9 +1,9 @@
-define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/admin/controllers","angular/route"], function(angular, routes) {
+define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/admin/controllers","angular/route", "angular/analytics/ga"], function(angular, routes) {
 	"use strict";
 	
-	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "qfAdminServices", "qfAdminControllers"]);
+	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfAdminServices", "qfAdminControllers"]);
 
-	quefomeAdmin.config(["$locationProvider", "$routeProvider", function($locationProvider, $routeProvider) {
+	quefomeAdmin.config(["$locationProvider", "$routeProvider", "$analyticsProvider", function($locationProvider, $routeProvider, $analyticsProvider) {
 		$locationProvider.html5Mode(true);
 
 		var configureRoutes = function() {
@@ -23,6 +23,11 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 
 		configureRoutes();
 
+		$analyticsProvider.firstPageview(false);
+
+		if (window.debug) {
+			$analyticsProvider.developerMode(true);
+		}
 	}]);
 
 	quefomeAdmin.run(["$rootScope", "$route", "$location", "AuthService", function($rootScope, $route, $location, AuthService) {

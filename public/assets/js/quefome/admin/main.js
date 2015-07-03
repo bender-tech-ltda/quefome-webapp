@@ -9,7 +9,9 @@ require.config({
 		"bootstrap/datepicker": "/components/bootstrap-datepicker/dist/js/bootstrap-datepicker",
 		"bootstrap/datepicker/br": "/components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min",
 		"angular": "/components/angular/angular",
-		"angular/route": "/components/angular-route/angular-route"
+		"angular/route": "/components/angular-route/angular-route",
+		"angular/analytics": "/components/angulartics/src/angulartics",
+		"angular/analytics/ga": "/components/angulartics/src/angulartics-ga"
 	},
 	shim: {
 		"jquery": {"exports" : "jquery"},
@@ -20,7 +22,12 @@ require.config({
 			deps: ["jquery"],
 			exports : "angular"
 		},
-		"angular/route": ["angular"]
+		"angular/route": ["angular"],
+		"angular/analytics": {
+			deps: ["angular"],
+			exports : "angular/analytics"
+		},
+		"angular/analytics/ga": ["angular", "angular/analytics"]
 	}
 });
 

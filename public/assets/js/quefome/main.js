@@ -20,7 +20,7 @@ require.config({
 		},
 		"angular/route": ["angular"],
 		"angular/analytics": {
-			deps: ["jquery"],
+			deps: ["angular"],
 			exports : "angular/analytics"
 		},
 		"angular/analytics/ga": ["angular", "angular/analytics"]

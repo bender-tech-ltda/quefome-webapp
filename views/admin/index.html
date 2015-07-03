@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title><%= title %></title>
+		<title>Quefo.me - Acesso Delivery</title>
 
 		<link rel="shortcut icon" href="/assets/img/quefome_icon_70x75.png">
 
@@ -282,6 +282,11 @@
 			</footer>
 		</div>
 		
+		<% if(!debug && analytics.adminKey){ %>
+		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', '<%= analytics.appKey %>', 'auto'); ga('send', 'pageview');</script>
+		<% } else { %>
+		<script type="text/javascript">window.debug = true;</script>
+		<% } %>
 
 		<script src="/components/requirejs/require.js" data-main="/assets/js/quefome/admin/main.js"></script>
 	</body>
