@@ -284,6 +284,43 @@
 		
 		<% if(!debug && analytics.adminKey){ %>
 		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', '<%= analytics.appKey %>', 'auto'); ga('send', 'pageview');</script>
+		
+		<script type="text/javascript">
+			var reportError = function(error, file, line, column) {
+				if (typeof(error) !== "object") {
+					error = {
+						message: error,
+						filename: file,
+						lineno: line
+					};
+
+					if (column) {
+						error.colno = column;
+					}
+				}
+
+				var errorString = "{";
+				errorString += "error: " + error.message + ", ";
+				errorString += "file: " + error.filename + ", ";
+				errorString += "line: " + error.lineno ;
+
+				if (error.colno) {
+					errorString += ", column: " + error.colno;
+				}
+
+				errorString += "}";
+
+				ga("send", "event", "Error", "Javascript Error", errorString);
+			};
+
+			if (window.addEventListener) {
+				window.addEventListener("error", reportError);
+			} else if (window.attachEvent) {
+				window.attachEvent("onerror", reportError);
+			} else {
+				window.onerror = reportError;
+			}
+		</script>
 		<% } else { %>
 		<script type="text/javascript">window.debug = true;</script>
 		<% } %>
