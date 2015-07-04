@@ -1,7 +1,7 @@
-define(["angular"], function(angular) {
+define(["angular", "angular/analytics/ga"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfServices", []);
+	var module = angular.module("qfServices", ["angulartics", "angulartics.google.analytics"]);
 
 	var treatPromiseErrors = function($q) {
 		return function(response) {
@@ -625,9 +625,40 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.factory("AnalyticsErrorReportHttpInterceptor", ["$q", "$analytics", function($q, $analytics) {
+		return {
+			responseError: function(response) {
+				var isBusinessError = function() {
+					return response.status >= 900 && response.status < 1000
+				};
+
+				try {
+					if (!isBusinessError()) {
+						var errorObject = {
+							url: response.config.url,
+							method: response.config.method,
+							status: response.status,
+							body: response.data
+						};
+
+						$analytics.eventTrack("Ajax Request Error", {
+							category: 'Error',
+							label: angular.toJson(errorObject, true),
+							nonInteraction: true
+						});
+					}
+				} catch (e) {}
+
+				return $q.reject(response);
+			}
+		};
+	}]);
+
 	module.config(["$httpProvider", function($httpProvider) {
 		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 		$httpProvider.defaults.headers.common["X-User-Accept"] = $httpProvider.defaults.headers.common["Accept"];
+
+		$httpProvider.interceptors.push('AnalyticsErrorReportHttpInterceptor');
 	}]);
 
 	return module;
