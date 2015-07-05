@@ -1,4 +1,4 @@
-define(["angular", "angular/analytics/ga"], function(angular) {
+define(["angular", "angular/analytics"], function(angular) {
 	"use strict";
 	
 	var module = angular.module("qfServices", ["angulartics"]);

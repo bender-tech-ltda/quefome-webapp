@@ -3,7 +3,7 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 	
 	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfAdminServices", "qfAdminControllers"]);
 
-	quefomeAdmin.config(["$locationProvider", "$routeProvider", "$analyticsProvider", function($locationProvider, $routeProvider, $analyticsProvider) {
+	quefomeAdmin.config(["$locationProvider", "$routeProvider", "$analyticsProvider", "$provide", function($locationProvider, $routeProvider, $analyticsProvider, $provide) {
 		$locationProvider.html5Mode(true);
 
 		var configureRoutes = function() {
@@ -23,11 +23,44 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 
 		configureRoutes();
 
-		$analyticsProvider.firstPageview(false);
-
 		if (window.debug) {
 			$analyticsProvider.developerMode(true);
 		}
+
+		$analyticsProvider.firstPageview(false);
+
+		$provide.decorator("$exceptionHandler", ["$delegate", "$analytics", function($delegate, $analytics) {
+			return function(exception, cause) {
+				$delegate(exception, cause);
+				
+				var errorObject = {
+					name: exception.name,
+					message: exception.message
+				};
+
+				if (exception.stack) {
+					errorObject.stack = exception.stack;
+				}
+
+				if (exception.lineNumber) {
+					errorObject.line = exception.lineNumber;
+				}
+
+				if (exception.columnNumber) {
+					errorObject.column = exception.columnNumber;
+				}
+
+				if (exception.fileName) {
+					errorObject.file = exception.fileName;
+				}
+
+				$analytics.eventTrack("AngularJS Error", {
+					category: 'Error',
+					label: angular.toJson(errorObject, true),
+					nonInteraction: true
+				});
+			};
+		}]);
 	}]);
 
 	quefomeAdmin.run(["$rootScope", "$route", "$location", "AuthService", function($rootScope, $route, $location, AuthService) {

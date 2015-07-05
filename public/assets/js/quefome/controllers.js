@@ -1,4 +1,4 @@
-define(["angular", "angular/route", "quefome/services", "quefome/directives", "quefome/filters", "angular/analytics/ga"], function(angular) {
+define(["angular", "angular/route", "quefome/services", "quefome/directives", "quefome/filters", "angular/analytics"], function(angular) {
 	"use strict";
 	
 	var module = angular.module("qfControllers", ["ngRoute", "angulartics", "qfServices", "qfDirectives", "qfFilters"]);
