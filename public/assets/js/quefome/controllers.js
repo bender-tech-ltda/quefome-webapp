@@ -1,7 +1,7 @@
-define(["angular", "angular/route", "quefome/services", "quefome/directives", "quefome/filters"], function(angular) {
+define(["angular", "angular/route", "quefome/services", "quefome/directives", "quefome/filters", "angular/analytics/ga"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfControllers", ["ngRoute", "qfServices", "qfDirectives", "qfFilters"]);
+	var module = angular.module("qfControllers", ["ngRoute", "angulartics", "qfServices", "qfDirectives", "qfFilters"]);
 
 	module.controller("UserMenuController", ["$scope", "AuthService", function($scope, AuthService) {
 		$scope.loginView = "/partials/login/login";
@@ -194,7 +194,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		});
 	}]);
 
-	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, Dialog, AddressService, ProductTypeService, EstablishmentService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "$analytics", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, $analytics, Dialog, AddressService, ProductTypeService, EstablishmentService) {
 		$scope.productTypes = [];
 
 		$scope.establishments = [];
@@ -239,6 +239,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 			var searchObject = {};
 			if ($scope.searchFilter.query) {
+				$analytics.eventTrack("Search by Name", {
+					category: "Establishment Search",
+					label: $scope.searchFilter.query
+				});
+
 				searchObject.q = $scope.searchFilter.query;
 			}
 

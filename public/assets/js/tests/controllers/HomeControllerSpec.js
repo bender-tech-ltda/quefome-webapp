@@ -3,7 +3,8 @@
 define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 	describe("HomeController", function() {
-		var scope, controller, Mocked$location, MockedEstablishmentService, MockedProductTypeService;
+		var scope, controller, Mocked$location;
+		var MockedEstablishmentService, MockedProductTypeService;
 
 		beforeEach(module("qfControllers"));
 

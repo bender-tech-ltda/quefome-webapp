@@ -1,7 +1,7 @@
 define(["angular", "angular/analytics/ga"], function(angular) {
 	"use strict";
 	
-	var module = angular.module("qfServices", ["angulartics", "angulartics.google.analytics"]);
+	var module = angular.module("qfServices", ["angulartics"]);
 
 	var treatPromiseErrors = function($q) {
 		return function(response) {
