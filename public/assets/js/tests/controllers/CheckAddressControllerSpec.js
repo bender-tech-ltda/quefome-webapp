@@ -5,7 +5,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 	describe("CheckAddressController", function() {
 		var scope, controller;
 		var MockedAddressService, MockedEstablishmentService, MockedOrderService;
-		var Mocked$location;
+		var Mocked$location, Mocked$analytics;
 
 		beforeEach(module("qfControllers"));
 
@@ -85,6 +85,17 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					return this._path;
 				}
 			};
+
+			Mocked$analytics = {
+				_eventTrackCalled: false,
+				_eventTrackEvent: null,
+				_eventTrackProperties: null,
+				eventTrack: function(event, properties) {
+					this._eventTrackCalled = true;
+					this._eventTrackEvent = event;
+					this._eventTrackProperties = properties;
+				}
+			};
 		});
 
 		beforeEach(function() {
@@ -92,7 +103,8 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				AddressService: MockedAddressService,
 				EstablishmentService: MockedEstablishmentService,
 				OrderService: MockedOrderService,
-				$location: Mocked$location
+				$location: Mocked$location,
+				$analytics: Mocked$analytics
 			};
 
 			return injectController("CheckAddressController", "views/partials/establishments/check-address.html", params, function($scope) {
@@ -222,6 +234,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressChecked).toBe(true);
 			});
 
+			it("should track an event in $analytics if the zip code is not attended", function() {
+				scope.zipCode = "93336220";
+				scope.$digest();
+
+				scope.checkZipCode();
+
+				expect(Mocked$analytics._eventTrackCalled).toBe(true);
+				expect(Mocked$analytics._eventTrackEvent).toEqual("Establishment doesn't attend User Address");
+				expect(Mocked$analytics._eventTrackProperties.category).toEqual("Address not attended");
+				expect(Mocked$analytics._eventTrackProperties.label).toContain("93336220");
+			});
+
 			it("should set the processing to true", function() {
 				MockedEstablishmentService.isAttendingAddress = function() {
 					return {then: function() {}};
@@ -261,6 +285,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.checkZipCode();
 				expect(scope.invalidZipCode).toBe(true);
+			});
+
+			it("should track an event in $analytics if the zipCode is invalid", function() {
+				scope.zipCode = "blablabla";
+
+				Mocked$analytics._eventTrackCalled = false;
+				MockedAddressService.searchZipCode = function() {
+					return {
+						then: function(successCallback, failCallback) {
+							failCallback();
+						}
+					};
+				};
+
+				scope.checkZipCode();
+				expect(Mocked$analytics._eventTrackCalled).toBe(true);
+				expect(Mocked$analytics._eventTrackEvent).toEqual("Zip Code not found");
+				expect(Mocked$analytics._eventTrackProperties.category).toEqual("Address not attended");
+				expect(Mocked$analytics._eventTrackProperties.label).toEqual("blablabla");
 			});
 		});
 
@@ -314,6 +357,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				expect(scope.addressChecked).toBe(true);
 			});
 
+			it("should track an event in $analytics if the zip code is not attended", function() {
+				MockedEstablishmentService.attendedZipCode = "95677229";
+
+				scope.address.address = "blablabla"
+				scope.checkAddress();
+
+				expect(Mocked$analytics._eventTrackCalled).toBe(true);
+				expect(Mocked$analytics._eventTrackEvent).toEqual("Establishment doesn't attend User Address");
+				expect(Mocked$analytics._eventTrackProperties.category).toEqual("Address not attended");
+				expect(Mocked$analytics._eventTrackProperties.label).toContain("blablabla");
+			});
+
 			it("should set the processing to true", function() {
 				MockedEstablishmentService.isAttendingAddress = function() {
 					return {then: function() {}};
@@ -351,6 +406,25 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				scope.checkAddress();
 				expect(scope.invalidAddress).toBe(true);
+			});
+
+			it("should track an event in $analytics if the address is invalid", function() {
+				scope.address.address = "teste 123";
+
+				Mocked$analytics._eventTrackCalled = false;
+				MockedAddressService.searchAddress = function() {
+					return {
+						then: function(successCallback, failCallback) {
+							failCallback();
+						}
+					};
+				};
+
+				scope.checkAddress();
+				expect(Mocked$analytics._eventTrackCalled).toBe(true);
+				expect(Mocked$analytics._eventTrackEvent).toEqual("Address not found");
+				expect(Mocked$analytics._eventTrackProperties.category).toEqual("Address not attended");
+				expect(Mocked$analytics._eventTrackProperties.label).toContain("teste 123");
 			});
 		});
 

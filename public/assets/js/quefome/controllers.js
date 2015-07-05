@@ -900,7 +900,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		});
 	}]);
 
-	module.controller("CheckAddressController", ["$scope", "$location", "AddressService", "EstablishmentService", "OrderService", function($scope, $location, AddressService, EstablishmentService, OrderService) {
+	module.controller("CheckAddressController", ["$scope", "$location", "$analytics", "AddressService", "EstablishmentService", "OrderService", function($scope, $location, $analytics, AddressService, EstablishmentService, OrderService) {
 		var alreadyInformedAddress = AddressService.getCurrentAddress();
 
 		$scope.address = alreadyInformedAddress ? alreadyInformedAddress : {};
@@ -943,6 +943,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 				if (isAttending) {
 					$scope.closeDialog();
+				} else {
+					$analytics.eventTrack("Establishment doesn't attend User Address", {
+						category: "Address not attended",
+						label: angular.toJson(address)
+					});
 				}
 			}, function() {
 				$scope.addressChecked = false;
@@ -969,6 +974,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				$scope.addressChecked = false;
 
 				$scope.invalidZipCode = true;
+
+				$analytics.eventTrack("Zip Code not found", {
+					category: "Address not attended",
+					label: $scope.zipCode
+				});
 			});
 		};
 
@@ -998,6 +1008,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				$scope.addressChecked = false;
 
 				$scope.invalidAddress = true;
+
+				$analytics.eventTrack("Address not found", {
+					category: "Address not attended",
+					label: angular.toJson(address)
+				});
 			});
 		};
 
