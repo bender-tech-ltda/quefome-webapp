@@ -13,7 +13,7 @@ define(["angular", "angular/analytics"], function(angular) {
 		};
 	};
 
-	module.service("AuthService", ["$http", "$q", function($http, $q) {
+	module.service("AuthService", ["$http", "$q", "$analytics", function($http, $q, $analytics) {
 		var loggedUser = null;
 
 		this.isLogged = function() {
@@ -24,9 +24,12 @@ define(["angular", "angular/analytics"], function(angular) {
 			return loggedUser;
 		};
 
-		this.__setLoggedUser = function(user) {
+		var setLoggedUser = function(user) {
 			loggedUser = user;
+			$analytics.setUsername(user && user.email ? user.email : null);
 		};
+
+		this.__setLoggedUser = setLoggedUser;
 
 		this.login = function(email, password, keepLoggedIn) {
 			var params = {
@@ -35,14 +38,14 @@ define(["angular", "angular/analytics"], function(angular) {
 			};
 
 			return $http.get("/api/establishment-users/auth/login/" + email + "/", {params: params}).then(function(response) {
-				loggedUser = response.data;
+				setLoggedUser(response.data);
 				return response.data
 			}, treatPromiseErrors($q));
 		};
 
 		this.logout = function() {
 			return $http.delete("/api/establishment-users/auth/logout/").then(function() {
-				loggedUser = null
+				setLoggedUser(null);
 			});
 		};
 
@@ -60,18 +63,14 @@ define(["angular", "angular/analytics"], function(angular) {
 			isCheckingForLoggedUser = true;
 
 			return $http.get("/api/establishment-users/auth/retrieve/").then(function(response) {
-				if (response.data) {
-					loggedUser = response.data;
-				} else {
-					loggedUser = null;
-				}
+				setLoggedUser(response.data ? response.data : null);
 
 				isCheckingForLoggedUser = false;
 				hasCheckedForLoggedUser = true;
 
 				return response.data;
 			}, function(response) {
-				loggedUser = null;
+				setLoggedUser(null);
 
 				isCheckingForLoggedUser = false;
 				hasCheckedForLoggedUser = true;

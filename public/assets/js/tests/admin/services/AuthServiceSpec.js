@@ -4,10 +4,19 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 	describe("AuthService", function() {
 		var $httpBackend, Auth;
+		var Mocked$analytics;
 
 		beforeEach(module("qfAdminServices"));
 
-		beforeEach(inject(function(_AuthService_, _$httpBackend_) {
+		beforeEach(inject(function($injector, _AuthService_, _$httpBackend_) {
+			Mocked$analytics = $injector.get("$analytics");
+			Mocked$analytics._setUsernameCalled = false;
+			Mocked$analytics._setUsernameUsername = null;
+			Mocked$analytics.setUsername = function(username) {
+				this._setUsernameCalled = true;
+				this._setUsernameUsername = username;
+			};
+
 			$httpBackend = _$httpBackend_;
 			Auth = _AuthService_;
 
@@ -58,6 +67,16 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.flush();
 		});
 
+		it("should attach the user to the $analytics on login", function() {
+			Mocked$analytics._setUsernameCalled = false;
+
+			Auth.login("teste@teste.com", "teste");
+			$httpBackend.flush();
+
+			expect(Mocked$analytics._setUsernameCalled).toBe(true);
+			expect(Mocked$analytics._setUsernameUsername).toBe("teste@teste.com");
+		});
+
 		it("should logout the user", function() {
 			Auth.login("teste@teste.com", "teste").then(function(user) {
 				expect(Auth.isLogged()).toBe(true);
@@ -82,8 +101,20 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			$httpBackend.flush();
 		});
 
-				//I heard you like checks, so I put a check into your check...
-		describe("should check if was checked for logged user", function() {
+		it("should attach the current user to the $analytics", function() {
+			Mocked$analytics._setUsernameCalled = false;
+
+			$httpBackend.expectGET("/api/establishment-users/auth/retrieve/").respond(200, {name: "Teste", email: "teste@teste.com"});
+
+			Auth.checkForLoggedUser();
+			$httpBackend.flush();
+
+			expect(Mocked$analytics._setUsernameCalled).toBe(true);
+			expect(Mocked$analytics._setUsernameUsername).toBe("teste@teste.com");
+		});
+
+		//I heard you like checks, so I put a check into your check...
+		describe("should check if it was checked for logged user", function() {
 			it("and return false if it wasn't", function() {
 				expect(Auth.hasCheckedForLoggedUser()).toBe(false);	
 			});
