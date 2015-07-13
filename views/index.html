@@ -259,7 +259,7 @@
 				<p class="loading-message" ng-show="$app.route.loadingMessage">{{$app.route.loadingMessage}}</p>
 			</div>
 
-			<div class="content" ng-hide="$app.route.loading" ng-view></div>
+			<div class="content" ng-hide="$app.route.loading" autoscroll="true" ng-view></div>
 
 			<footer class="footer">
 				<a class="new-delivery" href="<%= landingPageUrl %>" target="_blank" title="Clique aqui para saber como ter seu restaurante no Quefo.me">
