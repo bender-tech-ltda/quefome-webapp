@@ -1,7 +1,7 @@
 <div class="delivery-search-page">
 	<form name="searchForm" class="search-form" ng-submit="searchEstablishments()" qf-lose-focus-on-submit>
 		<div class="food-type-choice">
-			<h2 class="title">Escolha o tipo de comida</h4>
+			<h3 class="title">Escolha o tipo de comida</h3>
 
 			<div class="loading-product-types" ng-show="loadingProductTypes">
 				<span class="qf-icon icon-loading spin"></span>
@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="query-search">
-			<h2 class="title">Procure pelo nome do estabelecimento</h4>
+			<h3 class="title">Procure pelo nome do estabelecimento</h3>
 
 			<div class="query-group">
 				<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="searchForm.$submit()"/>
