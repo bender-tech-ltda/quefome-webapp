@@ -1,7 +1,7 @@
 <div class="home-page">
 	<div class="delivery-search-panel" qf-random-class="banner-burger, banner-pizza">
 		<div class="food-type-search">
-			<h3 class="title">Você tem fome de quê?</h3>
+			<h1 class="title">Você tem fome de quê?</h1>
 
 			<div class="loading" ng-show="loadingProductTypes">
 				<span class="qf-icon icon-loading spin"></span>
@@ -13,14 +13,14 @@
 					<a href="/establishments/search?productType={{productType.name}}">
 						<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 						<br/>
-						<span>{{productType.name}}</span>
+						<h3>{{productType.name}}</h3>
 					</a>
 				</li>
 			</ul>
 		</div>
 
 		<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()">
-			<h3 class="title">Procure pelo seu restaurante favorito</h3>
+			<h2 class="title">Procure pelo seu restaurante favorito</h2>
 
 			<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="querySearchForm.$submit()"/>
 
