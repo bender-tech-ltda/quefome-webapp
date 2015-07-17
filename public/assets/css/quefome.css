@@ -1359,7 +1359,7 @@ a:hover, a:focus {
 
 .order-finish-page .panel-wrapper > .title {
 	font-size: 25px;
-	margin-bottom: 2px;
+	margin: 20px 0px 2px;
 	text-align: center;
 	color: #F26C23;
 }
@@ -1367,7 +1367,7 @@ a:hover, a:focus {
 .order-finish-page .panel-wrapper > .description {
 	font-size: 15px;
 	color: #808080;
-	margin-top: 0px;
+	margin: 0px 0px 10px;
 	text-align: center;
 }
 
@@ -1422,8 +1422,9 @@ a:hover, a:focus {
 
 .order-finish-page .resume-panel .establishment-name {
 	text-align: center;
-	margin-bottom: 5px;
+	margin: 10px 0px 5px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+	font-size: 18px;
 }
 
 .order-finish-page .resume-panel .btn-back {
@@ -1464,6 +1465,7 @@ a:hover, a:focus {
 	margin-bottom: 10px;
 	padding-bottom: 4px;
 	border-bottom: 1px solid #E5E5E5;
+	font-size: 18px;
 }
 
 .order-finish-page .delivery-type-panel > .title .error-message,
@@ -1637,6 +1639,11 @@ a:hover, a:focus {
 	color: #7A7A7A;
 	text-align: center;
 	font-size: 20px;
+}
+
+.order-finish-page .finish-order-processing-panel .message {
+	margin: 10px 0px 10px;
+	font-size: 18px;
 }
 
 .order-finish-page .finish-order-processing-panel .qf-icon {
@@ -2528,7 +2535,7 @@ input.invalid:focus, select.invalid:focus {
 
 	.order-finish-page .resume-panel {
 		position: absolute;
-		top: 66px;
+		top: 63px;
 		right: 14%;
 		width: 25%;
 	}

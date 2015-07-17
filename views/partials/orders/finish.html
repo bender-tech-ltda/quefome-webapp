@@ -1,6 +1,5 @@
 <div class="not-found establishment-not-found" ng-show="!loadingEstablishment && establishmentNotFound">
-	<h2>Estabelecimento não encontrado</h2>
-
+	<p class="title">Estabelecimento não encontrado</p>
 	<a href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
 </div>
 
@@ -10,7 +9,7 @@
 
 <div class="order-finish-page" ng-hide="loadingEstablishment || establishmentNotFound">
 	<div class="resume-panel" qf-sticky-scroll="top">
-		<h4 class="establishment-name">{{establishment.name}}</h4>
+		<h2 class="establishment-name">{{establishment.name}}</h2>
 
 		<button type="button" class="btn btn-link btn-back" ng-click="goToEstablishmentPage()">
 			<span class="qf-icon icon-back"></span>
@@ -20,11 +19,11 @@
 	</div>
 
 	<div class="panel-wrapper">
-		<h2 class="title">Bora matar essa fome?</h2>
-		<h3 class="description">Só precisamos de mais algumas coisinhas...</h3>
+		<h4 class="title">Bora matar essa fome?</h4>
+		<p class="description">Só precisamos de mais algumas coisinhas...</p>
 
 		<fieldset class="delivery-type-panel" ng-show="establishment.parameters.canWithdraw">
-			<h4 class="title"><span class="qf-icon icon-bike"></span> Como você quer receber seu pedido?</h4>
+			<h3 class="title"><span class="qf-icon icon-bike"></span> Como você quer receber seu pedido?</h3>
 
 			<div class="radio">
 				<label>
@@ -43,11 +42,11 @@
 		</fieldset>
 
 		<fieldset class="address-panel" ng-hide="order.withdraw">
-			<h4 class="title">
+			<h3 class="title">
 				<span><span class="qf-icon icon-location"></span> Onde entregar seu pedido?</span>
 
 				<span class="error-message" ng-show="!addressStatus.processing && !addressStatus.zipCodeValid && !addressStatus.addressValid">Você precisa informar o endereço de entrega do seu pedido.</span>
-			</h4>
+			</h3>
 
 			<div class="address-input-method">
 				<div class="radio">
@@ -179,12 +178,12 @@
 		</fieldset>
 
 		<fieldset class="phone-number-panel">
-			<h4 class="title">
+			<h3 class="title">
 				<span class="qf-icon icon-phone"></span>
 				<span>Qual seu telefone?</span>
 
 				<span class="error-message" ng-show="phoneForm.$invalid">Você precisa informar um telefone para contato</span>
-			</h4>
+			</h3>
 
 			<form name="phoneForm">
 				<div class="phone-group">
@@ -199,10 +198,10 @@
 		</fieldset>
 
 		<fieldset class="payment-method-panel">
-			<h4 class="title">
+			<h3 class="title">
 				<span>Como você quer pagar?</span>
 				<span class="error-message" ng-show="!order.paymentMethod">Você precisa selecionar uma forma de pagamento</span>
-			</h4>
+			</h3>
 
 			<form name="paymentForm">
 				<fieldset class="payment-method-category" ng-repeat="category in paymentCategories | orderBy: ['sequence', 'name']">
@@ -247,7 +246,7 @@
 		</div>
 
 		<div class="finish-order-processing-panel" ng-show="processingOrder">
-			<h4 class="message">Enviando pedido...</h4>
+			<p class="message">Enviando pedido...</p>
 			<span class="qf-icon icon-loading spin"></span>
 		</div>
 	</div>
