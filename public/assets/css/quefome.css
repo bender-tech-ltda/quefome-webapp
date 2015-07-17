@@ -599,10 +599,16 @@ a:hover, a:focus {
 }
 
 .establishment-page .establishment .information .title .description {
+	margin: 0px 0px 10px;
+	line-height: 20px;
+	font-size: 14px;
 	color: #7a7a7a;
 }
 
 .establishment-page .establishment .information .address {
+	margin: 0px 0px 10px;
+	line-height: 20px;
+	font-size: 14px;
 	color: #666;
 }
 

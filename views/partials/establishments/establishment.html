@@ -14,11 +14,11 @@
 
 		<div class="information">
 			<div class="title">
-				<h3 class="name">{{establishment.name}}</h3>
-				<p class="description">{{establishment.description}}</p>
+				<h1 class="name">{{establishment.name}}</h1>
+				<h2 class="description">{{establishment.description}}</h2>
 			</div>
 
-			<p class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</p>
+			<h2 class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</h2>
 		</div>
 
 		<div class="additional-info">
@@ -76,19 +76,19 @@
 	</div>
 
 	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes" ng-hide="loadingProducts">
-		<h5 class="title">
+		<h2 class="title">
 			<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 			<span>{{productType.name}}</span>
-		</h5>
+		</h2>
 
 		<ul class="products">
 			<li class="product" ng-repeat="product in productType.products" title="{{establishment.parameters.status != 'OPEN' ? 'Você não pode montar seu pedido, esse estabelecimento esta fechado no momento.' : ''}}">
 				<span class="no-image-icon qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}" ng-hide="product.imageUrl"></span>
 
-				<img class="img-thumbnail image" ng-src="{{product.imageUrl ? product.imageUrl : '/assets/img/no_product_image_260x260.jpg'}}" alt="{{product.name}}"  />
+				<img class="img-thumbnail image" ng-src="{{product.imageUrl ? product.imageUrl : '/assets/img/no_product_image_260x260.jpg'}}" alt="{{product.name}}" />
 
 				<div class="title">
-					<h5 class="name">{{product.name}}</h5>
+					<h3 class="name">{{product.name}}</h3>
 					<p class="description">{{product.description}}</p>
 				</div>
 
