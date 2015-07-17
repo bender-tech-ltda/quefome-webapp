@@ -1,13 +1,7 @@
 <div class="delivery-search-page">
-	<ul class="order-steps">
-		<li class="active delivery-choose"><p>Você tem fome de quê?</p></li>
-		<li class="order-ready"><p>Já pode pedir!</p></li>
-		<li class="order-destination"><p>Onde entregar?</p></li>
-	</ul>
-
 	<form name="searchForm" class="search-form" ng-submit="searchEstablishments()" qf-lose-focus-on-submit>
 		<div class="food-type-choice">
-			<h5 class="title">Escolha o tipo de comida</h5>
+			<h2 class="title">Escolha o tipo de comida</h4>
 
 			<div class="loading-product-types" ng-show="loadingProductTypes">
 				<span class="qf-icon icon-loading spin"></span>
@@ -25,7 +19,7 @@
 		</div>
 
 		<div class="query-search">
-			<h5 class="title">Procure pelo nome do estabelecimento</h5>
+			<h2 class="title">Procure pelo nome do estabelecimento</h4>
 
 			<div class="query-group">
 				<input type="text" class="query-field" name="query" ng-model="searchFilter.query" placeholder="Qual o nome do estabelecimento?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="searchForm.$submit()"/>
@@ -57,7 +51,7 @@
 
 							<div class="information">
 								<div class="title">
-									<h3 class="name">{{establishment.name}}</h3>
+									<h2 class="name">{{establishment.name}}</h2>
 									<p class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, Nº {{establishment.address.number}}, Bairro {{establishment.address.neighborhood.name}}</p>
 								</div>
 
@@ -80,7 +74,7 @@
 				</ul>
 
 				<div class="no-establishment-found" ng-hide="searchingEstablishments || (establishments && establishments.length > 0)">
-					<h5>Nenhum estabelecimento encontrado</h5>
+					<p>Nenhum estabelecimento encontrado</p>
 				</div>
 
 				<div class="searching-establishments" ng-show="searchingEstablishments">
