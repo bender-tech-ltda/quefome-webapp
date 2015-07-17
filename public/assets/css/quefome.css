@@ -163,9 +163,14 @@ a:hover, a:focus {
 }
 
 .home-page .delivery-search-panel .food-type-search .food-type-list li a .qf-icon {
-	margin-top: 3px;
-	margin-bottom: 4px;
+	margin-top: 2px;
+	margin-bottom: 3px;
 	font-size: 35px;
+}
+
+.home-page .delivery-search-panel .food-type-search .food-type-list li a .food-type-name {
+	font-size: 1em;
+	margin: 1px 0px 0px;
 }
 
 .home-page .delivery-search-panel .query-search {
