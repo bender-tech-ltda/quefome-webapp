@@ -1907,6 +1907,10 @@ a:hover, a:focus {
 	margin-bottom: 10%;
 }
 
+.not-found.establishment-not-found > .title {
+	font-size: 28px;
+}
+
 .login-message {
 	margin: 10% 5%;
 	text-align: center;	
