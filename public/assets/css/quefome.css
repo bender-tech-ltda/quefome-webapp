@@ -1656,14 +1656,14 @@ a:hover, a:focus {
 }
 
 .order-track-page .header > .title {
-	margin-bottom: 2px;
+	margin: 20px 0px 2px;
 	color: #F26C23;
 	font-size: 24px;
 	text-align: center;
 }
 
 .order-track-page .header > .description {
-	margin-top: 0px;
+	margin: 0px 0px 10px;
 	color: #808080;
 	font-size: 15px;
 	text-align: center;
@@ -1826,6 +1826,11 @@ a:hover, a:focus {
 	font-size: 20px;
 }
 
+.order-track-page .searching-orders-panel > .message {
+	margin: 10px 0px 10px;
+	font-size: 18px;
+}
+
 .order-track-page .searching-orders-panel .qf-icon {
 	font-size: 25px;
 }
@@ -1930,7 +1935,7 @@ a:hover, a:focus {
 }
 
 .login-message .message {
-	margin-bottom: 0px;
+	margin: 20px 0px 0px;
 	color: #F26C23;
 	font-size: 20px;
 }

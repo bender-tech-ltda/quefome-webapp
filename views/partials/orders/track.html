@@ -1,18 +1,18 @@
 <div class="login-message" ng-show="isLoginChecked() && !isUserLogged()">
-	<h3 class="message">
+	<p class="message">
 		<span class="qf-icon icon-lock"></span>
 		<span>Você precisa estar logado para acompanhar seus pedidos!</span>
-	</h3>
+	</p>
 	<button type="button" class="btn btn-link" ng-click="login()">Clique aqui para fazer seu login</button>
 </div>
 
 <div class="order-track-page" ng-show="isUserLogged()">
 	<div class="header">
-		<h2 class="title">
+		<h4 class="title">
 			<span>{{orders.length > 1 ? 'Acompanhe seus pedidos' : 'Acompanhe seu pedido'}}</span>
 			<span class="qf-icon icon-pacman"></span>
-		</h2>
-		<h3 class="description">Fique de olho para saber quando seu rango vai estar chegando!</h3>
+		</h4>
+		<p class="description">Fique de olho para saber quando seu rango vai estar chegando!</p>
 	</div>
 
 	<div class="alert alert-success alert-recent-order" ng-show="recentlyCreatedOrder">
@@ -24,8 +24,8 @@
 	</div>
 
 	<div class="order" ng-repeat="order in orders | orderBy: '-date'" ng-show="ordersSearched && orders && orders.length > 0">
-		<h3 class="order-number">Pedido nº {{order.id}}</h3>
-		<h4 class="order-establishment">{{order.establishment.name}}</h4>
+		<h2 class="order-number">Pedido nº {{order.id}}</h3>
+		<h3 class="order-establishment">{{order.establishment.name}}</h4>
 
 		<div class="status-panel" ng-class="{'status-open': order.status == 'OPEN', 'status-production': order.status == 'PRODUCTION', 'status-delivered': order.status == 'DELIVERED'}" title="{{order | orderStatusDescription}}">
 			<ul class="status">
@@ -63,7 +63,7 @@
 	</div>
 
 	<div class="searching-orders-panel" ng-hide="ordersSearched">
-		<h4>Estamos buscando seus pedidos...</h4>
+		<p class="message">Estamos buscando seus pedidos...</p>
 		<span class="qf-icon icon-loading spin"></span>
 	</div>
 </div>
