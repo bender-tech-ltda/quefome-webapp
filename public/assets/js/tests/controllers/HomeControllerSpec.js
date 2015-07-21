@@ -135,7 +135,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should send the user to the search establishments page", function() {
 				scope.searchEstablishments();
-				expect(Mocked$location.path()).toEqual("/establishments/search");
+				expect(Mocked$location.path()).toEqual("/restaurantes/");
 			});
 
 			it("and should set the 'q' search property", function() {

@@ -816,7 +816,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 				MockedDialog._params.onResponse({name: "Blablabla"});
 				expect(scope.orderDetailPanelOpen).toBe(false);
-				expect(Mocked$location._currentLocation).toEqual("/establishments/teste/order/finish/");
+				expect(Mocked$location._currentLocation).toEqual("/teste/pedido/finalizar/");
 			});
 
 			it("should store the current order", function() {
@@ -838,7 +838,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.finishOrder();
 
 				expect(scope.orderDetailPanelOpen).toBe(false);
-				expect(Mocked$location._currentLocation).toEqual("/establishments/teste/order/finish/");
+				expect(Mocked$location._currentLocation).toEqual("/teste/pedido/finalizar/");
 			});
 		});
 	});

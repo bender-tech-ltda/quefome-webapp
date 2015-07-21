@@ -46,7 +46,7 @@
 			<div class="panel-body">
 				<ul class="establishment-list" ng-show="!searchingEstablishments && establishments && establishments.length > 0">
 					<li class="establishment" ng-repeat="establishment in establishments | orderBy: ['-totalOrders', 'status']">
-						<a href="/establishments/{{establishment.url}}">
+						<a href="/{{establishment.url}}">
 							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
 
 							<div class="information">

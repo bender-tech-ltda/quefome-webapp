@@ -510,7 +510,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should send to the establishment search page", function() {
 				scope.goToEstablishmentSearch();
-				expect(Mocked$location.path()).toEqual("/establishments/search/");
+				expect(Mocked$location.path()).toEqual("/restaurantes/");
 			});
 		});
 

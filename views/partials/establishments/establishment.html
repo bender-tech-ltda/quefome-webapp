@@ -1,6 +1,6 @@
 <div ng-show="!loadingEstablishment && establishmentNotFound" class="not-found establishment-not-found">
 	<p class="title">Estabelecimento não encontrado</p>
-	<a href="/establishments/search">Clique aqui procurar outro estabelecimento</a>
+	<a href="/restaurantes/">Clique aqui procurar outro estabelecimento</a>
 </div>
 
 <div class="loading-page loading-establishment-page" ng-show="loadingEstablishment">
@@ -65,7 +65,7 @@
 			<span ng-hide="establishment.parameters.currentSchedule">abrirá mais tarde.</span>
 			<span ng-show="establishment.parameters.currentSchedule">{{(establishment | establishmentSchedule).toLowerCase()}}</span>
 		</p>
-		<a href="/establishments/search">
+		<a href="/restaurantes/">
 			<span class="qf-icon icon-back"></span>
 			<span>Voltar para a pesquisa de estabelecimentos</span>
 		</a>

@@ -281,7 +281,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedAuthService._currentUser = null;
 				scope.startup();
 
-				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+				expect(Mocked$location._currentPath).toEqual("/" + Mocked$routeParams.establishmentUrl);
 			});
 
 			it("should search for the establishment using the $routeParams.establishmentUrl", function() {
@@ -312,14 +312,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				MockedOrderService._retrieveOrder = null;
 				scope.startup();
 
-				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+				expect(Mocked$location._currentPath).toEqual("/" + Mocked$routeParams.establishmentUrl);
 			});
 
 			it("should redirect to the establishment page if the order doesn't have items", function() {
 				MockedOrderService._retrieveOrder = {items: []};
 				scope.startup();
 
-				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+				expect(Mocked$location._currentPath).toEqual("/" + Mocked$routeParams.establishmentUrl);
 			});
 
 			it("should set the order user with the logged user", function() {
@@ -927,7 +927,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 		describe("when going to the establishment page", function() {
 			it("should use the $routeParams", function() {
 				scope.goToEstablishmentPage();
-				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+				expect(Mocked$location._currentPath).toEqual("/" + Mocked$routeParams.establishmentUrl);
 			});
 		});
 
@@ -941,14 +941,14 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should send to the establishment search page", function() {
 				scope.goToEstablishmentSearch();
-				expect(Mocked$location._currentPath).toEqual("/establishments/search/");
+				expect(Mocked$location._currentPath).toEqual("/restaurantes/");
 			});
 		});
 
 		describe("when the user logout", function() {
 			it("should go to the establishment page", function() {
 				scope.$broadcast("$userLogout");
-				expect(Mocked$location._currentPath).toEqual("/establishments/" + Mocked$routeParams.establishmentUrl);
+				expect(Mocked$location._currentPath).toEqual("/" + Mocked$routeParams.establishmentUrl);
 			});
 		});
 
@@ -1164,7 +1164,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.order = {items: [], withdraw: true};
 				scope.finishOrder();
 
-				expect(Mocked$location._currentPath).toEqual("/user/orders/");
+				expect(Mocked$location._currentPath).toEqual("/usuario/pedidos/");
 			});
 		});
 	});

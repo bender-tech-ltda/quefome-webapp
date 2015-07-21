@@ -180,7 +180,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			$scope.searchingEstablishments = true;
 
 			$scope.$digest(function() {
-				$location.path("/establishments/search").search({q: $scope.query});
+				$location.path("/restaurantes/").search({q: $scope.query});
 			});
 		};
 
@@ -543,7 +543,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				OrderService.store($scope.order);
 
 				$scope.orderDetailPanelOpen = false;
-				$location.path("/establishments/" + $scope.establishment.url + "/order/finish/");
+				$location.path("/" + $scope.establishment.url + "/pedido/finalizar/");
 			};
 
 			if (!AuthService.isLogged()) {
@@ -1054,7 +1054,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				});
 
 				$scope.$dialog.beforeHide(function() {
-					$location.path("/establishments/search/");
+					$location.path("/restaurantes/");
 					$scope.$apply();
 				});
 
@@ -1287,12 +1287,12 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$scope.goToEstablishmentPage = function() {
-			$location.path("/establishments/" + $routeParams.establishmentUrl);
+			$location.path("/" + $routeParams.establishmentUrl);
 		};
 
 		$scope.goToEstablishmentSearch = function() {
 			OrderService.remove($scope.order);
-			$location.path("/establishments/search/");
+			$location.path("/restaurantes/");
 		};
 
 		$scope.isFinishValid = function() {
@@ -1355,7 +1355,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 			OrderService.create($scope.order).then(function(order) {
 				$flashStorage.set("recentlyCreatedOrder", order);
-				$location.path("/user/orders/");
+				$location.path("/usuario/pedidos/");
 
 				$scope.processingOrder = false;
 			}, function(status) {
@@ -1369,7 +1369,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 		$scope.startup = function() {
 			if (!$routeParams.establishmentUrl) {
-				$location.path("/establishments/search/");
+				$location.path("/restaurantes/");
 			}
 
 			if (!AuthService.isLogged()) {
