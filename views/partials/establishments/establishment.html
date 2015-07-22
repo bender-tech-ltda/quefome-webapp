@@ -8,17 +8,25 @@
 	<p class="loading-message">Carregando um estabelecimento ultra-master delicioso...</p>
 </div>
 
-<div ng-hide="loadingEstablishment || establishmentNotFound" class="establishment-page">
+<div ng-hide="loadingEstablishment || establishmentNotFound" class="establishment-page" itemscope itemtype="https://schema.org/FoodEstablishment">
 	<div class="establishment">
-		<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
+		<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}" itemprop="logo"/>
 
 		<div class="information">
 			<div class="title">
-				<h1 class="name">{{establishment.name}}</h1>
-				<h2 class="description">{{establishment.description}}</h2>
+				<h1 class="name" itemprop="name">{{establishment.name}}</h1>
+				<h2 class="description" itemprop="description">{{establishment.description}}</h2>
 			</div>
 
-			<h2 class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</h2>
+			<h2 class="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+				<span class="qf-icon icon-location"></span>
+				<span itemprop="streetAddress">{{establishment.address.address}}, nº {{establishment.address.number}}, bairro {{establishment.address.neighborhood.name}}</span>
+
+				<meta itemprop="addressLocality" content="Porto Alegre" />
+				<meta itemprop="addressRegion" content="RS" />
+				<meta itemprop="addressCountry" content="BRA" />
+				<meta itemprop="postalCode" content="{{establishment.address.zipCode}}" />
+			</h2>
 		</div>
 
 		<div class="additional-info">
@@ -37,6 +45,10 @@
 				<span class="qf-icon icon-money"></span>
 				<span>Pedido mínimo: R$ {{establishment.parameters.minimumOrderValue | money}}</span>
 			</div>
+
+			<meta itemprop="currenciesAccepted" content="BRL" />
+			<meta itemprop="paymentAccepted" content="{{establishment.parameters.paymentMethods | join : ', ' : 'name'}}" />
+			
 		</div>
 
 		<div class="clearfix"></div>
@@ -78,7 +90,7 @@
 	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes" ng-hide="loadingProducts">
 		<h2 class="title">
 			<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
-			<span>{{productType.name}}</span>
+			<span itemprop="servesCuisine">{{productType.name}}</span>
 		</h2>
 
 		<ul class="products">

@@ -42,6 +42,40 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.filter("join", [function() {
+		return function(array, separator, property) {
+			if (!array) {
+				return "";
+			}
+
+			if (!separator) {
+				separator = ", ";
+			}
+
+			var result = "";
+
+			for (var i = 0; i < array.length; i++) {
+				var value = array[i];
+
+				if (property) {
+					if (typeof(property) === "function") {
+						value = property(value, i) || "";
+					} else if (typeof(value) === "object") {
+						value = value[property];
+					}
+				}
+
+				result += value;
+
+				if ((i+1) < array.length) {
+					result += separator;
+				}
+			}
+
+			return result;
+		};
+	}]);
+
 	module.filter("establishmentStatus", [function() {
 		return function(establishment) {
 			var status = establishment;
