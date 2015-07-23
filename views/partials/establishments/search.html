@@ -35,23 +35,25 @@
 		<div class="clearfix"></div>
 	</form>
 
-	<div class="search-result">
+	<div class="search-result" itemscope itemtype="https://schema.org/ItemList">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span ng-show="!searchingEstablishments && establishments.length == 0">Nenhum estabelecimento encontrado</span>
 				<span ng-show="!searchingEstablishments && establishments.length == 1">1 estabelecimento encontrado</span>
 				<span ng-show="!searchingEstablishments && establishments.length > 1">{{establishments.length}} estabelecimentos encontrados</span>
 				<span ng-show="searchingEstablishments">Procurando estabelecimentos...</span>
+
+				<meta itemprop="numberOfItems" content="{{establishments ? establishments.length : 0}}" />
 			</div>
 			<div class="panel-body">
 				<ul class="establishment-list" ng-show="!searchingEstablishments && establishments && establishments.length > 0">
-					<li class="establishment" ng-repeat="establishment in establishments | orderBy: ['-totalOrders', 'status']">
-						<a href="/{{establishment.url}}">
-							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}"/>
+					<li id="{{establishment.url}}" class="establishment" ng-repeat="establishment in establishments | orderBy: ['-totalOrders', 'status']" itemprop="itemListElement" itemscope itemtype="https://schema.org/FoodEstablishment">
+						<a href="/{{establishment.url}}" itemprop="url" content="{{baseUrl()}}/{{establishment.url}}">
+							<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}" itemprop="logo"/>
 
 							<div class="information">
 								<div class="title">
-									<h2 class="name">{{establishment.name}}</h2>
+									<h2 class="name" itemprop="name">{{establishment.name}}</h2>
 									<p class="address"><span class="qf-icon icon-location"></span>{{establishment.address.address}}, Nº {{establishment.address.number}}, Bairro {{establishment.address.neighborhood.name}}</p>
 								</div>
 
