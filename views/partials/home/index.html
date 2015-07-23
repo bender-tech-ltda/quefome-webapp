@@ -1,7 +1,9 @@
-<div class="home-page">
+<div class="home-page" itemscope itemtype="http://schema.org/WebSite">
+	<meta itemprop="url" content="{{baseUrl()}}/" />
+
 	<div class="delivery-search-panel" qf-random-class="banner-burger, banner-pizza">
-		<div class="food-type-search">
-			<h3 class="title">Você tem fome de quê?</h3>
+		<div class="food-type-search" itemscope itemtype="http://schema.org/ItemList">
+			<h3 class="title" itemprop="name" content="Rangos e especialidades">Você tem fome de quê?</h3>
 
 			<div class="loading" ng-show="loadingProductTypes">
 				<span class="qf-icon icon-loading spin"></span>
@@ -9,19 +11,21 @@
 			</div>
 
 			<ul class="food-type-list" ng-hide="loadingProductTypes">
-				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}">
-					<a href="/restaurantes/?productType={{productType.name}}">
+				<li class="helper-no-select" ng-repeat="productType in productTypes | filter: {important: true}" itemprop="itemListElement" itemscope itemtype="https://schema.org/SomeProducts">
+					<a href="/restaurantes/?productType={{productType.name}}" itemprop="url">
 						<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
-						<h2 class="food-type-name">{{productType.name}}</h2>
+						<h2 class="food-type-name" itemprop="name">{{productType.name}}</h2>
 					</a>
 				</li>
 			</ul>
 		</div>
 
-		<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()">
-			<h3 class="title">Procure pelo seu restaurante favorito</h3>
+		<form name="querySearchForm" class="query-search" ng-submit="searchEstablishments()" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
+			<h3 class="title" itemprop="name">Procure pelo seu restaurante favorito</h3>
 
-			<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="querySearchForm.$submit()"/>
+			<input type="text" class="query-field" name="query" ng-model="query" placeholder="Qual o nome do restaurante?" qf-autocomplete qf-fetch-function="searchEstablishmentsNames($query, $callback)" qf-on-select-item="querySearchForm.$submit()" itemprop="query-input" />
+
+			<meta itemprop="target" content="/restaurantes?q={query}" />
 
 			<button type="submit" class="btn btn-primary query-button" ng-disabled="searchingEstablishments">
 				<span ng-hide="searchingEstablishments">Pesquisar</span>
