@@ -292,8 +292,6 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			items: []
 		};
 
-
-		//TODO criar teste
 		$scope.formatScheduleInInternationalFormat = function(schedule) {
 			var weekDaysAbbreviation = {
 				"sunday": "Su",
@@ -1556,7 +1554,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	module.run(["$rootScope", "$timeout", "AuthService", function($rootScope, $timeout, AuthService) {
+	module.run(["$rootScope", "$timeout", "$location", "AuthService", function($rootScope, $timeout, $location, AuthService) {
 		$rootScope.$app = {
 			route: {
 				loading: false,
@@ -1641,6 +1639,13 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				$rootScope.$broadcast("$userLoginChecked", user);
 				$rootScope.$apply();
 			});
+		};
+
+		$rootScope.baseUrl = function() {
+			var absUrl = $location.absUrl();
+			var currentUrl = $location.url();
+
+			return absUrl.replace(currentUrl, "");
 		};
 	}]);
 

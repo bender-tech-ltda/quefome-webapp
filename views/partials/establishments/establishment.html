@@ -8,7 +8,7 @@
 	<p class="loading-message">Carregando um estabelecimento ultra-master delicioso...</p>
 </div>
 
-<div ng-hide="loadingEstablishment || establishmentNotFound" class="establishment-page" itemscope itemtype="https://schema.org/FoodEstablishment">
+<div id="{{establishment.url}}" class="establishment-page" itemscope itemtype="https://schema.org/FoodEstablishment" ng-hide="loadingEstablishment || establishmentNotFound">
 	<div class="establishment">
 		<img class="logo img-circle" ng-src="{{establishment.imageUrl ? establishment.imageUrl : '/assets/img/no_image_200x200.jpg'}}" alt="{{establishment.name}}" itemprop="logo"/>
 
@@ -27,6 +27,8 @@
 				<meta itemprop="addressCountry" content="BRA" />
 				<meta itemprop="postalCode" content="{{establishment.address.zipCode}}" />
 			</h2>
+
+			<meta itemprop="url" content="{{baseUrl()}}/{{establishment.url}}" />
 		</div>
 
 		<div class="additional-info">
