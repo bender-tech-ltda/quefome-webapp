@@ -292,6 +292,28 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			items: []
 		};
 
+
+		//TODO criar teste
+		$scope.formatScheduleInInternationalFormat = function(schedule) {
+			var weekDaysAbbreviation = {
+				"sunday": "Su",
+				"monday": "Mo",
+				"tuesday": "Tu",
+				"wednesday": "We",
+				"thursday": "Th",
+				"friday": "Fr",
+				"saturday": "Sa"
+			};
+
+			var openingTimeDate = new Date(schedule.openingTime);
+			var closingTimeDate = new Date(schedule.closingTime);
+
+			var result = weekDaysAbbreviation[schedule.weekDay.key] + " ";
+			result += $filter("date")(openingTimeDate, "HH:mm") + "-" + $filter("date")(closingTimeDate, "HH:mm");
+
+			return result;
+		};
+
 		$scope.refreshOrder = function(establishment) {
 			if (!establishment) {
 				establishment = {};

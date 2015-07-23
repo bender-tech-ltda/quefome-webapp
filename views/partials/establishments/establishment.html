@@ -48,7 +48,7 @@
 
 			<meta itemprop="currenciesAccepted" content="BRL" />
 			<meta itemprop="paymentAccepted" content="{{establishment.parameters.paymentMethods | join : ', ' : 'name'}}" />
-			
+			<meta itemprop="openingHours" content="{{establishment.parameters.schedules | orderBy: 'weekDay.number' | join: ', ' : formatScheduleInInternationalFormat}}" />
 		</div>
 
 		<div class="clearfix"></div>

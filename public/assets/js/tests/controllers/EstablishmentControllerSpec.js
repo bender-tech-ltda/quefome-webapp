@@ -238,6 +238,63 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
+		describe("when formatting the schedule in international format", function() {
+			var schedule;
+
+			beforeEach(function() {
+				schedule = {
+					weekDay: {
+						key: "sunday"
+					},
+					openingTime: new Date(),
+					closingTime: new Date()
+				};
+
+				schedule.openingTime.setHours(10, 20);
+				schedule.closingTime.setHours(14, 15);
+			});
+
+			it("should use the weekDay abbreviation", function() {
+				var result;
+
+				schedule.weekDay.key = "sunday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Su");
+
+				schedule.weekDay.key = "monday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Mo");
+
+				schedule.weekDay.key = "tuesday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Tu");
+
+				schedule.weekDay.key = "wednesday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^We");
+
+				schedule.weekDay.key = "thursday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Th");
+
+				schedule.weekDay.key = "friday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Fr");
+
+				schedule.weekDay.key = "saturday";
+				result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toMatch("^Sa");
+			});
+
+			it("should parse the openingTime and closingTime in HH:mm format", function() {
+				schedule.openingTime.setHours(10, 20);
+				schedule.closingTime.setHours(23, 30);
+
+				var result = scope.formatScheduleInInternationalFormat(schedule);
+				expect(result).toContain("10:20-23:30");
+			});
+		});
+
 		describe("when refreshing the order", function() {
 			it("should retrieve any stored order", function() {
 				MockedOrderService._retrieveOrder = {items: []};
