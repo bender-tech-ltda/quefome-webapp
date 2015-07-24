@@ -270,7 +270,6 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				var that = this;
 				return function() {
 					var callbackIndex = that.resizeChangeCallbacks.indexOf(callback);
-					console.log("cancelado resize " + callbackIndex);
 
 					if (callbackIndex >= 0) {
 						that.resizeChangeCallbacks.splice(callbackIndex, 1);
@@ -278,9 +277,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				};
 			},
 
-			tiggerResizeChange: function(event) {
-				console.log("resize");
-				
+			tiggerResizeChange: function(event) {			
 				for (var i in this.resizeChangeCallbacks) {
 					var callback = this.resizeChangeCallbacks[i];
 					callback.call($window, event);
@@ -294,7 +291,6 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				var that = this;
 				return function() {
 					var callbackIndex = that.scrollChangeCallbacks.indexOf(callback);
-					console.log("cancelado scroll " + callbackIndex);
 
 					if (callbackIndex >= 0) {
 						that.scrollChangeCallbacks.splice(callbackIndex, 1);

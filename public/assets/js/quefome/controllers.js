@@ -205,13 +205,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			productType: $routeParams.productType || searchObject["product-type"] || searchObject.productType || ""
 		};
 
-		console.log($routeParams.productType);
-
 		$scope.searchingEstablishments = false;
 		$scope.loadingProductTypes = false;
 
 		$scope.selectProductType = function(productType) {
-			$scope.searchFilter.productType = productType ? productType.name : false;
+			$scope.searchFilter.productType = productType ? productType.url : false;
 			$scope.searchFilter.query = "";
 
 			$scope.$digest();
@@ -220,7 +218,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$scope.isProductTypeSelected = function(productType) {
-			return $scope.searchFilter.productType && $scope.searchFilter.productType == productType.name;
+			return $scope.searchFilter.productType && $scope.searchFilter.productType == productType.url;
 		};
 
 		$scope.searchEstablishmentsNames = function(query, callback) {

@@ -158,7 +158,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		describe("selecting a product type", function() {
 			it("should set the selected product type", function() {
 				var productType = {
-					name: "Teste"
+					name: "Teste",
+					url: "teste"
 				};
 
 				expect(function() {
@@ -180,14 +181,15 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 			it("should change the current query search in the URL", function() {
 				var productType = {
-					name: "Teste"
+					name: "Teste",
+					url: "teste"
 				};
 
 				expect(function() {
 					scope.selectProductType(productType);
 				}).not.toThrow();
 
-				expect(Mocked$location._pathPath).toEqual("/restaurantes/" + productType.name);
+				expect(Mocked$location._pathPath).toEqual("/restaurantes/" + productType.url);
 				expect(Mocked$location._searchQuery.q).toBeUndefined();
 			});
 
@@ -271,11 +273,11 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("should search for a list of establishments using a query object", function() {
-				var productType = {name: "Teste"};
+				var productType = {name: "Teste", url: "teste"};
 				scope.selectProductType(productType);
 
 				scope.searchEstablishments();
-				expect(MockedEstablishmentService.query.productType).toEqual(productType.name);
+				expect(MockedEstablishmentService.query.productType).toEqual(productType.url);
 
 				var query = "Pizzaria";
 				scope.searchFilter.query = query;
