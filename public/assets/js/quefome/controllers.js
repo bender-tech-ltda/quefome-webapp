@@ -1552,7 +1552,25 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	module.run(["$rootScope", "$timeout", "$location", "AuthService", function($rootScope, $timeout, $location, AuthService) {
+	module.run(["$rootScope", "$timeout", "$location", "$route", "AuthService", function($rootScope, $timeout, $location, $route, AuthService) {
+		var originalPathFunction = $location.path;
+
+		$location.path = function(path, reload) {
+			if (reload === false) {
+				var currentRoute = $route.current;
+
+				$rootScope.$$isLocationNotReloading = true;
+				var destroyEvent = $rootScope.$on('$locationChangeSuccess', function() {
+					$route.current = currentRoute;
+
+					delete($rootScope.$$reloadLocation);
+					destroyEvent();
+				});
+			}
+
+			return originalPathFunction.call(this, path);
+		};
+
 		$rootScope.$app = {
 			route: {
 				loading: false,
@@ -1561,6 +1579,10 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+			if ($rootScope.$$isLocationNotReloading) {
+				return;
+			}
+
 			if (nextRoute && nextRoute.$$route) {
 				nextRoute = nextRoute.$$route;
 			}
