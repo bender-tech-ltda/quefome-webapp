@@ -67,25 +67,26 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			};
 
 			Mocked$location = {
-				_currentQuery: {},
+				_pathPath: "",
+				path: function(path) {
+					this._pathPath = path;
 
-				search: function(propertyOrObject, value) {
-					if (propertyOrObject) {
-						if (typeof(propertyOrObject) === "object") {
-							this._currentQuery = propertyOrObject;
-						} else if (typeof(propertyOrObject) === "string") {
-							if (typeof(value) !== "undefined") {
-								this._currentQuery[propertyOrObject] = value;
-							}
-						}
+					return this;
+				},
 
+				_searchQuery: {},
+				search: function(query) {
+					if (query) {
+						this._searchQuery = query;
 						return this;
 					}
 
-					return this._currentQuery;
+					return this._searchQuery;
 				},
 
+				_replaceCalled: false,
 				replace: function() {
+					this._replaceCalled = true;
 					return this;
 				}
 			};
@@ -186,8 +187,8 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					scope.selectProductType(productType);
 				}).not.toThrow();
 
-				expect(Mocked$location._currentQuery["product-type"]).toEqual(productType.name);
-				expect(Mocked$location._currentQuery["q"]).toBeUndefined();
+				expect(Mocked$location._pathPath).toEqual("/restaurantes/" + productType.name);
+				expect(Mocked$location._searchQuery.q).toBeUndefined();
 			});
 
 			it("should search for establishments", function() {
@@ -247,12 +248,14 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				expect(scope.searchFilter.productType).toEqual("");
 			});
 
-			it("should change the current query search if it has a query to search", function() {
+			it("should change the path and current query search if it has a query to search", function() {
 				scope.searchFilter.query = "Pizzaria";
 
 				scope.searchEstablishments();
-				expect(Mocked$location._currentQuery["q"]).toEqual(scope.searchFilter.query);
-				expect(Mocked$location._currentQuery["productType"]).toBeUndefined();
+
+				expect(Mocked$location._pathPath).toEqual("/restaurantes/");
+				expect(Mocked$location._searchQuery["q"]).toEqual(scope.searchFilter.query);
+				expect(Mocked$location._replaceCalled).toBe(true);
 			});
 
 			it("should track an event in $analytics if it has a query search", function() {

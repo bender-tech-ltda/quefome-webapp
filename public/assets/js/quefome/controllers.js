@@ -194,7 +194,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		});
 	}]);
 
-	module.controller("SearchEstablishmentController", ["$scope", "$location", "$filter", "$analytics", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $location, $filter, $analytics, Dialog, AddressService, ProductTypeService, EstablishmentService) {
+	module.controller("SearchEstablishmentController", ["$scope", "$routeParams", "$location", "$filter", "$analytics", "Dialog", "AddressService", "ProductTypeService", "EstablishmentService", function($scope, $routeParams, $location, $filter, $analytics, Dialog, AddressService, ProductTypeService, EstablishmentService) {
 		$scope.productTypes = [];
 
 		$scope.establishments = [];
@@ -202,8 +202,10 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		var searchObject = $location.search();
 		$scope.searchFilter = {
 			query: searchObject.q || searchObject.query || "",
-			productType: searchObject["product-type"] || searchObject.productType || ""
+			productType: $routeParams.productType || searchObject["product-type"] || searchObject.productType || ""
 		};
+
+		console.log($routeParams.productType);
 
 		$scope.searchingEstablishments = false;
 		$scope.loadingProductTypes = false;
@@ -247,11 +249,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				searchObject.q = $scope.searchFilter.query;
 			}
 
-			if ($scope.searchFilter.productType) {
-				searchObject["product-type"] = $scope.searchFilter.productType;
-			}
-
-			$location.search(searchObject).replace();
+			$location.path("/restaurantes/" + $scope.searchFilter.productType, false).search(searchObject).replace();
 
 			EstablishmentService.list($scope.searchFilter).then(function(establishments) {
 				$scope.establishments = establishments;

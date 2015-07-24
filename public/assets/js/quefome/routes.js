@@ -8,7 +8,7 @@ define([], function() {
 			templateUrl: "/partials/home/index.html"
 		},
 		{
-			path: "/restaurantes",
+			path: "/restaurantes/:productType?",
 			controller: "SearchEstablishmentController",
 			templateUrl: "/partials/establishments/search.html",
 			reloadOnSearch: false
