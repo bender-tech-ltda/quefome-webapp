@@ -47,7 +47,7 @@ module.exports = {
 		}
 	},
 
-	sitemap: {
+	robots: {
 		protocol: (process.env.USE_SSL_PROTOCOL ? "https" : "http"),
 		domain: (process.env.APP_DOMAIN || "quefo.me"),
 		cacheTime: (process.env.SITEMAP_CACHE_TIME || (1000*60*24))
