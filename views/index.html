@@ -10,6 +10,10 @@
 
 		<meta name="description" content="Quefome é um aplicativo web para você pedir comida online do seu delivery ou restaurante favorito. Peça na internet e receba a tele-entrega em casa." />
 
+		<% if(debug || !seo.allowRobots){ %>
+		<meta name="robots" content="none,noindex,nofollow" />
+		<% } %>
+
 		<style type="text/css">
 			html, body {
 				height: 100%;

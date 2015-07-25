@@ -40,6 +40,10 @@ module.exports = {
 		analytics: {
 			appKey: (process.env.APP_ANALYTICS_KEY || false),
 			adminKey: (process.env.ADMIN_ANALYTICS_KEY || false),
+		},
+
+		seo: {
+			allowRobots: (process.env.ALLOW_SE_ROBOTS ? true : false)
 		}
 	},
 
