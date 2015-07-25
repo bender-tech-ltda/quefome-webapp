@@ -1554,19 +1554,21 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		var originalPathFunction = $location.path;
 
 		$location.path = function(path, reload) {
-			if (reload === false) {
+			var currentPath = originalPathFunction.call(this);
+
+			if (reload === false && currentPath != path) {
 				var currentRoute = $route.current;
 
 				$rootScope.$$isLocationNotReloading = true;
 				var destroyEvent = $rootScope.$on('$locationChangeSuccess', function() {
 					$route.current = currentRoute;
 
-					delete($rootScope.$$reloadLocation);
+					delete($rootScope.$$isLocationNotReloading);
 					destroyEvent();
 				});
 			}
 
-			return originalPathFunction.call(this, path);
+			return originalPathFunction.apply(this, arguments);
 		};
 
 		$rootScope.$app = {
