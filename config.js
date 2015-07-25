@@ -47,6 +47,12 @@ module.exports = {
 		}
 	},
 
+	sitemap: {
+		protocol: (process.env.USE_SSL_PROTOCOL ? "https" : "http"),
+		domain: (process.env.APP_DOMAIN || "quefo.me"),
+		cacheTime: (process.env.SITEMAP_CACHE_TIME || (1000*60*24))
+	},
+
 	override: function(configFile) {
 		this.view.debug = this.debug;
 	}
