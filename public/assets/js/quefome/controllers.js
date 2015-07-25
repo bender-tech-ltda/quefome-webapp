@@ -1667,6 +1667,10 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 			return absUrl.replace(currentUrl, "");
 		};
+
+		$rootScope.currentUrl = function() {
+			return $location.url();
+		};
 	}]);
 
 	return module;

@@ -2090,6 +2090,10 @@ input.invalid:focus, select.invalid:focus {
 	text-align: center;
 }
 
+.breadcrumb {
+	display: none;
+}
+
 .autocomplete {
 	width: 100%;
 	display: inline-block;

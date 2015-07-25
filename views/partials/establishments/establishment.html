@@ -1,3 +1,22 @@
+<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+	<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<a href="/" itemprop="item">
+			<span itemprop="name">Quefo.me</span>
+		</a>
+		<meta itemprop="position" content="1" />
+	</li>
+	<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<a href="/restaurantes/" itemprop="item">
+			<span itemprop="name">Estabelecimentos</span>
+		</a>
+		<meta itemprop="position" content="2" />
+	</li>
+	<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<span itemprop="name">{{establishment ? establishment.name : 'Restaurante'}}</span>
+		<meta itemprop="position" content="3" />
+	</li>
+</ol>
+
 <div ng-show="!loadingEstablishment && establishmentNotFound" class="not-found establishment-not-found">
 	<p class="title">Estabelecimento não encontrado</p>
 	<a href="/restaurantes/">Clique aqui procurar outro estabelecimento</a>

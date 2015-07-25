@@ -1,4 +1,19 @@
 <div class="delivery-search-page">
+	<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+		<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a href="/" itemprop="item">
+				<span itemprop="name">Quefo.me</span>
+			</a>
+			<meta itemprop="position" content="1" />
+		</li>
+		<li class="active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+			<a href="/restaurantes/" itemprop="item">
+				<span itemprop="name">Estabelecimentos</span>
+			</a>
+			<meta itemprop="position" content="2" />
+		</li>
+	</ol>
+
 	<form name="searchForm" class="search-form" ng-submit="searchEstablishments()" qf-lose-focus-on-submit>
 		<div class="food-type-choice">
 			<h3 class="title">Escolha o tipo de comida</h3>
