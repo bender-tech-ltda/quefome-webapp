@@ -122,13 +122,13 @@ var App = function() {
 	this.controllers = new ControllerCollection(app);
 
 	var loadMiddlewareParsers = function() {
-		var logger = require('morgan');
-		var bodyParser = require('body-parser');
+		var logger = require("morgan");
+		var bodyParser = require("body-parser");
 		var methodOverride = require("method-override");
-		var cookieParser = require('cookie-parser');
-		var session = require('express-session');
+		var cookieParser = require("cookie-parser");
+		var session = require("express-session");
 		//var multipart = require("connect-multiparty");
-		var errorhandler = require("errorhandler");
+		//var errorhandler = require("errorhandler");
 
 		app.use(logger('dev'));
 		app.use(bodyParser.json());
