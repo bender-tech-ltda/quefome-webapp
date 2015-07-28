@@ -53,6 +53,13 @@ module.exports = {
 		cacheTime: (process.env.SITEMAP_CACHE_TIME || (1000*60*24))
 	},
 
+	integration: {
+		prerender: {
+			serviceUrl: (process.env.PRERENDER_URL || "http://localhost:3010/"),
+			token: (process.env.PRERENDER_TOKEN || false)
+		}
+	},
+
 	override: function(configFile) {
 		this.view.debug = this.debug;
 	}

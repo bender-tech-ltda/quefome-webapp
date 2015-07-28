@@ -5,5 +5,6 @@ module.exports = {
 	"mongo": "/util/datasource/mongo.js",
 	"datasource": "/util/datasource/datasource.js",
 	"model": "/util/model/Model.js",
-	"expand-js-api": "/util/expand-js-api.js"
+	"expand-js-api": "/util/expand-js-api.js",
+	"integration/prerender": "/util/integration/prerender.js"
 };

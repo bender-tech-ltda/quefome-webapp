@@ -129,6 +129,7 @@ var App = function() {
 		var session = require("express-session");
 		//var multipart = require("connect-multiparty");
 		//var errorhandler = require("errorhandler");
+		var prerender = $require("integration/prerender");
 
 		app.use(logger('dev'));
 		app.use(bodyParser.json());
@@ -138,6 +139,8 @@ var App = function() {
 		app.use(session({secret: config.webapp.session.secret, resave: false, saveUninitialized: false, cookie: {maxAge: 60000}}));
 		//app.use(multipart({uploadDir: config.webapp.upload.dir}));
 		app.use(express.static(PUBLIC_DIR));
+
+		app.use(prerender);
 	};
 
 	var configureErrorHandlers = function() {
