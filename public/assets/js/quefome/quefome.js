@@ -4,6 +4,8 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 	var quefome = angular.module("quefome", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfServices", "qfControllers"]);
 
 	quefome.config(["$locationProvider", "$routeProvider", "$analyticsProvider", "$provide", function($locationProvider, $routeProvider, $analyticsProvider, $provide) {
+		$locationProvider.hashPrefix("!");
+		
 		$locationProvider.html5Mode({
 			enabled: true,
 			requireBase: false
