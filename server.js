@@ -1,5 +1,5 @@
 var app = require('./app');
-
+//TODO transformar isso em um modulo utilizavel (e.g. app.js = index.js e require("app")().start())
 app.bootstrap();
 app.start(function() {
 	console.log('Servidor iniciado na porta ' + app.config.webapp.port);
