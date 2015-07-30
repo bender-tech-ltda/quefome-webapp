@@ -5,10 +5,11 @@ var ViewData = function() {
 
 		var data = util.Object.copy(config.view);
 		data.debug = config.debug;
+		data.info.url = data.info.baseUrl;
 
 		if (req.url) {
-			data.currentUrl = req.url;
-			data.info.url = req.url;
+			data.currentPath = req.originalUrl;
+			data.info.url += req.originalUrl;
 		}
 
 		return data;

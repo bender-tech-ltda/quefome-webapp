@@ -41,9 +41,10 @@ module.exports = {
 			name: (process.env.WEBSITE_NAME || "Quefo.me"),
 			title: (process.env.WEBSITE_TITLE || "Quefo.me - Peça comida e tele-entrega online - Delivery de restaurantes"),
 			description: (process.env.WEBSITE_DESCRIPTION || "Quefome é um aplicativo web para você pedir comida online do seu delivery ou restaurante favorito. Peça na internet e receba a tele-entrega em casa."),
-			image: (process.env.WEBSITE_IMAGE || ""),
+			baseUrl: (process.env.WEBSITE_BASE_URL || "http://quefo.me"),
+			imageUrl: (process.env.WEBSITE_IMAGE || ""),
 			largeImage: (process.env.WEBSITE_LARGE_IMAGE === "false" ? false : true),
-			type: (process.env.WEBSITE_TYPE || "website")
+			websiteType: (process.env.WEBSITE_TYPE || "website")
 		},
 
 		landingPageUrl: (process.env.DELIVERY_PAGE_URL || "http://delivery.quefo.me"),

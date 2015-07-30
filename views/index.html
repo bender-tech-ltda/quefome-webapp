@@ -9,28 +9,30 @@
 		<meta name="robots" content="none,noindex,nofollow" />
 		<% } %>
 
-		<title>Quefo.me - Peça comida e tele-entrega online - Delivery de restaurantes</title>
+		<title><%= info.title %></title>
 
-		<meta name="description" content="Quefome é um aplicativo web para você pedir comida online do seu delivery ou restaurante favorito. Peça na internet e receba a tele-entrega em casa." />
+		<meta name="description" content="<%= info.description %>" />
 		
-		<meta property="og:site_name" content="" />
-		<meta property="og:title" content="" />
-		<meta property="og:description" content="" />
-		<meta property="og:type" content="" />
-		<meta property="og:image" content="" />
-		<meta property="og:url" content="" />
+		<meta property="og:site_name" content="<%= info.name %>" />
+		<meta property="og:title" content="<%= info.title %>" />
+		<meta property="og:description" content="<%= info.description %>" />
+		<meta property="og:type" content="<%= info.websiteType %>" />
+		<meta property="og:image" content="<%= info.imageUrl %>" />
+		<meta property="og:url" content="<%= info.url %>" />
 		<meta property="fb:admins" content="" />
 
-		<meta name="twitter:card" content="" />
-		<meta name="twitter:site" content="" />
-		<meta name="twitter:title" content="" />
-		<meta name="twitter:description" content="" />
-		<meta name="twitter:image" content="" />
+		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : 'summary') %>" />
+		<meta name="twitter:site" content="<%= info.name %>" />
+		<meta name="twitter:title" content="<%= info.title %>" />
+		<meta name="twitter:description" content="<%= info.description %>" />
+		<meta name="twitter:image" content="<%= info.imageUrl %>" />
 
-		<meta itemprop="name" content="" />
-		<meta itemprop="description" content="" />
-		<meta itemprop="image" content="" />
-		<meta itemprop="url" content="" />
+		<meta itemprop="name" content="<%= info.name %>" />
+		<meta itemprop="description" content="<%= info.description %>" />
+		<meta itemprop="image" content="<%= info.imageUrl %>" />
+		<meta itemprop="url" content="<%= info.url %>" />
+
+		<link rel="canonical" href="<%= info.url %>" />
 
 		<link rel="shortcut icon" href="/assets/img/quefome_icon_70x75.png" />
 
