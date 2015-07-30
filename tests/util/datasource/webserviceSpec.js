@@ -16,7 +16,7 @@ setTimeout(function() {
 	server.close();
 }, 5000);
 
-var webservice = $require("webservice");
+var webservice = $require("integration/webservice");
 webservice.setConfig({
 	baseUrl: "http://127.0.0.1:" + WEB_SERVICE_PORT
 });

@@ -7,8 +7,8 @@ var ProductType = app.models.ProductType;
 var Establishment = app.models.Establishment;
 
 var map = sitemap.createSitemap({
-	hostname: config.robots.protocol + "://" + config.robots.domain,
-	cacheTime: config.robots.cacheTime,
+	hostname: config.integration.seo.protocol + "://" + config.integration.seo.domain,
+	cacheTime: config.integration.seo.cacheTime,
 	urls: []
 })
 

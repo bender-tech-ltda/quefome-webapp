@@ -1,5 +1,5 @@
 var Q = require("q");
-var webservice = $require("webservice");
+var webservice = $require("integration/webservice");
 
 var Order = function() {
 	this.create = function(order) {

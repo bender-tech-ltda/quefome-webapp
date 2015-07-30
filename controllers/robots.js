@@ -1,6 +1,6 @@
 var config = $require("config");
 
-var basePath = config.robots.protocol + "://" + config.robots.domain;
+var basePath = config.integration.seo.protocol + "://" + config.integration.seo.domain;
 
 var robots = [
 	{

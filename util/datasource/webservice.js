@@ -1,7 +1,7 @@
 var Q = require("q");
 var request = require("request");
 
-var defaultConfig = $require("config").webservice;
+var defaultConfig = $require("config").integration.webservice;
 
 var WebService = function(config) {
 	if (!config) {

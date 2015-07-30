@@ -136,8 +136,8 @@ var App = function() {
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(methodOverride());
 		app.use(cookieParser());
-		app.use(session({secret: config.webapp.session.secret, resave: false, saveUninitialized: false, cookie: {maxAge: 60000}}));
-		//app.use(multipart({uploadDir: config.webapp.upload.dir}));
+		app.use(session({secret: config.server.session.secret, resave: false, saveUninitialized: false, cookie: {maxAge: 60000}}));
+		//app.use(multipart({uploadDir: config.server.upload.dir}));
 		app.use(express.static(PUBLIC_DIR));
 
 		app.use(prerender);
@@ -176,7 +176,7 @@ var App = function() {
 	var configureApp = function() {
 		var ejs = require("ejs");
 
-		app.set('port', config.webapp.port);
+		app.set('port', config.server.port);
 		app.set('views', VIEWS_DIR);
 		app.set('view engine', 'html');
 		app.engine('html', ejs.renderFile);

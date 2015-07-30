@@ -1,4 +1,4 @@
-var webservice = $require("webservice");
+var webservice = $require("integration/webservice");
 
 var Establishment = function() {
 	this.list = function() {

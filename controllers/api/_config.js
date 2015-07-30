@@ -1,5 +1,5 @@
 var config = $require("config");
-var webservice = $require("webservice");
+var webservice = $require("integration/webservice");
 
 module.exports = {
 	beforeLoad: function(router) {
