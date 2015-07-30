@@ -1,5 +1,7 @@
 var config = $require("config");
 
+var ViewData = app.models.ViewData;
+
 module.exports = {
 	beforeLoad: function(router) {
 		router.use(function(req, res, next) {
@@ -10,7 +12,7 @@ module.exports = {
 
 	afterLoad: function(router) {
 		router.get("/*", function(req, res, next) {
-			res.render("index", config.view);
+			res.render("index", ViewData.getData(req));
 		});
 	}
 };
