@@ -214,11 +214,44 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 			$scope.$digest();
 
+			$scope.updatePageInfo();
 			$scope.searchEstablishments();
 		};
 
 		$scope.isProductTypeSelected = function(productType) {
 			return $scope.searchFilter.productType && $scope.searchFilter.productType == productType.url;
+		};
+
+		var originalTitle, originalDescription;
+		$scope.updatePageInfo = function() {
+			if (!originalTitle && !originalDescription) {
+				originalTitle = $scope.$app.info.title;
+				originalDescription = $scope.$app.info.description;
+			} else {
+				$scope.$app.info.title = originalTitle;
+				$scope.$app.info.description = originalDescription;
+			}
+			
+			if ($scope.searchFilter.productType) {
+				var selectedProductType = null;
+
+				for (var i in $scope.productTypes) {
+					var type = $scope.productTypes[i];
+
+					if (type.url == $scope.searchFilter.productType) {
+						selectedProductType = type;
+						break;
+					}
+				}
+
+				if (selectedProductType) {
+					$scope.$app.info.title = selectedProductType.name + " - Pesquisa de estabelecimentos - Quefo.me";
+					$scope.$app.info.description = "Procurando por " + selectedProductType.name + "? Chega mais que temos restaurantes ultra-master-deliciosos para você!";
+				}
+			} else if ($scope.searchFilter.query) {
+				$scope.$app.info.title = "'" + $scope.searchFilter.query + "'" + " - Pesquisa de estabelecimentos - Quefo.me";
+				$scope.$app.info.description = "Procurando por '" + $scope.searchFilter.query + "'?  Chega mais que temos restaurantes ultra-master-deliciosos para você!";
+			}
 		};
 
 		$scope.searchEstablishmentsNames = function(query, callback) {
@@ -255,6 +288,8 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 				$scope.$digest();
 			});
+
+			$scope.updatePageInfo();
 		};
 
 		$scope.loadingProductTypes = true;
@@ -262,6 +297,8 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			$scope.productTypes = productTypes;
 			$scope.loadingProductTypes = false;
 			
+			$scope.updatePageInfo();
+
 			$scope.$digest();
 		});
 

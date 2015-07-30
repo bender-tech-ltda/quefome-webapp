@@ -394,6 +394,18 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.refreshOrder({id: -2})
 				expect(called).toBe(true);
 			});
+
+			it("should update the page info", function() {
+				var called = false;
+
+				scope.updatePageInfo = function() {
+					called = true;
+				};
+
+				scope.refreshOrder({id: -1});
+
+				expect(called).toBe(true);
+			});
 		});
 
 		describe("when refreshing the parameters", function() {

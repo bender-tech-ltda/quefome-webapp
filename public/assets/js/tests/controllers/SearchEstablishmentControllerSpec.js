@@ -204,6 +204,18 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 				expect(scope.establishments).toEqual(MockedEstablishmentService._list);
 			});
+
+			it("should update the page info", function() {
+				var called = false;
+
+				scope.updatePageInfo = function() {
+					called = true;
+				};
+
+				scope.selectProductType({name: "Pizza"});
+
+				expect(called).toBe(true);
+			});
 		});
 
 		describe("when getting establishments names", function() {
@@ -220,6 +232,42 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				});
 
 				expect(called).toBe(true);
+			});
+		});
+
+		describe("when updating the page info", function() {
+			it("should set the info based on the selected product type", function() {
+				scope.searchFilter.productType = "pizza";
+				scope.productTypes = [
+					{name: "pizza", url: "pizza"}
+				];
+
+				scope.updatePageInfo();
+
+				expect(scope.$app.info.title).toContain("pizza");
+				expect(scope.$app.info.description).toContain("pizza");
+			});
+
+			it("should set the info title based on the searched query", function() {
+				scope.searchFilter.query = "pudim";
+
+				scope.updatePageInfo();
+
+				expect(scope.$app.info.title).toContain("pudim");
+			});
+
+			it("should set back the original title if needed", function() {
+				scope.$app.info.title = "Titulo";
+				scope.$app.info.description = "Descrição";
+
+				scope.searchFilter.query = "asdf";
+				scope.updatePageInfo();
+
+				scope.searchFilter.query = "";
+				scope.updatePageInfo();
+
+				expect(scope.$app.info.title).toEqual("Titulo");
+				expect(scope.$app.info.description).toEqual("Descrição");
 			});
 		});
 
@@ -291,6 +339,18 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				scope.searchEstablishments();
 
 				expect(scope.searchingEstablishments).toBe(false);
+			});
+
+			it("should update the page info", function() {
+				var called = false;
+
+				scope.updatePageInfo = function() {
+					called = true;
+				};
+
+				scope.searchEstablishments();
+
+				expect(called).toBe(true);
 			});
 		});
 	});

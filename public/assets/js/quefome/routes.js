@@ -12,7 +12,7 @@ define([], function() {
 			controller: "SearchEstablishmentController",
 			templateUrl: "/partials/establishments/search.html",
 			pageInfo: {
-				title: "Pesquisa de estabelecimentos - Quefo.me",
+				title: "Procure estabelecimentos - Quefo.me",
 				description: "#partiu procurar o restaurante do seu rango de hoje? Encontre os melhores deliveries de Porto Alegre."
 			},
 			reloadOnSearch: false
