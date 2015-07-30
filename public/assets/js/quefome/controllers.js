@@ -1609,8 +1609,10 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		});
 
 		$rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
-			if (currentRoute && currentRoute.$$route) {
-				$rootScope.$app.route.originalPath = currentRoute.$$route.redirectTo || currentRoute.$$route.originalPath;
+			if (currentRoute && currentRoute.$$route && currentRoute.$$route.redirectTo) {
+				$rootScope.$app.route.originalPath = currentRoute.$$route.redirectTo;
+			} else {
+				$rootScope.$app.route.originalPath = $location.path();
 			}
 
 			$timeout(function(){

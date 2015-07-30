@@ -679,7 +679,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 		};
 	}]);
 
-	module.directive("qfTitleBind", function() {
+	module.directive("qfTitleBind", [function() {
 		return {
 			restrict: "A",
 			scope: {
@@ -693,5 +693,37 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				});
 			}
 		};
-	});
+	}]);
+
+	module.directive("qfContentBind", [function() {
+		return {
+			restrict: "A",
+			scope: {
+				bind: "=qfContentBind"
+			},
+			link: function(scope, element, attrs) {
+				var originalContent = attrs.content;
+
+				scope.$watch("bind", function() {
+					element.attr("content", scope.bind ? scope.bind : originalContent);
+				});
+			}
+		};
+	}]);
+
+	module.directive("qfHrefBind", [function() {
+		return {
+			restrict: "A",
+			scope: {
+				bind: "=qfHrefBind"
+			},
+			link: function(scope, element, attrs) {
+				var originalHref = attrs.href;
+
+				scope.$watch("bind", function() {
+					element.attr("href", scope.bind ? scope.bind : originalHref);
+				});
+			}
+		};
+	}]);
 });
