@@ -419,6 +419,34 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			});
 		});
 
+		describe("when updating the page info", function() {
+			it("should set as not found if the establishment was not found", function() {
+				scope.$app.info = {};
+				scope.establishmentNotFound = true;
+
+				scope.updatePageInfo();
+
+				expect(scope.$app.info.title).toContain("não encontrado");
+				expect(scope.$app.info.largeImage).toBe(false);
+			});
+
+			it("should use the establishment info when found", function() {
+				scope.$app.info = {};
+				scope.establishmentNotFound = false;
+				scope.establishment = {
+					name: "Pudim",
+					description: "É bom",
+					imageUrl: "http://imagem_bacana.jpg"
+				};
+
+				scope.updatePageInfo();
+
+				expect(scope.$app.info.title).toContain("Pudim");
+				expect(scope.$app.info.description).toEqual("É bom");
+				expect(scope.$app.info.imageUrl).toEqual("http://imagem_bacana.jpg");
+			});
+		});
+
 		describe("when checking for user address", function() {
 			it("should not show a dialog if the user will withdraw the order", function() {
 				scope.order.withdraw = true;

@@ -336,6 +336,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			}
 
 			$scope.refreshParameters();
+			$scope.updatePageInfo();
 		};
 
 		var refreshParametersPromise = null;
@@ -348,6 +349,22 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 					$scope.refreshParameters();
 				});
 			}, 1000 * 60 * 5);
+		};
+
+		$scope.updatePageInfo = function() {
+			if ($scope.establishmentNotFound) {
+				$scope.$app.info = {
+					title: "Estabelecimento não encontrado - Quefo.me",
+					largeImage: false
+				};
+			} else {
+				$scope.$app.info = {
+					title: $scope.establishment.name + " - Quefo.me",
+					description: $scope.establishment.description,
+					imageUrl: $scope.establishment.imageUrl,
+					largeImage: false
+				};
+			}
 		};
 
 		$scope.toggleProductType = function(productType) {
@@ -610,6 +627,8 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		}, function(error) {
 			$scope.establishmentNotFound = error.isNotFoundError ? true : false;
 			$scope.loadingEstablishment = !$scope.establishmentNotFound;
+
+			$scope.updatePageInfo();
 		});
 	}]);
 

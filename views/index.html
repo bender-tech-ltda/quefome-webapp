@@ -23,7 +23,7 @@
 		<meta property="og:url" content="<%= info.url %>" qf-content-bind="'<%= info.baseUrl %>' + $app.route.originalPath" />
 		<meta property="fb:admins" content="<%= integration.facebook.pageId %>" />
 
-		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : '') %>" qf-content-bind="$app.info.largeImage ? 'summary_large_image' : 'summary'" />
+		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : 'summary') %>" qf-content-bind="$app.info.largeImage ? 'summary_large_image' : ($app.info.largeImage === false ? 'summary' : '')" />
 		<meta name="twitter:site" content="<%= integration.twitter.account %>" />
 		<meta name="twitter:title" content="<%= info.title %>" qf-content-bind="$app.info.title" />
 		<meta name="twitter:description" content="<%= info.description %>" qf-content-bind="$app.info.description" />

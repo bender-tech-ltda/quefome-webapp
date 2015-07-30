@@ -22,7 +22,7 @@ define([], function() {
 			controller: "EstablishmentController",
 			templateUrl: "/partials/establishments/establishment.html",
 			pageInfo: {
-				title: "Quefo.me",
+				title: "Restaurante - Quefo.me",
 				description: "Estabelecimento ultra-master delicioso"
 			},
 			loadingMessage: "Carregando um estabelecimento ultra-master delicioso...",
