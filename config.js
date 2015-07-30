@@ -47,20 +47,33 @@ module.exports = {
 			websiteType: (process.env.WEBSITE_TYPE || "website")
 		},
 
-		landingPageUrl: (process.env.DELIVERY_PAGE_URL || "http://delivery.quefo.me"),
+		href: {
+			landingPageUrl: (process.env.DELIVERY_PAGE_URL || "http://delivery.quefo.me"),
 
-		social: {
-			facebookPageUrl: (process.env.FACEBOOK_PAGE_URL || "https://facebook.com/quefomeapp"),
-			twitterPageUrl: (process.env.TWITTER_PAGE_URL || "https://twitter.com/quefomeapp")
+			social: {
+				facebookPageUrl: (process.env.FACEBOOK_PAGE_URL || "https://facebook.com/quefomeapp"),
+				twitterPageUrl: (process.env.TWITTER_PAGE_URL || "https://twitter.com/quefomeapp"),
+			}
 		},
 
-		analytics: {
-			appKey: (process.env.APP_ANALYTICS_KEY || false),
-			adminKey: (process.env.ADMIN_ANALYTICS_KEY || false),
-		},
 
-		seo: {
-			allowRobots: (process.env.ALLOW_ROBOTS ? true : false)
+		integration: {
+			googleAnalytics: {
+				appKey: (process.env.APP_ANALYTICS_KEY || false),
+				adminKey: (process.env.ADMIN_ANALYTICS_KEY || false),
+			},
+
+			facebook: {
+				pageId: (process.env.FACEBOOK_PAGE_ID || "")
+			},
+
+			twitter: {
+				account: (process.env.TWITTER_ACCOUNT || "@quefomeapp")
+			},
+
+			seo: {
+				allowRobots: (process.env.ALLOW_ROBOTS ? true : false)
+			}
 		}
 	},
 

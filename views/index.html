@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-br" ng-app="">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="fragment" content="!" />
+
+		<link rel="canonical" href="<%= info.url %>" qf-href-bind="<%= info.url %>' + $app.info.originalPath" />
 
 		<% if(debug || !seo.allowRobots){ %>
 		<meta name="robots" content="none,noindex,nofollow" />
 		<% } %>
 
-		<title><%= info.title %></title>
+		<title ng-bind="$app.info.title"><%= info.title %></title>
 
-		<meta name="description" content="<%= info.description %>" />
+		<meta name="description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
 		
-		<meta property="og:site_name" content="<%= info.name %>" />
-		<meta property="og:title" content="<%= info.title %>" />
-		<meta property="og:description" content="<%= info.description %>" />
-		<meta property="og:type" content="<%= info.websiteType %>" />
-		<meta property="og:image" content="<%= info.imageUrl %>" />
-		<meta property="og:url" content="<%= info.url %>" />
-		<meta property="fb:admins" content="" />
+		<meta property="og:site_name" content="<%= info.name %>" qf-content-bind="$app.info.name" />
+		<meta property="og:title" content="<%= info.title %>" qf-content-bind="$app.info.title" />
+		<meta property="og:description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
+		<meta property="og:type" content="<%= info.websiteType %>" qf-content-bind="$app.info.websiteType" />
+		<meta property="og:image" content="<%= info.imageUrl %>" qf-content-bind="$app.info.imageUrl" ng-if="$app.info.imageUrl" />
+		<meta property="og:url" content="<%= info.url %>" qf-content-bind="'<%= info.url %>' + $app.info.originalPath" />
+		<meta property="fb:admins" content="<%= integration.facebook.pageId %>" />
 
-		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : 'summary') %>" />
-		<meta name="twitter:site" content="<%= info.name %>" />
-		<meta name="twitter:title" content="<%= info.title %>" />
-		<meta name="twitter:description" content="<%= info.description %>" />
-		<meta name="twitter:image" content="<%= info.imageUrl %>" />
+		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : 'summary') %>" qf-content-bind="$app.info.largeImage ? 'summary_large_image' : 'summary'" />
+		<meta name="twitter:site" content="<%= integration.twitter.account %>" />
+		<meta name="twitter:title" content="<%= info.title %>" qf-content-bind="$app.info.title" />
+		<meta name="twitter:description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
+		<meta name="twitter:image" content="<%= info.imageUrl %>" qf-content-bind="$app.info.imageUrl" ng-if="$app.info.imageUrl" />
 
-		<meta itemprop="name" content="<%= info.name %>" />
-		<meta itemprop="description" content="<%= info.description %>" />
-		<meta itemprop="image" content="<%= info.imageUrl %>" />
-		<meta itemprop="url" content="<%= info.url %>" />
-
-		<link rel="canonical" href="<%= info.url %>" />
+		<meta itemprop="name" content="<%= info.name %>" qf-content-bind="$app.info.name" />
+		<meta itemprop="description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
+		<meta itemprop="image" content="<%= info.imageUrl %>" qf-content-bind="$app.info.imageUrl" ng-if="$app.info.imageUrl" />
+		<meta itemprop="url" content="<%= info.url %>" qf-content-bind="<%= info.url %>' + $app.info.originalPath"/>
 
 		<link rel="shortcut icon" href="/assets/img/quefome_icon_70x75.png" />
 
@@ -290,22 +290,22 @@
 			<div class="content" ng-hide="$app.route.loading" autoscroll="true" ng-view></div>
 
 			<footer class="footer">
-				<a class="new-delivery" href="<%= landingPageUrl %>" target="_blank" title="Clique aqui para saber como ter seu restaurante no Quefo.me">
+				<a class="new-delivery" href="<%= href.landingPageUrl %>" target="_blank" title="Clique aqui para saber como ter seu restaurante no Quefo.me">
 					<span class="qf-icon icon-home"></span>
 				</a>
 				<div class="social-networks">
-					<a class="facebook-link" href="<%= social.facebookPageUrl %>" target="_blank" title="Siga nossa página no Facebook">
+					<a class="facebook-link" href="<%= href.social.facebookPageUrl %>" target="_blank" title="Siga nossa página no Facebook">
 						<span class="qf-icon icon-facebook-round"></span>
 					</a>
-					<a class="twitter-link" href="<%= social.twitterPageUrl %>" target="_blank" title="Siga nossa página no Twitter">
+					<a class="twitter-link" href="<%= href.social.twitterPageUrl %>" target="_blank" title="Siga nossa página no Twitter">
 						<span class="qf-icon icon-twitter"></span>
 					</a>
 				</div>
 			</footer>
 		</div>
 
-		<% if(!debug && analytics.appKey){ %>
-		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', '<%= analytics.appKey %>', 'auto'); ga('send', 'pageview');</script>
+		<% if(!debug && integration.googleAnalytics.appKey){ %>
+		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', '<%= integration.googleAnalytics.appKey %>', 'auto'); ga('send', 'pageview');</script>
 		
 		<script type="text/javascript">
 			var reportError = function(error, file, line, column) {
