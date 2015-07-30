@@ -1572,9 +1572,18 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$rootScope.$app = {
+			info: {
+				name: null,
+				title: null,
+				description: null,
+				websiteType: null,
+				imageUrl: null,
+				largeImage: null
+			},
 			route: {
 				loading: false,
-				loadingMessage: false
+				loadingMessage: false,
+				originalPath: ""
 			}
 		};
 
@@ -1587,6 +1596,9 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				nextRoute = nextRoute.$$route;
 			}
 
+			$rootScope.$app.info = (nextRoute.pageInfo ? angular.copy(nextRoute.pageInfo) : {});
+			$rootScope.$app.route.originalPath = "";
+
 			if (nextRoute && nextRoute.loadingMessage) {
 				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;
 			} else {
@@ -1596,7 +1608,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			$rootScope.$app.route.loading = true;
 		});
 
-		$rootScope.$on('$routeChangeSuccess', function () {
+		$rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
+			if (currentRoute && currentRoute.$$route) {
+				$rootScope.$app.route.originalPath = currentRoute.$$route.redirectTo || currentRoute.$$route.originalPath;
+			}
+
 			$timeout(function(){
 				$rootScope.$app.route.loading = false;
 			}, 200);

@@ -11,7 +11,10 @@ define([], function() {
 			path: "/restaurantes/:productType?",
 			controller: "SearchEstablishmentController",
 			templateUrl: "/partials/establishments/search.html",
-			reloadOnSearch: false
+			reloadOnSearch: false,
+			pageInfo: {
+				title: "Pesquisa de estabelecimentos - Quefo.me"
+			}
 		},
 		{
 			path: "/:establishmentUrl",

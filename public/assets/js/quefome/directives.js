@@ -678,4 +678,20 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			}
 		};
 	}]);
+
+	module.directive("qfTitleBind", function() {
+		return {
+			restrict: "A",
+			scope: {
+				bind: "=qfTitleBind"
+			},
+			link: function(scope, element, attrs) {
+				var originalTitle = element.text();
+
+				scope.$watch("bind", function() {
+					element.text(scope.bind ? scope.bind : originalTitle);
+				});
+			}
+		};
+	});
 });
