@@ -390,10 +390,11 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 		$scope.updatePageInfo = function() {
 			if ($scope.establishmentNotFound) {
-				$scope.$app.info = {
+				$scope.$app.status.notFound({
 					title: "Estabelecimento não encontrado - Quefo.me",
-					largeImage: false
-				};
+					description: "Não encontramos esse estabelecimento, mas temos vários outros esperando você!",
+					noImage: false
+				});
 			} else {
 				$scope.$app.info = {
 					title: $scope.establishment.name + " - Quefo.me",
@@ -1604,6 +1605,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 	}]);
 
 	module.controller("NotFoundController", ["$scope", function($scope) {
+		$scope.$app.status.notFound();
 	}]);
 
 	module.run(["$rootScope", "$timeout", "$location", "$route", "AuthService", function($rootScope, $timeout, $location, $route, AuthService) {
@@ -1628,18 +1630,53 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$rootScope.$app = {
+			header: {
+				status: null,
+			},
+
 			info: {
 				name: null,
 				title: null,
 				description: null,
 				websiteType: null,
 				imageUrl: null,
-				largeImage: null
+				largeImage: null,
+				noImage: null,
 			},
+
 			route: {
 				loading: false,
 				loadingMessage: false,
 				originalPath: ""
+			},
+
+			status: {
+				notFound: function(info) {
+					info = info || {};
+					info.title = info.title || "Página não encontrada - Quefo.me";
+					info.description = info.description || "Desculpe, mas não encontramos a página que você está procurando.";
+					info.noImage = (info.noImage === false ? false : true);
+
+					return this.code(404, info);
+				},
+
+				error: function(info) {
+					info = info || {};
+					info.title = info.title || "Tivemos um problema - Quefo.me";
+					info.noImage = (info.noImage === false ? false : true);
+
+					return this.code(500, info);
+				},
+
+				code: function(code, info) {
+					$rootScope.$app.header.status = code;
+
+					if (info) {
+						$rootScope.$app.info = info;
+					}
+
+					return this;
+				}
 			}
 		};
 
@@ -1652,7 +1689,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				nextRoute = nextRoute.$$route;
 			}
 
-			$rootScope.$app.info = (nextRoute.pageInfo ? angular.copy(nextRoute.pageInfo) : {});
+			$rootScope.$app.status.code(200, (nextRoute.pageInfo ? angular.copy(nextRoute.pageInfo) : {}));
 			$rootScope.$app.route.originalPath = "";
 
 			if (nextRoute && nextRoute.loadingMessage) {
@@ -1678,6 +1715,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 		$rootScope.$on('$routeChangeError', function () {
 			$rootScope.$app.route.loading = false;
+			$rootScope.$app.status.error();
 		});
 
 		var doItSafe = function(what, callback) {
