@@ -1610,6 +1610,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 	module.run(["$rootScope", "$timeout", "$location", "$route", "AuthService", function($rootScope, $timeout, $location, $route, AuthService) {
 		var originalPathFunction = $location.path;
+		var originalSearchFunction = $location.search;
 
 		$location.path = function(path, reload) {
 			var currentPath = originalPathFunction.call(this);
@@ -1627,6 +1628,13 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			}
 
 			return originalPathFunction.apply(this, arguments);
+		};
+
+		$location.search = function() {
+			var result = originalSearchFunction.apply(this, arguments);
+			$rootScope.$app.route.originalPath = $location.url();
+
+			return result;
 		};
 
 		$rootScope.$app = {
@@ -1681,6 +1689,18 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		};
 
 		$rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
+			if (nextRoute && nextRoute.$$route) {
+				nextRoute = nextRoute.$$route;
+			}
+
+			if (nextRoute && nextRoute.redirectTo) {
+				$rootScope.$app.route.originalPath = nextRoute.redirectTo;
+			} else {
+				$rootScope.$app.route.originalPath = $location.url();
+			}
+		});
+
+		$rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute) {
 			if ($rootScope.$$isLocationNotReloading) {
 				return;
 			}
@@ -1690,7 +1710,6 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			}
 
 			$rootScope.$app.status.code(200, (nextRoute.pageInfo ? angular.copy(nextRoute.pageInfo) : {}));
-			$rootScope.$app.route.originalPath = "";
 
 			if (nextRoute && nextRoute.loadingMessage) {
 				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;
@@ -1702,12 +1721,6 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 		});
 
 		$rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
-			if (currentRoute && currentRoute.$$route && currentRoute.$$route.redirectTo) {
-				$rootScope.$app.route.originalPath = currentRoute.$$route.redirectTo;
-			} else {
-				$rootScope.$app.route.originalPath = $location.path();
-			}
-
 			$timeout(function(){
 				$rootScope.$app.route.loading = false;
 			}, 200);
