@@ -32,8 +32,6 @@ module.exports = {
 		},
 
 		seo: {
-			protocol: (process.env.USE_SSL_PROTOCOL ? "https" : "http"),
-			domain: (process.env.APP_DOMAIN || "quefo.me"),
 			cacheTime: (process.env.SITEMAP_CACHE_TIME || (1000*60*24))
 		}
 	},
@@ -43,7 +41,6 @@ module.exports = {
 			name: (process.env.WEBSITE_NAME || "Quefo.me"),
 			title: (process.env.WEBSITE_TITLE || "Quefo.me - Peça comida e tele-entrega online - Delivery de restaurantes"),
 			description: (process.env.WEBSITE_DESCRIPTION || "Quefome é um aplicativo web para você pedir comida online do seu delivery ou restaurante favorito. Peça na internet e receba a tele-entrega em casa."),
-			baseUrl: (process.env.WEBSITE_BASE_URL || "http://quefo.me"),
 			imageUrl: (process.env.WEBSITE_IMAGE || ""),
 			largeImage: (process.env.WEBSITE_LARGE_IMAGE === "false" ? false : true),
 			websiteType: (process.env.WEBSITE_TYPE || "website")
@@ -57,7 +54,6 @@ module.exports = {
 				twitterPageUrl: (process.env.TWITTER_PAGE_URL || "https://twitter.com/quefomeapp"),
 			}
 		},
-
 
 		integration: {
 			googleAnalytics: {

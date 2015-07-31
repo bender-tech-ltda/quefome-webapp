@@ -5,11 +5,13 @@ var ViewData = function() {
 
 		var data = util.Object.copy(config.view);
 		data.debug = config.debug;
-		data.info.url = data.info.baseUrl;
 
-		if (req.url) {
+		data.baseUrl = (config.server.secure ? "https://" : "http://") + config.server.domain;
+		data.currentUrl = data.baseUrl;
+
+		if (req.originalUrl) {
 			data.currentPath = req.originalUrl;
-			data.info.url += req.originalUrl;
+			data.currentUrl += req.originalUrl;
 		}
 
 		return data;

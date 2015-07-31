@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="fragment" content="!" />
 
-		<link rel="canonical" href="<%= info.url %>" qf-href-bind="'<%= info.baseUrl %>' + $app.route.originalPath" />
+		<link rel="canonical" href="<%= currentUrl %>" qf-href-bind="'<%= baseUrl %>' + $app.route.originalPath" />
 
 		<% if(debug || !seo.allowRobots){ %>
 		<meta name="robots" content="none,noindex,nofollow" />
@@ -20,7 +20,7 @@
 		<meta property="og:description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
 		<meta property="og:type" content="<%= info.websiteType %>" qf-content-bind="$app.info.websiteType" />
 		<meta property="og:image" content="<%= info.imageUrl %>" qf-content-bind="$app.info.imageUrl" ng-if="$app.info.noImage !== true" />
-		<meta property="og:url" content="<%= info.url %>" qf-content-bind="'<%= info.baseUrl %>' + $app.route.originalPath" />
+		<meta property="og:url" content="<%= currentUrl %>" qf-content-bind="'<%= baseUrl %>' + $app.route.originalPath" />
 		<meta property="fb:admins" content="<%= integration.facebook.pageId %>" />
 
 		<meta name="twitter:card" content="<%= (info.largeImage ? 'summary_large_image' : 'summary') %>" qf-content-bind="$app.info.largeImage ? 'summary_large_image' : ($app.info.noImage === true || $app.info.largeImage === false ? 'summary' : '')" />
@@ -32,7 +32,7 @@
 		<meta itemprop="name" content="<%= info.name %>" qf-content-bind="$app.info.name" />
 		<meta itemprop="description" content="<%= info.description %>" qf-content-bind="$app.info.description" />
 		<meta itemprop="image" content="<%= info.imageUrl %>" qf-content-bind="$app.info.imageUrl" ng-if="$app.info.noImage !== true" />
-		<meta itemprop="url" content="<%= info.url %>" qf-content-bind="'<%= info.baseUrl %>' + $app.route.originalPath"/>
+		<meta itemprop="url" content="<%= currentUrl %>" qf-content-bind="'<%= baseUrl %>' + $app.route.originalPath"/>
 
 		<meta name="prerender-status-code" content="200" qf-content-bind="$app.header.status" />
 
