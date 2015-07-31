@@ -433,13 +433,15 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		describe("when updating the page info", function() {
 			it("should set as not found if the establishment was not found", function() {
-				scope.$app.info = {};
+				var called = false;
+				scope.$app.status.notFound = function() {
+					called = true;
+				};
 				scope.establishmentNotFound = true;
 
 				scope.updatePageInfo();
 
-				expect(scope.$app.info.title).toContain("não encontrado");
-				expect(scope.$app.info.largeImage).toBe(false);
+				expect(called).toBe(true);
 			});
 
 			it("should use the establishment info when found", function() {
