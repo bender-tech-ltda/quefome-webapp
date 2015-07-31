@@ -12,6 +12,8 @@ module.exports = {
 	debug: environment == "development",
 
 	server: {
+		secure: (process.env.USE_SSL_PROTOCOL ? true : false),
+		domain: (process.env.APP_DOMAIN || "quefo.me"),
 		port: (process.env.PORT || 3000),
 
 		session: {
