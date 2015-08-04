@@ -1,3 +1,5 @@
+var config = $require("config");
+
 var User = app.models.User;
 var Order = app.models.Order;
 
@@ -21,16 +23,15 @@ module.exports = function(router) {
 	});
 
 	router.get("/api/users/auth/login/:email", function(req, res) {
-		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.body.keepLoggedIn : false;
+		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.query.keepLoggedIn : false;
 
 		User.login(req.params.email, req.query ? req.query.password : "").then(function(user) {
 			if (typeof(user.password) != "undefined") {
 				delete(user.password);
 			}
 
-			if (!keepLoggedIn) {
-				req.session.cookie.expires = false;
-				req.session.cookie.maxAge = false;
+			if (!keepLoggedIn || keepLoggedIn === "false") {
+				req.session.cookie.maxAge = null;
 			}
 
 			req.session.user = user;

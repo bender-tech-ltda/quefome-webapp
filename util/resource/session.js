@@ -2,11 +2,14 @@ var session = require("express-session");
 var config = $require("config");
 
 var sessionOptions = {
+	name: config.server.session.name,
 	secret: config.server.session.secret,
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
-		maxAge: 60000
+		maxAge: config.server.session.maxAge,
+		secure: config.server.secure,
+		httpOnly: false
 	}
 };
 
@@ -22,7 +25,7 @@ if (config.server.session.store.redis) {
 		db: config.integration.redis.db
 	});
 } else {
-	console.log("Session Store: in memory");
+	console.log("Session Store: MemoryStore");
 }
 
 module.exports = session(sessionOptions);

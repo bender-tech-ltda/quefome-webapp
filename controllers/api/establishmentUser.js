@@ -2,16 +2,15 @@ var EstablishmentUser = app.models.EstablishmentUser;
 
 module.exports = function(router) {
 	router.get("/api/establishment-users/auth/login/:email", function(req, res) {
-		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.body.keepLoggedIn : false;
+		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.query.keepLoggedIn : false;
 
 		EstablishmentUser.login(req.params.email, req.query ? req.query.password : "").then(function(establishmentUser) {
 			if (typeof(establishmentUser.password) != "undefined") {
 				delete(establishmentUser.password);
 			}
 
-			if (!keepLoggedIn) {
-				req.session.cookie.expires = false;
-				req.session.cookie.maxAge = false;
+			if (!keepLoggedIn || keepLoggedIn === "false") {
+				req.session.cookie.maxAge = null;
 			}
 
 			req.session.establishmentUser = establishmentUser;
