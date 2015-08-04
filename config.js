@@ -17,18 +17,27 @@ module.exports = {
 		port: (process.env.PORT || 3000),
 
 		session: {
+			store: {
+				redis: (process.env.USE_REDIS_SESSION_STORE ? true : false)
+			},
 			secret: (process.env.SESSION_SECRET || "H698Hkas637ASmNasd3901iasdL")
 		}
 	},
 
 	integration: {
 		webservice: {
-			baseUrl: (process.env.WS_URL || "http://localhost:8080/QueFomeCoreMVP/")
+			baseUrl: (process.env.WS_URL || "http://127.0.0.1:8080/QueFomeCoreMVP/")
 		},
 
 		prerender: {
-			serviceUrl: (process.env.PRERENDER_URL || "http://localhost:3010/"),
+			serviceUrl: (process.env.PRERENDER_URL || "http://127.0.0.1:3010/"),
 			token: (process.env.PRERENDER_TOKEN || false)
+		},
+
+		redis: {
+			host: (process.env.REDIS_HOST || "127.0.0.1"),
+			port: (process.env.REDIS_PORT || "6379"),
+			password: (process.env.REDIS_PASSWORD || ""),
 		},
 
 		seo: {
