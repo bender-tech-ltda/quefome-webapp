@@ -43,7 +43,13 @@ module.exports = function(router) {
 
 	router.delete("/api/users/auth/logout/", function(req, res) {
 		if (req.session) {
-			req.session.destroy();
+			if (req.session.user) {
+				delete(req.session.user);
+			}
+
+			if (!req.session.establishmentUser) {
+				req.session.destroy();
+			}
 		}
 
 		res.json({destroyed: true});

@@ -22,7 +22,13 @@ module.exports = function(router) {
 
 	router.delete("/api/establishment-users/auth/logout/", function(req, res) {
 		if (req.session) {
-			req.session.destroy();
+			if (req.session.establishmentUser) {
+				delete(req.session.establishmentUser);
+			}
+
+			if (!req.session.user) {
+				req.session.destroy();
+			}
 		}
 
 		res.json({destroyed: true});
