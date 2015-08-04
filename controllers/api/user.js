@@ -5,6 +5,11 @@ var Order = app.models.Order;
 
 module.exports = function(router) {
 	router.post("/api/users/", function(req, res) {
+		if (!req.session) {
+			res.status(503).send("Desculpe, não estamos conseguindo fazer cadastros nesse momento.");
+			return;
+		}
+
 		var user = req.body;
 
 		User.save(user).then(function(user) {
@@ -23,6 +28,11 @@ module.exports = function(router) {
 	});
 
 	router.get("/api/users/auth/login/:email", function(req, res) {
+		if (!req.session) {
+			res.status(503).send("Desculpe, não estamos conseguindo fazer login nesse momento.");
+			return;
+		}
+
 		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.query.keepLoggedIn : false;
 
 		User.login(req.params.email, req.query ? req.query.password : "").then(function(user) {

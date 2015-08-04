@@ -60,10 +60,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 					}
 				}, function(error) {
 					$scope.processing = false;
-
-					if (error.isBusinessError) {
-						$scope.errorMessage = error.message;
-					}
+					$scope.errorMessage = error.isBusinessError ? error.message : "Desculpe, não estamos conseguindo fazer login nesse momento.";
 				});
 			}
 		};
@@ -133,10 +130,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 					$scope.processing = false;
 				}, function(error) {
 					$scope.processing = false;
-
-					if (error.isBusinessError) {
-						$scope.errorMessage = error.message;
-					}
+					$scope.errorMessage = error.isBusinessError ? error.message : "Desculpe, não estamos conseguindo fazer seu cadastro nesse momento.";
 				});
 			}
 		};
