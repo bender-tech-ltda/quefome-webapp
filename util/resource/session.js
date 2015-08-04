@@ -18,7 +18,8 @@ if (config.server.session.store.redis) {
 	sessionOptions.store = new RedisStore({
 		host: config.integration.redis.host,
 		port: config.integration.redis.port,
-		pass: config.integration.redis.password
+		pass: config.integration.redis.password,
+		db: config.integration.redis.db
 	});
 } else {
 	console.log("Session Store: in memory");
