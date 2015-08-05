@@ -3,6 +3,108 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 	
 	var module = angular.module("qfDirectives", []);
 
+	module.service("$notification", ["$window", "$q", function($window, $q) {
+		var Notification = $window.Notification || false;
+
+		this.__setNotification = function(_Notification) {
+			Notification = _Notification;
+		};
+
+		var Notify = function(title, options) {
+			this.options = {};
+
+			if (typeof(title) === "object") {
+				this.options = title;
+			} else if (typeof(options) === "object") {
+				this.options = options;
+			}
+
+			if (typeof(this.options.title) !== "undefined") {
+				this.title = this.options.title;
+				delete(this.options.title);
+			} else if (typeof(title) === "string") {
+				this.title = title;
+			}
+
+			if (typeof(this.options.message) !== "undefined") {
+				this.options.body = this.options.message;
+				delete(this.options.message);
+			} else if (typeof(options) === "string") {
+				this.options.body = options; //message
+			}
+
+			if (!this.options.lang) {
+				this.options.lang = "pt-BR";
+			}
+
+			if (!this.options.icon) {
+				this.options.icon = "/assets/img/quefome_icon_70x75.png";
+			}
+
+			if (this.options.show !== false) {
+				this.show();
+			}
+		};
+
+		Notify.prototype.title = "";
+		Notify.prototype.options = null;
+
+		Notify.prototype._currentNotification = null;
+		Notify.prototype.show = function() {
+			if (!Notification) {
+				return;
+			}
+
+			this.hide();
+
+			this._currentNotification = new Notification(this.title, this.options);
+			return this._currentNotification;
+		};
+
+		Notify.prototype.hide = function() {
+			if (this._currentNotification) {
+				this._currentNotification.close();
+			}
+		};
+
+		Notify.prototype.close = Notify.prototype.hide;
+
+		this.requestPermission = function() {
+			if (!Notification) {
+				return $q(function(resolve, reject) {
+					reject();
+				});
+			}
+
+			if (this.hasPermission()) {
+				return $q(function(resolve, reject) {
+					resolve();
+				});
+			}
+
+			var deferred = $q.defer();
+			var that = this;
+
+			Notification.requestPermission(function(permission) {
+				if (that.hasPermission()) {
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			});
+
+			return deferred.promise;
+		};
+
+		this.hasPermission = function() {
+			return Notification && Notification.permission == "granted" ? true : false;
+		};
+
+		this.notify = function(title, options) {
+			return new Notify(title, options);
+		};
+	}]);
+
 	module.service("TemplateResolver", ["$compile", "$http", "$templateCache", function($compile, $http, $templateCache) {
 		this.resolve = function(url, compileScope) {
 			var requestConfig = {

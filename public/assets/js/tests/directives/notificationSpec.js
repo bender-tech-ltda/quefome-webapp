@@ -6,7 +6,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		var $notification;
 		var MockedNotification;
 
-		beforeEach(module("qfServices"));
+		beforeEach(module("qfDirectives"));
 
 		beforeEach(inject(function(_$notification_) {
 			$notification = _$notification_;
@@ -101,13 +101,19 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 					expect(MockedNotification._options.body).toEqual("message");
 				});
 
-				it("should accept a show flag", function() {
+				it("should accept a show flag option", function() {
 					MockedNotification._called = false;
-					$notification.notify("title", "message", false);
+					$notification.notify("title", {
+						message: "message",
+						show: false
+					});
 					expect(MockedNotification._called).toBe(false);
 
 					MockedNotification._called = false;
-					$notification.notify("title", "message", true);
+					$notification.notify("title", {
+						message: "message",
+						show: true
+					});
 					expect(MockedNotification._called).toBe(true);
 				});
 
@@ -133,7 +139,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				describe("the notification object", function() {
 					it("should have a show function", function() {
-						var notification = $notification.notify("Teste", "teste", false);
+						var notification = $notification.notify("Teste", {message: "teste", show: false});
 						expect(MockedNotification._called).toBe(false);
 
 						notification.show();
@@ -141,7 +147,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 					});
 
 					it("should have a hide function", function() {
-						var notification = $notification.notify("Teste", "teste", true);
+						var notification = $notification.notify("Teste", "teste");
 						expect(MockedNotification._closeCalled).toBe(false);
 
 						notification.hide();
