@@ -4,7 +4,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 	describe("OrdersFullfillmentController", function() {
 		var scope;
-		var Mocked$timeout;
+		var Mocked$timeout, Mocked$notification;
 		var MockedDialog;
 		var MockedOrderService;
 
@@ -15,6 +15,25 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				Mocked$timeout.whenCalling(callback, time);
 			};
 			Mocked$timeout.whenCalling = function() {};
+
+			Mocked$notification = {
+				_requestPermissionCalled: false,
+				requestPermission: function() {
+					this._requestPermissionCalled = true;
+				},
+
+				_notifyCalled: false,
+				_notifyTitle: null,
+				_notifyMessage: null,
+				_notifyOptions: null,
+				notify: function(title, message, options) {
+					this._notifyCalled = true;
+
+					this._notifyTitle = title;
+					this._notifyMessage = message;
+					this._notifyOptions = options;
+				}
+			};
 
 			MockedDialog = {
 				_createCalled: false,
@@ -49,6 +68,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		beforeEach(function() {
 			var params = {
 				$timeout: Mocked$timeout,
+				$notification: Mocked$notification,
 				Dialog: MockedDialog,
 				OrderService: MockedOrderService
 			};
@@ -218,6 +238,62 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				expect(called).toBe(true);
 				expect(time).toBeGreaterThan(0);
 			});
+
+			it("should notify the user of something", function() {
+				var called = true;
+				scope.notifyUser = function() {
+					called = true;
+				};
+
+				scope.checkIncomingOrders();
+				expect(called).toBe(true);
+			});
+		});
+
+		describe("when notifying the user", function() {
+			beforeEach(function() {
+				scope.numberOfIncomingOrders = 0;
+				scope.orders = [];
+			});
+
+			it("should notify if it has opened orders", function() {
+				Mocked$notification._notifyCalled = false;
+				
+				scope.orders = [
+					{id: -1, date: new Date(), status: "OPEN"},
+					{id: -2, date: new Date(), status: "DELIVERED"}
+				];
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("aberto ");
+
+				Mocked$notification._notifyCalled = false;
+				
+				scope.orders = [
+					{id: -1, date: new Date(), status: "OPEN"},
+					{id: -2, date: new Date(), status: "DELIVERED"},
+					{id: -3, date: new Date(), status: "OPEN"}
+				];
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("abertos");
+			});
+
+			it("should notify if it has incoming orders", function() {
+				Mocked$notification._notifyCalled = false;
+				
+				scope.numberOfIncomingOrders = 1;
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("novo pedido");
+
+				Mocked$notification._notifyCalled = false;
+
+				scope.numberOfIncomingOrders = 2;
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("novos pedidos");
+			});
 		});
 
 		describe("when updating orders with cached orders", function() {
@@ -239,6 +315,6 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				expect(scope.numberOfIncomingOrders).toEqual(0);
 				expect(scope.numberOfModifiedOrders).toEqual(0);
 			});
-		})
+		});
 	});
 });

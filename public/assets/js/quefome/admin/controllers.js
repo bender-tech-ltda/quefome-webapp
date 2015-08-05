@@ -62,7 +62,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 	module.controller("HomeController", ["$scope", function($scope) {
 	}]);
 
-	module.controller("OrdersFullfillmentController", ["$scope", "$timeout", "Dialog", "OrderService", function($scope, $timeout, Dialog, OrderService) {
+	module.controller("OrdersFullfillmentController", ["$scope", "$timeout", "$filter", "$notification", "Dialog", "OrderService", function($scope, $timeout, $filter, $notification, Dialog, OrderService) {
 		$scope.orders = [];
 		$scope.secondsToCheckForIncomingOrders = 30;
 		$scope.cachedOrders = []
@@ -128,7 +128,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			};
 		};
 
-		var timeoutPromise = false;
+		var incomingOrdersTimeoutPromise = false;
 		$scope.checkIncomingOrders = function() {
 			var secontsToCheck = ($scope.secondsToCheckForIncomingOrders * 1000)
 
@@ -145,11 +145,41 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 
 				$scope.loadedOrders = true;
 
-				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
+				$scope.notifyUser();
+
+				incomingOrdersTimeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 				$scope.$digest();
 			}, function() {
-				timeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
+				$scope.notifyUser();
+
+				incomingOrdersTimeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 			});
+		};
+
+		$scope.notifyUser = function() {
+			if ($scope.numberOfIncomingOrders && $scope.numberOfIncomingOrders > 0) {
+				var numberOfOrders = $scope.numberOfIncomingOrders;
+
+				var title = (numberOfOrders == 1 ? "Novo pedido chegando!" : "Novos pedidos chegando!");
+				var message = (numberOfOrders == 1 ? "Existe um novo pedido." : ("Existem " + numberOfOrders + " novos pedidos."));
+
+				$notification.notify(title, message);
+
+				return;
+			}
+
+			var openOrders = $filter("filter")($scope.orders, {
+				status: OrderStatus.OPEN
+			});
+
+			if (openOrders && openOrders.length > 0) {
+				var title = (openOrders.length == 1 ? "Hey, um pedido aguarda atendimento!" : "Hey, pedidos aguardam atendimento!");
+				var message = (openOrders.length == 1 ? "Existe um pedido aberto aguardando atendimento." : ("Existem " + openOrders.length + " pedidos abertos aguardando atendimento."));
+
+				$notification.notify(title, message);
+
+				return;
+			}
 		};
 
 		$scope.updateOrdersWithCachedOrders = function() {
@@ -163,10 +193,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		$scope.checkIncomingOrders();
 
 		$scope.$on("$destroy", function() {
-			if (timeoutPromise) {
-				$timeout.cancel(timeoutPromise);
+			if (incomingOrdersTimeoutPromise) {
+				$timeout.cancel(incomingOrdersTimeoutPromise);
 			}
 		});
+
+		$notification.requestPermission();
 	}]);
 
 	module.controller("OrderDetailController", ["$scope", "OrderService", function($scope, OrderService) {

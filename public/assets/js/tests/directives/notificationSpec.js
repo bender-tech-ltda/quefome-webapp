@@ -1,6 +1,6 @@
 "use strict";
 
-define(["angular", "angular/mock", "quefome/services"], function(angular) {
+define(["angular", "angular/mock", "quefome/directives"], function(angular) {
 
 	describe("$notification", function() {
 		var $notification;
@@ -103,15 +103,13 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				it("should accept a show flag option", function() {
 					MockedNotification._called = false;
-					$notification.notify("title", {
-						message: "message",
+					$notification.notify("title", "message", {
 						show: false
 					});
 					expect(MockedNotification._called).toBe(false);
 
 					MockedNotification._called = false;
-					$notification.notify("title", {
-						message: "message",
+					$notification.notify("title", "message", {
 						show: true
 					});
 					expect(MockedNotification._called).toBe(true);
@@ -139,7 +137,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 				describe("the notification object", function() {
 					it("should have a show function", function() {
-						var notification = $notification.notify("Teste", {message: "teste", show: false});
+						var notification = $notification.notify("Teste", "teste", {show: false});
 						expect(MockedNotification._called).toBe(false);
 
 						notification.show();

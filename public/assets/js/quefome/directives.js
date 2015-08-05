@@ -10,13 +10,15 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			Notification = _Notification;
 		};
 
-		var Notify = function(title, options) {
+		var Notify = function(title, message) {
 			this.options = {};
 
-			if (typeof(title) === "object") {
-				this.options = title;
-			} else if (typeof(options) === "object") {
-				this.options = options;
+			if (typeof(arguments[0]) === "object") {
+				this.options = arguments[0];
+			} else if (typeof(arguments[1]) === "object") {
+				this.options = arguments[1];
+			} else if (typeof(arguments[2]) === "object") {
+				this.options = arguments[2];
 			}
 
 			if (typeof(this.options.title) !== "undefined") {
@@ -29,8 +31,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			if (typeof(this.options.message) !== "undefined") {
 				this.options.body = this.options.message;
 				delete(this.options.message);
-			} else if (typeof(options) === "string") {
-				this.options.body = options; //message
+			} else if (typeof(message) === "string") {
+				this.options.body = message;
 			}
 
 			if (!this.options.lang) {
@@ -100,8 +102,8 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			return Notification && Notification.permission == "granted" ? true : false;
 		};
 
-		this.notify = function(title, options) {
-			return new Notify(title, options);
+		this.notify = function(title, message, options) {
+			return new Notify(title, message, options);
 		};
 	}]);
 
