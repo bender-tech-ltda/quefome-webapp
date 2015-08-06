@@ -4,9 +4,25 @@ define(["angular", "angular/mock", "quefome/directives"], function(angular) {
 
 	describe("$notification", function() {
 		var $notification;
+		var Mocked$windowState;
 		var MockedNotification;
 
 		beforeEach(module("qfDirectives"));
+
+		beforeEach(function() {
+			Mocked$windowState = {
+				_hasFocusReturn: false,
+				_hasFocusCalled: false,
+				hasFocus: function() {
+					this._hasFocusCalled = true;
+					return this._hasFocusReturn;
+				}
+			};
+
+			module(function($provide) {
+				$provide.value("$windowState", Mocked$windowState);
+			});
+		});
 
 		beforeEach(inject(function(_$notification_) {
 			$notification = _$notification_;
@@ -39,13 +55,13 @@ define(["angular", "angular/mock", "quefome/directives"], function(angular) {
 
 			it("should not throw an error on notify", function() {
 				expect(function() {
-					$notification.notify("Teste Notificação", "Mensagem da notificação", true);
+					$notification.notify("Teste Notificação", "Mensagem da notificação");
 				}).not.toThrow();
 			});
 		});
 
 		describe("when mocking the browser notification", function() {
-			beforeEach(function() {			
+			beforeEach(function() {
 				MockedNotification = function(title, options) {
 					MockedNotification._called = true;
 					MockedNotification._title = title;
@@ -150,6 +166,35 @@ define(["angular", "angular/mock", "quefome/directives"], function(angular) {
 
 						notification.hide();
 						expect(MockedNotification._closeCalled).toBe(true);
+					});
+				});
+
+				describe("with the showIfNoFocus option", function() {
+					it("should only show the notification if the window has no focus when true", function() {
+						MockedNotification._called = false;
+						Mocked$windowState._hasFocusCalled = false;
+
+						Mocked$windowState._hasFocusReturn = false;
+						$notification.notify("teste", "blabla", {
+							showIfNoFocus: true
+						});
+
+						expect(MockedNotification._called).toBe(true);
+						expect(Mocked$windowState._hasFocusCalled).toBe(true);
+					});
+
+					it("should not check if the window has focus when false", function() {
+						Mocked$windowState._hasFocusCalled = false;
+
+						$notification.notify("teste", "blabla", {
+							showIfNoFocus: false
+						});
+						expect(Mocked$windowState._hasFocusCalled).toBe(false);
+
+						Mocked$windowState._hasFocusCalled = false;
+
+						$notification.notify("teste", "blabla");
+						expect(Mocked$windowState._hasFocusCalled).toBe(false);
 					});
 				});
 			});

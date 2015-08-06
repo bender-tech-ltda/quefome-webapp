@@ -266,6 +266,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.notifyUser();
 				expect(Mocked$notification._notifyCalled).toBe(true);
 				expect(Mocked$notification._notifyMessage).toContain("aberto ");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
 
 				Mocked$notification._notifyCalled = false;
 				
@@ -277,6 +278,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.notifyUser();
 				expect(Mocked$notification._notifyCalled).toBe(true);
 				expect(Mocked$notification._notifyMessage).toContain("abertos");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
 			});
 
 			it("should notify if it has incoming orders", function() {
@@ -286,6 +288,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.notifyUser();
 				expect(Mocked$notification._notifyCalled).toBe(true);
 				expect(Mocked$notification._notifyMessage).toContain("novo pedido");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
 
 				Mocked$notification._notifyCalled = false;
 
@@ -293,6 +296,25 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				scope.notifyUser();
 				expect(Mocked$notification._notifyCalled).toBe(true);
 				expect(Mocked$notification._notifyMessage).toContain("novos pedidos");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
+			});
+
+			it("should notify if it has modified orders", function() {
+				Mocked$notification._notifyCalled = false;
+				
+				scope.numberOfModifiedOrders = 1;
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("alterado ");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
+
+				Mocked$notification._notifyCalled = false;
+
+				scope.numberOfModifiedOrders = 2;
+				scope.notifyUser();
+				expect(Mocked$notification._notifyCalled).toBe(true);
+				expect(Mocked$notification._notifyMessage).toContain("alterados");
+				expect(Mocked$notification._notifyOptions.showIfNoFocus).toBe(true);
 			});
 		});
 

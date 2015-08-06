@@ -3,7 +3,33 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 	
 	var module = angular.module("qfDirectives", []);
 
-	module.service("$notification", ["$window", "$q", function($window, $q) {
+	module.service("$windowState", ["$document", function($document) {
+		var documentHasFocus = document.hasFocus || false;
+
+		var focusState = {
+			focused: false,
+			dontKnow: true
+		};
+
+		angular.element(window).blur(function() {
+			focusState.dontKnow = false;
+			focusState.focused = false;
+		});
+
+		angular.element(window).focus(function() {
+			focusState.focused = true;
+		});
+
+		this.hasFocus = function() {
+			if (typeof(documentHasFocus) === "function") {
+				return documentHasFocus.call(document);
+			}
+
+			return !focusState.dontKnow && focusState.focused;
+		};
+	}]);
+
+	module.service("$notification", ["$window", "$q", "$windowState", function($window, $q, $windowState) {
 		var Notification = $window.Notification || false;
 
 		this.__setNotification = function(_Notification) {
@@ -43,7 +69,11 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 				this.options.icon = "/assets/img/quefome_icon_70x75.png";
 			}
 
-			if (this.options.show !== false) {
+			if (this.options.showIfNoFocus) {
+				if (!$windowState.hasFocus()) {
+					this.show();
+				}
+			} else if (this.options.show !== false) {
 				this.show();
 			}
 		};

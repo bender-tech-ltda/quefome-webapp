@@ -157,28 +157,39 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		};
 
 		$scope.notifyUser = function() {
+			var notificationTag = "new-orders-or-open-orders-notification";
+
+			var notification = false;
+
 			if ($scope.numberOfIncomingOrders && $scope.numberOfIncomingOrders > 0) {
 				var numberOfOrders = $scope.numberOfIncomingOrders;
 
-				var title = (numberOfOrders == 1 ? "Novo pedido chegando!" : "Novos pedidos chegando!");
-				var message = (numberOfOrders == 1 ? "Existe um novo pedido." : ("Existem " + numberOfOrders + " novos pedidos."));
+				notification = {
+					title: (numberOfOrders == 1 ? "Novo pedido chegando!" : "Novos pedidos chegando!"),
+					message: (numberOfOrders == 1 ? "Acabou de chegar um novo pedido." : ("Acabaram de chegar " + numberOfOrders + " novos pedidos."))
+				};
+			} else if ($scope.numberOfModifiedOrders && $scope.numberOfModifiedOrders > 0) {
+				var numberOfOrders = $scope.numberOfModifiedOrders;
 
-				$notification.notify(title, message);
+				notification = {
+					title: (numberOfOrders == 1 ? "Pedido alterado!" : "Pedidos alterados!"),
+					message: (numberOfOrders == 1 ? "Um pedido foi alterado e precisa ser atualizado." : (numberOfOrders + " pedidos foram alterados e precisam ser atualizados."))
+				};
+			} else {
+				var openOrders = $filter("filter")($scope.orders, {
+					status: OrderStatus.OPEN
+				});
 
-				return;
+				if (openOrders && openOrders.length > 0) {
+					notification = {
+						title: (openOrders.length == 1 ? "Hey, um pedido aguarda atendimento!" : "Hey, pedidos aguardam atendimento!"),
+						message: (openOrders.length == 1 ? "Existe um pedido aberto aguardando atendimento." : ("Existem " + openOrders.length + " pedidos abertos aguardando atendimento."))
+					};
+				}
 			}
 
-			var openOrders = $filter("filter")($scope.orders, {
-				status: OrderStatus.OPEN
-			});
-
-			if (openOrders && openOrders.length > 0) {
-				var title = (openOrders.length == 1 ? "Hey, um pedido aguarda atendimento!" : "Hey, pedidos aguardam atendimento!");
-				var message = (openOrders.length == 1 ? "Existe um pedido aberto aguardando atendimento." : ("Existem " + openOrders.length + " pedidos abertos aguardando atendimento."));
-
-				$notification.notify(title, message);
-
-				return;
+			if (notification) {
+				$notification.notify(notification.title, notification.message, {tag: notificationTag, showIfNoFocus: true});
 			}
 		};
 
