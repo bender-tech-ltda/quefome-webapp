@@ -65,23 +65,37 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			};
 		});
 
+		beforeEach(inject(function($rootScope) {
+			scope = $rootScope.$new();
+
+			scope._$watchCalled = false;
+			scope._$watchProperty = null;
+			scope._$watchCallback = null;
+			scope.$watch = function(property, callback) {
+				console.log(property);
+
+				scope._$watchCalled = true;
+				scope._$watchProperty = property;
+				scope._$watchCallback = callback;
+			};
+
+			scope.$digest = function(callback) {
+				if (typeof(callback) === "function") {
+					callback();
+				}
+			};
+		}));
+
 		beforeEach(function() {
 			var params = {
 				$timeout: Mocked$timeout,
 				$notification: Mocked$notification,
 				Dialog: MockedDialog,
-				OrderService: MockedOrderService
+				OrderService: MockedOrderService,
+				$scope: scope
 			};
 
-			return injectController("OrdersFullfillmentController", "views/admin/partials/orders/fullfillment.html", params, function($scope) {
-				scope = $scope;
-
-				scope.$digest = function(callback) {
-					if (typeof(callback) === "function") {
-						callback();
-					}
-				};
-			});
+			return injectController("OrdersFullfillmentController", "views/admin/partials/orders/fullfillment.html", params);
 		});
 
 		it("should have a orders property", function() {
@@ -111,6 +125,19 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 		it("should get a list of orders on startup", function() {
 			expect(MockedOrderService.listCalled).toBe(true);
 			expect(scope.orders).toEqual(MockedOrderService._orders);
+		});
+
+		it("should use $watch to check for orders status", function() {
+			var called = false;
+			scope.indicateOpenOrders = function() {
+				called = true;
+			};
+
+			expect(scope._$watchCalled).toBe(true);
+			expect(typeof(scope._$watchProperty)).toEqual("function");
+
+			scope._$watchCallback();
+			expect(called).toBe(true);
 		});
 
 		describe("when showing order details", function() {
@@ -239,6 +266,16 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 				expect(time).toBeGreaterThan(0);
 			});
 
+			it("should indicate the number of open orders", function() {
+				var called = true;
+				scope.indicateOpenOrders = function() {
+					called = true;
+				};
+
+				scope.checkIncomingOrders();
+				expect(called).toBe(true);
+			});
+
 			it("should notify the user of something", function() {
 				var called = true;
 				scope.notifyUser = function() {
@@ -247,6 +284,56 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 				scope.checkIncomingOrders();
 				expect(called).toBe(true);
+			});
+		});
+
+		describe("when indicating open orders", function() {
+			beforeEach(function() {
+				scope.$app = {
+					info: {titlePrefix: ""}
+				};
+			});
+
+			it("should use the current orders and show the number in the title", function() {
+				scope.orders = [
+					{id: -1, date: new Date(), status: "OPEN"},
+					{id: -2, date: new Date(), status: "DELIVERED"}
+				];
+
+				scope.indicateOpenOrders();
+				expect(scope.$app.info.titlePrefix).toContain("(1)");
+
+				scope.orders = [
+					{id: -1, date: new Date(), status: "OPEN"},
+					{id: -2, date: new Date(), status: "DELIVERED"},
+					{id: -3, date: new Date(), status: "OPEN"},
+				];
+
+				scope.indicateOpenOrders();
+				expect(scope.$app.info.titlePrefix).toContain("(2)");
+			});
+
+			it("should use the cached orders over the current orders", function() {
+				scope.orders = [
+					{id: -1, date: new Date(), status: "OPEN"}
+				];
+
+				scope.cachedOrders = [
+					{id: -1, date: new Date(), status: "OPEN"},
+					{id: -2, date: new Date(), status: "OPEN"},
+					{id: -3, date: new Date(), status: "OPEN"}
+				];
+
+				scope.indicateOpenOrders();
+				expect(scope.$app.info.titlePrefix).toContain("(3)");
+			});
+
+			it("should show nothing if no open orders", function() {
+				scope.orders = [];
+				scope.cachedOrders = null;
+
+				scope.indicateOpenOrders();
+				expect(scope.$app.info.titlePrefix).toBe(null);
 			});
 		});
 

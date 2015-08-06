@@ -145,15 +145,41 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 
 				$scope.loadedOrders = true;
 
+				$scope.indicateOpenOrders();
 				$scope.notifyUser();
 
 				incomingOrdersTimeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 				$scope.$digest();
 			}, function() {
+				$scope.indicateOpenOrders();
 				$scope.notifyUser();
 
 				incomingOrdersTimeoutPromise = $timeout($scope.checkIncomingOrders, secontsToCheck);
 			});
+		};
+
+		var getOpenOrders = function(cached) {
+			var orders = $scope.orders;
+
+			if (cached && $scope.cachedOrders && $scope.cachedOrders.length > 0) {
+				orders = $scope.cachedOrders;
+			}
+
+			var openOrders = $filter("filter")(orders, {
+				status: OrderStatus.OPEN
+			});
+
+			return openOrders;
+		};
+
+		$scope.indicateOpenOrders = function() {
+			var openOrders = getOpenOrders(true);
+
+			if (openOrders && openOrders.length > 0) {
+				$scope.$app.info.titlePrefix = "(" + openOrders.length + ") ";
+			} else {
+				$scope.$app.info.titlePrefix = null;
+			}
 		};
 
 		$scope.notifyUser = function() {
@@ -176,9 +202,7 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 					message: (numberOfOrders == 1 ? "Um pedido foi alterado e precisa ser atualizado." : (numberOfOrders + " pedidos foram alterados e precisam ser atualizados."))
 				};
 			} else {
-				var openOrders = $filter("filter")($scope.orders, {
-					status: OrderStatus.OPEN
-				});
+				var openOrders = getOpenOrders(false);
 
 				if (openOrders && openOrders.length > 0) {
 					notification = {
@@ -202,6 +226,12 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 		};
 
 		$scope.checkIncomingOrders();
+
+		$scope.$watch(function() {
+			return getOpenOrders(true).length;
+		}, function() {
+			$scope.indicateOpenOrders();
+		});
 
 		$scope.$on("$destroy", function() {
 			if (incomingOrdersTimeoutPromise) {
@@ -385,8 +415,13 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 	module.controller("NotFoundController", ["$scope", function($scope) {
 	}]);
 
-	module.run(["$rootScope", "$timeout", "AuthService", function($rootScope, $timeout, AuthService) {
+	module.run(["$rootScope", "$timeout", "$interpolate", "AuthService", function($rootScope, $timeout, $interpolate, AuthService) {
 		$rootScope.$app = {
+			info: {
+				title: null,
+				titlePrefix: null,
+				notificationTitle: null,
+			},
 			route: {
 				loading: false,
 				loadingMessage: false
@@ -397,6 +432,8 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			if (nextRoute && nextRoute.$$route) {
 				nextRoute = nextRoute.$$route;
 			}
+
+			$rootScope.$app.info =  nextRoute.pageInfo ? angular.copy(nextRoute.pageInfo) : {};
 
 			if (nextRoute && nextRoute.loadingMessage) {
 				$rootScope.$app.route.loadingMessage = nextRoute.loadingMessage;
