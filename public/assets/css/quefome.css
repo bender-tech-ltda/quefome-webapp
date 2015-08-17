@@ -806,14 +806,14 @@ a:hover, a:focus {
 }
 
 .establishment-page .establishment-products .products .product .title {
-	min-height: 80px;
+	min-height: 90px;
 	margin-top: 5px;
 }
 
 .establishment-page .establishment-products .products .product .title .name {
-	margin: 0px 0px 1px;
+	margin: 0px 3px 1px;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .establishment-page .establishment-products .products .product .title .description {
@@ -826,6 +826,7 @@ a:hover, a:focus {
 	width: 100%;
 	font-size: 13px;
 	font-weight: bold;
+	color: #008000;
 }
 
 .establishment-page .establishment-products .products .product .btn-add-product {

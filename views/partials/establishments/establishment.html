@@ -124,7 +124,7 @@
 
 				<div class="title">
 					<h3 class="name" itemprop="name">{{product.name}}</h3>
-					<p class="description" itemprop="description">{{product.description}}</p>
+					<p class="description" itemprop="description">{{product.description | shortText: 50}}</p>
 				</div>
 
 				<span class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">

@@ -72,8 +72,6 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 			scope._$watchProperty = null;
 			scope._$watchCallback = null;
 			scope.$watch = function(property, callback) {
-				console.log(property);
-
 				scope._$watchCalled = true;
 				scope._$watchProperty = property;
 				scope._$watchCallback = callback;

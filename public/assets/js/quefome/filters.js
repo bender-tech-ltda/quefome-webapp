@@ -76,6 +76,28 @@ define(["angular"], function(angular) {
 		};
 	}]);
 
+	module.filter("shortText", [function() {
+		return function(text, size) {
+			if (!text) {
+				return "";
+			}
+
+			if (!size) {
+				size = 100;
+			}
+
+			var shortText = null;
+
+			if (text.length > size) {
+				shortText = text.substr(0, size).trim() + "...";
+			} else {
+				shortText = text;
+			}
+
+			return shortText;
+		};
+	}]);
+
 	module.filter("establishmentStatus", [function() {
 		return function(establishment) {
 			var status = establishment;
