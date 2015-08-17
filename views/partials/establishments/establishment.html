@@ -117,14 +117,14 @@
 		</h2>
 
 		<ul class="products">
-			<li class="product" ng-repeat="product in productType.products" title="{{establishment.parameters.status != 'OPEN' ? 'Você não pode montar seu pedido, esse estabelecimento esta fechado no momento.' : ''}}" itemprop="owns" itemscope itemtype="http://schema.org/Product">
+			<li class="product" ng-repeat="product in productType.products" title="{{establishment.parameters.status != 'OPEN' ? 'Você não pode montar seu pedido, esse estabelecimento está fechado no momento.' : ''}}" itemprop="owns" itemscope itemtype="http://schema.org/Product">
 				<span class="no-image-icon qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}" ng-hide="product.imageUrl"></span>
 
-				<img class="img-thumbnail image" ng-src="{{product.imageUrl ? product.imageUrl : '/assets/img/no_product_image_260x260.jpg'}}" alt="{{product.name}}" itemprop="image" />
+				<img class="img-thumbnail image" ng-src="{{product.imageUrl ? product.imageUrl : '/assets/img/no_product_image_260x260.jpg'}}" alt="{{product.name}}" title="{{product.name}}" itemprop="image" />
 
 				<div class="title">
-					<h3 class="name" itemprop="name">{{product.name}}</h3>
-					<p class="description" itemprop="description">{{product.description | shortText: 50}}</p>
+					<h3 class="name" itemprop="name" title="{{product.name}}">{{product.name}}</h3>
+					<p class="description" itemprop="description" title="{{product.description}}">{{product.description | shortText: 50}}</p>
 				</div>
 
 				<span class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
