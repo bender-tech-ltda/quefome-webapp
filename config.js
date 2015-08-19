@@ -9,9 +9,17 @@ if (typeof(environment) === "string") {
 }
 
 module.exports = {
-	debug: environment == "development",
+	debug: environment === "development",
+
+	env: {
+		development: environment === "development",
+		test: environment === "test",
+		production: environment === "production",
+	},
 
 	server: {
+		forceRedirect: (process.env.FORCE_REDIRECT || false),
+
 		secure: (process.env.USE_SSL_PROTOCOL ? true : false),
 		domain: (process.env.APP_DOMAIN || "quefo.me"),
 		port: (process.env.PORT || 3000),

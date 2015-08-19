@@ -4,8 +4,8 @@ var ViewData = app.models.ViewData;
 
 module.exports = {
 	beforeLoad: function(router) {
-		router.use(function(req, res, next) {
-			if (!config.debug) {
+		if (!config.env.development && config.server.forceRedirect) {
+			router.use(function(req, res, next) {
 				var redirect = false;
 				var redirectUrl = "http://";
 
@@ -23,10 +23,10 @@ module.exports = {
 					res.redirect(301, redirectUrl);
 					return;
 				}
-			}
 
-			next();
-		});
+				next();
+			});
+		}
 
 		router.use(function(req, res, next) {
 			req.authorized = app.config.debug || (req.xhr && req.headers["x-user-accept"]);	
