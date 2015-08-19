@@ -18,7 +18,7 @@ module.exports = {
 	},
 
 	server: {
-		forceRedirect: (process.env.FORCE_REDIRECT || false),
+		forceRedirect: (process.env.FORCE_REDIRECT ? true : false),
 
 		secure: (process.env.USE_SSL_PROTOCOL ? true : false),
 		domain: (process.env.APP_DOMAIN || "quefo.me"),

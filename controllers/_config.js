@@ -29,7 +29,7 @@ module.exports = {
 		}
 
 		router.use(function(req, res, next) {
-			req.authorized = app.config.debug || (req.xhr && req.headers["x-user-accept"]);	
+			req.authorized = config.env.development || (req.xhr && req.headers["x-user-accept"]);	
 			next();
 		});
 	},

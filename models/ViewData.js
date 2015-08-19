@@ -4,7 +4,7 @@ var ViewData = function() {
 		var config = $require("config");
 
 		var data = util.Object.copy(config.view);
-		data.debug = config.debug;
+		data.env = util.Object.copy(config.env);
 
 		data.baseUrl = (config.server.secure ? "https://" : "http://") + config.server.domain;
 		data.currentUrl = data.baseUrl;
