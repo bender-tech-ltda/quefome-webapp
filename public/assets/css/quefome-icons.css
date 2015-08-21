@@ -172,6 +172,30 @@
 	content: "\f067";
 }
 
+.icon-dessert:before {
+	content: "\e628";
+}
+
+.icon-salad:before {
+	content: "\e629";
+}
+
+.icon-drink:before {
+	content: "\e62a";
+}
+
+.icon-snack:before {
+	content: "\e62b";
+}
+
+.icon-side-dish:before {
+	content: "\e62c";
+}
+
+.icon-food-plate:before {
+	content: "\e62d";
+}
+
 .icon-meat:before {
 	content: "\e600";
 }
