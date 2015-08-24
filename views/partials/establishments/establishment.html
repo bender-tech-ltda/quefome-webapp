@@ -83,7 +83,7 @@
 		</div>
 
 		<ul class="establishment-product-types" ng-hide="loadingProducts">
-			<li class="product-type" ng-repeat="productType in productTypes" title="{{productType.name}}" ng-click="toggleProductType(productType)" ng-class="{active: isProductTypeSelected(productType)}">
+			<li class="product-type" ng-repeat="productType in productTypes | orderBy: ['sequence', 'name']" title="{{productType.name}}" ng-click="toggleProductType(productType)" ng-class="{active: isProductTypeSelected(productType)}">
 				<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 			</li>
 		</ul>
@@ -108,7 +108,7 @@
 		<span class="qf-icon icon-loading spin"></span>
 	</div>
 
-	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes" ng-hide="loadingProducts">
+	<div class="establishment-products" ng-repeat="productType in productTypes | filter: filterProductTypes | orderBy: ['sequence', 'name']" ng-hide="loadingProducts">
 		<h2 class="title">
 			<span class="qf-icon icon-{{productType.iconName ? productType.iconName : 'question'}}"></span>
 			<span itemprop="servesCuisine">{{productType.name}}</span>
