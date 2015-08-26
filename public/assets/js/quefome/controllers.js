@@ -389,9 +389,9 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 					description: "Não encontramos esse estabelecimento, mas temos vários outros esperando você!",
 					noImage: false
 				});
-			} else {
+			} else if ($scope.establishment) {
 				$scope.$app.info = {
-					title: $scope.establishment.name + " - Quefo.me",
+					title: ($scope.establishment.name || "Restaurante") + " - Quefo.me",
 					description: $scope.establishment.description,
 					imageUrl: $scope.establishment.imageUrl,
 					largeImage: false
