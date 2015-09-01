@@ -433,6 +433,7 @@ body {
 
 .order-detail-dialog .actions .btn-delivered-to-production {
 	width: 100%;
+	margin-left: 0px;
 }
 
 .order-detail-dialog .actions .btn-close-dialog {
