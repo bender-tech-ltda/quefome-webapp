@@ -412,9 +412,18 @@ body {
 .order-detail-dialog .actions .btn-production-to-open,
 .order-detail-dialog .actions .btn-production-to-delivered {
 	float: left;
-	width: 48%;
+	width: 49%;
 	font-size: 12px;
 	white-space: normal;
+}
+
+.order-detail-dialog .actions .btn-production-to-open {
+	margin-left: 0px;
+	margin-right: 1%;
+}
+
+.order-detail-dialog .actions .btn-production-to-delivered {
+	margin-left: 1%;
 }
 
 .order-detail-dialog .actions .btn-production-to-open .qf-icon,
@@ -429,6 +438,7 @@ body {
 .order-detail-dialog .actions .btn-close-dialog {
 	width: 100%;
 	margin-top: 20px;
+	margin-left: 0px;
 }
 
 .order-detail-dialog .processing-action {
