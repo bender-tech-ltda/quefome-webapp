@@ -3,12 +3,17 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 	
 	var module = angular.module("qfDirectives", []);
 
-	module.service("$windowState", ["$document", function($document) {
+	module.service("$windowState", ["$document", "$interval", function($document, $interval) {
 		var documentHasFocus = document.hasFocus || false;
 
 		var focusState = {
 			focused: false,
 			dontKnow: true
+		};
+
+		var screenState = {
+			on: true,
+			lastTime: new Date()
 		};
 
 		angular.element(window).blur(function() {
@@ -20,12 +25,33 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			focusState.focused = true;
 		});
 
+		$interval(function() {
+			var currentTime = new Date();
+			var lastCheckDiference = (currentTime.getTime() - screenState.lastTime.getTime());
+
+			if (lastCheckDiference > 1100) {
+				screenState.on = false;
+			} else {
+				screenState.on = true;
+			}
+
+			screenState.lastTime = new Date();
+		}, 1000);
+
 		this.hasFocus = function() {
 			if (typeof(documentHasFocus) === "function") {
 				return documentHasFocus.call(document);
 			}
 
 			return !focusState.dontKnow && focusState.focused;
+		};
+
+		this.isScreenOn = function() {
+			return screenState.on;
+		};
+
+		this.isScreenOff = function() {
+			return !this.isScreenOn();
 		};
 	}]);
 
@@ -70,7 +96,7 @@ define(["angular", "bootstrap", "jquery/autocomplete"], function(angular, bootst
 			}
 
 			if (this.options.showIfNoFocus) {
-				if (!$windowState.hasFocus()) {
+				if (!$windowState.hasFocus() || $windowState.isScreenOff()) {
 					this.show();
 				}
 			} else if (this.options.show !== false) {
