@@ -305,6 +305,22 @@ body {
 	font-size: 21px;
 }
 
+.order-detail-dialog .header .btn-print-order {
+	float: right;
+	width: 30%;
+	margin-right: 20px;
+	margin-bottom: 0px;
+}
+
+.order-detail-dialog .btn-print-order {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.order-detail-dialog .btn-print-order .qf-icon {
+	font-size: 1.3em;
+}
+
 .order-detail-dialog .label-order-status.status-open {
 	background-color: #5cb85c;
 }
@@ -609,6 +625,14 @@ body {
 	user-select: none;
 }
 
+.hide-mobile, .show-desktop {
+	display: none;
+}
+
+.show-mobile, .hide-desktop {
+	display: block;
+}
+
 /** --- Override bootstrap style --- **/
 .table thead tr th {
 	background-color: #333;
@@ -881,6 +905,15 @@ label .required {
 
 	.content .order-search-page .orders-table {
 		font-size: 14px;
+	}
+
+	/** Helper Classes **/
+	.hide-mobile, .show-desktop {
+		display: block;
+	}
+
+	.show-mobile, .hide-desktop {
+		display: none;
 	}
 }
 

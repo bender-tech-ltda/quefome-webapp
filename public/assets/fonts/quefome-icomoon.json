@@ -8963,7 +8963,11 @@
 				},
 				{
 					"id": 654,
-					"order": 0
+					"order": 73,
+					"prevSize": 24,
+					"code": 58926,
+					"name": "print",
+					"tempChar": ""
 				},
 				{
 					"id": 655,
@@ -8971,7 +8975,7 @@
 					"prevSize": 24,
 					"code": 58919,
 					"name": "restaurant",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 656,
@@ -9019,7 +9023,7 @@
 					"prevSize": 24,
 					"code": 58894,
 					"name": "paper-ticket",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 667,
@@ -9151,7 +9155,7 @@
 					"prevSize": 24,
 					"code": 58898,
 					"name": "event-open",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 699,
@@ -9159,7 +9163,7 @@
 					"prevSize": 24,
 					"code": 58899,
 					"name": "event-closed",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 700,
@@ -9331,7 +9335,7 @@
 					"prevSize": 24,
 					"code": 58895,
 					"name": "user",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 742,
@@ -18898,7 +18902,7 @@
 					"prevSize": 28,
 					"code": 61461,
 					"name": "home",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 21,
@@ -19210,7 +19214,7 @@
 					"prevSize": 28,
 					"code": 61543,
 					"name": "plus",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"id": 98,
@@ -27273,7 +27277,7 @@
 					"prevSize": 32,
 					"code": 58920,
 					"name": "dessert",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 71,
@@ -27281,7 +27285,7 @@
 					"prevSize": 32,
 					"code": 58921,
 					"name": "salad",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 70,
@@ -27289,7 +27293,7 @@
 					"prevSize": 32,
 					"code": 58922,
 					"name": "drink",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 69,
@@ -27297,7 +27301,7 @@
 					"prevSize": 32,
 					"code": 58923,
 					"name": "snack",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 68,
@@ -27305,7 +27309,7 @@
 					"prevSize": 32,
 					"code": 58924,
 					"name": "side-dish",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 67,
@@ -27313,7 +27317,7 @@
 					"prevSize": 32,
 					"code": 58925,
 					"name": "food-plate",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 12,
@@ -27321,7 +27325,7 @@
 					"prevSize": 32,
 					"code": 58880,
 					"name": "meat",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 11,
@@ -27329,7 +27333,7 @@
 					"prevSize": 32,
 					"code": 58883,
 					"name": "yakisoba",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 10,
@@ -27337,7 +27341,7 @@
 					"prevSize": 32,
 					"code": 58881,
 					"name": "skewer",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 9,
@@ -27345,7 +27349,7 @@
 					"prevSize": 32,
 					"code": 58882,
 					"name": "burger",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 8,
@@ -27353,7 +27357,7 @@
 					"prevSize": 32,
 					"code": 58884,
 					"name": "vegetarian",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 7,
@@ -27361,7 +27365,7 @@
 					"prevSize": 32,
 					"code": 58887,
 					"name": "question",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 6,
@@ -27369,7 +27373,7 @@
 					"prevSize": 32,
 					"code": 58885,
 					"name": "fish",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 5,
@@ -27377,7 +27381,7 @@
 					"prevSize": 32,
 					"code": 58886,
 					"name": "pizza",
-					"tempChar": ""
+					"tempChar": ""
 				},
 				{
 					"order": 4,
@@ -27385,7 +27389,7 @@
 					"prevSize": 32,
 					"code": 58888,
 					"name": "sushi",
-					"tempChar": ""
+					"tempChar": ""
 				}
 			],
 			"id": 2,
@@ -27900,7 +27904,7 @@
 					"order": 52,
 					"prevSize": 32,
 					"code": 59670,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "pacman, game2",
 					"name": "pacman"
 				},
@@ -28638,7 +28642,7 @@
 					"order": 27,
 					"prevSize": 32,
 					"code": 59752,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "redo2, right",
 					"name": "forward"
 				},
@@ -28800,7 +28804,7 @@
 					"order": 26,
 					"prevSize": 32,
 					"code": 59770,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "spinner, loading2",
 					"name": "loading"
 				},
@@ -29169,7 +29173,7 @@
 					"order": 53,
 					"prevSize": 32,
 					"code": 59811,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "spoon-knife, food",
 					"name": "eat"
 				},
@@ -31284,7 +31288,7 @@
 					"order": 57,
 					"prevSize": 32,
 					"code": 60046,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "facebook3, brand8",
 					"name": "facebook-round"
 				},
@@ -31311,7 +31315,7 @@
 					"order": 58,
 					"prevSize": 32,
 					"code": 60049,
-					"tempChar": "",
+					"tempChar": "",
 					"ligatures": "twitter, brand11",
 					"name": "twitter"
 				},

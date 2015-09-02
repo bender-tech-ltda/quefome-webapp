@@ -144,6 +144,10 @@
 	content: "\e60d";
 }
 
+.icon-print:before {
+	content: "\e62e";
+}
+
 .icon-restaurant:before {
 	content: "\e627";
 }
