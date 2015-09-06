@@ -1,0 +1,59 @@
+<b>Pedido nº <%= order.id %></b><br/>
+<b>Data:</b> <%= helpers.formatDate(order.date) %><br/>
+<br/>
+
+<b>Cliente:</b> <%= order.user.name%><br/>
+<b>Email:</b> <%= order.user.email%><br/>
+<b>Telefone:</b> <%= order.phone%><br/>
+<br/>
+
+<% if (order.paymentMethod.category.hasChange) { %>
+<b>Pagamento:</b> <%= order.paymentMethod.name %><br/>
+<% } else { %>
+<b>Pagamento:</b> <%= order.paymentMethod.name %> (<%= order.paymentMethod.category.name %>)<br/>
+<% } %>
+<b>Total:</b> R$ <%= helpers.formatCurrency(order.price) %><br/>
+<% if (order.paymentMethod.category.hasChange && order.changeFor) { %>
+<b>Troco:</b> R$ <%= helpers.formatCurrency(order.changeFor - order.price) %><br/>
+<% } %>
+<br/>
+
+<% if (order.withdraw) { %>
+<b>O pedido será retirado no balcão!</b><br/>
+<% } else { %>
+<b>Endereço:</b> <%= order.address.address %>, nº <%= order.address.number %> - Bairro <%= order.address.neighborhood.name %> - Porto Alegre - RS<br/>
+<b>CEP:</b> <%= order.address.zipCode %><br/>
+<% } %>
+<br/>
+
+<% if (order.observation) { %>
+<b>Observações:</b><br/>
+<%= order.observation %><br/>
+<br/>
+<% } %>
+
+<u>Produtos:</u><br/>
+
+<% for (var itemIndex = 0; itemIndex < order.items.length; itemIndex++) { %>
+	<% var item = order.items[itemIndex]; %>
+
+<b><%= item.product.name%></b><br/>
+<b>Quantidade:</b> <%= item.quantity%><br/>
+
+	<% if (item.flavors && item.flavors.length) { %>
+<b>Sabores:</b> <%= helpers.joinObjectArray(item.flavors, "name", ", ") %><br/>
+	<% } %>
+
+	<% if (item.components && item.components.length) { %>
+	<% for (var componentIndex = 0; componentIndex < item.components.length; componentIndex++) { %>
+		<% var component = item.components[componentIndex]; %>
+<b><%= component.component.name %>:</b> <%= helpers.formatComponentValue(component) %><br/>
+	<% } %>
+	<% } %>
+
+		<% if (item.instructions) { %>
+<b>Instruções:</b><br/>
+<%= item.instructions %><br/>
+	<% } %>
+<br/>
+<% } %>
