@@ -13,6 +13,75 @@ define(["angular", "angular/analytics"], function(angular) {
 		};
 	};
 
+	module.service("PrintService", ["$http", "$q", "$timeout", "$document", function($http, $q, $timeout, $document) {
+		var document = $document[0];
+
+		var printContent = function(title, content) {
+			var html = [];
+			html.push("<html>");
+			html.push("<head>");
+			html.push("<meta charset='utf-8' />");
+			html.push("<title>" + (title || "Quefo.me") + "</title>");
+			html.push("</head>");
+			html.push("<body>");
+			html.push(content);
+			html.push("<script type='text/javascript'>")
+			html.push("function printPage(callback) {window.focus();window.print();callback();}");
+			html.push("</script");
+			html.push("></body>");
+			html.push("</html>");
+
+			var iframe = document.createElement("iframe");
+			iframe.src = "about:blank";
+			iframe.style.display = "none";
+
+			document.body.appendChild(iframe);
+
+			var iframeDocument = (iframe.contentWindow ? iframe.contentWindow.document : iframe.contentDocument);
+			iframeDocument.open();
+			iframeDocument.write(html.join(""));
+
+			var printPage = function() {
+				if (!iframe.contentWindow || !iframe.contentWindow.printPage) {
+					$timeout(printPage, 50);
+					return;
+				}
+
+				iframe.contentWindow.printPage(function() {
+					iframeDocument.close();
+					iframe.remove();
+				});	
+			};
+
+			printPage();
+		};
+
+		this.print = function(options) {
+			if (typeof(options) === "undefined") {
+				throw "You need to pass an URL for print";
+			} else if (typeof(options) === "string") {
+				options = {
+					url: options
+				};
+			}
+
+			if (!options.method) {
+				options.method = "get";
+			}
+
+			if (!options.title) {
+				options.title = "Quefo.me";
+			}
+
+			return $http(options).then(function(response) {
+				var content = response.data;
+				printContent(options.title, content);
+
+				return content;
+			}, treatPromiseErrors($q));
+		};
+	}]);
+
 	module.service("AuthService", ["$http", "$q", "$analytics", function($http, $q, $analytics) {
 		var loggedUser = null;
 
@@ -78,7 +147,7 @@ define(["angular", "angular/analytics"], function(angular) {
 		};
 	}]);
 
-	module.service("OrderService", ["$http", "$q", function($http, $q) {
+	module.service("OrderService", ["$http", "$q", "PrintService", function($http, $q, PrintService) {
 		this.list = function(filter) {
 			if (filter) {
 				filter = angular.copy(filter);
@@ -104,6 +173,14 @@ define(["angular", "angular/analytics"], function(angular) {
 			return $http.put("/api/orders/" + order.id + "/status/", order).then(function(response) {
 				return response.data;
 			}, treatPromiseErrors($q));
+		};
+
+		this.print = function(order) {
+			return PrintService.print({
+				url: ("/admin/orders/" + order.id + "/print/"),
+				method: "post",
+				data: order
+			});
 		};
 	}]);
 

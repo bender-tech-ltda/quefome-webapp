@@ -286,6 +286,10 @@ define(["angular", "quefome/admin/services", "quefome/admin/directives", "quefom
 			$scope.changeOrderStatus(OrderStatus.DELIVERED);
 		};
 
+		$scope.printOrder = function() {
+			return OrderService.print($scope.order);
+		};
+
 		$scope.closeDialog = function() {
 			if ($scope.$dialog) {
 				$scope.$dialog.hide()

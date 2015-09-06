@@ -21,6 +21,13 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 							success(order);
 						}
 					};
+				},
+
+				_printCalled: false,
+				_printOrder: null,
+				print: function(order) {
+					this._printCalled = true;
+					this._printOrder = order;
 				}
 			};			
 		});
@@ -153,6 +160,22 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/admin/controllers"],
 
 				scope.markAsDelivered();
 				expect(status).toEqual('DELIVERED');
+			});
+		});
+
+		describe("when printing the order", function() {
+			it("should call the print service", function() {
+				MockedOrderService._printCalled = false;
+				MockedOrderService._printOrder = null;
+
+				scope.order = {
+					id: 1
+				};
+
+				scope.printOrder();
+
+				expect(MockedOrderService._printCalled).toBe(true);
+				expect(MockedOrderService._printOrder).toEqual(scope.order);
 			});
 		});
 

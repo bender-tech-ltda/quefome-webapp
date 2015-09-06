@@ -4,8 +4,24 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 	describe("OrderService", function() {
 		var $httpBackend, OrderService;
+		var MockedPrintService;
 
 		beforeEach(module("qfAdminServices"));
+
+		beforeEach(function() {
+			MockedPrintService = {
+				_printCalled: false,
+				_printOptions: null,
+				print: function(options) {
+					this._printCalled = true;
+					this._printOptions = options;
+				}
+			};
+
+			module(function($provide) {
+				$provide.value("PrintService", MockedPrintService);
+			});
+		});
 
 		beforeEach(inject(function(_OrderService_, _$httpBackend_) {
 			$httpBackend = _$httpBackend_;
@@ -56,5 +72,22 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			expect(updatedOrder.id).toEqual(order.id);
 			expect(updatedOrder.status).toEqual("PRODUCTION");
 		});
+
+		describe("print()", function() {
+			it("should call the PrintService", function() {
+				var order = {id: 1};
+
+				MockedPrintService._printCalled = false;
+				MockedPrintService._printOptions = null;
+				
+				OrderService.print(order);
+
+				expect(MockedPrintService._printCalled).toBe(true);
+
+				expect(MockedPrintService._printOptions.url).toEqual("/admin/orders/1/print/");
+				expect(MockedPrintService._printOptions.method).toEqual("post");
+				expect(MockedPrintService._printOptions.data).toEqual(order);
+			});
+		})
 	});
 });
