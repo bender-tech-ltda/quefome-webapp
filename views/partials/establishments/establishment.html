@@ -150,9 +150,14 @@
 					<span class="title">Seu Pedido</span>
 				</div>
 		
-				<button type="button" class="btn btn-show-order-details" ng-class="{dropup: !orderDetailPanelOpen}" ng-click="toggleOrderDetailPanel()">
-					<span class="caret"></span>
-					<span>{{orderDetailPanelOpen ? 'Esconder detalhes': 'Exibir/Finalizar Pedido'}}</span>
+				<button type="button" class="btn btn-show-order-details" ng-click="toggleOrderDetailPanel()" ng-hide="orderDetailPanelOpen">
+					<span class="qf-icon icon-cart"></span>
+					<span>Finalizar Pedido</span>
+				</button>
+
+				<button type="button" class="btn btn-show-order-details" ng-click="toggleOrderDetailPanel()" ng-show="orderDetailPanelOpen">
+					<span class="qf-icon icon-back"></span>
+					<span>Continuar comprando</span>
 				</button>
 
 				<div class="total">

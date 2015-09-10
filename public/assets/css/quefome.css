@@ -889,7 +889,7 @@ a:hover, a:focus {
 	background-color: #EEE;
 	width: 100%;
 	height: 1px;
-	margin: 2px 0px 10px;
+	margin: 2px 0px 8px;
 	text-align: center;
 }
 
@@ -903,14 +903,18 @@ a:hover, a:focus {
 
 .establishment-page .order-panel .header .btn-show-order-details {
 	float: left;
-	padding: 1px 0px;
-	background-color: transparent;
-	color: #fff;
-	text-decoration: underline;
+	padding: 2px 2%;
+	background-color: #FFF;
+	color: #333;
 }
 
 .establishment-page .order-panel .header .btn-show-order-details:hover {
-	color: #DCDCDC;
+	background-color: #F46C21;
+	color: #FFF;
+}
+
+.establishment-page .order-panel .header .btn-show-order-details .qf-icon {
+	font-size: 1.1em;
 }
 
 .establishment-page .order-panel .header .total {
