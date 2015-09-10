@@ -80,7 +80,8 @@
 
 			<div class="address" ng-hide="order.establishment.parameters.canWithdraw && order.withdraw">
 				<p class="title">Endereço</p>
-				<p>{{order.address.address}}, nº {{order.address.number}} - Bairro {{order.address.neighborhood.name}}</p>
+				<p ng-hide="order.address.complement">{{order.address.address}}, nº {{order.address.number}} - Bairro {{order.address.neighborhood.name}}</p>
+				<p ng-show="order.address.complement">{{order.address.address}}, nº {{order.address.number}}, compl. {{order.address.complement}} - Bairro {{order.address.neighborhood.name}}</p>
 			</div>
 
 			<div class="city" ng-hide="order.establishment.parameters.canWithdraw && order.withdraw">

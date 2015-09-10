@@ -20,9 +20,13 @@
 
 <% if (order.withdraw) { %>
 <b>O pedido será retirado no balcão!</b><br/>
-<% } else { %>
-<b>Endereço:</b> <%= order.address.address %>, nº <%= order.address.number %> - Bairro <%= order.address.neighborhood.name %> - Porto Alegre - RS<br/>
 <b>CEP:</b> <%= order.address.zipCode %><br/>
+<% } else { %>
+	<% if (order.address.complement) { %>
+<b>Endereço:</b> <%= order.address.address %>, nº <%= order.address.number %>, compl. <%= order.address.complement %> - Bairro <%= order.address.neighborhood.name %> - Porto Alegre - RS<br/>
+	<% } else { %>
+<b>Endereço:</b> <%= order.address.address %>, nº <%= order.address.number %> - Bairro <%= order.address.neighborhood.name %> - Porto Alegre - RS<br/>
+	<% } %>
 <% } %>
 <br/>
 
