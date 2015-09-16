@@ -309,7 +309,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		describe("when checking for the address", function() {
 			beforeEach(function() {
-				scope.address = {address: "Rua B", city: "Porto Alegre", state: "RS"};
+				scope.address = {address: "Rua 4", city: "Canoas", state: "RS"};
 				scope.$digest();
 			});
 
