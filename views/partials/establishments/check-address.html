@@ -23,12 +23,12 @@
 					<label for="address">Logradouro<span class="required">*</span></label>
 					<input type="text" class="form-control" name="address" placeholder="Rua, Avenida, Rodovia..." ng-model="address.address" required />
 					<span class="fail-message" ng-show="addressForm.$submitted && addressForm.address.$invalid">Por favor, informe seu logradouro.</span>
-					<span class="fail-message" ng-show="invalidAddress">O logradouro que você inseriu parece não existir dentro de Porto Alegre.</span>
+					<span class="fail-message" ng-show="invalidAddress">Por enquanto, estamos atendendo somente Canoas e, infelizmente, seu logradouro é de outra cidade.</span>
 				</div>
 
 				<div class="city-group">
 					<label>Cidade</label>
-					<span class="static-input">Porto Alegre</span>
+					<span class="static-input">Canoas</span>
 				</div>
 
 				<div class="state-group">
@@ -36,7 +36,7 @@
 					<span class="static-input">Rio Grande do Sul</span>
 				</div>
 
-				<span class="city-info">No momento, o QueFo.me atende somente à cidade de Porto Alegre.</span>
+				<span class="city-info">No momento, o QueFo.me atende somente na cidade de Canoas.</span>
 
 				<button type="submit" class="btn btn-primary btn-check-address">Verificar endereço</button>
 			</fieldset>
