@@ -122,6 +122,7 @@ var App = function() {
 	this.controllers = new ControllerCollection(app);
 
 	var loadMiddlewareParsers = function() {
+		var compression = require("compression");
 		var logger = require("morgan");
 		var bodyParser = require("body-parser");
 		var methodOverride = require("method-override");
@@ -132,6 +133,7 @@ var App = function() {
 		var prerender = $require("integration/prerender");
 
 		app.use(logger('dev'));
+		app.use(compression());
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));
 		app.use(methodOverride());
