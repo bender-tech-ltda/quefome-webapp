@@ -21,18 +21,10 @@ require.config({
 		"angular/route": ["angular"],
 		"angular/analytics": {
 			deps: ["angular"],
-			exports : "angular/analytics"
+			exports : "angularAnalytics"
 		},
 		"angular/analytics/ga": ["angular", "angular/analytics"]
 	}
 });
 
-//Isso faz com que o angular pause sua inicializacao ate que o metodo resumeBootstrap seja chamado
-//https://docs.angularjs.org/guide/bootstrap
-window.name = "NG_DEFER_BOOTSTRAP!";
-
-require(["angular", "quefome/quefome"], function(angular, quefomeApp) {
-	angular.element().ready(function() {
-		angular.resumeBootstrap([quefomeApp.name]);	
-	});
-});
+require(["quefome/quefome"]);

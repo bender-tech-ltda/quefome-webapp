@@ -1,4 +1,4 @@
-define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route", "angular/analytics/ga"], function(angular, routes) {
+require(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route", "angular/analytics/ga"], function(angular, routes) {
 	"use strict";
 	
 	var quefome = angular.module("quefome", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfServices", "qfControllers"]);
@@ -73,6 +73,12 @@ define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", 
 			$rootScope.checkForLoggedUser();
 		}
 	}]);
+
+	angular.element(document).ready(function() {
+		angular.bootstrap(document, ["quefome"], {
+			strictDi: true
+		});	
+	});
 
 	return quefome;
 });

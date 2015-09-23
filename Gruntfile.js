@@ -5,9 +5,19 @@ module.exports = function(grunt) {
 		requirejs: {
 			compile: {
 				options: {
-					mainConfigFile: "public/assets/js/quefome/main.js",
 					baseUrl: "public/assets/js",
+
+					mainConfigFile: "public/assets/js/quefome/main.js",
+
 					name: "quefome/quefome",
+					paths: {
+						requireLib: "../../components/requirejs/require"
+					},
+					include: ["requireLib"],
+
+					preserveLicenseComments: false,
+					optimize: 'none',
+
 					out: "public/assets/js/quefome.min.js"
 				}
 			}
