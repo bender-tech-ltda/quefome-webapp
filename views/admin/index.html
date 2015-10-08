@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="">
+<html lang="pt-br">
 	<head>
 		<base href="/admin/" />
 
@@ -328,6 +328,11 @@
 		<script type="text/javascript">window.debug = true;</script>
 		<% } %>
 
+
+		<% if(env.development) { %>
 		<script src="/components/requirejs/require.js" data-main="/assets/js/quefome/admin/main.js"></script>
+		<% } else { %>
+		<script src="/dist/js/quefome-admin.min.js"></script>
+		<% } %>
 	</body>
 </html>

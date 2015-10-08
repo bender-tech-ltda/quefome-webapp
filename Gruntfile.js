@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON("package.json"),
 
 		requirejs: {
-			compile: {
+			"webapp": {
 				options: {
 					baseUrl: "public/assets/js",
 
@@ -16,9 +16,28 @@ module.exports = function(grunt) {
 					include: ["requireLib"],
 
 					preserveLicenseComments: false,
-					optimize: 'none',
+					optimize: "none",
 
-					out: "public/assets/js/quefome.min.js"
+					out: "public/dist/js/quefome.min.js"
+				}
+			},
+
+			"webadmin": {
+				options: {
+					baseUrl: "public/assets/js",
+
+					mainConfigFile: "public/assets/js/quefome/admin/main.js",
+
+					name: "quefome/admin/admin",
+					paths: {
+						requireLib: "../../components/requirejs/require"
+					},
+					include: ["requireLib"],
+
+					preserveLicenseComments: false,
+					optimize: "none",
+
+					out: "public/dist/js/quefome-admin.min.js"
 				}
 			}
 		}

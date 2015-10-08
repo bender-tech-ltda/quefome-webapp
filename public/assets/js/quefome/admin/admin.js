@@ -1,4 +1,4 @@
-define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/admin/controllers","angular/route", "angular/analytics/ga"], function(angular, routes) {
+require(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/admin/controllers","angular/route", "angular/analytics/ga"], function(angular, routes) {
 	"use strict";
 	
 	var quefomeAdmin = angular.module("quefomeAdmin", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfAdminServices", "qfAdminControllers"]);
@@ -94,6 +94,12 @@ define(["angular", "quefome/admin/routes", "quefome/admin/services" ,"quefome/ad
 			});
 		}
 	}]);
+
+	angular.element(document).ready(function() {
+		angular.bootstrap(document, ["quefomeAdmin"], {
+			strictDi: true
+		});	
+	});
 
 	return quefomeAdmin;
 });
