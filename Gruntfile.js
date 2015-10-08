@@ -1,49 +1,9 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
-		pkg: grunt.file.readJSON("package.json"),
-
-		requirejs: {
-			"webapp": {
-				options: {
-					baseUrl: "public/assets/js",
-
-					mainConfigFile: "public/assets/js/quefome/main.js",
-
-					name: "quefome/quefome",
-					paths: {
-						requireLib: "../../components/requirejs/require"
-					},
-					include: ["requireLib"],
-
-					preserveLicenseComments: false,
-					optimize: "none",
-
-					out: "public/dist/js/quefome.min.js"
-				}
-			},
-
-			"webadmin": {
-				options: {
-					baseUrl: "public/assets/js",
-
-					mainConfigFile: "public/assets/js/quefome/admin/main.js",
-
-					name: "quefome/admin/admin",
-					paths: {
-						requireLib: "../../components/requirejs/require"
-					},
-					include: ["requireLib"],
-
-					preserveLicenseComments: false,
-					optimize: "none",
-
-					out: "public/dist/js/quefome-admin.min.js"
-				}
-			}
-		}
+		pkg: grunt.file.readJSON("package.json")
 	});
 
-	grunt.loadNpmTasks("grunt-contrib-requirejs");
+	grunt.loadTasks("tasks");
 
-	grunt.registerTask("default", ["requirejs"]);
+	grunt.registerTask("default", ["compile-javascript"]);
 };
