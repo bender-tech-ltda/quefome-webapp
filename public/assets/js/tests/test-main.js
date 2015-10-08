@@ -45,14 +45,6 @@ require.config({
 	callback: window.__karma__.start,
 });
 
-/**
-//Isso faz com que o angular pause sua inicializacao ate que o metodo resumeBootstrap seja chamado
+//Caso os testes comecem a falhar repentinamente, talvez seja necessaria setar essa opção
 //https://docs.angularjs.org/guide/bootstrap
-window.name = "NG_DEFER_BOOTSTRAP!";
-
-require(["angular", "quefome"], function(angular, quefomeApp) {
-	angular.element().ready(function() {
-		angular.bootstrap(document, [quefomeApp.name]);	
-	});
-});
-**/
+//window.name = "NG_DEFER_BOOTSTRAP!";
