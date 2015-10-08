@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 		include: ["requireLib"],
 
 		preserveLicenseComments: false,
-		optimize: "none"
+		optimize: "uglify"
 	};
 
 	var requireJsConfig = {
