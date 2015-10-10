@@ -1,4 +1,4 @@
-require(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route", "angular/analytics/ga"], function(angular, routes) {
+define(["angular", "quefome/routes", "quefome/services" ,"quefome/controllers", "angular/route", "angular/analytics/ga"], function(angular, routes) {
 	"use strict";
 	
 	var quefome = angular.module("quefome", ["ngRoute", "angulartics", "angulartics.google.analytics", "qfServices", "qfControllers"]);

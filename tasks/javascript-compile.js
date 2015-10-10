@@ -18,11 +18,15 @@ module.exports = function(grunt) {
 	};
 
 	requireJsConfig.webapp.options = grunt.util._.clone(requirejsDefaultOptions);
+	requireJsConfig.webapp.options.include = grunt.util._.clone(requirejsDefaultOptions.include);
+	requireJsConfig.webapp.options.include.push("quefome/main");
 	requireJsConfig.webapp.options.mainConfigFile = "public/assets/js/quefome/main.js";
 	requireJsConfig.webapp.options.name = "quefome/quefome";
 	requireJsConfig.webapp.options.out = "public/dist/js/quefome.min.js"
 
 	requireJsConfig.webadmin.options = grunt.util._.clone(requirejsDefaultOptions);
+	requireJsConfig.webadmin.options.include = grunt.util._.clone(requirejsDefaultOptions.include);
+	requireJsConfig.webadmin.options.include.push("quefome/admin/main");
 	requireJsConfig.webadmin.options.mainConfigFile = "public/assets/js/quefome/admin/main.js";
 	requireJsConfig.webadmin.options.name = "quefome/admin/admin";
 	requireJsConfig.webadmin.options.out = "public/dist/js/quefome-admin.min.js"
