@@ -5,5 +5,5 @@ module.exports = function(grunt) {
 
 	grunt.loadTasks("tasks");
 
-	grunt.registerTask("default", ["compile-javascript"]);
+	grunt.registerTask("default", ["javascript-compile"]);
 };

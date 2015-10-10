@@ -33,5 +33,5 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks("grunt-contrib-requirejs");
 
-	grunt.registerTask("compile-javascript", ["requirejs"]);
+	grunt.registerTask("javascript-compile", ["requirejs"]);
 };
