@@ -11,7 +11,6 @@ module.exports = function(grunt) {
 					"views/**/*.html"
 				],
 				exclude: [
-					"public/assets/js/main.js",
 					"public/components/**/*Spec.js"
 				],
 
@@ -19,13 +18,32 @@ module.exports = function(grunt) {
 
 				colors: true,
 				reporters: ["progress"],
+				logLevel: "INFO"
 			},
 
 			dev: {
-				logLevel: "INFO",
-
 				autoWatch: true, //observar mudanças nos arquivos JS
 				singleRun: false, //executar sem parar
+
+				browsers: ["Firefox"]
+			},
+
+			minified: {
+				files: {
+					src: [
+						"public/assets/js/tests/test-minified-main.js",
+						"public/dist/js/*.js",
+						"views/**/*.html"
+					]
+				},
+				exclude: [
+					"public/components/**/*Spec.js",
+					"public/assets/js/tests/test-main.js"
+				],
+
+
+				autoWatch: false, //nao observar mudanças nos arquivos JS
+				singleRun: true, //executar uma única vez
 
 				browsers: ["Firefox"]
 			},
