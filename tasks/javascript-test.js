@@ -31,16 +31,9 @@ module.exports = function(grunt) {
 			minified: {
 				files: {
 					src: [
-						"public/assets/js/tests/test-minified-main.js",
-						"public/dist/js/*.js",
-						"views/**/*.html"
+						"public/dist/js/*.js"
 					]
 				},
-				exclude: [
-					"public/components/**/*Spec.js",
-					"public/assets/js/tests/test-main.js"
-				],
-
 
 				autoWatch: false, //nao observar mudanças nos arquivos JS
 				singleRun: true, //executar uma única vez

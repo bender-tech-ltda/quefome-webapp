@@ -45,6 +45,19 @@ require.config({
 	callback: window.__karma__.start,
 });
 
+var originalRequire = window.require;
+
+window.require = function(module) {
+	if (module == "quefome/quefome" || module == "quefome/admin/admin") {
+		return null;
+	}
+
+	return originalRequire(module);
+};
+
+window.require.config = function() {};
+
+
 //Caso os testes comecem a falhar repentinamente, talvez seja necessaria setar essa opção
 //https://docs.angularjs.org/guide/bootstrap
-//window.name = "NG_DEFER_BOOTSTRAP!";
+window.name = "NG_DEFER_BOOTSTRAP!";
