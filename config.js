@@ -8,7 +8,11 @@ if (typeof(environment) === "string") {
 	environment = environment.trim().toLowerCase();
 }
 
+var packageProperties = require("./package.json");
+
 module.exports = {
+	version: packageProperties.version,
+
 	debug: environment === "development",
 
 	env: {

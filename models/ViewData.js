@@ -6,6 +6,8 @@ var ViewData = function() {
 		var data = util.Object.copy(config.view);
 		data.env = util.Object.copy(config.env);
 
+		data.currentVersion = config.version;
+
 		data.baseUrl = (config.server.secure ? "https://" : "http://") + config.server.domain;
 		data.currentUrl = data.baseUrl;
 
