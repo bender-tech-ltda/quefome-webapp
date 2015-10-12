@@ -6,7 +6,7 @@
     "start": "node server.js",
     "supervisor-start": "./node_modules/supervisor/lib/cli-wrapper.js server.js",
     "node-test": "./node_modules/jasmine-node/bin/jasmine-node tests --growl",
-    "test": "./node_modules/karma/bin/karma start",
+    "test": "grunt test",
     "install": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
