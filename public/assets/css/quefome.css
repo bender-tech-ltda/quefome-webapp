@@ -182,7 +182,7 @@ a:hover, a:focus {
 	min-height: 182px;
 	width: 90%;
 	width: -webkit-calc(100% - 30px);
-	width: -moz-calc(100% -; 30px);
+	width: -moz-calc(100% - 30px);
 	width: calc(100% - 30px);
 	text-align: center;
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);

@@ -241,9 +241,13 @@
 			}
 		</style>
 
-		<link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css?v=<%= currentVersion %>" />
-		<link rel="stylesheet" href="/assets/css/quefome.css?v=<%= currentVersion %>" />
-		<link rel="stylesheet" href="/assets/css/quefome-icons.css?v=<%= currentVersion %>" />
+		<% if(env.development) { %>
+		<link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="/assets/css/quefome.css" />
+		<link rel="stylesheet" href="/assets/css/quefome-icons.css" />
+		<% } else { %>
+		<link rel="stylesheet" href="/dist/css/quefome.min.css?v=<%= currentVersion %>" />
+		<% } %>
 	</head>
 
 	<body>

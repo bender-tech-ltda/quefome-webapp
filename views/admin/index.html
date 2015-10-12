@@ -215,9 +215,13 @@
 			}
 		</style>		
 
+		<% if(env.development) { %>
 		<link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="/assets/css/quefome-admin.css" />
 		<link rel="stylesheet" href="/assets/css/quefome-icons.css" />
+		<% } else { %>
+		<link rel="stylesheet" href="/dist/css/quefome-admin.min.css?v=<%= currentVersion %>" />
+		<% } %>
 	</head>
 
 	<body>
@@ -332,7 +336,7 @@
 		<% if(env.development) { %>
 		<script src="/components/requirejs/require.js" data-main="/assets/js/quefome/admin/main.js"></script>
 		<% } else { %>
-		<script src="/dist/js/quefome-admin.min.js"></script>
+		<script src="/dist/js/quefome-admin.min.js?v=<%= currentVersion %>"></script>
 		<% } %>
 	</body>
 </html>
