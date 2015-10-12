@@ -32,10 +32,16 @@ module.exports = function(grunt) {
 	requireJsConfig.webadmin.options.out = "public/dist/js/quefome-admin.min.js"
 
 	grunt.initConfig({
-		requirejs:requireJsConfig
+		requirejs: requireJsConfig
 	});
 
 	grunt.loadNpmTasks("grunt-contrib-requirejs");
 
-	grunt.registerTask("javascript-compile", ["requirejs"]);
+	grunt.registerTask("javascript-compile", "Mificar o código JavaScript do Front-end", function() {
+		grunt.task.run("requirejs");
+
+		if (!grunt.option("skip-tests")) {
+			grunt.task.run("front-javascript-test:minified");
+		}
+	});
 };
