@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 	requireJsConfig.webadmin.options.name = "quefome/admin/admin";
 	requireJsConfig.webadmin.options.out = "public/dist/js/quefome-admin.min.js"
 
-	grunt.initConfig({
+	grunt.config.merge({
 		requirejs: requireJsConfig
 	});
 
