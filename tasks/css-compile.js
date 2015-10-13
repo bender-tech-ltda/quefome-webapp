@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
 	grunt.config.merge({
 		cssmin: {
+			options: {
+				keepSpecialComments: "0"
+			},
+			
 			webapp: {
 				files: {
 					"public/dist/css/quefome.min.css": [
