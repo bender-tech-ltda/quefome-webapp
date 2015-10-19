@@ -1058,7 +1058,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			var address = {
 				address: $scope.address.address,
 				city: {
-					name: "Porto Alegre",
+					name: "Canoas",
 					state: {
 						acronym: "RS"
 					}
@@ -1323,7 +1323,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			var address = {
 				address: $scope.address.address,
 				city: {
-					name: "Porto Alegre",
+					name: "Canoas",
 					state: {
 						acronym: "RS"
 					}

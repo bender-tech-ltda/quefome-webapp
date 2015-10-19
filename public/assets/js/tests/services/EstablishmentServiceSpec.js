@@ -108,15 +108,15 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				
 				var address = {
 					zipCode: "93336220",
-					address: "Rua A",
-					neighborhood: "Centro",
+					address: "Rua 4",
+					neighborhood: "Igara",
 					city: {
-						name: "Porto Alegre",
+						name: "Canoas",
 						state: {acronym: "RS"}
 					}
 				};
 
-				$httpBackend.expectGET("/api/establishments/2/attend-address/93336220/Rua A/Centro/Porto Alegre/RS/").respond(200, true);
+				$httpBackend.expectGET("/api/establishments/2/attend-address/93336220/Rua 4/Igara/Canoas/RS/").respond(200, true);
 				EstablishmentService.isAttendingAddress(establishment, address).then(function(isAttendingAddress) {
 					expect(isAttendingAddress).toBe(true);
 				});

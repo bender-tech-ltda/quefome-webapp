@@ -13,7 +13,7 @@ define([], function() {
 			templateUrl: "/partials/establishments/search.html",
 			pageInfo: {
 				title: "Procure estabelecimentos - Quefo.me",
-				description: "#partiu procurar o restaurante do seu rango de hoje? Encontre os melhores deliveries de Porto Alegre."
+				description: "#partiu procurar o restaurante do seu rango de hoje? Encontre os melhores deliveries de Canoas."
 			},
 			reloadOnSearch: false
 		},

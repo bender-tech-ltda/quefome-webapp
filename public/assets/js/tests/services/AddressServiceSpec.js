@@ -7,12 +7,12 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		var $httpBackend, AddressService;
 
 		var validAddress = {
-			zipCode: "90570020",
-			address: "Rua Tobias da Silva",
-			neighborhood: "Moinhos de Vento",
+			zipCode: "92410350",
+			address: "Rua Boqueirão",
+			neighborhood: "Igara",
 			city: {
-				name: "Porto Alegre",
-				ibgeCode: "4314902",
+				name: "Canoas",
+				ibgeCode: "4304606",
 				state: {acronym: "RS"}
 			}
 		};
@@ -86,9 +86,9 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		describe("the searchAddress function", function() {
 			it("should return an address for an address", function() {
 				var searchAddress = {
-					address: "Rua A", 
+					address: "Rua 4", 
 					city: {
-						name: "Porto Alegre",
+						name: "Canoas",
 						state: {acronym: "RS"}
 					}
 				};
@@ -96,7 +96,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				var addressResponse = angular.copy(searchAddress);
 				addressResponse.zipCode = "92554778";
 
-				$httpBackend.expectGET("/api/addresses/search/address/RS/Porto Alegre/Rua A").respond(200, addressResponse);
+				$httpBackend.expectGET("/api/addresses/search/address/RS/Canoas/Rua 4").respond(200, addressResponse);
 
 				AddressService.searchAddress(searchAddress);
 				$httpBackend.flush();
