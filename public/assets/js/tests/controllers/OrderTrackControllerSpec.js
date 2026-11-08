@@ -184,7 +184,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 		describe("when refreshing the user orders", function() {
 			beforeEach(function() {
-				MockedAuthService._currentUser = {id: -5, email: "teste@teste.com"};
+				MockedAuthService._currentUser = {id: -5, email: "exemplo4@example.com"};
 			});
 
 			it("should check if the user is logged in", function() {

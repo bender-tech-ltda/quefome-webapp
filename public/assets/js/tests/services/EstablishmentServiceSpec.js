@@ -107,7 +107,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				var establishment = {id: 2};
 				
 				var address = {
-					zipCode: "93336220",
+					zipCode: "00000001",
 					address: "Rua 4",
 					neighborhood: "Igara",
 					city: {
@@ -116,7 +116,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 					}
 				};
 
-				$httpBackend.expectGET("/api/establishments/2/attend-address/93336220/Rua 4/Igara/Canoas/RS/").respond(200, true);
+				$httpBackend.expectGET("/api/establishments/2/attend-address/00000001/Rua 4/Igara/Canoas/RS/").respond(200, true);
 				EstablishmentService.isAttendingAddress(establishment, address).then(function(isAttendingAddress) {
 					expect(isAttendingAddress).toBe(true);
 				});

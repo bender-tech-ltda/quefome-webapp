@@ -4,7 +4,7 @@
   "license": "private",
   "private": true,
   "authors": [
-    "Gabriel Hoff <gabrielhof@gmail.com>"
+    "Example Maintainer <maintainer@example.com>"
   ],
   "dependencies": {
     "requirejs": "2.1.15",

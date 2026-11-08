@@ -11,43 +11,43 @@ define(["angular", "angular/mock", "quefome/filters"], function(angular) {
 		}));
 
 		it("should separate digit number if the number has 8 digits", function() {
-			var result = phoneFilter("35934949")
-			expect(result).toEqual("3593-4949");
+			var result = phoneFilter("00000000")
+			expect(result).toEqual("0000-0000");
 		});
 
 		it("should separate digit number if the number has 9 digits", function() {
-			var result = phoneFilter("359349499")
-			expect(result).toEqual("3593-49499");
+			var result = phoneFilter("000000000")
+			expect(result).toEqual("0000-00000");
 		});
 
 		it("should separate the area code if present", function() {
-			var result = phoneFilter("5135934949")
-			expect(result).toEqual("(51) 3593-4949");
+			var result = phoneFilter("0000000000")
+			expect(result).toEqual("(00) 0000-0000");
 
-			result = phoneFilter("51359349499")
-			expect(result).toEqual("(51) 3593-49499");
+			result = phoneFilter("00000000000")
+			expect(result).toEqual("(00) 0000-00000");
 		});
 
 		it("should ignore if the number has more than 11 digits", function() {
-			var result = phoneFilter("019146822009")
-			expect(result).toEqual("019146822009");
+			var result = phoneFilter("000000000000")
+			expect(result).toEqual("000000000000");
 
-			result = phoneFilter("+019146822009")
-			expect(result).toEqual("+019146822009");
+			result = phoneFilter("+000000000000")
+			expect(result).toEqual("+000000000000");
 		});
 
 		it("should parse as local number if it is a brazillian number", function() {
-			var result = phoneFilter("555135934949")
-			expect(result).toEqual("(51) 3593-4949");
+			var result = phoneFilter("550000000000")
+			expect(result).toEqual("(00) 0000-0000");
 
-			result = phoneFilter("+555135934949")
-			expect(result).toEqual("(51) 3593-4949");
+			result = phoneFilter("+550000000000")
+			expect(result).toEqual("(00) 0000-0000");
 
-			result = phoneFilter("5551359349499")
-			expect(result).toEqual("(51) 3593-49499");
+			result = phoneFilter("5500000000000")
+			expect(result).toEqual("(00) 0000-00000");
 
-			result = phoneFilter("+5551359349499")
-			expect(result).toEqual("(51) 3593-49499");
+			result = phoneFilter("+5500000000000")
+			expect(result).toEqual("(00) 0000-00000");
 		});
 	});
 });

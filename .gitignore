@@ -1,3 +1,19 @@
 #NodeJS
 node_modules/
 npm-debug.log
+
+# Local credentials, logs and editor artifacts
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.log
+*.swp
+*.swo
+
+# Generated browser JavaScript bundles
+/public/dist/**/*.min.js

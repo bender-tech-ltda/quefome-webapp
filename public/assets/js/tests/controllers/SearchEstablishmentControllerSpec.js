@@ -317,7 +317,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 				expect(Mocked$analytics._eventTrackCalled).toBe(true);
 				expect(Mocked$analytics._eventTrackEvent).toEqual("Search by Name");
 				expect(Mocked$analytics._eventTrackProperties.category).toEqual("Establishment Search");
-				expect(Mocked$analytics._eventTrackProperties.label).toEqual("Pudim");
+				expect(Mocked$analytics._eventTrackProperties.label).toEqual("redacted");
 			});
 
 			it("should search for a list of establishments using a query object", function() {

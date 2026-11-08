@@ -10,7 +10,7 @@ var User = function() {
 	};
 
 	this.login = function(email, password) {
-		return webservice.get("/users/auth/login/" + email + "/", {password: password}).then(function(response) {
+		return webservice.post("/users/auth/login/", {email: email, password: password}).then(function(response) {
 			var user = response.body;
 
 			if (!user) {

@@ -7,8 +7,8 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		var $httpBackend, AddressService;
 
 		var validAddress = {
-			zipCode: "92410350",
-			address: "Rua Boqueirão",
+			zipCode: "00000003",
+			address: "Rua Exemplo 1",
 			neighborhood: "Igara",
 			city: {
 				name: "Canoas",
@@ -18,8 +18,8 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		};
 
 		var invalidAddres = {
-			zipCode: "93336220",
-			address: "Rua Marechal Câmara",
+			zipCode: "00000001",
+			address: "Rua Exemplo 2",
 			neighborhood: "Ideal",
 			city: {
 				name: "Novo Hamburgo",
@@ -64,9 +64,9 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 
 		describe("the searchZipCode function", function() {
 			it("should return an address for zip code", function() {
-				$httpBackend.expectGET("/api/addresses/search/zip-code/90570020").respond(200, validAddress);
+				$httpBackend.expectGET("/api/addresses/search/zip-code/00000004").respond(200, validAddress);
 
-				AddressService.searchZipCode("90570020").then(function(address) {
+				AddressService.searchZipCode("00000004").then(function(address) {
 					expect(address).toEqual(validAddress);
 				}, function() {
 					expect(false).toBe(true);
@@ -76,7 +76,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 			});
 
 			it("should get strip off all non-number characteres from the zip code", function() {
-				$httpBackend.expectGET("/api/addresses/search/zip-code/90570020").respond(200, validAddress);
+				$httpBackend.expectGET("/api/addresses/search/zip-code/00000004").respond(200, validAddress);
 
 				AddressService.searchZipCode("90570-020");
 				$httpBackend.flush();
@@ -94,7 +94,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				};
 
 				var addressResponse = angular.copy(searchAddress);
-				addressResponse.zipCode = "92554778";
+				addressResponse.zipCode = "00000005";
 
 				$httpBackend.expectGET("/api/addresses/search/address/RS/Canoas/Rua 4").respond(200, addressResponse);
 
@@ -121,7 +121,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				Mocked$localStorage._getValue = {
 					__localStorageObject: true,
 					updated: new Date(),
-					value: {address: "Rua dos Alfeneiros"}
+					value: {address: "Rua Exemplo 3"}
 				};
 
 				//AddressService.setCurrentAddress(address);
@@ -134,7 +134,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 				Mocked$localStorage._getValue = {
 					__localStorageObject: true,
 					updated: new Date(),
-					value: {address: "Rua dos Alfeneiros"}
+					value: {address: "Rua Exemplo 3"}
 				};
 
 				var today = new Date();

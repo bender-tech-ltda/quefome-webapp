@@ -9,6 +9,16 @@ if (typeof(environment) === "string") {
 }
 
 var packageProperties = require("./package.json");
+var sessionSecret = process.env.SESSION_SECRET;
+
+// Production must use a persistent secret supplied outside the repository.
+if (!sessionSecret || !sessionSecret.trim()) {
+	if (environment !== "development" && environment !== "test") {
+		throw new Error("SESSION_SECRET must be configured outside development/test");
+	}
+	// Local sessions expire on restart rather than sharing a published secret.
+	sessionSecret = require("crypto").randomBytes(32).toString("hex");
+}
 
 module.exports = {
 	version: packageProperties.version,
@@ -33,7 +43,7 @@ module.exports = {
 				redis: (process.env.USE_REDIS_SESSION_STORE ? true : false)
 			},
 			name: (process.env.SESSION_NAME || "cXVlZm9tZV9zZXNzaW9uX2lk"),
-			secret: (process.env.SESSION_SECRET || "H698Hkas637ASmNasd3901iasdL"),
+			secret: sessionSecret,
 			maxAge: (process.env.SESSION_MAX_AGE ? parseInt(process.env.SESSION_MAX_AGE) : (2592000 * 1000))
 		}
 	},

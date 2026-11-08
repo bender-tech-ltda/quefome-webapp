@@ -140,7 +140,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 			};
 
 			MockedAddressService = {
-				_searchZipCodeAddress: {address: "Rua Marechal Camara", neighborhood: "Ideal", zipCode: "93336220"},
+				_searchZipCodeAddress: {address: "Rua Exemplo 2", neighborhood: "Ideal", zipCode: "00000001"},
 				_searchZipCodeZipCode: null,
 				_searchZipCodeCalled: false,
 				searchZipCode: function(zipCode) {
@@ -160,7 +160,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 					};
 				},
 
-				_searchAddressZipCode: "93336220",
+				_searchAddressZipCode: "00000001",
 				_searchAddressAddress: null,
 				_searchAddressCalled: false,
 				searchAddress: function(address) {
@@ -324,7 +324,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 
 			it("should set the order user with the logged user", function() {
 				MockedOrderService._retrieveOrder = {items: [{}]};
-				MockedAuthService._currentUser = {name: "Bla", phone: "5135934949"};
+				MockedAuthService._currentUser = {name: "Bla", phone: "0000000000"};
 
 				scope.startup();
 
@@ -957,7 +957,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.order = {
 					withdraw: false,
 					address: {number: "363"},
-					phone: "30305488",
+					phone: "00000000",
 					paymentMethod: {name: "Dinheiro"}
 				};
 			});
@@ -1019,7 +1019,7 @@ define(["angular", "angular/mock", "quefome/controllers"], function(angular) {
 				scope.order = {
 					withdraw: false,
 					address: {number: "464"},
-					phone: "94567855",
+					phone: "00000001",
 					paymentMethod: {name: "Dinheiro"}
 				};
 

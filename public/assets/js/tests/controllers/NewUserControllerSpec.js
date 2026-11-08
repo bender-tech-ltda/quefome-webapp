@@ -12,9 +12,9 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 		beforeEach(function() {
 			var savedUsers = {
-				"beeblebrox@gmail.com": {
+				"exemplo2@example.com": {
 					name: "Zaphod Beeblebrox",
-					email: "beeblebrox@gmail.com",
+					email: "exemplo2@example.com",
 					password: "imreallycrazy"
 				}
 			};
@@ -108,7 +108,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 		describe("should show a error message", function() {
 			//Arthur Dent
 			it("when the name is not filled", function() {
-				saveAndLogin("", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("", "exemplo1@example.com", "42istheanswer");
 
 				expect(scope.isUserLoggedIn()).toBe(false);
 
@@ -126,7 +126,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("when the password is not filled", function() {
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "");
 
 				expect(scope.isUserLoggedIn()).toBe(false);
 
@@ -144,7 +144,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("when the password has less than 6 characters", function() {
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42");
 
 				expect(scope.isUserLoggedIn()).toBe(false);
 
@@ -153,7 +153,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("when the password has more than 20 characters", function() {
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswerforlifeuniverseandeverythingelse");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42istheanswerforlifeuniverseandeverythingelse");
 
 				expect(scope.isUserLoggedIn()).toBe(false);
 
@@ -162,7 +162,7 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 			});
 
 			it("when the email is already beeing used", function() {
-				saveAndLogin("Arthur Dent", "beeblebrox@gmail.com", "42istheanswer");
+				saveAndLogin("Arthur Dent", "exemplo2@example.com", "42istheanswer");
 
 				expect(scope.isUserLoggedIn()).toBe(false);
 
@@ -173,13 +173,13 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 
 		describe("when registering the user", function() {
 			it("should save and login the user", function() {
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42istheanswer");
 
 				expect(scope.isUserLoggedIn()).toBe(true);
 			});
 
 			it("should close the current dialog", function() {
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42istheanswer");
 				expect(scope.$dialog._hideCalled).toBe(true);
 			});
 
@@ -189,13 +189,13 @@ define(["angular", "quefome/mock", "quefome/controllers"], function(angular) {
 					return {then: function() {}};
 				};
 
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42istheanswer");
 				expect(scope.processing).toBe(true);
 			});
 
 			it("should set processing to false after finish", function() {
 				scope.processing = true;
-				saveAndLogin("Arthur Dent", "arthurdent@gmail.com", "42istheanswer");
+				saveAndLogin("Arthur Dent", "exemplo1@example.com", "42istheanswer");
 
 				expect(scope.processing).toBe(false);
 			});

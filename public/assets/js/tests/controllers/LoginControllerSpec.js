@@ -33,7 +33,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 				},
 
 				login: function(email, password, keepLoggedIn) {
-					if (email == "teste@teste.com" && password == "teste") {
+					if (email == "exemplo4@example.com" && password == "teste") {
 						this._user = {
 							email: email,
 							password: password,
@@ -116,7 +116,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			};
 
 			var defaultLogin = function() {
-				login("teste@teste.com", "teste");
+				login("exemplo4@example.com", "teste");
 			};
 
 			it("should show a error message when the email is not filled", function() {
@@ -129,7 +129,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			});
 
 			it("should show a error message when the password is not filled", function() {
-				login("teste@teste.com");
+				login("exemplo4@example.com");
 
 				expect(scope.isLogged()).toBe(false);
 
@@ -147,7 +147,7 @@ define(["angular", "angular/mock", "quefome/mock", "quefome/controllers"], funct
 			});
 
 			it("should show an error if the user and password are incorrect", function() {
-				login("pudim@pudim.com.br", "euamopudim");
+				login("exemplo3@example.com", "euamopudim");
 
 				expect(scope.isLogged()).toBe(false);
 

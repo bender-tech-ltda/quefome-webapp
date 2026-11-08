@@ -49,7 +49,7 @@ var WebService = function(config) {
 			}	
 		}
 
-		console.log(options.url);
+
 
 		if (data) {
 			if (methodHasBody(options.method)) {
@@ -78,10 +78,10 @@ var WebService = function(config) {
 						};
 					}
 
-					console.error(response);
+					console.error("Webservice request failed", response.statusCode);
 
 					if (error) {
-						console.error(error);
+						console.error("Webservice transport failed");
 					}
 
 					deferred.reject(response, httpRequest);
@@ -100,7 +100,7 @@ var WebService = function(config) {
 
 			deferred.promise.request = httpRequest;
 		} catch (error) {
-			console.log(error);
+			console.error("Webservice request failed");
 			throw error;
 		}
 		

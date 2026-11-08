@@ -27,15 +27,15 @@ module.exports = function(router) {
 		});
 	});
 
-	router.get("/api/users/auth/login/:email", function(req, res) {
+	router.post("/api/users/auth/login/", function(req, res) {
 		if (!req.session) {
 			res.status(503).send("Desculpe, não estamos conseguindo fazer login nesse momento.");
 			return;
 		}
 
-		var keepLoggedIn = req.query && req.query.keepLoggedIn ? req.query.keepLoggedIn : false;
+		var keepLoggedIn = req.body && req.body.keepLoggedIn ? req.body.keepLoggedIn : false;
 
-		User.login(req.params.email, req.query ? req.query.password : "").then(function(user) {
+		User.login(req.body ? req.body.email : "", req.body ? req.body.password : "").then(function(user) {
 			if (typeof(user.password) != "undefined") {
 				delete(user.password);
 			}
@@ -49,6 +49,12 @@ module.exports = function(router) {
 		}, function(response) {
 			res.status(response.statusCode).send(response.body);
 		});
+	});
+
+	// Retired credential-bearing URLs must not reach the generic API proxy.
+	router.all("/api/users/auth/login/:email?", function(req, res) {
+		res.set("Allow", "POST");
+		res.status(405).send("Use POST with credentials in the request body.");
 	});
 
 	router.delete("/api/users/auth/logout/", function(req, res) {

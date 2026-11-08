@@ -21,7 +21,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		it("should save and login a user", function() {
 			var user = {
 				name: "Arthur Dent",
-				email: "arthurdent@gmail.com",
+				email: "exemplo1@example.com",
 				password: "42istheanswer"
 			};
 
@@ -37,7 +37,7 @@ define(["angular", "angular/mock", "quefome/services"], function(angular) {
 		it("should not save a user with an email address beeing used by another user", function() {
 			var user = {
 				name: "Zaphod Beeblebrox",
-				email: "beeblebrox@gmail.com",
+				email: "exemplo2@example.com",
 				password: "imreallycrazy"
 			};
 

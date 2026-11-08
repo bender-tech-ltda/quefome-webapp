@@ -268,7 +268,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 			if ($scope.searchFilter.query) {
 				$analytics.eventTrack("Search by Name", {
 					category: "Establishment Search",
-					label: $scope.searchFilter.query
+					label: "redacted"
 				});
 
 				searchObject.q = $scope.searchFilter.query;
@@ -1013,7 +1013,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 				} else {
 					$analytics.eventTrack("Establishment doesn't attend User Address", {
 						category: "Address not attended",
-						label: angular.toJson(address)
+						label: "redacted"
 					});
 				}
 			}, function() {
@@ -1044,7 +1044,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 				$analytics.eventTrack("Zip Code not found", {
 					category: "Address not attended",
-					label: $scope.zipCode
+					label: "redacted"
 				});
 			});
 		};
@@ -1078,7 +1078,7 @@ define(["angular", "angular/route", "quefome/services", "quefome/directives", "q
 
 				$analytics.eventTrack("Address not found", {
 					category: "Address not attended",
-					label: angular.toJson(address)
+					label: "redacted"
 				});
 			});
 		};

@@ -30,9 +30,6 @@ module.exports = {
 				}
 			}
 
-			if (config.debug) {
-				console.log(req.body);
-			}
 
 			webservice.request(options).then(function(response) {
 				if (response.headers && response.headers["content-type"]) {

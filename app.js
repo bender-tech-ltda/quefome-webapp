@@ -132,7 +132,8 @@ var App = function() {
 		//var errorhandler = require("errorhandler");
 		var prerender = $require("integration/prerender");
 
-		app.use(logger('dev'));
+		// Log only timing/status metadata; URLs can contain personal data.
+		app.use(logger(':method :status :response-time ms'));
 		app.use(compression());
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({extended: true}));

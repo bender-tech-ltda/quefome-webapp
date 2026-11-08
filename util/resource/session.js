@@ -9,7 +9,7 @@ var sessionOptions = {
 	cookie: {
 		maxAge: config.server.session.maxAge,
 		secure: config.server.secure,
-		httpOnly: false
+		httpOnly: true
 	}
 };
 

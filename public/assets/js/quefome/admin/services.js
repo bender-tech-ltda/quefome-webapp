@@ -95,18 +95,19 @@ define(["angular", "angular/analytics"], function(angular) {
 
 		var setLoggedUser = function(user) {
 			loggedUser = user;
-			$analytics.setUsername(user && user.email ? user.email : null);
+			$analytics.setUsername(null);
 		};
 
 		this.__setLoggedUser = setLoggedUser;
 
 		this.login = function(email, password, keepLoggedIn) {
 			var params = {
+				email: email,
 				password: password,
 				keepLoggedIn: keepLoggedIn ? keepLoggedIn : false
 			};
 
-			return $http.get("/api/establishment-users/auth/login/" + email + "/", {params: params}).then(function(response) {
+			return $http.post("/api/establishment-users/auth/login/", params).then(function(response) {
 				setLoggedUser(response.data);
 				return response.data
 			}, treatPromiseErrors($q));
@@ -194,10 +195,8 @@ define(["angular", "angular/analytics"], function(angular) {
 				try {
 					if (!isBusinessError()) {
 						var errorObject = {
-							url: response.config.url,
 							method: response.config.method,
-							status: response.status,
-							body: response.data
+							status: response.status
 						};
 
 						$analytics.eventTrack("Ajax Request Error", {
