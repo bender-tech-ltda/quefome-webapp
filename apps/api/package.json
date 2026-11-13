@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:pg": "TEST_DATABASE_URL=${TEST_DATABASE_URL:-postgres://postgres@localhost:5432/quefome_test} vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "clean": "rimraf .turbo node_modules"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.15",
