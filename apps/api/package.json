@@ -1,0 +1,43 @@
+{
+  "name": "@quefome/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The real backend: Hono + PostgreSQL (Drizzle). PGlite (embedded Postgres) by default for local dev/tests; DATABASE_URL for real Postgres.",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/cli.ts migrate",
+    "db:seed": "tsx src/db/cli.ts seed",
+    "db:reset": "tsx src/db/cli.ts reset",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:pg": "TEST_DATABASE_URL=${TEST_DATABASE_URL:-postgres://postgres@localhost:5432/quefome_test} vitest run",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.15",
+    "@hono/node-server": "2.1.6",
+    "@quefome/contract": "workspace:*",
+    "@quefome/domain": "workspace:*",
+    "@quefome/fixtures": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "hono": "4.10.2",
+    "pg": "8.23.1",
+    "pino": "10.4.0",
+    "tsx": "4.23.15",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/pg": "8.23.1",
+    "drizzle-kit": "0.31.11",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0",
+    "@vitest/coverage-v8": "5.1.0"
+  }
+}

@@ -1,0 +1,940 @@
+/** --- Override general element style --- **/
+html, body {
+	height: 100%;
+}
+
+body {
+	width: 100%;
+}
+
+
+/** --- Application specific style --- **/
+.login-page {
+	width: 100%;
+	height: 100%;
+	background: url("/assets/img/background_blur_pizza_1920x1080.jpg") no-repeat center;
+	background-size: cover;
+	display: table;
+
+	box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+}
+
+.login-page .quefome-brand {
+	margin: 35px auto 0px;
+	background: url("/assets/img/quefome_logo_250x93.png") no-repeat;
+	width: 250px;
+	height: 93px;
+}
+
+.login-page .login-panel {
+	background: rgba(255, 255, 255, 0.7);
+	/*background: rgba(78, 32, 15, 0.7);*/
+	padding: 10px 20px 20px;
+	margin: 35px auto;
+	width: 80%;
+	min-height: 200px;
+	border-radius: 2px;
+	box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
+}
+
+.login-page .login-panel .input-group-addon {
+	background-color: #f26c23;
+	color: #fff; 
+	border: 1px solid #f26c23;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.login-page .login-panel .input-group-addon.disabled {
+	background-color: #F89F6E;
+	border-color: #F89F6E;
+}
+
+.login-page .login-panel .input-group-addon > * {
+	font-size: 18px;
+}
+
+.login-page .login-panel input {
+	border: 1px solid #f3ba9a;
+}
+
+.page-body {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+.navbar-quefome-admin {
+	background-color: #EB3825;
+	border-color: #EB3825;
+	border-radius: 0px;
+	color: #fff;
+	height: 91px;
+	width: 100%;
+	margin-bottom: 0px;
+}
+
+.navbar-quefome-admin .navbar-quefome-brand {
+	background: transparent url("/assets/img/quefome_logo_250x93.png") no-repeat;
+	background-size: 165px;	
+	width: 168px;
+	height: 65px;
+	float: left;
+	margin: 15px 10px 0px;
+}
+
+.navbar-quefome-admin .establishment-info {
+	float: right;
+	margin: 10px;
+}
+
+.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 4px;
+	width: 70px;
+	height: 70px;
+}
+
+.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu.open {
+	display: block;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu {
+	display: none;
+	width: 60%;
+	top: 90px;
+	right: 0px;
+	background-color: #fff;
+	position: absolute;
+	border-bottom: 2px solid #EB3825;
+	border-left: 2px solid #EB3825;
+	border-right: 2px solid #EB3825;
+	padding: 8px 0px;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu:before {
+	top: -6px;
+	right: 37px;
+	position: absolute;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #FFF;
+	border-left: 7px solid transparent;
+	content: "";
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu li a {
+	display: block;
+	margin: 0px 8px;
+	padding: 7px;
+	color: #333;
+	background-color: #EEEEEE;
+	font-size: 12px;
+}
+
+.navbar-quefome-admin .establishment-info .establishment-menu li a:hover {
+	text-decoration: none;
+	background-color: #EB3825;
+	color: #fff;
+}
+
+.navbar-menu {
+	background-color: rgb(51, 51, 51);
+	color: rgb(255, 255, 255);
+}
+
+.navbar-menu .menus {
+	margin: 0px 10px;
+	padding: 0px;
+	list-style: outside none none;
+}
+
+.navbar-menu .menus .menu {
+	display: block;
+	color: #fff;
+	padding: 8px 0px;
+}
+
+.navbar-menu .menus .menu .qf-icon {
+	top: 2px;
+	font-size: 16px;
+}
+
+.content {
+	display: table-row;
+	height: 100%;
+}
+
+.content .content-body {
+	margin: 0px 10px 0px;
+}
+
+.content .partial-header {
+	min-height: 68px;
+	padding: 15px;
+	margin: 0px -10px 15px -10px;
+	border-bottom: 1px solid #DDD;
+}
+
+.content .partial-header .partial-icon {
+	float: left;
+	display: inline-block;
+	width: 53px;
+	font-size: 32px;
+	text-align: center;
+	color: #EB3825;
+	border: 3px solid #EB3825;
+	border-radius: 50px;
+}
+
+.content .partial-header .partial-icon > * {
+	top: 4px;
+	font-size: 42px;
+}
+
+.content .partial-header .partial-icon + .partial-title {
+	margin-left: 65px;
+}
+
+.content .partial-header .partial-title .short-description {
+	margin: 5px 0px 3px;
+	text-transform: uppercase;
+	font-size: 11px;
+	color: #999;
+}
+
+.content .partial-header .partial-title .title {
+	margin-top: 15px;
+	margin-left: -2px;
+	font-size: 24px;
+	color: #EB3825;
+}
+
+.content .partial-header .partial-title .short-description + .title {
+	margin-top: 0px;
+}
+
+.content .order-fullfillment-page {
+	width: 100%;
+}
+
+.content .order-fullfillment-page .alert-incoming-orders,
+.content .order-fullfillment-page .alert-modified-orders,
+.content .order-fullfillment-page .alert-updated-orders {
+	text-align: center;
+}
+
+.content .order-fullfillment-page .alert-incoming-orders .btn-link,
+.content .order-fullfillment-page .alert-modified-orders .btn-link,
+.content .order-fullfillment-page .alert-updated-orders .btn-link {
+	word-wrap: break-word;
+	white-space: normal;
+} 
+
+.content .order-fullfillment-page .orders-table {
+	font-size: 11px;
+}
+
+.content .order-fullfillment-page .orders-table th {
+	font-size: 10px;
+}
+
+.content .order-fullfillment-page .orders-table p {
+	margin: 0px;
+}
+
+.content .order-fullfillment-page .orders-table .loading-orders,
+.content .order-fullfillment-page .orders-table .empty-orders {
+	font-size: 16px;
+	color: #545454;
+	text-align: center;
+}
+
+.content .order-fullfillment-page .orders-table .loading-orders .qf-icon {
+	font-size: 20px;
+}
+
+.content .order-fullfillment-page .orders-table .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-fullfillment-page .orders-table .customer-column {
+	display: none;
+}
+
+.content .order-fullfillment-page .orders-table .customer-column .order-deliver-widraw-message {
+	color: #EB3825;
+	font-size: 11px;
+}
+
+.content .order-fullfillment-page .orders-table .price-column {
+	display: none;
+}
+
+.content .order-fullfillment-page .orders-table .products-column .price-label {
+	color: #008000;
+	font-weight: bold;
+}
+
+.content .order-fullfillment-page .orders-table th.order-details-column {
+	text-align: center;
+}
+
+.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details {
+	width: 100%;
+}
+
+.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details .text {
+	display: none;
+}
+
+.order-detail-dialog .header .label-order-status {
+	float: left;
+	margin-top: 7px;
+	margin-right: 10px;
+	font-size: 13px;
+}
+
+.order-detail-dialog .header .title {
+	float: left;
+	margin: 5px 0px 0px;
+	font-size: 21px;
+}
+
+.order-detail-dialog .header .btn-print-order {
+	float: right;
+	width: 30%;
+	margin-right: 20px;
+	margin-bottom: 0px;
+}
+
+.order-detail-dialog .btn-print-order {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.order-detail-dialog .btn-print-order .qf-icon {
+	font-size: 1.3em;
+}
+
+.order-detail-dialog .label-order-status.status-open {
+	background-color: #5cb85c;
+}
+
+.order-detail-dialog .label-order-status.status-production {
+	background-color: #f0ad4e;
+}
+
+.order-detail-dialog .label-order-status.status-delivered {
+	background-color: #d9534f;
+}
+
+.order-detail-dialog fieldset {
+	margin-bottom: 20px;
+}
+
+.order-detail-dialog legend {
+	margin-bottom: 5px;
+	font-size: 18px;
+}
+
+.order-detail-dialog p.title {
+	margin: 0px;
+	font-weight: bold;
+}
+
+.order-detail-dialog .order-data-panel .order-number,
+.order-detail-dialog .order-data-panel .order-date,
+.order-detail-dialog .order-customer-panel .customer-name,
+.order-detail-dialog .order-customer-panel .customer-email,
+.order-detail-dialog .payment-panel .change-for,
+.order-detail-dialog .payment-panel .change {
+	float: left;
+	width: 50%;
+}
+
+.order-detail-dialog .order-customer-panel .customer-email {
+	word-wrap: break-word
+}
+
+.order-detail-dialog .payment-panel .payment-method .qf-icon {
+	font-size: 17px;
+	top: 2px;
+}
+
+.order-detail-dialog .order-items-panel .items-list {
+	padding-left: 14px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item p {
+	margin-bottom: 0px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .product-name {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item {
+	margin-bottom: 15px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .quantity,
+.order-detail-dialog .order-items-panel .items-list .item .flavors {
+	color: #545454;
+	margin-bottom: 5px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .flavor {
+	color: #F46C21;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .component-list {
+	list-style: none;
+	padding: 0px;
+	color: #545454;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .component-list .component {
+	margin-bottom: 5px;
+}
+
+.order-detail-dialog .order-items-panel .items-list .item .item-instructions {
+	color: #EB3825;
+}
+
+.order-detail-dialog .action-error-message {
+	margin: 0px 0px 15px;
+	color: red;
+	text-align: center;
+}
+
+.order-detail-dialog .actions {
+	width: 100%;
+}
+
+.order-detail-dialog .actions .qf-icon {
+	font-size: 16px;
+}
+
+.order-detail-dialog .actions .btn-open-to-production {
+	width: 100%;
+}
+
+.order-detail-dialog .actions .btn-production-to-open,
+.order-detail-dialog .actions .btn-production-to-delivered {
+	float: left;
+	width: 49%;
+	font-size: 12px;
+	white-space: normal;
+}
+
+.order-detail-dialog .actions .btn-production-to-open {
+	margin-left: 0px;
+	margin-right: 1%;
+}
+
+.order-detail-dialog .actions .btn-production-to-delivered {
+	margin-left: 1%;
+}
+
+.order-detail-dialog .actions .btn-production-to-open .qf-icon,
+.order-detail-dialog .actions .btn-production-to-delivered .qf-icon {
+	font-size: 12px;
+}
+
+.order-detail-dialog .actions .btn-delivered-to-production {
+	width: 100%;
+	margin-left: 0px;
+}
+
+.order-detail-dialog .actions .btn-close-dialog {
+	width: 100%;
+	margin-top: 20px;
+	margin-left: 0px;
+}
+
+.order-detail-dialog .processing-action {
+	text-align: center;
+	color: #545454;
+}
+
+.order-detail-dialog .processing-action .message {
+	font-size: 12px; 
+}
+
+.order-detail-dialog .processing-action .qf-icon {
+	font-size: 25px;
+}
+
+.content .order-search-page .filter-form {
+	padding: 15px 5%;
+	background-color: #F2F0F0;
+}
+
+.content .order-search-page .filter-form .error-text {
+	display: block;
+	color: #EB3825;
+	font-size: 12px;
+}
+
+.content .order-search-page .filter-form .filter-panel {
+	width: 100%;
+}
+
+.content .order-search-page .filter-form .filter-panel .control-label {
+	display: block;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-status-filter,
+.content .order-search-page .filter-form .filter-panel .order-date-filter {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter input {
+	display: inline-block;
+	width: 40%;
+	width: -webkit-calc(48% - 15px);
+	width: -moz-calc(48% - 15px);
+	width: calc(48% - 15px);
+}
+
+.content .order-search-page .filter-form .filter-panel .order-date-filter .between-label {
+	display: inline-block;
+	width: 30px;
+	text-align: center;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.content .order-search-page .filter-form .filter-panel .btn-search-orders .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-search-page .orders-table {
+	font-size: 11px;
+}
+
+.content .order-search-page .orders-table th {
+	font-size: 10px;
+}
+
+.content .order-search-page .orders-table p {
+	margin: 0px;
+}
+
+.content .order-search-page .orders-table .loading-orders,
+.content .order-search-page .orders-table .empty-orders {
+	font-size: 16px;
+	color: #545454;
+	text-align: center;
+}
+
+.content .order-search-page .orders-table .loading-orders .qf-icon {
+	font-size: 20px;
+}
+
+.content .order-search-page .orders-table .error-loading-orders {
+	text-align: center;
+	color: #EB3825;
+}
+
+.content .order-search-page .orders-table .qf-icon {
+	font-size: 16px;
+}
+
+.content .order-search-page .orders-table .customer-column,
+.content .order-search-page .orders-table .products-column {
+	display: none;
+}
+
+.content .order-search-page .orders-table .products-column .price-label {
+	color: #008000;
+	font-weight: bold;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-open {
+	background-color: #5cb85c;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-production {
+	background-color: #f0ad4e;
+}
+
+.content .order-search-page .orders-table .order-status-column .label-order-status.status-delivered {
+	background-color: #d9534f;
+}
+
+
+.content .order-search-page .orders-table th.order-details-column {
+	text-align: center;
+}
+
+.content .order-search-page .orders-table .order-details-column .btn-show-order-details {
+	width: 100%;
+}
+
+.content .order-search-page .orders-table .order-details-column .btn-show-order-details .text {
+	display: none;
+}
+
+.footer {
+	width: 100%;
+	display: table-row;
+}
+
+.footer .footer-content {
+	border-top: 1px solid #CCC;
+	color: #7A7A7A;
+	margin: 10px;
+	padding: 10px;
+	min-height: 50px;
+	text-align: center;
+}
+
+.loading-page {
+	margin: 75px 4%;
+	text-align: center;
+	font-size: 20px;
+	color: #EF6815;
+}
+
+.loading-page .qf-icon {
+	font-size: 1.7em;
+}
+
+.loading-page .loading-message {
+	margin: 10px 0px 0px;
+}
+
+/** --- Helper classes --- **/
+.helper-no-select {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.hide-mobile, .show-desktop {
+	display: none;
+}
+
+.show-mobile, .hide-desktop {
+	display: block;
+}
+
+/** --- Override bootstrap style --- **/
+.table thead tr th {
+	background-color: #333;
+	color: #fff;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 12px;
+	border-top: none;
+	border-bottom: 2px solid #333;
+	vertical-align: middle;
+}
+
+.table tbody tr td {
+	padding: 8px;
+	line-height: 20px;
+	vertical-align: top;
+	border-top: 1px solid #D0D0D0;
+}
+
+.table tbody tr:hover {
+	background-color: #DCDCDC;
+}
+
+.table tbody tr.no-hover:hover {
+	background-color: #fff;	
+}
+
+label .required {
+	color: #F00;
+}
+
+.form-control {
+	box-shadow: none;
+	border-radius: 2px;
+}
+
+.form-control:focus {
+	border-color: #f26c23;
+	box-shadow: 0px 0px 8px rgba(242, 108, 35, 0.6);
+}
+
+.btn {
+	border-radius: 2px;
+}
+
+.btn.btn-primary {
+	color: #fff;
+	background-color: #f46c21;
+	border-color: #f46c21;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus {
+	border-color: #fbca0e;
+	background-color: #fbca0e;
+}
+
+.btn.btn-primary.disabled, .btn.btn-primary[disabled],
+.btn.btn-primary.disabled:focus, .btn.btn-primary[disabled]:focus,
+.btn.btn-primary.disabled:hover, .btn.btn-primary[disabled]:hover {
+	border-color: #F89F6E;
+	background-color: #F89F6E;
+}
+
+.btn.btn-default {
+	border-color: #A6A6A6;
+	background-color: #A6A6A6;
+	color: #fff;
+}
+
+.btn.btn-default:hover, .btn.btn-default:focus {
+	border-color: #f46c21;
+	background-color: #f46c21;
+}
+
+.btn.btn-default.disabled, .btn.btn-default[disabled],
+.btn.btn-default.disabled:focus, .btn.btn-default[disabled]:focus,
+.btn.btn-default.disabled:hover, .btn.btn-default[disabled]:hover {
+	border-color: #BFBFBF;
+}
+
+.alert {
+	border-radius: 2px;
+}
+
+.badge {
+	vertical-align: middle;
+}
+
+.modal .modal-content {
+	border-radius: 2px;
+}
+
+@media(min-width: 427px) {
+	.navbar-menu .menus .menu {
+		float: left;
+		display: inline-block;
+		color: #fff;
+		padding: 8px 10px;
+	}
+
+	.content .order-fullfillment-page .orders-table th,
+	.content .order-fullfillment-page .orders-table {
+		font-size: 12px;
+	}
+
+	.content .order-fullfillment-page .orders-table .customer-column,
+	.content .order-fullfillment-page .orders-table .price-column {
+		display: table-cell;
+	}
+
+	.content .order-fullfillment-page .orders-table .products-column .price-label {
+		display: none;
+	}
+
+	.order-detail-dialog .order-data-panel .order-number,
+	.order-detail-dialog .order-data-panel .order-date,
+	.order-detail-dialog .order-data-panel .order-status {
+		float: left;
+		width: 33.33% !important;
+	}
+
+	.order-detail-dialog .order-data-panel .order-number,
+	.order-detail-dialog .order-data-panel .order-date,
+	.order-detail-dialog .delivery-panel .address-zip-code,
+	.order-detail-dialog .delivery-panel .address,
+	.order-detail-dialog .payment-panel .payment-method,
+	.order-detail-dialog .payment-panel .order-price {
+		float: left;
+		width: 50%;
+	}
+
+	.order-detail-dialog .order-items-panel .items-list .item .component-list .component {
+		float: left;
+		width: 50%;
+	}
+
+	.order-detail-dialog .actions .btn-production-to-open,
+	.order-detail-dialog .actions .btn-production-to-delivered {
+		font-size: 14px;
+	}
+
+	.order-detail-dialog .processing-action .message {
+		font-size: 16px; 
+	}
+
+	.content .order-search-page .orders-table {
+		font-size: 12px;
+	}
+
+	.content .order-search-page .orders-table .customer-column,
+	.content .order-search-page .orders-table .products-column {
+		display: table-cell;
+	}
+}
+
+@media (min-width: 768px) {
+	.login-page .login-panel {
+		width: 400px;
+	}
+
+	.navbar-toggle-sidebar {
+		display: none;
+	}
+
+	.navbar-quefome-admin {
+		height: 110px;
+	}
+
+	.navbar-quefome-admin .navbar-quefome-brand {
+		background-size: 200px;
+		width: 200px;
+		height: 76px;
+		margin-left: 20px;
+	}
+
+	.navbar-quefome-admin .establishment-info .navbar-establishment-brand {
+		float: left;
+	}
+
+	.navbar-quefome-admin .establishment-info .navbar-establishment-brand .navbar-establishment-photo {
+		width: 90px;
+		height: 90px;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu {
+		float: left;
+		width: 125px;
+		top: 0px;
+		left: 0px;
+		position: relative;
+		display: inline-block;
+		margin: 66px 0px 0px 7px;
+		padding: 0px;
+		list-style: outside none none;
+		background: none;
+		border: none;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu:before {
+		border: none;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu li a {
+		width: 100%;
+		padding: 4px 5px 3px;
+		margin: 0px;
+		background-color: rgba(255, 255, 255, 0.1) ;
+		color: #fff;
+		display: block;
+		font-size: 12px;
+	}
+
+	.navbar-quefome-admin .establishment-info .establishment-menu li a:hover {
+		background-color: rgba(255, 255, 255, 0.3) ;
+		text-decoration: none;
+	}
+
+	.nav-sidebar {
+		top: 110px;
+		width: 260px;
+		transition: none;
+	}
+
+	.content {
+		width: 100%;
+	}
+
+	.content .partial-header {
+		padding: 20px;
+	}
+
+	.content .partial-header .partial-icon {
+		font-size: 42px;
+		width: 70px;
+	}
+
+	.content .partial-header .partial-icon + .partial-title {
+		margin-left: 85px;
+	}
+
+	.content .partial-header .partial-title .title {
+		font-size: 32px;
+	}
+
+	.content .order-fullfillment-page .orders-table {
+		font-size: 14px;
+	}
+
+	.content .order-fullfillment-page .orders-table .customer-column .order-deliver-widraw-message {
+		font-size: 12px;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		margin-right: 50px;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		float: left;
+		width: 30%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		float: left;
+		width: 40%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .btn-search-orders {
+		width: 25%;
+	}
+
+	.content .order-search-page .orders-table {
+		font-size: 14px;
+	}
+
+	/** Helper Classes **/
+	.hide-mobile, .show-desktop {
+		display: block;
+	}
+
+	.show-mobile, .hide-desktop {
+		display: none;
+	}
+}
+
+@media (min-width: 992px) {
+	.content .order-fullfillment-page .orders-table .order-details-column .btn-show-order-details .text {
+		display: inline-block;
+	}
+
+	.content .order-search-page .orders-table .order-details-column .btn-show-order-details .text {
+		display: inline-block;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-status-filter {
+		width: 20%;
+	}
+
+	.content .order-search-page .filter-form .filter-panel .order-date-filter {
+		width: 30%;
+	}
+}
+
+@media (min-width: 1200px) {
+
+}

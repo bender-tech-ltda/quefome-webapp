@@ -1,0 +1,26 @@
+{
+  "name": "@quefome/domain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure business rules (pricing, validation, formatting, order lifecycle). Zero runtime dependencies; shared by web and api.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vitest": "5.1.0",
+    "fast-check": "4.10.2",
+    "@types/node": "22.20.5",
+    "eslint": "9.39.5",
+    "typescript-eslint": "8.72.1",
+    "@vitest/coverage-v8": "5.1.0"
+  }
+}

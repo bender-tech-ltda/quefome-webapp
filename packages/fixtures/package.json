@@ -1,0 +1,11 @@
+{
+  "name": "@quefome/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Demo/seed data shared by the mock API, the real API seed and the test suites.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "typecheck": "tsc --noEmit", "lint": "eslint .", "test": "echo 'fixtures: validated by the api seed + tests'" },
+  "dependencies": { "@quefome/contract": "workspace:*" },
+  "devDependencies": { "typescript": "6.0.3", "eslint": "9.39.5", "typescript-eslint": "8.72.1" }
+}

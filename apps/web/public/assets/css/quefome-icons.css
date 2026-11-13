@@ -1,0 +1,283 @@
+@font-face {
+	font-family: 'quefome';
+	src:url('/assets/fonts/quefome.eot?-q38e6l');
+	src:url('/assets/fonts/quefome.eot?#iefix-q38e6l') format('embedded-opentype'),
+		url('/assets/fonts/quefome.woff?-q38e6l') format('woff'),
+		url('/assets/fonts/quefome.ttf?-q38e6l') format('truetype'),
+		url('/assets/fonts/quefome.svg?-q38e6l#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.qf-icon {
+	font-family: "quefome";
+	speak: none;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	position: relative;
+	display: inline-block;
+	top: 1px;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.qf-icon.spin {
+	-webkit-animation: 1.3s linear 0s normal none infinite spin;
+	-moz-animation: 1.3s linear 0s normal none infinite spin;
+	animation: 1.3s linear 0s normal none infinite spin;
+}
+
+.qf-icon.flip {
+	transform: scaleX(-1);
+	-moz-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	-ms-transform: scaleX(-1);
+}
+
+.icon-order-check:before {
+	content: "\e624";
+}
+
+.icon-food:before {
+	content: "\e620";
+}
+
+.icon-fire:before {
+	content: "\e621";
+}
+
+.icon-order:before {
+	content: "\e609";
+}
+
+.icon-card-ticket:before {
+	content: "\e625";
+}
+
+.icon-trash:before {
+	content: "\e615";
+}
+
+.icon-lock:before {
+	content: "\e60a";
+}
+
+.icon-card:before {
+	content: "\e60b";
+}
+
+.icon-search:before {
+	content: "\e614";
+}
+
+.icon-cart:before {
+	content: "\e616";
+}
+
+.icon-menu:before {
+	content: "\e60c";
+}
+
+.icon-phone:before {
+	content: "\e622";
+}
+
+.icon-email:before {
+	content: "\e610";
+}
+
+.icon-location:before {
+	content: "\e617";
+}
+
+.icon-cacel:before {
+	content: "\e618";
+}
+
+.icon-front:before {
+	content: "\e619";
+}
+
+.icon-reply:before {
+	content: "\e61a";
+}
+
+.icon-back:before {
+	content: "\e61b";
+}
+
+.icon-rotate-screen:before {
+	content: "\e626";
+}
+
+.icon-edit:before {
+	content: "\e61c";
+}
+
+.icon-arrow-down:before {
+	content: "\e61d";
+}
+
+.icon-arrow-up:before {
+	content: "\e61e";
+}
+
+.icon-arrow-next:before {
+	content: "\e623";
+}
+
+.icon-place-check:before {
+	content: "\e61f";
+}
+
+.icon-bike:before {
+	content: "\e611";
+}
+
+.icon-money:before {
+	content: "\e60d";
+}
+
+.icon-print:before {
+	content: "\e62e";
+}
+
+.icon-restaurant:before {
+	content: "\e627";
+}
+
+.icon-paper-ticket:before {
+	content: "\e60e";
+}
+
+.icon-event-open:before {
+	content: "\e612";
+}
+
+.icon-event-closed:before {
+	content: "\e613";
+}
+
+.icon-user:before {
+	content: "\e60f";
+}
+
+.icon-home:before {
+	content: "\f015";
+}
+
+.icon-plus:before {
+	content: "\f067";
+}
+
+.icon-dessert:before {
+	content: "\e628";
+}
+
+.icon-salad:before {
+	content: "\e629";
+}
+
+.icon-drink:before {
+	content: "\e62a";
+}
+
+.icon-snack:before {
+	content: "\e62b";
+}
+
+.icon-side-dish:before {
+	content: "\e62c";
+}
+
+.icon-food-plate:before {
+	content: "\e62d";
+}
+
+.icon-meat:before {
+	content: "\e600";
+}
+
+.icon-yakisoba:before {
+	content: "\e603";
+}
+
+.icon-skewer:before {
+	content: "\e601";
+}
+
+.icon-burger:before {
+	content: "\e602";
+}
+
+.icon-vegetarian:before {
+	content: "\e604";
+}
+
+.icon-question:before {
+	content: "\e607";
+}
+
+.icon-fish:before {
+	content: "\e605";
+}
+
+.icon-pizza:before {
+	content: "\e606";
+}
+
+.icon-sushi:before {
+	content: "\e608";
+}
+
+.icon-pacman:before {
+	content: "\e916";
+}
+
+.icon-forward:before {
+	content: "\e968";
+}
+
+.icon-loading:before {
+	content: "\e97a";
+}
+
+.icon-eat:before {
+	content: "\e9a3";
+}
+
+.icon-facebook-round:before {
+	content: "\ea8e";
+}
+
+.icon-twitter:before {
+	content: "\ea91";
+}
+
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}

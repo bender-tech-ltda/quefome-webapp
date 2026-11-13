@@ -1,0 +1,19 @@
+{
+  "name": "quefome",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=12.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @quefome/api --filter @quefome/web dev",
+    "build": "pnpm --filter @quefome/web build",
+    "start": "pnpm --parallel --filter @quefome/api --filter @quefome/web start",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r --filter '!@quefome/e2e' lint",
+    "test": "pnpm -r --filter '!@quefome/e2e' test",
+    "test:e2e": "pnpm --filter @quefome/e2e test",
+    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build && pnpm test:e2e",
+    "test:pg": "pnpm --filter @quefome/api test:pg"
+  }
+}
